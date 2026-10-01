@@ -2,9 +2,17 @@
   <div class="db">
     <section class="db-kpis" aria-label="Indicadores">
       @for (m of numeros; track m.id) {
-        <article class="db-panel db-num" [attr.data-cor]="m.cor">
+        <article class="db-num" [attr.data-cor]="m.cor">
           <span class="db-num-faixa" aria-hidden="true"></span>
-          <span class="db-num-bolha" aria-hidden="true"></span>
+          <svg class="db-num-elipse" width="125" height="96" viewBox="0 0 125 96" fill="none" aria-hidden="true" focusable="false">
+            <path opacity="0.4" d="M125 0C108.585 -1.50336e-07 92.3303 2.48311 77.1646 7.30757C61.9989 12.132 48.219 19.2033 36.6116 28.1178C25.0043 37.0322 15.7969 47.6151 9.51505 59.2624C3.23322 70.9097 -2.47863e-06 83.3931 0 96L117 96C121.418 96 125 92.4183 125 88V0Z" [attr.fill]="'url(#db-el-' + m.id + ')'" />
+            <defs>
+              <linearGradient [attr.id]="'db-el-' + m.id" x1="0.960603" y1="-0.00123366" x2="93.5261" y2="121.461" gradientUnits="userSpaceOnUse">
+                <stop class="db-num-elipse-cor" />
+                <stop offset="0.735289" stop-color="white" stop-opacity="0.32" />
+              </linearGradient>
+            </defs>
+          </svg>
           <header class="db-num-head">
             <lib-icon class="db-num-icone" [icon]="m.icone" [size]="20" color="inherit"></lib-icon>
             <h2>{{ m.titulo }}</h2>
@@ -12,12 +20,19 @@
               <lib-icon-button class="db-num-olho" type="neutral" variant="ghost" size="small" [icon]="escondido(m.id) ? 'EyeSlash' : 'Eye'" [ariaLabel]="(escondido(m.id) ? 'Mostrar ' : 'Ocultar ') + m.titulo" (clicked)="esconder(m.id)"></lib-icon-button>
             }
           </header>
-          <p class="db-num-valor">{{ escondido(m.id) ? m.mascara : m.valor }}</p>
-          <div class="db-num-rodape">
-            <div class="db-num-sub"><span>{{ m.legenda }}</span>@if (m.detalhe) {<b>{{ m.detalhe }}</b>}</div>
-            @if (m.variacao) {
-              <span class="db-num-var" [attr.aria-label]="'Alta de ' + m.variacao + ' em relação ao mês anterior'"><lib-icon icon="TrendUp" [size]="12" color="inherit"></lib-icon>{{ m.variacao }}</span>
-            }
+          <div class="db-num-dados">
+            <p class="db-num-valor">{{ escondido(m.id) ? m.mascara : m.valor }}</p>
+            <div class="db-num-sub">
+              <span>{{ m.legenda }}</span>
+              @if (m.detalhe || m.variacao) {
+                <div class="db-num-linha">
+                  <b>{{ m.detalhe }}</b>
+                  @if (m.variacao) {
+                    <span class="db-num-var" [attr.aria-label]="'Alta de ' + m.variacao + ' em relação ao mês anterior'"><lib-icon icon="TrendUp" [size]="12" color="inherit"></lib-icon>{{ m.variacao }}</span>
+                  }
+                </div>
+              }
+            </div>
           </div>
         </article>
       }
