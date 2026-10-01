@@ -15,7 +15,7 @@
     <lib-spinner class="lib-button__spinner" [size]="iconSize()"></lib-spinner>
   }
 
-  @if (showIcon() && icon()) {
+  @if (showIcon() && icon() && !loading()) {
     <lib-icon
       class="lib-button__icon"
       [icon]="icon()"

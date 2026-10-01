@@ -85,7 +85,7 @@ describe('ButtonComponent', () => {
     expect(component.hostClass()).toContain('is-disabled');
   });
 
-  it('should render the loading spinner icon before the button icon and label', () => {
+  it('should replace the button icon with the spinner while loading, keeping the label', () => {
     fixture.componentRef.setInput('label', 'Salvar');
     fixture.componentRef.setInput('icon', 'DiamondsFour');
     fixture.componentRef.setInput('loading', true);
@@ -94,12 +94,23 @@ describe('ButtonComponent', () => {
     const button: HTMLElement = fixture.nativeElement.querySelector('button');
     const children = Array.from(button.children);
     const spinnerIndex = children.findIndex((el) => el.classList.contains('lib-button__spinner'));
-    const iconIndex = children.findIndex((el) => el.classList.contains('lib-button__icon'));
     const labelIndex = children.findIndex((el) => el.classList.contains('lib-button__label'));
 
+    expect(button.querySelector('.lib-button__icon')).toBeNull();
     expect(spinnerIndex).toBeGreaterThanOrEqual(0);
-    expect(spinnerIndex).toBeLessThan(iconIndex);
-    expect(iconIndex).toBeLessThan(labelIndex);
+    expect(spinnerIndex).toBeLessThan(labelIndex);
+  });
+
+  it('should show the button icon again when loading ends', () => {
+    fixture.componentRef.setInput('icon', 'DiamondsFour');
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+    fixture.componentRef.setInput('loading', false);
+    fixture.detectChanges();
+
+    const el: HTMLElement = fixture.nativeElement;
+    expect(el.querySelector('.lib-button__icon')).not.toBeNull();
+    expect(el.querySelector('.lib-button__spinner')).toBeNull();
   });
 
   it('should render the spinner component sized like the button icon', () => {
