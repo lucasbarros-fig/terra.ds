@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/angular";
 
 import { BannerComponent, type BannerSlide } from "../banner.component";
 
-const IMG = "/assets/banners/banner-exemplo.jpg";
+const IMG = "assets/banners/banner-exemplo.jpg";
 
 const SLIDES: BannerSlide[] = [
 	{ src: IMG, alt: "The House — banner de exemplo" },
