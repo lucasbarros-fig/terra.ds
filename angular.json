@@ -86,6 +86,90 @@
           }
         }
       }
+    },
+    "jornadas": {
+      "projectType": "application",
+      "root": "projects/jornadas",
+      "sourceRoot": "projects/jornadas/src",
+      "prefix": "jv",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": "dist/jornadas",
+            "index": "projects/jornadas/src/index.html",
+            "browser": "projects/jornadas/src/main.ts",
+            "tsConfig": "projects/jornadas/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/jornadas/public"
+              }
+            ],
+            "styles": [
+              "projects/jornadas/src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules"
+              ]
+            }
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "none",
+              "optimization": true,
+              "sourceMap": false,
+              "budgets": []
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "buildTarget": "jornadas:build:development",
+            "port": 4300
+          }
+        },
+        "build-dashboard": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": "dist/dashboard-terra",
+            "index": "projects/jornadas/src/embed.html",
+            "browser": "projects/jornadas/src/main-embed.ts",
+            "tsConfig": "projects/jornadas/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [],
+            "styles": [
+              "projects/jornadas/src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules"
+              ]
+            }
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "none",
+              "optimization": true,
+              "sourceMap": false,
+              "budgets": []
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
     }
   }
 }

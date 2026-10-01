@@ -1,0 +1,96 @@
+<div class="jv">
+  <header class="jv-bar">
+    <div class="jv-marca">
+      <svg class="jv-simbolo" viewBox="4 8 43 43" aria-hidden="true"><path fill="#1684E6" d="M25.5 8C13.6458 8 4 17.6458 4 29.5C4 41.3542 13.6458 51 25.5 51C37.3542 51 47 41.3542 47 29.5C47 17.6458 37.3561 8 25.5 8ZM28.4247 29.8187L28.2991 29.8937L28.3178 30.0381L29.5608 39.7326H21.4411L22.6841 30.0381L22.7028 29.8937L22.5772 29.8187C20.8505 28.7801 19.8194 26.9597 19.8194 24.948C19.8194 21.8153 22.3672 19.2674 25.5 19.2674C28.6328 19.2674 31.1806 21.8153 31.1806 24.948C31.1806 26.9597 30.1495 28.7801 28.4228 29.8187H28.4247Z"/></svg>
+      <div class="jv-marca-txt"><b>Jornadas</b><span>The House · Terra DS</span></div>
+    </div>
+
+    <lib-select
+      class="jv-jornada"
+      variant="outlined"
+      selectAriaLabel="Jornada"
+      [options]="opcoesJornada"
+      [placeholder]="jornada().title"
+      (selectionChange)="escolherJornada($event)"
+    ></lib-select>
+
+    <div class="jv-etapa">
+      <lib-icon-button type="neutral" variant="ghost" icon="CaretLeft" ariaLabel="Etapa anterior" [disabled]="indice() <= 0" (clicked)="irPara(indice() - 1)"></lib-icon-button>
+      <div class="jv-etapa-txt" aria-live="polite">
+        <span>Etapa {{ indice() + 1 }} de {{ jornada().steps.length }}</span>
+        <b>{{ etapa().title }}</b>
+      </div>
+      <lib-icon-button type="neutral" variant="ghost" icon="CaretRight" ariaLabel="Próxima etapa" [disabled]="indice() >= jornada().steps.length - 1" (clicked)="irPara(indice() + 1)"></lib-icon-button>
+    </div>
+
+    <span class="jv-esp"></span>
+
+    <lib-tabs class="jv-abas" [tabs]="[{ label: 'Protótipo', icon: 'Monitor' }, { label: 'Print do Figma', icon: 'Image' }]" [selected]="aba()" (selectedChange)="aba.set($event)"></lib-tabs>
+
+    <lib-icon-button type="neutral" variant="ghost" [icon]="modo() === 'dark' ? 'Sun' : 'Moon'" [ariaLabel]="modo() === 'dark' ? 'Usar tema claro' : 'Usar tema escuro'" (clicked)="modo.set(modo() === 'dark' ? 'light' : 'dark')"></lib-icon-button>
+    <lib-button intent="branding" variant="filled" icon="ListBullets" label="Etapas e detalhes" (clicked)="detalhes.set(true)"></lib-button>
+  </header>
+
+  <main class="jv-palco">
+    @if (aba() === 1) {
+      <div class="jv-print">
+        <img [src]="etapa().shot" [alt]="'Print do Figma: ' + etapa().figmaName" />
+      </div>
+    } @else {
+      @for (v of [versao()]; track v) {
+        @switch (jornada().screen) {
+          @case ('dashboard') { <jv-dashboard [journey]="jornada()" [state]="estado()" (nav)="navegar($event)"></jv-dashboard> }
+          @case ('nova-proposta') { <jv-nova-proposta [journey]="jornada()" [state]="estado()" (stateChange)="mudarEstado($event)" (nav)="navegar($event)"></jv-nova-proposta> }
+          @case ('propostas') { <jv-propostas [journey]="jornada()" [state]="estado()" (nav)="navegar($event)"></jv-propostas> }
+          @case ('simuladores') { <jv-simuladores [journey]="jornada()" [state]="estado()" (stateChange)="mudarEstado($event)" (nav)="navegar($event)"></jv-simuladores> }
+          @case ('clientes') { <jv-clientes [journey]="jornada()" [state]="estado()" (nav)="navegar($event)"></jv-clientes> }
+          @case ('configuracoes') { <jv-configuracoes [journey]="jornada()" [state]="estado()" (nav)="navegar($event)"></jv-configuracoes> }
+        }
+      }
+    }
+  </main>
+
+  <lib-drawer
+    [open]="detalhes()"
+    [title]="jornada().title"
+    [description]="jornada().steps.length + (jornada().steps.length === 1 ? ' etapa · ' : ' etapas · ') + jornada().version + ' · atualizada em ' + dataBR(jornada().updated)"
+    [showFooter]="false"
+    ariaLabel="Etapas e detalhes da jornada"
+    (closeClick)="detalhes.set(false)"
+    (backdropClick)="detalhes.set(false)"
+  >
+    <div class="jv-det">
+      <nav class="jv-det-etapas" aria-label="Etapas da jornada">
+        @for (g of grupos(); track g.id) {
+          <p class="jv-det-grupo">{{ g.label }} · {{ g.steps.length }}</p>
+          @for (s of g.steps; track s.id) {
+            <button type="button" class="jv-det-etapa" [class.is-on]="s.id === etapa().id" [attr.aria-current]="s.id === etapa().id ? 'step' : null" (click)="escolherEtapa(s.id)">
+              <span class="jv-det-n">{{ jornada().steps.indexOf(s) + 1 }}</span>
+              <span>{{ s.title }}</span>
+            </button>
+          }
+        }
+      </nav>
+
+      <section class="jv-det-bloco">
+        <h3>Sobre esta etapa</h3>
+        <p>{{ etapa().about }}</p>
+        @if (etapa().rules?.length) {
+          <ul>@for (r of etapa().rules; track $index) { <li>{{ r }}</li> }</ul>
+        }
+      </section>
+
+      <section class="jv-det-bloco">
+        <h3>Origem no Figma</h3>
+        <p>Frame <b>{{ etapa().figmaName }}</b> · node-id {{ etapa().node }}</p>
+        <a class="jv-link" [href]="linkFigma()" target="_blank" rel="noopener">Abrir este frame no Figma <lib-icon icon="ArrowSquareOut" [size]="16" color="inherit"></lib-icon></a>
+      </section>
+
+      <section class="jv-det-bloco">
+        <h3>Sobre a jornada</h3>
+        <p>{{ jornada().description }}</p>
+        <a class="jv-link" href="https://lucasbarros-fig.github.io/terra.ds/" target="_blank" rel="noopener">Storybook do Terra DS <lib-icon icon="ArrowSquareOut" [size]="16" color="inherit"></lib-icon></a>
+      </section>
+    </div>
+  </lib-drawer>
+</div>

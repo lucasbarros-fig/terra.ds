@@ -1,0 +1,58 @@
+<jv-shell menu="propostas" title="Seu acompanhamento" [breadcrumbs]="[{ label: 'Acompanhamento de proposta' }]" (nav)="nav.emit($event)">
+  <div class="pp" #area>
+    <div class="pp-filtros" role="search">
+      <lib-input-text class="pp-busca" variant="outlined" iconBefore="MagnifyingGlass" placeholder="Pesquise por cliente" inputAriaLabel="Pesquisar proposta por cliente" [clearable]="true" [ngModel]="busca()" (ngModelChange)="busca.set($event ?? '')"></lib-input-text>
+      <lib-select class="pp-sel" variant="outlined" selectAriaLabel="Período" iconBefore="Calendar" [options]="opPeriodos" [ngModel]="periodo()" (selectionChange)="periodo.set($any($event) || 'todos')"></lib-select>
+      <lib-select class="pp-sel" variant="outlined" selectAriaLabel="Produto" placeholder="Produto: todos" [multiple]="true" [searchable]="true" [options]="opProdutos()" [ngModel]="produto()" (selectionChange)="produto.set(lista($event))"></lib-select>
+      <lib-select class="pp-sel" variant="outlined" selectAriaLabel="Status" placeholder="Status: todos" [multiple]="true" [options]="opEtapas()" [ngModel]="status()" (selectionChange)="status.set(lista($event))"></lib-select>
+      <lib-select class="pp-sel" variant="outlined" selectAriaLabel="Usuários" placeholder="Usuários: todos" [multiple]="true" [searchable]="true" [options]="opUsuarios()" [ngModel]="usuarios()" (selectionChange)="usuarios.set(lista($event))"></lib-select>
+      <lib-button intent="branding" variant="filled" icon="FileArrowDown" label="Exportar relatório" (clicked)="exportar()"></lib-button>
+    </div>
+
+    <section class="pp-resumo" aria-label="Resumo por etapa">
+      @for (r of resumo(); track r.e.value) {
+        <lib-kpi-card [label]="r.e.label" [value]="'R$ ' + inteiro(r.total)" [icon]="ic(r.e.icon)" [statusLabel]="r.n + (r.n === 1 ? ' proposta' : ' propostas')" [statusColor]="corEtapa(r.e.color)" note=""></lib-kpi-card>
+      }
+    </section>
+
+    @if (!base().length) {
+      <lib-empty-state class="pp-vazio" icon="FolderOpen" title="Você ainda não possui propostas cadastradas..." description="Quando novas propostas forem criadas, elas aparecerão aqui." buttonLabel="Nova proposta" buttonIcon="NotePencil" (buttonClicked)="nav.emit('nova')"></lib-empty-state>
+    } @else if (!linhas().length) {
+      <lib-empty-state class="pp-vazio" icon="Funnel" title="Nenhuma proposta encontrada..." description="Tente ajustar ou limpar os filtros aplicados." buttonLabel="Limpar filtros" buttonIcon="FunnelX" (buttonClicked)="limpar()"></lib-empty-state>
+    } @else {
+      <div class="pp-quadro" tabindex="0" aria-label="Quadro de propostas por etapa">
+        @for (c of colunas(); track c.e.value) {
+          <section class="pp-col" [attr.aria-label]="c.e.label + ', ' + c.cards.length + ' propostas'">
+            <header class="pp-col-head"><b>{{ c.e.label }}</b><lib-tag emphasis="low" color="neutral" size="small">{{ c.cards.length }}</lib-tag></header>
+            <div class="pp-col-lista">
+              @for (p of c.cards; track p.id) {
+                <lib-card-kanban
+                  [type]="p.tipo"
+                  [proposalId]="'#' + p.id"
+                  [clientName]="p.cliente"
+                  [product]="p.produto"
+                  [amount]="'R$ ' + brl(p.valor)"
+                  [statusLabel]="p.status"
+                  [statusColor]="corStatus(p.status)"
+                  [time]="curto(p.criado)"
+                  timeLabel="Criado em"
+                  (cardClick)="ver(p)"
+                  (menuClick)="abrirMenu($event, p)"
+                ></lib-card-kanban>
+              } @empty {
+                <p class="pp-col-vazia">As propostas aparecerão aqui quando chegarem nesta etapa.</p>
+              }
+            </div>
+          </section>
+        }
+      </div>
+    }
+
+    @if (menu(); as m) {
+      <jv-menu-flutuante
+        [itens]="[{ value: 'ver', label: 'Ver proposta', icon: 'eye--duotone' }, { value: 'transferir', label: 'Transferir proposta', icon: 'arrange-horizontal--duotone' }, { value: 'cancelar', label: 'Cancelar proposta', icon: 'close-circle--duotone' }]"
+        [pos]="m.pos" rotulo="Ações da proposta" (escolher)="acao($event)" (fechar)="menu.set(null)"
+      ></jv-menu-flutuante>
+    }
+  </div>
+</jv-shell>

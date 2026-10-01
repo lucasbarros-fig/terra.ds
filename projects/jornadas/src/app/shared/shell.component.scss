@@ -1,0 +1,122 @@
+:host { display: block; height: 100%; }
+
+.sh {
+  position: relative;
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  background: var(--color-theme-base);
+  color: var(--color-text-essential-body);
+  overflow: hidden;
+}
+
+.sh-side { flex: 0 0 auto; }
+
+.sh-main {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.sh-top { flex: 0 0 auto; }
+
+.sh-content {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+.sh-backdrop { position: absolute; inset: 0; z-index: 30; }
+
+.sh-panel {
+  position: absolute;
+  top: 80px;
+  right: var(--size-spacing-24);
+  z-index: 31;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-12);
+  padding: var(--size-spacing-16);
+  border: var(--size-stoke-1) solid var(--color-stroke-frame);
+  border-radius: var(--size-radius-16);
+  background: var(--color-theme-overlay);
+}
+
+.sh-panel-title {
+  margin: 0;
+  font-size: var(--size-font-heading-20);
+  font-weight: 700;
+  color: var(--color-text-essential-heading);
+}
+
+.sh-notif { width: 420px; }
+.sh-notif-list { display: flex; flex-direction: column; gap: var(--size-spacing-4); max-height: 360px; overflow: auto; }
+.sh-notif-item {
+  display: flex;
+  gap: var(--size-spacing-12);
+  padding: var(--size-spacing-12);
+  border: 0;
+  border-radius: var(--size-radius-8);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  &:hover { background: var(--color-state-system-ghost-hovering); }
+  &:focus-visible { outline: var(--size-stoke-2) solid var(--color-state-system-focus); }
+}
+.sh-dot { flex: 0 0 8px; height: 8px; margin-top: 6px; border-radius: var(--size-radius-999); &.is-on { background: var(--color-state-feedback-negative-surface-base); } }
+.sh-notif-body { display: flex; flex-direction: column; gap: var(--size-spacing-4); }
+.sh-notif-text { font-size: var(--size-font-body-14); line-height: 1.45; color: var(--color-text-essential-heading); }
+.is-lida .sh-notif-text { color: var(--color-text-essential-body); }
+.sh-notif-date { display: inline-flex; align-items: center; gap: 4px; font-size: var(--size-font-body-12); color: var(--color-text-essential-caption); }
+.sh-notif-foot { display: flex; justify-content: flex-end; }
+.sh-ok { display: flex; flex-direction: column; align-items: center; gap: var(--size-spacing-8); padding: var(--size-spacing-24); color: var(--color-state-feedback-positive-surface-base); b { color: var(--color-text-essential-heading); font-size: var(--size-font-body-14); } }
+
+.sh-menu { width: 260px; gap: 0; padding: var(--size-spacing-8); }
+.sh-menu--loja { width: 230px; }
+.sh-versao { margin: var(--size-spacing-8) 0 0; padding: var(--size-spacing-8) var(--size-spacing-12) 0; border-top: var(--size-stoke-1) solid var(--color-stroke-list); font-size: var(--size-font-body-12); line-height: 1.5; color: var(--color-text-essential-caption); }
+
+.sh-toasts {
+  position: absolute;
+  right: var(--size-spacing-24);
+  bottom: var(--size-spacing-24);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--size-spacing-8);
+  pointer-events: none;
+  ::ng-deep lib-toast { pointer-events: auto; }
+  ::ng-deep lib-toast { position: static !important; }
+}
+
+/* Home: faixa de boas-vindas na cor da marca (Figma "Dashboard | The House"), composta com tokens e componentes do Terra. */
+.sh-home {
+  display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between; gap: var(--size-spacing-24);
+  min-height: 90px; padding: var(--size-spacing-16) var(--size-spacing-32);
+  background: var(--color-branding-surface-primary-base); color: var(--color-text-static-white);
+}
+.sh-home-txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.sh-home-titulo { margin: 0; font-size: var(--size-font-heading-24); font-weight: 700; line-height: 1.2; }
+.sh-home-sub { margin: 0; font-size: var(--size-font-body-16); font-weight: 500; }
+.sh-home-dir { display: flex; align-items: center; gap: var(--size-spacing-16); }
+.sh-home-destaque ::ng-deep button { border: var(--size-stoke-2) solid var(--color-text-static-white) !important; color: var(--color-text-static-white) !important; }
+.sh-home-destaque ::ng-deep button:hover { background: var(--color-state-system-ghost-hovering-contrast) !important; }
+.sh-home-ib ::ng-deep button { color: var(--color-icons-static-white) !important; }
+.sh-home-ib ::ng-deep button:hover { background: var(--color-state-system-ghost-hovering-contrast) !important; }
+.sh-home-acao { position: relative; display: inline-flex; }
+.sh-home-badge { position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; border: 2px solid var(--color-branding-surface-primary-base); border-radius: var(--size-radius-999); background: var(--color-state-feedback-negative-surface-base); box-sizing: content-box; }
+.sh-home-perfil { display: flex; align-items: center; gap: var(--size-spacing-12);
+  div { display: flex; flex-direction: column; align-items: flex-end; }
+  b { font-size: var(--size-font-body-16); line-height: 1.2; }
+  span { font-size: var(--size-font-body-14); font-weight: 500; } }
+.sh-home-avatar { display: inline-grid; width: 48px; height: 48px; place-items: center; border-radius: var(--size-radius-999);
+  background: var(--color-theme-base); color: var(--color-branding-surface-primary-base); font-size: var(--size-font-body-14) !important; font-weight: 700; }
+
+/* Topo da sidebar na cor da marca, com o logo em branco (como no Figma). */
+.sh-side--marca ::ng-deep .sidebar-top { min-height: 90px; flex-basis: 90px; border-bottom-color: transparent; background: var(--color-branding-surface-primary-base); }
+.sh-side--marca ::ng-deep .sidebar-logo { fill: var(--color-icons-static-white); }
+.sh-side--marca ::ng-deep .sidebar-logo path[fill] { fill: var(--color-icons-static-white); }
+.sh-side--marca ::ng-deep .sidebar-top-accent { display: none; }

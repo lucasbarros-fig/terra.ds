@@ -1,0 +1,109 @@
+<jv-shell menu="home" [title]="C.header.welcome + ' ' + C.header.name" [breadcrumbs]="[{ label: 'Home' }]" (nav)="nav.emit($event)">
+  <div class="db">
+    <p class="db-sub">{{ C.header.subtitle }}</p>
+
+    <section class="db-kpis" aria-label="Indicadores">
+      @for (m of numeros; track m.id) {
+        <article class="db-panel db-num" [attr.data-cor]="m.cor">
+          <span class="db-num-faixa" aria-hidden="true"></span>
+          <span class="db-num-bolha" aria-hidden="true"></span>
+          <header class="db-num-head">
+            <lib-icon class="db-num-icone" [icon]="m.icone" [size]="20" color="inherit"></lib-icon>
+            <h2>{{ m.titulo }}</h2>
+            <lib-icon-button class="db-num-olho" type="neutral" variant="ghost" size="small" [icon]="escondido(m.id) ? 'EyeSlash' : 'Eye'" [ariaLabel]="(escondido(m.id) ? 'Mostrar ' : 'Ocultar ') + m.titulo" (clicked)="esconder(m.id)"></lib-icon-button>
+          </header>
+          <p class="db-num-valor">{{ escondido(m.id) ? 'R$ ••••••' : m.valor }}</p>
+          <div class="db-num-rodape">
+            <div class="db-num-sub"><span>{{ m.legenda }}</span><b>{{ escondido(m.id) && m.comparativo ? 'R$ ••••••' : m.detalhe }}</b></div>
+            @if (m.variacao) {
+              <span class="db-num-var" [attr.aria-label]="'Alta de ' + m.variacao + ' em relação ao mês anterior'"><lib-icon icon="TrendUp" [size]="12" color="inherit"></lib-icon>{{ m.variacao }}</span>
+            }
+          </div>
+        </article>
+      }
+
+      <section class="db-panel db-gerente" aria-label="Sua gerente de sucesso">
+        <div class="db-gerente-head">
+          <span class="db-ini" aria-hidden="true">RS</span>
+          <div class="db-gerente-txt">
+            <b>{{ C.gerente.name }}</b>
+            <span>{{ C.gerente.role }}</span>
+          </div>
+        </div>
+        <div class="db-gerente-acoes">
+          <lib-icon-button class="db-contorno db-contorno--azul" type="branding" variant="ghost" icon="Envelope" [ariaLabel]="'Enviar email para ' + C.gerente.name" (clicked)="avisar('Email da gerente de sucesso: ' + C.gerente.email)"></lib-icon-button>
+          <lib-icon-button class="db-contorno db-contorno--verde" type="neutral" variant="ghost" icon="WhatsappLogo" [ariaLabel]="'Chamar ' + C.gerente.name + ' no WhatsApp'" (clicked)="avisar('WhatsApp da gerente de sucesso: ' + C.gerente.phone, 'success')"></lib-icon-button>
+          <lib-button class="db-contorno db-contorno--cinza db-tel" intent="neutral" variant="ghost" icon="Phone" [label]="C.gerente.phone" (clicked)="avisar('Telefone da gerente de sucesso: ' + C.gerente.phone)"></lib-button>
+        </div>
+      </section>
+    </section>
+
+    <div class="db-meio">
+      <section class="db-panel db-destaques" aria-labelledby="db-destaques-t">
+        <header class="db-head">
+          <h2 id="db-destaques-t">{{ C.destaques.title }}</h2>
+          <lib-button intent="branding" variant="bare" [showIcon]="false" [label]="C.destaques.link" (clicked)="avisar('A central de notícias ainda não tem jornada cadastrada.')"></lib-button>
+        </header>
+        <lib-banner [slides]="slides()" [height]="280" [autoplay]="true" [interval]="6000" ariaLabel="Destaques da The House"></lib-banner>
+      </section>
+
+      <section class="db-panel db-funil" aria-labelledby="db-funil-t">
+        <h2 id="db-funil-t">{{ C.funil.title }}</h2>
+        <div class="db-funil-total"><b>{{ C.funil.total }}</b><span>{{ C.funil.caption }}</span></div>
+        <ol class="db-funil-lista">
+          @for (e of C.funil.etapas; track e.label; let i = $index) {
+            <li [style.width.%]="100 - i * 7"><span>{{ e.label }}</span><b>{{ e.value }}</b></li>
+          }
+        </ol>
+      </section>
+    </div>
+
+    <div class="db-listas">
+      <section class="db-panel" aria-labelledby="db-atencao-t">
+        <header class="db-head">
+          <div class="db-head-titulo">
+            <h2 id="db-atencao-t">{{ C.atencao.title }}</h2>
+            <span class="db-ia"><lib-icon icon="Sparkle" [size]="12" color="inherit"></lib-icon>{{ C.atencao.tag }}</span>
+          </div>
+          <lib-button intent="branding" variant="bare" [showIcon]="false" [label]="C.atencao.link" (clicked)="nav.emit('propostas')"></lib-button>
+        </header>
+        <div class="db-itens">
+          @for (it of C.atencao.itens; track $index) {
+            <article class="db-item">
+              <div class="db-item-main">
+                <p class="db-linha"><b>{{ it.nome }}</b><span class="db-sep" aria-hidden="true"></span><span>{{ it.numero }}</span></p>
+                <p class="db-linha">{{ it.produto }}</p>
+                <lib-status status="negative" size="small" [text]="it.status"></lib-status>
+              </div>
+              <div class="db-item-lado">
+                <span class="db-tempo"><lib-icon icon="Clock" [size]="16" color="inherit"></lib-icon>{{ it.tempo }}</span>
+                <lib-button intent="branding" variant="filled" [showIcon]="false" label="Ver proposta" (clicked)="nav.emit('propostas')"></lib-button>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+
+      <section class="db-panel" aria-labelledby="db-sim-t">
+        <header class="db-head">
+          <h2 id="db-sim-t">{{ C.simulacoes.title }}</h2>
+          <lib-button intent="branding" variant="bare" [showIcon]="false" [label]="C.simulacoes.link" (clicked)="nav.emit('simuladores')"></lib-button>
+        </header>
+        <div class="db-itens">
+          @for (it of C.simulacoes.itens; track $index) {
+            <article class="db-item">
+              <div class="db-item-main">
+                <p class="db-linha"><b>{{ it.cliente }}</b></p>
+                <p class="db-linha">{{ it.produto }}</p>
+                <p class="db-linha db-data">{{ it.data }}</p>
+              </div>
+              <div class="db-item-lado">
+                <lib-button class="db-contorno db-contorno--forte" intent="neutral" variant="ghost" [showIcon]="false" label="Gerar proposta" (clicked)="nav.emit('nova')"></lib-button>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+    </div>
+  </div>
+</jv-shell>

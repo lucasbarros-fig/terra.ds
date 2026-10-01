@@ -1,0 +1,41 @@
+.cl { position: relative; display: flex; flex-direction: column; gap: var(--size-spacing-16); min-height: 100%; padding: var(--size-spacing-24) var(--size-spacing-32) var(--size-spacing-32); }
+.cl-barra { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--size-spacing-16); }
+.cl-barra-dir { display: flex; align-items: center; gap: var(--size-spacing-16); }
+.cl-busca { width: 320px; }
+.cl-conta { font-size: var(--size-font-body-14); color: var(--color-text-essential-caption); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.cl-lista { display: flex; flex-direction: column; gap: var(--size-spacing-12); }
+.cl-linha { cursor: pointer; }
+.cl-nome { font-weight: 500; color: var(--color-text-essential-heading); }
+.cl-acoes { display: inline-flex; gap: 2px; }
+.cl-vazio, .cl-aba-vazia { display: flex; flex-direction: column; align-items: center; gap: var(--size-spacing-8); padding: var(--size-spacing-32); color: var(--color-icons-essential-low);
+  span { font-size: var(--size-font-body-14); color: var(--color-text-essential-caption); } }
+
+.cl-drawer { --drawer-width: min(1040px, 92vw); }
+.cl-dr { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: var(--size-spacing-24); align-items: start; }
+.cl-dr-main { display: flex; flex-direction: column; gap: var(--size-spacing-16); min-width: 0; }
+.cl-dr-topo { display: flex; align-items: center; gap: var(--size-spacing-8); }
+.cl-esp { flex: 1 1 auto; }
+.cl-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--size-spacing-16); margin: 0;
+  > div { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  dt { font-size: var(--size-font-body-12); color: var(--color-text-essential-caption); }
+  dd { margin: 0; font-size: var(--size-font-body-14); font-weight: 500; line-height: 1.45; color: var(--color-text-essential-heading); overflow-wrap: anywhere; } }
+.cl-s2 { grid-column: span 2; }
+.cl-s3 { grid-column: 1 / -1; }
+.cl-bacen { display: flex; align-items: center; gap: var(--size-spacing-4); }
+.cl-sub { display: flex; flex-direction: column; gap: var(--size-spacing-8); margin: 0; padding: 0; list-style: none;
+  li { display: flex; align-items: center; gap: var(--size-spacing-12); padding: var(--size-spacing-12); border-radius: var(--size-radius-8); background: var(--color-theme-upper); color: var(--color-icons-essential-medium); }
+  div { display: flex; flex: 1 1 auto; flex-direction: column; }
+  span { font-size: var(--size-font-body-12); color: var(--color-text-essential-caption); }
+  b { font-size: var(--size-font-body-14); font-weight: 500; color: var(--color-text-essential-heading); } }
+.cl-hist { display: flex; flex-direction: column; gap: var(--size-spacing-12); padding: var(--size-spacing-16); border: var(--size-stoke-1) solid var(--color-stroke-frame); border-radius: var(--size-radius-16); background: var(--color-theme-lower);
+  h3 { margin: 0; font-size: var(--size-font-body-16); font-weight: 700; color: var(--color-text-essential-heading); }
+  > p { margin: 0; font-size: var(--size-font-body-12); line-height: 1.5; color: var(--color-text-essential-caption); }
+  ul { display: flex; flex-direction: column; gap: var(--size-spacing-8); margin: 0; padding: 0; list-style: none; }
+  li { display: flex; flex-direction: column; gap: 6px; padding: var(--size-spacing-12); border-radius: var(--size-radius-8); background: var(--color-theme-upper); }
+  li b { font-size: var(--size-font-body-14); font-weight: 500; color: var(--color-text-essential-heading); }
+  li span { display: flex; align-items: center; justify-content: space-between; gap: var(--size-spacing-8); font-size: var(--size-font-body-12); color: var(--color-text-essential-caption); } }
+.cl-rodape { display: flex; align-items: center; justify-content: space-between; gap: var(--size-spacing-12); width: 100%; }
+.cl-rodape-dir { display: flex; align-items: center; gap: var(--size-spacing-12); }
+.cl-dlg { margin: 0; font-size: var(--size-font-body-14); line-height: 1.5; color: var(--color-text-essential-body); }
+
+@media (max-width: 1100px) { .cl-dr { grid-template-columns: minmax(0, 1fr); } .cl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

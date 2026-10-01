@@ -1,0 +1,100 @@
+<jv-shell menu="nova" title="Nova Proposta" [breadcrumbs]="[{ label: 'Nova Proposta' }]" (nav)="nav.emit($event)">
+  <div class="np">
+    <div class="np-col">
+      <div class="np-perguntas">
+        <section class="np-q">
+          <div class="np-q-head"><p>{{ C().questions.perfil.caption }}</p><h2>{{ C().questions.perfil.title }}</h2></div>
+          <div class="np-op" role="group" [attr.aria-label]="C().questions.perfil.title">
+            @for (o of C().perfis; track o.value) {
+              <lib-button [intent]="s().perfil === o.value ? 'branding' : 'neutral'" [variant]="s().perfil === o.value ? 'filled' : 'ghost'" [selected]="s().perfil === o.value" [icon]="ic(o.icon)" [label]="o.label" (clicked)="escolher('perfil', o.value)"></lib-button>
+            }
+          </div>
+        </section>
+
+        @if (s().perfil) {
+          <lib-divisor></lib-divisor>
+          <section class="np-q">
+            <div class="np-q-head"><p>{{ C().questions.solucao.caption }}</p><h2>{{ C().questions.solucao.title }}</h2></div>
+            <div class="np-op" role="group" [attr.aria-label]="C().questions.solucao.title">
+              @for (o of C().solucoes; track o.value) {
+                <lib-button [intent]="s().solucao === o.value ? 'branding' : 'neutral'" [variant]="s().solucao === o.value ? 'filled' : 'ghost'" [selected]="s().solucao === o.value" [icon]="ic(o.icon)" [label]="o.label" (clicked)="escolher('solucao', o.value)"></lib-button>
+              }
+            </div>
+          </section>
+        }
+
+        @if (cfg()) {
+          <lib-divisor></lib-divisor>
+          <section class="np-q">
+            <div class="np-q-head"><p>{{ C().questions.produto.caption }}</p><h2>{{ C().questions.produto.title }}</h2></div>
+            <div class="np-op" role="group" [attr.aria-label]="C().questions.produto.title">
+              @for (v of cfg().options; track v) {
+                <span class="np-op-item">
+                  <lib-button [intent]="s().produto === v ? 'branding' : 'neutral'" [variant]="s().produto === v ? 'filled' : 'ghost'" [selected]="s().produto === v" [disabled]="emBreve(v)" [icon]="ic(cat()[v].icon)" [label]="cat()[v].label" (clicked)="escolher('produto', v)"></lib-button>
+                  @if (emBreve(v)) { <lib-tag emphasis="low" color="neutral" size="small">Em breve</lib-tag> }
+                </span>
+              }
+            </div>
+          </section>
+        }
+
+        @if (produto()) {
+          <lib-divisor></lib-divisor>
+          <section class="np-q">
+            <div class="np-q-head"><p>{{ C().questions.seguir.caption }}</p><h2>{{ C().questions.seguir.title }}</h2></div>
+            <div class="np-op">
+              <lib-button intent="branding" variant="filled" icon="NotePencil" label="Preencher proposta" (clicked)="preencher()"></lib-button>
+              <lib-button intent="neutral" variant="ghost" icon="Copy" label="Copiar link para o cliente" (clicked)="copiarLink()"></lib-button>
+            </div>
+          </section>
+        }
+      </div>
+
+      @if (s().perfil) {
+        <footer class="np-rodape">
+          <lib-button intent="neutral" variant="ghost" icon="ArrowLeft" label="Voltar" (clicked)="voltar()"></lib-button>
+        </footer>
+      }
+    </div>
+
+    <aside class="np-painel" aria-label="Painel de produtos">
+      @if (produto(); as p) {
+        <div class="np-p-head"><h2>{{ p.label }}</h2>@if (p.detail.subtitle) { <p>{{ p.detail.subtitle }}</p> }</div>
+        <ul class="np-bullets">
+          @for (b of p.detail.bullets; track $index) {
+            <li><lib-icon icon="Check" [size]="16" color="inherit"></lib-icon><span>{{ bullet(b).text }}
+              @if (bullet(b).sub.length) { <ul>@for (x of bullet(b).sub; track x) { <li>{{ x }}</li> }</ul> }
+            </span></li>
+          }
+        </ul>
+        <div class="np-bloco">
+          <b>{{ p.detail.partnersTitle }}</b>
+          <div class="np-parceiros">@for (n of p.detail.partners; track n) { <jv-parceiro [nome]="n" [tamanho]="56"></jv-parceiro> }</div>
+          <lib-button class="np-doc" intent="neutral" variant="bare" icon="ArrowSquareOut" label="Documentações e informações necessárias" (clicked)="documentacao()"></lib-button>
+        </div>
+        @if (p.detail.about) {
+          <div class="np-bloco"><b>Conheça o produto:</b><p>{{ p.detail.about }}</p></div>
+        }
+      } @else if (listaPainel(); as lp) {
+        <div class="np-p-head"><h2>{{ lp.title }}</h2></div>
+        <div class="np-cards">
+          @for (it of lp.items; track it.label) {
+            <article class="np-card">
+              <header><lib-icon [icon]="ic(it.icon)" [size]="20" color="inherit"></lib-icon><b>{{ it.label }}</b></header>
+              <p>{{ it.text }}</p>
+              <div class="np-parceiros np-parceiros--sm">@for (n of it.partners; track n) { <jv-parceiro [nome]="n" [tamanho]="40"></jv-parceiro> }</div>
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="np-p-head"><h2>{{ C().intro.title }}</h2></div>
+        <div class="np-intro">@for (t of C().intro.text; track $index) { <p>{{ t }}</p> }</div>
+        <ol class="np-passos">
+          @for (st of C().intro.steps; track st.title; let i = $index) {
+            <li><span class="np-n">{{ i + 1 }}</span><div><b>{{ st.title }}</b><span>{{ st.text }}</span></div></li>
+          }
+        </ol>
+      }
+    </aside>
+  </div>
+</jv-shell>

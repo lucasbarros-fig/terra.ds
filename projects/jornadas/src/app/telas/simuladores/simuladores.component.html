@@ -1,0 +1,162 @@
+<jv-shell menu="simuladores" title="Simuladores" [breadcrumbs]="breadcrumbs()" (nav)="nav.emit($event)">
+  @if (s().resultado) {
+    <div class="sm-res">
+      <div class="sm-res-head">
+        <div class="sm-q"><p>Simulação concluída com sucesso!</p><h2>Compare os resultados e transforme a melhor condição em uma proposta!</h2></div>
+        <lib-button intent="neutral" variant="ghost" icon="ShareNetwork" label="Compartilhar" (clicked)="compartilhar()"></lib-button>
+      </div>
+
+      <section class="sm-resumo" aria-label="Dados da simulação">
+        <div class="sm-resumo-tipo"><img [src]="tipoRes().image" alt="" /><div><span>Tipo de imóvel</span><b>{{ tipoRes().label }}</b></div></div>
+        <dl class="sm-itens">
+          @for (it of itensRes(); track it[0]) { <div><dt>{{ it[0] }}</dt><dd>{{ it[1] }}</dd></div> }
+        </dl>
+      </section>
+
+      <lib-list [striped]="false" [hoverable]="true" aria-label="Condições dos bancos parceiros">
+        <lib-list-header>
+          <lib-list-header-item>Parceiro</lib-list-header-item>
+          <lib-list-header-item>Valor financiado</lib-list-header-item>
+          <lib-list-header-item>Taxa de juros</lib-list-header-item>
+          <lib-list-header-item>CET</lib-list-header-item>
+          <lib-list-header-item align="center">Parcelas</lib-list-header-item>
+          <lib-list-header-item>1ª parcela</lib-list-header-item>
+          <lib-list-header-item>Última parcela</lib-list-header-item>
+        </lib-list-header>
+        <lib-list-body>
+          @for (l of linhas(); track l.parceiro) {
+            <lib-list-body-row tabindex="0">
+              <lib-list-body-cell><span class="sm-parc"><jv-parceiro [nome]="l.parceiro" [tamanho]="32"></jv-parceiro>{{ l.parceiro }}</span></lib-list-body-cell>
+              <lib-list-body-cell>R$ {{ brl(l.financiado) }}</lib-list-body-cell>
+              <lib-list-body-cell>{{ pct(l.taxa) }}</lib-list-body-cell>
+              <lib-list-body-cell>{{ pct(l.cet) }}</lib-list-body-cell>
+              <lib-list-body-cell align="center">{{ l.parcelas }}</lib-list-body-cell>
+              <lib-list-body-cell>R$ {{ brl(l.primeira) }}</lib-list-body-cell>
+              <lib-list-body-cell>R$ {{ brl(l.ultima) }}</lib-list-body-cell>
+            </lib-list-body-row>
+          }
+        </lib-list-body>
+      </lib-list>
+
+      <footer class="sm-rodape">
+        <lib-button intent="neutral" variant="ghost" icon="ArrowLeft" label="Voltar" (clicked)="ajustar()"></lib-button>
+        <span class="sm-rodape-dir">
+          <lib-button intent="branding" variant="bare" [showIcon]="false" label="Ajustar simulação" (clicked)="ajustar()"></lib-button>
+          <lib-button intent="branding" variant="filled" [showIcon]="false" label="Gerar proposta" (clicked)="nav.emit('nova')"></lib-button>
+        </span>
+      </footer>
+    </div>
+  } @else if (s().produto) {
+    <div class="sm-grid">
+      <div class="sm-col">
+        <div class="sm-form">
+          <div class="sm-q"><p>Vamos começar a simulação</p><h2>Informe os dados do cliente e imóvel</h2></div>
+
+          <div class="sm-campo">
+            <span class="sm-label">Perfil do cliente</span>
+            <div class="sm-escolha" role="radiogroup" aria-label="Perfil do cliente">
+              @for (o of [{ value: 'pf', label: 'Pessoa Física', icon: 'User' }, { value: 'pj', label: 'Pessoa Jurídica', icon: 'City' }]; track o.value) {
+                <lib-button [intent]="f().perfil === o.value ? 'branding' : 'neutral'" variant="ghost" [selected]="f().perfil === o.value" [icon]="o.icon" [label]="o.label" (clicked)="set('perfil', o.value)"></lib-button>
+              }
+            </div>
+          </div>
+
+          <div class="sm-campo">
+            <span class="sm-label">Qual o tipo de imóvel?</span>
+            <div class="sm-tipos" role="radiogroup" aria-label="Qual o tipo de imóvel?">
+              @for (t of C().tipos; track t.value) {
+                <button type="button" class="sm-tipo" role="radio" [attr.aria-checked]="f().tipo === t.value" [class.is-on]="f().tipo === t.value" (click)="set('tipo', t.value)">
+                  <img [src]="t.image" alt="" />
+                  <b>{{ t.label }}</b>
+                  @if (f().tipo === t.value) { <lib-icon class="sm-tipo-ok" icon="CheckCircle" [size]="20" color="inherit"></lib-icon> }
+                </button>
+              }
+            </div>
+          </div>
+
+          <div class="sm-campos">
+            @if (!pj()) {
+              <lib-input-text label="Nascimento" variant="outlined" placeholder="dd/mm/aaaa" mask="00/00/0000" [dropSpecialCharacters]="false" [ngModel]="f().nascimento" (ngModelChange)="set('nascimento', $event)"></lib-input-text>
+            }
+            <lib-input-text label="Valor do imóvel" variant="outlined" type="currency" prefix="R$" placeholder="0,00" [ngModel]="f().valor" (ngModelChange)="set('valor', $event)"></lib-input-text>
+            <lib-input-text label="Valor de entrada" variant="outlined" type="currency" prefix="R$" placeholder="0,00" [error]="erroEntrada()" [helperText]="erroEntrada() ? 'A entrada precisa ser menor que o valor do imóvel.' : ''" [ngModel]="f().entrada" (ngModelChange)="set('entrada', $event)"></lib-input-text>
+            <lib-input-text label="Prazo de pagamento" variant="outlined" placeholder="0" suffix="Meses" mask="000" [ngModel]="f().prazo" (ngModelChange)="set('prazo', $event)"></lib-input-text>
+          </div>
+
+          <div class="sm-campo">
+            <span class="sm-label">Incluir custos de cartório?</span>
+            <div class="sm-escolha" role="radiogroup" aria-label="Incluir custos de cartório?">
+              <lib-button [intent]="f().cartorio === 'sim' ? 'branding' : 'neutral'" variant="ghost" [selected]="f().cartorio === 'sim'" icon="Check" label="Sim" (clicked)="set('cartorio', 'sim')"></lib-button>
+              <lib-button [intent]="f().cartorio === 'nao' ? 'branding' : 'neutral'" variant="ghost" [selected]="f().cartorio === 'nao'" icon="X" label="Não" (clicked)="set('cartorio', 'nao')"></lib-button>
+            </div>
+          </div>
+          @if (!pj()) {
+            <div class="sm-campo">
+              <span class="sm-label">Usar FGTS?</span>
+              <div class="sm-escolha" role="radiogroup" aria-label="Usar FGTS?">
+                <lib-button [intent]="f().fgts === 'sim' ? 'branding' : 'neutral'" variant="ghost" [selected]="f().fgts === 'sim'" icon="Check" label="Sim" (clicked)="set('fgts', 'sim')"></lib-button>
+                <lib-button [intent]="f().fgts === 'nao' ? 'branding' : 'neutral'" variant="ghost" [selected]="f().fgts === 'nao'" icon="X" label="Não" (clicked)="set('fgts', 'nao')"></lib-button>
+              </div>
+            </div>
+          }
+        </div>
+
+        <footer class="sm-rodape">
+          <lib-button intent="neutral" variant="ghost" icon="ArrowLeft" label="Voltar" (clicked)="voltarInicio()"></lib-button>
+          <lib-button intent="branding" variant="filled" [showIcon]="false" label="Simular" [disabled]="!completo()" (clicked)="simular()"></lib-button>
+        </footer>
+      </div>
+
+      <aside class="sm-painel" [attr.aria-label]="C().comoFunciona.title">
+        <h2>{{ C().comoFunciona.title }}</h2>
+        <p>{{ C().comoFunciona.text }}</p>
+        <ol class="sm-passos">
+          @for (st of C().comoFunciona.steps; track st.title) {
+            <li><lib-avatar size="large" [iconType]="ic(st.icon)"></lib-avatar><div><b>{{ st.title }}</b><span>{{ st.text }}</span></div></li>
+          }
+        </ol>
+      </aside>
+    </div>
+  } @else {
+    <div class="sm-inicio">
+      <section class="sm-bloco">
+        <div class="sm-cab"><h2>Nova simulação</h2><p>Escolha o produto que deseja simular</p></div>
+        <div class="sm-produtos">
+          @for (pr of C().produtos; track pr.value) {
+            <button type="button" class="sm-produto" (click)="escolherProduto(pr)">
+              <lib-avatar size="large" [iconType]="ic(pr.icon)"></lib-avatar>
+              <span class="sm-produto-txt"><b>{{ pr.label }}</b><span>{{ pr.text }}</span></span>
+              <lib-icon icon="CaretRight" [size]="20" color="inherit"></lib-icon>
+            </button>
+          }
+        </div>
+      </section>
+
+      <section class="sm-bloco sm-recentes">
+        <div class="sm-cab"><h2>Suas simulações recentes</h2><p>Continue a partir de uma simulação realizada anteriormente.</p></div>
+        <lib-list [striped]="false" [hoverable]="true" aria-label="Suas simulações recentes">
+          <lib-list-header>
+            <lib-list-header-item>Origem</lib-list-header-item>
+            <lib-list-header-item>Cliente</lib-list-header-item>
+            <lib-list-header-item>Produto</lib-list-header-item>
+            <lib-list-header-item>Valor solicitado</lib-list-header-item>
+            <lib-list-header-item>Simulado em</lib-list-header-item>
+            <lib-list-header-item align="right">Ações</lib-list-header-item>
+          </lib-list-header>
+          <lib-list-body>
+            @for (r of C().recentes; track r.id) {
+              <lib-list-body-row tabindex="0">
+                <lib-list-body-cell>{{ r.origem }}</lib-list-body-cell>
+                <lib-list-body-cell>@if (r.cliente) { {{ r.cliente }} } @else { <span class="sm-ni">Não informado</span> }</lib-list-body-cell>
+                <lib-list-body-cell>{{ r.produto }}</lib-list-body-cell>
+                <lib-list-body-cell>R$ {{ brl(r.valor) }}</lib-list-body-cell>
+                <lib-list-body-cell>{{ r.data }}</lib-list-body-cell>
+                <lib-list-body-cell align="right"><lib-button intent="neutral" variant="ghost" [showIcon]="false" label="Gerar proposta" (clicked)="nav.emit('nova')"></lib-button></lib-list-body-cell>
+              </lib-list-body-row>
+            }
+          </lib-list-body>
+        </lib-list>
+      </section>
+    </div>
+  }
+</jv-shell>

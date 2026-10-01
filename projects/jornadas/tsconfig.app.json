@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/jornadas",
+    "types": [],
+    "baseUrl": "../../",
+    "paths": {
+      "terra-ds": ["projects/terra-ds/src/public-api.ts"],
+      "terra-ds/*": ["projects/terra-ds/src/*"]
+    }
+  },
+  "files": ["src/main.ts", "src/main-embed.ts"],
+  "include": ["src/**/*.d.ts"]
+}

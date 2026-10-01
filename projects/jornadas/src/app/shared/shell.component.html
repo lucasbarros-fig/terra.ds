@@ -1,0 +1,114 @@
+<div class="sh">
+  <lib-sidebar class="sh-side" [class.sh-side--marca]="home()" [items]="itens" [activeId]="ativo()" groupLabel="" (itemSelect)="selecionar($event)"></lib-sidebar>
+
+  <div class="sh-main">
+    @if (home()) {
+      <header class="sh-home">
+        <div class="sh-home-txt">
+          <p class="sh-home-titulo">{{ title() }}</p>
+          @if (subtitulo()) { <p class="sh-home-sub">{{ subtitulo() }}</p> }
+        </div>
+        <div class="sh-home-dir">
+          <lib-button class="sh-home-destaque" intent="neutral" variant="ghost" icon="CalendarDots" label="Treinamentos" (clicked)="acao(acoes()[0])"></lib-button>
+          @for (a of acoes().slice(1, 3); track a.id) {
+            <span class="sh-home-acao">
+              <lib-icon-button class="sh-home-ib" type="neutral" variant="ghost" [icon]="a.icon" [ariaLabel]="a.label" (clicked)="acao(a)"></lib-icon-button>
+              @if (a.badge) { <span class="sh-home-badge" aria-hidden="true"></span> }
+            </span>
+          }
+          <div class="sh-home-perfil">
+            <div><b>{{ topo.account.name }}</b><span>{{ topo.account.role }}</span></div>
+            <span class="sh-home-avatar" aria-hidden="true">{{ iniciais(topo.account.name + ' R') }}</span>
+          </div>
+          <lib-icon-button class="sh-home-ib" type="neutral" variant="ghost" icon="Gear" ariaLabel="Configurações" (clicked)="acao(acoes()[3])"></lib-icon-button>
+        </div>
+      </header>
+    } @else {
+    <lib-top
+      class="sh-top"
+      [title]="title()"
+      [breadcrumbs]="breadcrumbs()"
+      [userName]="topo.account.name"
+      [userRole]="topo.account.role"
+      [actions]="acoes()"
+      (actionClick)="acao($event)"
+    ></lib-top>
+    }
+
+    <div class="sh-content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+
+  @if (painel()) {
+    <div class="sh-backdrop" (click)="painel.set(null)" aria-hidden="true"></div>
+
+    @switch (painel()) {
+      @case ('notificacoes') {
+        <section class="sh-panel sh-notif" role="dialog" aria-label="Suas notificações">
+          <p class="sh-panel-title">Suas notificações</p>
+          <lib-tabs
+            [tabs]="[{ label: 'Todas', icon: 'Bell' }, { label: naoLidas() ? 'Não lidas (' + naoLidas() + ')' : 'Não lidas', icon: 'Envelope' }]"
+            [selected]="abaNotif()"
+            (selectedChange)="abaNotif.set($event)"
+          ></lib-tabs>
+          <div class="sh-notif-list">
+            @if (tudoCerto() || !notifs().length) {
+              <div class="sh-ok" role="status">
+                <lib-icon icon="CheckCircle" [size]="24" color="inherit"></lib-icon>
+                <b>Tudo certo por aqui, sem novidades.</b>
+              </div>
+            } @else {
+              @for (n of notifs(); track n.id) {
+                <button type="button" class="sh-notif-item" [class.is-lida]="lidas()[n.id]" (click)="abrirNotificacao(n)">
+                  <span class="sh-dot" [class.is-on]="!lidas()[n.id]" aria-hidden="true"></span>
+                  <span class="sh-notif-body">
+                    <span class="sh-notif-text">{{ n.texto }}</span>
+                    <span class="sh-notif-date">
+                      {{ n.data }}
+                      @if (lidas()[n.id]) {
+                        · <lib-icon icon="Checks" [size]="12" color="inherit"></lib-icon> Lida
+                      }
+                    </span>
+                  </span>
+                </button>
+              }
+            }
+          </div>
+          <div class="sh-notif-foot">
+            <lib-button intent="neutral" variant="ghost" icon="Tray" label="Marcar todas como lidas" [disabled]="!naoLidas()" (clicked)="marcarTodas()"></lib-button>
+          </div>
+        </section>
+      }
+      @case ('configuracoes') {
+        <section class="sh-panel sh-menu" role="menu" aria-label="Configurações">
+          @for (g of gruposConfig(); track g[0]) {
+            <lib-dropdown-group-header [label]="g[0]"></lib-dropdown-group-header>
+            @for (it of g[1]; track it.value) {
+              <lib-dropdown-item
+                [label]="it.emBreve ? it.label + ' (em breve)' : it.label"
+                [icon]="ic(it.icon)"
+                [disabled]="!!it.disabled"
+                (itemSelect)="config(it)"
+              ></lib-dropdown-item>
+            }
+          }
+          <p class="sh-versao">by <b>The House®</b><br>{{ topo.versao }}</p>
+        </section>
+      }
+      @case ('loja') {
+        <section class="sh-panel sh-menu sh-menu--loja" role="menu" aria-label="Minha loja">
+          @for (it of topo.loja; track it.value) {
+            <lib-dropdown-item [label]="it.label" [icon]="ic(it.icon)" (itemSelect)="loja(it.value)"></lib-dropdown-item>
+          }
+        </section>
+      }
+    }
+  }
+
+  <div class="sh-toasts" aria-live="polite">
+    @for (a of avisos.lista(); track a.id) {
+      <lib-toast [state]="a.state" [label]="a.label" (closed)="avisos.fechar(a.id)"></lib-toast>
+    }
+  </div>
+</div>

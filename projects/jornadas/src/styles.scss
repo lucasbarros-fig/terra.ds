@@ -1,0 +1,18 @@
+/* Jornadas Terra: tokens e fontes do Terra DS (The House). */
+@use "../../../node_modules/terra-ds-tokens/dist/solaris/styles/theHouse/global";
+@import "../../../node_modules/terra-ds-tokens/dist/solaris/fonts/icons/style.css";
+
+:root { --font-family-primary: "DM Sans", sans-serif; }
+@import "./themes.css";
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--color-theme-base);
+  color: var(--color-text-essential-body);
+  font-family: var(--font-family-primary);
+  -webkit-font-smoothing: antialiased;
+}
+*, *::before, *::after { box-sizing: border-box; }
+button { font-family: inherit; }
+@media (prefers-reduced-motion: reduce) { * { animation-duration: 0s !important; transition-duration: 0s !important; } }
