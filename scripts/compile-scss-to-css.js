@@ -1,6 +1,6 @@
 /**
  * Compila os estilos do Storybook do Terra DS (The House).
- * Tokens: `@teddy-conkey/conkey-ds-tokens/dist/solaris/styles/theHouse` (marca `solaris-theHouse`).
+ * Tokens: `terra-ds-tokens/dist/solaris/styles/theHouse` (marca `solaris-theHouse`).
  * Saída: `projects/terra-ds/.storybook/styles.css` + `storybook-brands.generated.ts`.
  *
  * Base de deploy (GitHub Pages em subpasta): `STORYBOOK_BASE_TERRA` ou `STORYBOOK_BASE`.
@@ -15,7 +15,7 @@ const BRAND_TITLE = 'The House';
 
 const solarisTokensDist = path.join(
   __dirname,
-  '../node_modules/@teddy-conkey/conkey-ds-tokens/dist/solaris'
+  '../node_modules/terra-ds-tokens/dist/solaris'
 );
 const solarisStylesDir = path.join(solarisTokensDist, 'styles');
 const solarisFontsDir = path.join(solarisTokensDist, 'fonts');
@@ -83,7 +83,7 @@ function applyBaseToAbsoluteFontUrls(css) {
 
 function writeBrandsFile() {
   const file = `// Gerado por scripts/compile-scss-to-css.js — Terra DS (marca única ${BRAND}).
-// Rode \`npm run compile:styles\` após atualizar @teddy-conkey/conkey-ds-tokens.
+// Rode \`npm run compile:styles\` após atualizar terra-ds-tokens.
 
 export const TEDDY_STORYBOOK_DEFAULT_BRAND = '${BRAND}' as const;
 
@@ -108,7 +108,7 @@ try {
     const f = path.join(solarisStylesDir, BRAND_FOLDER, `${mode}.scss`);
     if (!fs.existsSync(f)) {
       throw new Error(
-        `Tokens The House não encontrados (${f}). Atualize @teddy-conkey/conkey-ds-tokens (precisa de solaris-theHouse).`
+        `Tokens The House não encontrados (${f}). Atualize terra-ds-tokens (precisa de solaris-theHouse).`
       );
     }
   }

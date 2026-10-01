@@ -48,26 +48,26 @@ export const INTRODUCTION_HTML = `<main class="pds-intro" role="main" aria-label
     <h2 id="pds-heading-pacotes">Pacotes</h2>
     <ul class="pds-packages" role="list">
       <li class="pds-pkg-item">
-        <span class="pds-pkg-name">@teddy-conkey/terra-ds</span>
-        <span class="pds-badge">v0.26.4</span>
+        <span class="pds-pkg-name">terra-ds</span>
+        <span class="pds-badge">v0.1.0</span>
         <a
           class="pds-pkg-link"
-          href="https://www.npmjs.com/package/@teddy-conkey/terra-ds"
+          href="https://github.com/lucasbarros-fig/terra.ds"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Abrir pacote terra-ds no npm (nova aba)"
-        >npm ↗</a>
+          aria-label="Abrir repositório terra.ds no GitHub (nova aba)"
+        >GitHub ↗</a>
       </li>
       <li class="pds-pkg-item">
-        <span class="pds-pkg-name">@teddy-conkey/conkey-ds-tokens</span>
-        <span class="pds-badge">^2.0.8</span>
+        <span class="pds-pkg-name">terra-ds-tokens</span>
+        <span class="pds-badge">local</span>
         <a
           class="pds-pkg-link"
-          href="https://www.npmjs.com/package/@teddy-conkey/conkey-ds-tokens"
+          href="https://github.com/lucasbarros-fig/terra.ds/tree/main/packages/terra-ds-tokens"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Abrir pacote conkey-ds-tokens no npm (nova aba)"
-        >npm ↗</a>
+          aria-label="Abrir pacote terra-ds-tokens no GitHub (nova aba)"
+        >GitHub ↗</a>
       </li>
     </ul>
   </section>
@@ -80,7 +80,7 @@ export const INTRODUCTION_HTML = `<main class="pds-intro" role="main" aria-label
       role="region"
       aria-label="Bloco de código — instalação via npm"
     >
-      <pre><code>npm install @teddy-conkey/terra-ds</code></pre>
+      <pre><code>npm install terra-ds</code></pre>
       <button type="button" class="pds-copy-btn" aria-label="Copiar comando de instalação npm">Copiar</button>
     </div>
 
@@ -90,7 +90,7 @@ export const INTRODUCTION_HTML = `<main class="pds-intro" role="main" aria-label
       role="region"
       aria-label="Bloco de código — importação do CSS global"
     >
-      <pre><code>@import '@teddy-conkey/terra-ds/styles/style.css';</code></pre>
+      <pre><code>@import 'terra-ds/styles/style.css';</code></pre>
       <button type="button" class="pds-copy-btn" aria-label="Copiar importação CSS">Copiar</button>
     </div>
   </section>
@@ -106,7 +106,7 @@ export const INTRODUCTION_HTML = `<main class="pds-intro" role="main" aria-label
       aria-label="Bloco de código — importação de componente Angular"
     >
       <pre><code>// Importação em standalone component (Angular 15+)
-import { ButtonComponent } from '@teddy-conkey/terra-ds';
+import { ButtonComponent } from 'terra-ds';
 
 // adicione ao array imports: [] do seu componente:</code></pre>
       <button type="button" class="pds-copy-btn" aria-label="Copiar exemplo de importação Angular">Copiar</button>
@@ -174,8 +174,8 @@ document.documentElement.setAttribute('data-brand', 'solaris-theHouse');</code><
             <td>&gt;= 9</td>
           </tr>
           <tr>
-            <th scope="row">@teddy-conkey/conkey-ds-tokens</th>
-            <td>&gt;= 2.0.8</td>
+            <th scope="row">terra-ds-tokens</th>
+            <td>incluído no repositório</td>
           </tr>
         </tbody>
       </table>
@@ -185,14 +185,14 @@ document.documentElement.setAttribute('data-brand', 'solaris-theHouse');</code><
   <section aria-labelledby="pds-heading-licenca">
     <h2 id="pds-heading-licenca">Licença</h2>
     <p>
-      Terra DS é distribuído sob a licença MIT. Consulte o arquivo
+      Terra DS é de uso interno do The House. Consulte o
       <a
         class="pds-license-link"
-        href="https://github.com/Teddy-Conkey/conkey-ds/blob/main/LICENSE"
+        href="https://github.com/lucasbarros-fig/terra.ds"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Abrir arquivo LICENSE no GitHub (nova aba)"
-      >LICENSE</a>
+        aria-label="Abrir repositório terra.ds no GitHub (nova aba)"
+      >repositório</a>
       para mais informações.
     </p>
   </section>

@@ -1,6 +1,6 @@
 /**
  * Gera `solaris-types.generated.json` (catálogo de ícones Solaris + mapa slug)
- * a partir de `@teddy-conkey/conkey-ds-tokens/dist/solaris/types/icon.ts`.
+ * a partir de `terra-ds-tokens/dist/solaris/types/icon.ts`.
  * Importado em `icon/utils/theme.ts` com `resolveJsonModule`.
  */
 const fs = require('fs');
@@ -9,7 +9,7 @@ const { buildLinearSlugBySolarisIconType } = require('./build-solaris-icon-type-
 
 const SRC = path.join(
   __dirname,
-  '../node_modules/@teddy-conkey/conkey-ds-tokens/dist/solaris/types/icon.ts',
+  '../node_modules/terra-ds-tokens/dist/solaris/types/icon.ts',
 );
 const OUT = path.join(
   __dirname,

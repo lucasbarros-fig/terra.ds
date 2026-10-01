@@ -1,5 +1,5 @@
 // Gerado por scripts/compile-scss-to-css.js — Terra DS (marca única solaris-theHouse).
-// Rode `npm run compile:styles` após atualizar @teddy-conkey/conkey-ds-tokens.
+// Rode `npm run compile:styles` após atualizar terra-ds-tokens.
 
 export const TEDDY_STORYBOOK_DEFAULT_BRAND = 'solaris-theHouse' as const;
 

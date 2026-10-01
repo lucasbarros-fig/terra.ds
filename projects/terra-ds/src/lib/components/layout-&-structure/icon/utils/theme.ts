@@ -1,4 +1,4 @@
-import type { SolarisIconType } from '@teddy-conkey/conkey-ds-tokens/dist/solaris/types/icon';
+import type { SolarisIconType } from 'terra-ds-tokens/dist/solaris/types/icon';
 import solarisTypesCatalog from '../data/solaris-types.generated.json';
 
 export const solarisIconTypes =

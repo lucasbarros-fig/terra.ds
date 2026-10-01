@@ -7,7 +7,7 @@ const path = require('path');
 
 const TOKENS = path.join(
   __dirname,
-  '../node_modules/@teddy-conkey/conkey-ds-tokens/dist/solaris',
+  '../node_modules/terra-ds-tokens/dist/solaris',
 );
 const SVG = path.join(TOKENS, 'fonts/icons/solaris-icons.svg');
 const SELECTION = path.join(TOKENS, 'fonts/icons/selection.json');

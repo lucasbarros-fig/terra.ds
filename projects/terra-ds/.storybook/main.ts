@@ -26,7 +26,7 @@ const config: StorybookConfig & { base: string } = {
   },
   staticDirs: [
     { from: '../.storybook', to: '/.storybook' },
-    { from: '../../../node_modules/@teddy-conkey/conkey-ds-tokens/dist/solaris/fonts/icons', to: '/fonts' },
+    { from: '../../../node_modules/terra-ds-tokens/dist/solaris/fonts/icons', to: '/fonts' },
     { from: '../src/assets', to: '/assets' },
     { from: '../../../node_modules/@angular/cdk', to: '/cdk' },
   ],

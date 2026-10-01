@@ -1,7 +1,0 @@
-{
-  "name": "@teddy-conkey/conkey-ds-tokens",
-  "version": "2.0.10-thehouse.1",
-  "description": "Tokens Solaris da marca The House (solaris-theHouse), vendorizados para o Terra DS. Gerados a partir de conkey-ds-tokens (tokens/solaris-theHouse/tokens.json).",
-  "private": true,
-  "license": "ISC"
-}

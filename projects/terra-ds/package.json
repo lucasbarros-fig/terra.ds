@@ -1,5 +1,5 @@
 {
-  "name": "@teddy-conkey/terra-ds",
+  "name": "terra-ds",
   "version": "0.1.0",
   "peerDependencies": {
     "@angular/cdk": "~21.2.14",

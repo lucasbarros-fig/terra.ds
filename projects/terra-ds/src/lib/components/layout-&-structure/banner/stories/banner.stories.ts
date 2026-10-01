@@ -2,12 +2,12 @@ import type { Meta, StoryObj } from "@storybook/angular";
 
 import { BannerComponent, type BannerSlide } from "../banner.component";
 
-const IMG = "/assets/banners/conkey-escola-consorcio.jpg";
+const IMG = "/assets/banners/banner-exemplo.jpg";
 
 const SLIDES: BannerSlide[] = [
-	{ src: IMG, alt: "Conkey — Primeira escola de consórcio do Brasil" },
-	{ src: IMG, alt: "Campanha 2: trilhas de formação em consórcio" },
-	{ src: IMG, alt: "Campanha 3: certificação para parceiros" },
+	{ src: IMG, alt: "The House — banner de exemplo" },
+	{ src: IMG, alt: "Campanha 2: banner de exemplo" },
+	{ src: IMG, alt: "Campanha 3: banner de exemplo" },
 	{ src: IMG, alt: "Campanha 4: novidades da plataforma" },
 ];
 

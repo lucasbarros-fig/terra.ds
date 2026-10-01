@@ -1,8 +1,7 @@
 # Terra Design System
 
-Biblioteca de componentes Angular do **The House** (`@teddy-conkey/terra-ds`), com Storybook.
-Mesma base de componentes do Plutão DS, com os tokens da marca `solaris-theHouse`
-(`@teddy-conkey/conkey-ds-tokens`). Figma: Terra.ds | Components.
+Biblioteca de componentes Angular do **The House** (`terra-ds`), com Storybook.
+Tokens da marca The House (`solaris-theHouse`) no pacote local `terra-ds-tokens`. Figma: Terra.ds | Components.
 
 ## Comandos
 
@@ -16,9 +15,8 @@ Mesma base de componentes do Plutão DS, com os tokens da marca `solaris-theHous
 
 ## Tokens
 
-Os tokens da marca The House ficam dentro deste repo, em `packages/conkey-ds-tokens`
-(instalados como `@teddy-conkey/conkey-ds-tokens` via `file:`), então não é preciso acesso
-ao registry da Teddy-Conkey. Veja `packages/conkey-ds-tokens/README.md` para atualizar.
+Os tokens da marca The House ficam dentro deste repo, em `packages/terra-ds-tokens`
+(instalados como `terra-ds-tokens` via `file:`). Veja `packages/terra-ds-tokens/README.md` para atualizar.
 
 ## Deploy
 
