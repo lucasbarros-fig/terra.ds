@@ -1,0 +1,81 @@
+:host {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-16);
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: var(--size-spacing-12) var(--size-spacing-16);
+  border-radius: var(--size-radius-8);
+  background-color: var(--color-support-colors-neutral);
+  color: var(--color-text-static-white);
+  font-family: var(--font-family-primary, 'DM Sans', sans-serif);
+}
+
+:host(.lib-alert--negative) {
+  background-color: var(--color-state-feedback-negative-surface-base);
+}
+
+:host(.lib-alert--informative) {
+  background-color: var(--color-state-feedback-informative-surface-base);
+}
+
+.alert-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  line-height: 0;
+  color: var(--color-icons-static-white);
+}
+
+.alert-text {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: var(--size-spacing-4);
+  min-width: 0;
+}
+
+.alert-title,
+.alert-description {
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+.alert-title {
+  font-size: var(--size-font-body-16, 16px);
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.alert-description {
+  font-size: var(--size-font-body-14, 14px);
+  font-weight: 400;
+  line-height: 21px;
+}
+
+.alert-action {
+  flex-shrink: 0;
+}
+
+// Negative / Informative: no Figma é o Button Neutral com override branco.
+// O override é local ao Alert (não altera o `lib-button` global).
+:host(.lib-alert--on-color) lib-button.alert-action.intent-neutral.variant-filled ::ng-deep .lib-button {
+  border-color: var(--color-icons-static-white);
+  color: var(--color-text-static-white);
+}
+
+:host(.lib-alert--on-color) lib-button.alert-action.intent-neutral.variant-filled ::ng-deep .lib-button:hover:not(:disabled) {
+  border-color: var(--color-icons-static-white);
+  background-color: color-mix(in srgb, var(--color-text-static-white) 12%, transparent);
+}
+
+:host(.lib-alert--on-color) lib-button.alert-action.intent-neutral.variant-filled ::ng-deep .lib-button:active:not(:disabled) {
+  border-color: var(--color-icons-static-white);
+  background-color: color-mix(in srgb, var(--color-text-static-white) 20%, transparent);
+}
+
+// O anel de foco padrão (focus) pode sumir sobre fundos coloridos: usa branco.
+:host(.lib-alert--on-color) lib-button.alert-action ::ng-deep .lib-button:focus-visible {
+  outline-color: var(--color-icons-static-white);
+  outline-offset: 4px;
+}

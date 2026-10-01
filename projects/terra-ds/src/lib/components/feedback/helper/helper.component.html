@@ -1,0 +1,16 @@
+@if (type() === 'inline_message') {
+  <div class="helper-title">
+    <div class="helper-icon">
+      <lib-icon [icon]="icon" [size]="20" [color]="color() !== 'warning' ? 'var(--color-icons-static-white)' : 'inherit'"></lib-icon>
+    </div>
+    <p class="helper-label">{{ text() }}</p>
+  </div>
+  <div class="helper-body">
+    <p class="helper-description">{{ description() }}</p>
+  </div>
+} @else if (type() === 'helper') {
+  <div class="helper-icon">
+    <lib-icon [icon]="icon" [size]="16" color="inherit"></lib-icon>
+  </div>
+  <p class="helper-description">{{ description() }}</p>
+}

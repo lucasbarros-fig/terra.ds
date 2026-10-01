@@ -1,0 +1,49 @@
+.lib-list-root thead th {
+  padding: var(--size-spacing-12) var(--size-spacing-16);
+  font-size: var(--size-font-body-14);
+  font-weight: 500;
+  line-height: 21px;
+  color: var(--color-text-essential-heading);
+  text-align: left;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.lib-list-root thead th.list-th-sortable {
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.lib-list-root thead th .list-sort-icon {
+  margin-left: var(--size-spacing-8);
+  font-size: 11px;
+  color: var(--color-icons-essential-low);
+}
+
+.lib-list-root thead th .lib-list-header-item-content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-spacing-8);
+}
+
+.lib-list-root thead th .lib-list-header-item-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-spacing-8);
+}
+
+.lib-list-root thead th[style*="center"] .lib-list-header-item-content {
+  justify-content: center;
+}
+
+.lib-list-root thead th[style*="right"] .lib-list-header-item-content {
+  justify-content: flex-end;
+}
+
+.lib-list-root
+  thead
+  th
+  .lib-list-header-item-content.lib-list-header-item-content--space-between {
+  width: 100%;
+  justify-content: space-between;
+}

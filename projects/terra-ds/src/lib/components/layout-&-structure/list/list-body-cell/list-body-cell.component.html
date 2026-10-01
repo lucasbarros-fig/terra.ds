@@ -1,0 +1,34 @@
+<td
+	[style.text-align]="align"
+	[attr.colspan]="colspan === null ? null : colspan"
+>
+	<span class="lib-list-body-cell-content">
+		<lib-icon
+			*ngIf="icon && iconPosition === 'before'"
+			[icon]="icon"
+			[size]="iconSize"
+			[color]="iconColor"
+		></lib-icon>
+		<span
+			class="lib-list-body-cell-text"
+			#text
+			(mouseenter)="syncOverflowTitle(text)"
+		>
+			<ng-content></ng-content>
+		</span>
+		<lib-icon
+			*ngIf="icon && iconPosition === 'after'"
+			[icon]="icon"
+			[size]="iconSize"
+			[color]="iconColor"
+		></lib-icon>
+		<lib-tooltip
+			*ngIf="tooltip"
+			[text]="tooltip"
+			arrow="middle"
+			indicator="top"
+			triggerIcon="Info"
+			[triggerIconColor]="iconColor"
+		></lib-tooltip>
+	</span>
+</td>

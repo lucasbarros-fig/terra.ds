@@ -1,0 +1,95 @@
+lib-list-pagination {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.lib-list-pagination-root {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: var(--size-spacing-8) var(--size-spacing-8) var(--size-spacing-8)
+    var(--size-spacing-16);
+  font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+  font-size: var(--size-font-body-14);
+  font-weight: 400;
+  line-height: 21px;
+  border-radius: var(--size-radius-8);
+  border: 1px solid var(--color-stroke-frame);
+  background: var(--color-theme-upper);
+  color: var(--color-text-essential-heading);
+}
+
+.lib-list-pagination-root .lib-list-pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--size-spacing-8);
+  min-width: 0;
+  max-width: 100%;
+}
+
+.lib-list-pagination-root .lib-list-pagination-page-size-group,
+.lib-list-pagination-root .lib-list-pagination-nav-group {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-spacing-8);
+  min-width: 0;
+}
+
+.lib-list-pagination-root .lib-list-pagination-label {
+  white-space: nowrap;
+}
+
+.lib-list-pagination-root .lib-list-pagination-page-size {
+  display: inline-flex;
+}
+
+.lib-list-pagination-root .lib-list-pagination-page-size-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-spacing-8);
+  height: 32px;
+  padding: var(--size-spacing-4) var(--size-spacing-12);
+  background: transparent;
+  border: 1px solid var(--color-stroke-frame);
+  border-radius: var(--size-radius-8);
+  color: var(--color-text-essential-heading);
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.lib-list-pagination-root
+  .lib-list-pagination-page-size-trigger:hover:not([disabled]) {
+  background: var(--color-state-system-ghost-hovering);
+}
+
+.lib-list-pagination-root
+  .lib-list-pagination-page-size-trigger:active:not([disabled]) {
+  background: var(--color-state-system-ghost-pressing);
+}
+
+.lib-list-pagination-root .lib-list-pagination-page-size-trigger:focus-visible {
+  outline: 2px solid var(--color-state-system-focus);
+  outline-offset: 2px;
+}
+
+.lib-list-pagination-root .lib-list-pagination-page-size-trigger.is-open {
+  background: var(--color-state-system-ghost-hovering);
+}
+
+.lib-list-pagination-root .lib-list-pagination-range {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-spacing-4);
+  white-space: nowrap;
+}
+
+.lib-list-pagination-root .lib-list-pagination-range-separator {
+  color: var(--color-text-essential-caption);
+}

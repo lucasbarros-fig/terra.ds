@@ -1,0 +1,40 @@
+<div
+  class="tooltip-container"
+  [ngClass]="[indicator, arrow]"
+  [class.is-open]="hoverInside"
+  [class.has-media]="!!media"
+  (mouseenter)="onContainerEnter()"
+  (mouseleave)="onContainerLeave()"
+>
+  <span class="trigger">
+    <span class="trigger-projection" #projection>
+      <ng-content></ng-content>
+    </span>
+    <lib-icon
+      *ngIf="!hasProjectedTrigger"
+      [icon]="triggerIcon"
+      [size]="triggerSize"
+      [color]="triggerIconColor"
+    ></lib-icon>
+  </span>
+
+  <div class="dropdown" role="tooltip" [attr.aria-hidden]="!hoverInside">
+    <img
+      *ngIf="media"
+      class="dropdown-media"
+      [src]="media"
+      [attr.alt]="mediaAlt"
+    />
+    <p *ngIf="text" class="dropdown-text">{{ text }}</p>
+  </div>
+
+  <svg
+    class="caret"
+    [attr.viewBox]="caretViewBox"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path class="caret-fill" [attr.d]="caretFillPath" />
+    <path class="caret-stroke" [attr.d]="caretStrokePath" />
+  </svg>
+</div>

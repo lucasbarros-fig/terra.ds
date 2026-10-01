@@ -1,0 +1,4673 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+
+@font-face {
+  font-family: 'solaris-icons';
+  src:  url("/fonts/solaris-icons.eot");
+  src:  url("/fonts/solaris-icons.eot#iefix") format('embedded-opentype'),
+    url("/fonts/solaris-icons.ttf") format('truetype'),
+    url("/fonts/solaris-icons.woff") format('woff'),
+    url("/fonts/solaris-icons.svg#solaris-icons") format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="solaris-icon-"], [class*=" solaris-icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'solaris-icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.solaris-icon-ArrowsClockwise:before {
+  content: "\e900";
+}
+.solaris-icon-ArrowsCounterClockwise:before {
+  content: "\e901";
+}
+.solaris-icon-ArrowsDownUp:before {
+  content: "\e902";
+}
+.solaris-icon-ArrowsHorizontal:before {
+  content: "\e903";
+}
+.solaris-icon-ArrowsIn:before {
+  content: "\e904";
+}
+.solaris-icon-ArrowsInCardinal:before {
+  content: "\e905";
+}
+.solaris-icon-ArrowsInLineHorizontal:before {
+  content: "\e906";
+}
+.solaris-icon-ArrowsInLineVertical:before {
+  content: "\e907";
+}
+.solaris-icon-ArrowsInSimple:before {
+  content: "\e908";
+}
+.solaris-icon-ArrowsLeftRight:before {
+  content: "\e909";
+}
+.solaris-icon-ArrowsMerge:before {
+  content: "\e90a";
+}
+.solaris-icon-ArrowsOut:before {
+  content: "\e90b";
+}
+.solaris-icon-ArrowsOutCardinal:before {
+  content: "\e90c";
+}
+.solaris-icon-ArrowsOutLineHorizontal:before {
+  content: "\e90d";
+}
+.solaris-icon-ArrowsOutLineVertical:before {
+  content: "\e90e";
+}
+.solaris-icon-ArrowsOutSimple:before {
+  content: "\e90f";
+}
+.solaris-icon-ArrowsSplit:before {
+  content: "\e910";
+}
+.solaris-icon-ArrowsVertical:before {
+  content: "\e911";
+}
+.solaris-icon-ArrowUDownRight:before {
+  content: "\e912";
+}
+.solaris-icon-ArrowULeftDown:before {
+  content: "\e913";
+}
+.solaris-icon-ArrowULeftUp:before {
+  content: "\e914";
+}
+.solaris-icon-ArrowUp:before {
+  content: "\e915";
+}
+.solaris-icon-ArrowUpLeft:before {
+  content: "\e916";
+}
+.solaris-icon-ArrowUpRight:before {
+  content: "\e917";
+}
+.solaris-icon-ArrowURightDown:before {
+  content: "\e918";
+}
+.solaris-icon-ArrowURightUp:before {
+  content: "\e919";
+}
+.solaris-icon-ArrowUUpLeft:before {
+  content: "\e91a";
+}
+.solaris-icon-ArrowUUpRight:before {
+  content: "\e91b";
+}
+.solaris-icon-Baby:before {
+  content: "\e91c";
+}
+.solaris-icon-Binary:before {
+  content: "\e91d";
+}
+.solaris-icon-Biohazard:before {
+  content: "\e91e";
+}
+.solaris-icon-Book:before {
+  content: "\e91f";
+}
+.solaris-icon-BookBookmark:before {
+  content: "\e920";
+}
+.solaris-icon-Bookmark:before {
+  content: "\e921";
+}
+.solaris-icon-Bookmarks:before {
+  content: "\e922";
+}
+.solaris-icon-BookmarkSimple:before {
+  content: "\e923";
+}
+.solaris-icon-BookmarksSimple:before {
+  content: "\e924";
+}
+.solaris-icon-BookOpen:before {
+  content: "\e925";
+}
+.solaris-icon-BookOpenText:before {
+  content: "\e926";
+}
+.solaris-icon-BookOpenUser:before {
+  content: "\e927";
+}
+.solaris-icon-Books:before {
+  content: "\e928";
+}
+.solaris-icon-BracketsAngle:before {
+  content: "\e929";
+}
+.solaris-icon-BracketsCurly:before {
+  content: "\e92a";
+}
+.solaris-icon-BracketsRound:before {
+  content: "\e92b";
+}
+.solaris-icon-BracketsSquare:before {
+  content: "\e92c";
+}
+.solaris-icon-Bug:before {
+  content: "\e92d";
+}
+.solaris-icon-BugBeetle:before {
+  content: "\e92e";
+}
+.solaris-icon-BugDroid:before {
+  content: "\e92f";
+}
+.solaris-icon-CaretCircleDoubleDown:before {
+  content: "\e930";
+}
+.solaris-icon-CaretCircleDoubleLeft:before {
+  content: "\e931";
+}
+.solaris-icon-CaretCircleDoubleRight:before {
+  content: "\e932";
+}
+.solaris-icon-CaretCircleDoubleUp:before {
+  content: "\e933";
+}
+.solaris-icon-CaretCircleDown:before {
+  content: "\e934";
+}
+.solaris-icon-CaretCircleLeft:before {
+  content: "\e935";
+}
+.solaris-icon-CaretCircleRight:before {
+  content: "\e936";
+}
+.solaris-icon-CaretCircleUp:before {
+  content: "\e937";
+}
+.solaris-icon-CaretCircleUpDown:before {
+  content: "\e938";
+}
+.solaris-icon-CaretDoubleDown:before {
+  content: "\e939";
+}
+.solaris-icon-CaretDoubleLeft:before {
+  content: "\e93a";
+}
+.solaris-icon-CaretDoubleRight:before {
+  content: "\e93b";
+}
+.solaris-icon-CaretDoubleUp:before {
+  content: "\e93c";
+}
+.solaris-icon-CaretDown:before {
+  content: "\e93d";
+}
+.solaris-icon-CaretLeft:before {
+  content: "\e93e";
+}
+.solaris-icon-CaretLineDown:before {
+  content: "\e93f";
+}
+.solaris-icon-CaretLineLeft:before {
+  content: "\e940";
+}
+.solaris-icon-CaretLineRight:before {
+  content: "\e941";
+}
+.solaris-icon-CaretLineUp:before {
+  content: "\e942";
+}
+.solaris-icon-CaretRight:before {
+  content: "\e943";
+}
+.solaris-icon-CaretUp:before {
+  content: "\e944";
+}
+.solaris-icon-CaretUpDown:before {
+  content: "\e945";
+}
+.solaris-icon-Certificate:before {
+  content: "\e946";
+}
+.solaris-icon-Chalkboard:before {
+  content: "\e947";
+}
+.solaris-icon-ChalkboardSimple:before {
+  content: "\e948";
+}
+.solaris-icon-ChalkboardTeacher:before {
+  content: "\e949";
+}
+.solaris-icon-Code:before {
+  content: "\e94a";
+}
+.solaris-icon-CodeBlock:before {
+  content: "\e94b";
+}
+.solaris-icon-CodeSimple:before {
+  content: "\e94c";
+}
+.solaris-icon-Cpu:before {
+  content: "\e94d";
+}
+.solaris-icon-Database:before {
+  content: "\e94e";
+}
+.solaris-icon-Detective:before {
+  content: "\e94f";
+}
+.solaris-icon-Exam:before {
+  content: "\e950";
+}
+.solaris-icon-ExclamationMark:before {
+  content: "\e951";
+}
+.solaris-icon-Eyes:before {
+  content: "\e952";
+}
+.solaris-icon-FalloutShelter:before {
+  content: "\e953";
+}
+.solaris-icon-Fingerprint:before {
+  content: "\e954";
+}
+.solaris-icon-FingerprintSimple:before {
+  content: "\e955";
+}
+.solaris-icon-FireExtinguisher:before {
+  content: "\e956";
+}
+.solaris-icon-Footprints:before {
+  content: "\e957";
+}
+.solaris-icon-GenderFemale:before {
+  content: "\e958";
+}
+.solaris-icon-GenderIntersex:before {
+  content: "\e959";
+}
+.solaris-icon-GenderMale:before {
+  content: "\e95a";
+}
+.solaris-icon-GenderNeuter:before {
+  content: "\e95b";
+}
+.solaris-icon-GenderNonbinary:before {
+  content: "\e95c";
+}
+.solaris-icon-GenderTransgender:before {
+  content: "\e95d";
+}
+.solaris-icon-GitBranch:before {
+  content: "\e95e";
+}
+.solaris-icon-GitCommit:before {
+  content: "\e95f";
+}
+.solaris-icon-GitDiff:before {
+  content: "\e960";
+}
+.solaris-icon-GitFork:before {
+  content: "\e961";
+}
+.solaris-icon-GitMerge:before {
+  content: "\e962";
+}
+.solaris-icon-GitPullRequest:before {
+  content: "\e963";
+}
+.solaris-icon-GraduationCap:before {
+  content: "\e964";
+}
+.solaris-icon-GraphicsCard:before {
+  content: "\e965";
+}
+.solaris-icon-Hand:before {
+  content: "\e966";
+}
+.solaris-icon-HandArrowDown:before {
+  content: "\e967";
+}
+.solaris-icon-HandArrowUp:before {
+  content: "\e968";
+}
+.solaris-icon-HandDeposit:before {
+  content: "\e969";
+}
+.solaris-icon-HandEye:before {
+  content: "\e96a";
+}
+.solaris-icon-HandFist:before {
+  content: "\e96b";
+}
+.solaris-icon-HandGrabbing:before {
+  content: "\e96c";
+}
+.solaris-icon-HandPalm:before {
+  content: "\e96d";
+}
+.solaris-icon-HandPeace:before {
+  content: "\e96e";
+}
+.solaris-icon-HandPointing:before {
+  content: "\e96f";
+}
+.solaris-icon-HandsClapping:before {
+  content: "\e970";
+}
+.solaris-icon-Handshake:before {
+  content: "\e971";
+}
+.solaris-icon-HandsPraying:before {
+  content: "\e972";
+}
+.solaris-icon-HandWaving:before {
+  content: "\e973";
+}
+.solaris-icon-HandWithdraw:before {
+  content: "\e974";
+}
+.solaris-icon-HeadCircuit:before {
+  content: "\e975";
+}
+.solaris-icon-IdentificationBadge:before {
+  content: "\e976";
+}
+.solaris-icon-IdentificationCard:before {
+  content: "\e977";
+}
+.solaris-icon-Info:before {
+  content: "\e978";
+}
+.solaris-icon-Key:before {
+  content: "\e979";
+}
+.solaris-icon-Keyhole:before {
+  content: "\e97a";
+}
+.solaris-icon-Lectern:before {
+  content: "\e97b";
+}
+.solaris-icon-Lock:before {
+  content: "\e97c";
+}
+.solaris-icon-LockKey:before {
+  content: "\e97d";
+}
+.solaris-icon-LockKeyOpen:before {
+  content: "\e97e";
+}
+.solaris-icon-LockLaminated:before {
+  content: "\e97f";
+}
+.solaris-icon-LockLaminatedOpen:before {
+  content: "\e980";
+}
+.solaris-icon-LockOpen:before {
+  content: "\e981";
+}
+.solaris-icon-LockSimple:before {
+  content: "\e982";
+}
+.solaris-icon-LockSimpleOpen:before {
+  content: "\e983";
+}
+.solaris-icon-Magnet:before {
+  content: "\e984";
+}
+.solaris-icon-MagnetStraight:before {
+  content: "\e985";
+}
+.solaris-icon-MarkdownLogo:before {
+  content: "\e986";
+}
+.solaris-icon-Password:before {
+  content: "\e987";
+}
+.solaris-icon-Person:before {
+  content: "\e988";
+}
+.solaris-icon-PersonArmsSpread:before {
+  content: "\e989";
+}
+.solaris-icon-PersonSimple:before {
+  content: "\e98a";
+}
+.solaris-icon-PersonSimpleBike:before {
+  content: "\e98b";
+}
+.solaris-icon-PersonSimpleCircle:before {
+  content: "\e98c";
+}
+.solaris-icon-PersonSimpleHike:before {
+  content: "\e98d";
+}
+.solaris-icon-PersonSimpleRun:before {
+  content: "\e98e";
+}
+.solaris-icon-PersonSimpleSwim:before {
+  content: "\e98f";
+}
+.solaris-icon-PersonSimpleTaiChi:before {
+  content: "\e990";
+}
+.solaris-icon-PersonSimpleThrow:before {
+  content: "\e991";
+}
+.solaris-icon-PersonSimpleWalk:before {
+  content: "\e992";
+}
+.solaris-icon-Prohibit:before {
+  content: "\e993";
+}
+.solaris-icon-ProhibitInset:before {
+  content: "\e994";
+}
+.solaris-icon-Question:before {
+  content: "\e995";
+}
+.solaris-icon-QuestionMark:before {
+  content: "\e996";
+}
+.solaris-icon-Radioactive:before {
+  content: "\e997";
+}
+.solaris-icon-Recycle:before {
+  content: "\e998";
+}
+.solaris-icon-Robot:before {
+  content: "\e999";
+}
+.solaris-icon-Seal:before {
+  content: "\e99a";
+}
+.solaris-icon-SealCheck:before {
+  content: "\e99b";
+}
+.solaris-icon-SealPercent:before {
+  content: "\e99c";
+}
+.solaris-icon-SealQuestion:before {
+  content: "\e99d";
+}
+.solaris-icon-SealWarning:before {
+  content: "\e99e";
+}
+.solaris-icon-SecurityCamera:before {
+  content: "\e99f";
+}
+.solaris-icon-Shield:before {
+  content: "\e9a0";
+}
+.solaris-icon-ShieldCheck:before {
+  content: "\e9a1";
+}
+.solaris-icon-ShieldCheckered:before {
+  content: "\e9a2";
+}
+.solaris-icon-ShieldChevron:before {
+  content: "\e9a3";
+}
+.solaris-icon-ShieldPlus:before {
+  content: "\e9a4";
+}
+.solaris-icon-ShieldSlash:before {
+  content: "\e9a5";
+}
+.solaris-icon-ShieldStar:before {
+  content: "\e9a6";
+}
+.solaris-icon-ShieldWarning:before {
+  content: "\e9a7";
+}
+.solaris-icon-Siren:before {
+  content: "\e9a8";
+}
+.solaris-icon-Smiley:before {
+  content: "\e9a9";
+}
+.solaris-icon-SmileyAngry:before {
+  content: "\e9aa";
+}
+.solaris-icon-SmileyBlank:before {
+  content: "\e9ab";
+}
+.solaris-icon-SmileyMeh:before {
+  content: "\e9ac";
+}
+.solaris-icon-SmileyMelting:before {
+  content: "\e9ad";
+}
+.solaris-icon-SmileyNervous:before {
+  content: "\e9ae";
+}
+.solaris-icon-SmileySad:before {
+  content: "\e9af";
+}
+.solaris-icon-SmileySticker:before {
+  content: "\e9b0";
+}
+.solaris-icon-SmileyWink:before {
+  content: "\e9b1";
+}
+.solaris-icon-SmileyXEyes:before {
+  content: "\e9b2";
+}
+.solaris-icon-Student:before {
+  content: "\e9b3";
+}
+.solaris-icon-Terminal:before {
+  content: "\e9b4";
+}
+.solaris-icon-TerminalWindow:before {
+  content: "\e9b5";
+}
+.solaris-icon-TreeStructure:before {
+  content: "\e9b6";
+}
+.solaris-icon-User:before {
+  content: "\e9b7";
+}
+.solaris-icon-UserCheck:before {
+  content: "\e9b8";
+}
+.solaris-icon-UserCircle:before {
+  content: "\e9b9";
+}
+.solaris-icon-UserCircleCheck:before {
+  content: "\e9ba";
+}
+.solaris-icon-UserCircleDashed:before {
+  content: "\e9bb";
+}
+.solaris-icon-UserCircleGear:before {
+  content: "\e9bc";
+}
+.solaris-icon-UserCircleMinus:before {
+  content: "\e9bd";
+}
+.solaris-icon-UserCirclePlus:before {
+  content: "\e9be";
+}
+.solaris-icon-UserFocus:before {
+  content: "\e9bf";
+}
+.solaris-icon-UserGear:before {
+  content: "\e9c0";
+}
+.solaris-icon-UserList:before {
+  content: "\e9c1";
+}
+.solaris-icon-UserMinus:before {
+  content: "\e9c2";
+}
+.solaris-icon-UserPlus:before {
+  content: "\e9c3";
+}
+.solaris-icon-UserRectangle:before {
+  content: "\e9c4";
+}
+.solaris-icon-Users:before {
+  content: "\e9c5";
+}
+.solaris-icon-UsersFour:before {
+  content: "\e9c6";
+}
+.solaris-icon-UserSound:before {
+  content: "\e9c7";
+}
+.solaris-icon-UserSquare:before {
+  content: "\e9c8";
+}
+.solaris-icon-UsersThree:before {
+  content: "\e9c9";
+}
+.solaris-icon-UserSwitch:before {
+  content: "\e9ca";
+}
+.solaris-icon-Vault:before {
+  content: "\e9cb";
+}
+.solaris-icon-Vector:before {
+  content: "\e9cc";
+}
+.solaris-icon-Video:before {
+  content: "\e9cd";
+}
+.solaris-icon-Wall:before {
+  content: "\e9ce";
+}
+.solaris-icon-Warning:before {
+  content: "\e9cf";
+}
+.solaris-icon-WarningCircle:before {
+  content: "\e9d0";
+}
+.solaris-icon-WarningDiamond:before {
+  content: "\e9d1";
+}
+.solaris-icon-WarningOctagon:before {
+  content: "\e9d2";
+}
+.solaris-icon-WebhooksLogo:before {
+  content: "\e9d3";
+}
+.solaris-icon-Wheelchair:before {
+  content: "\e9d4";
+}
+.solaris-icon-WheelchairMotion:before {
+  content: "\e9d5";
+}
+.solaris-icon-ArrowArcLeft:before {
+  content: "\e9d6";
+}
+.solaris-icon-ArrowArcRight:before {
+  content: "\e9d7";
+}
+.solaris-icon-ArrowBendDoubleUpLeft:before {
+  content: "\e9d8";
+}
+.solaris-icon-ArrowBendDoubleUpRight:before {
+  content: "\e9d9";
+}
+.solaris-icon-ArrowBendDownLeft:before {
+  content: "\e9da";
+}
+.solaris-icon-ArrowBendDownRight:before {
+  content: "\e9db";
+}
+.solaris-icon-ArrowBendLeftDown:before {
+  content: "\e9dc";
+}
+.solaris-icon-ArrowBendLeftUp:before {
+  content: "\e9dd";
+}
+.solaris-icon-ArrowBendRightDown:before {
+  content: "\e9de";
+}
+.solaris-icon-ArrowBendRightUp:before {
+  content: "\e9df";
+}
+.solaris-icon-ArrowBendUpLeft:before {
+  content: "\e9e0";
+}
+.solaris-icon-ArrowBendUpRight:before {
+  content: "\e9e1";
+}
+.solaris-icon-ArrowCircleDown:before {
+  content: "\e9e2";
+}
+.solaris-icon-ArrowCircleDownLeft:before {
+  content: "\e9e3";
+}
+.solaris-icon-ArrowCircleDownRight:before {
+  content: "\e9e4";
+}
+.solaris-icon-ArrowCircleLeft:before {
+  content: "\e9e5";
+}
+.solaris-icon-ArrowCircleRight:before {
+  content: "\e9e6";
+}
+.solaris-icon-ArrowCircleUp:before {
+  content: "\e9e7";
+}
+.solaris-icon-ArrowCircleUpLeft:before {
+  content: "\e9e8";
+}
+.solaris-icon-ArrowCircleUpRight:before {
+  content: "\e9e9";
+}
+.solaris-icon-ArrowClockwise:before {
+  content: "\e9ea";
+}
+.solaris-icon-ArrowCounterClockwise:before {
+  content: "\e9eb";
+}
+.solaris-icon-ArrowDown:before {
+  content: "\e9ec";
+}
+.solaris-icon-ArrowDownLeft:before {
+  content: "\e9ed";
+}
+.solaris-icon-ArrowDownRight:before {
+  content: "\e9ee";
+}
+.solaris-icon-ArrowElbowDownLeft:before {
+  content: "\e9ef";
+}
+.solaris-icon-ArrowElbowDownRight:before {
+  content: "\e9f0";
+}
+.solaris-icon-ArrowElbowLeft:before {
+  content: "\e9f1";
+}
+.solaris-icon-ArrowElbowLeftDown:before {
+  content: "\e9f2";
+}
+.solaris-icon-ArrowElbowLeftUp:before {
+  content: "\e9f3";
+}
+.solaris-icon-ArrowElbowRight:before {
+  content: "\e9f4";
+}
+.solaris-icon-ArrowElbowRightDown:before {
+  content: "\e9f5";
+}
+.solaris-icon-ArrowElbowRightUp:before {
+  content: "\e9f6";
+}
+.solaris-icon-ArrowElbowUpLeft:before {
+  content: "\e9f7";
+}
+.solaris-icon-ArrowElbowUpRight:before {
+  content: "\e9f8";
+}
+.solaris-icon-ArrowFatDown:before {
+  content: "\e9f9";
+}
+.solaris-icon-ArrowFatLeft:before {
+  content: "\e9fa";
+}
+.solaris-icon-ArrowFatLineDown:before {
+  content: "\e9fb";
+}
+.solaris-icon-ArrowFatLineLeft:before {
+  content: "\e9fc";
+}
+.solaris-icon-ArrowFatLineRight:before {
+  content: "\e9fd";
+}
+.solaris-icon-ArrowFatLinesDown:before {
+  content: "\e9fe";
+}
+.solaris-icon-ArrowFatLinesLeft:before {
+  content: "\e9ff";
+}
+.solaris-icon-ArrowFatLinesRight:before {
+  content: "\ea00";
+}
+.solaris-icon-ArrowFatLinesUp:before {
+  content: "\ea01";
+}
+.solaris-icon-ArrowFatLineUp:before {
+  content: "\ea02";
+}
+.solaris-icon-ArrowFatRight:before {
+  content: "\ea03";
+}
+.solaris-icon-ArrowFatUp:before {
+  content: "\ea04";
+}
+.solaris-icon-ArrowLeft:before {
+  content: "\ea05";
+}
+.solaris-icon-ArrowLineDown:before {
+  content: "\ea06";
+}
+.solaris-icon-ArrowLineDownLeft:before {
+  content: "\ea07";
+}
+.solaris-icon-ArrowLineDownRight:before {
+  content: "\ea08";
+}
+.solaris-icon-ArrowLineLeft:before {
+  content: "\ea09";
+}
+.solaris-icon-ArrowLineRight:before {
+  content: "\ea0a";
+}
+.solaris-icon-ArrowLineUp:before {
+  content: "\ea0b";
+}
+.solaris-icon-ArrowLineUpLeft:before {
+  content: "\ea0c";
+}
+.solaris-icon-ArrowLineUpRight:before {
+  content: "\ea0d";
+}
+.solaris-icon-ArrowRight:before {
+  content: "\ea0e";
+}
+.solaris-icon-ArrowSquareDown:before {
+  content: "\ea0f";
+}
+.solaris-icon-ArrowSquareDownLeft:before {
+  content: "\ea10";
+}
+.solaris-icon-ArrowSquareDownRight:before {
+  content: "\ea11";
+}
+.solaris-icon-ArrowSquareIn:before {
+  content: "\ea12";
+}
+.solaris-icon-ArrowSquareLeft:before {
+  content: "\ea13";
+}
+.solaris-icon-ArrowSquareOut:before {
+  content: "\ea14";
+}
+.solaris-icon-ArrowSquareRight:before {
+  content: "\ea15";
+}
+.solaris-icon-ArrowSquareUp:before {
+  content: "\ea16";
+}
+.solaris-icon-ArrowSquareUpLeft:before {
+  content: "\ea17";
+}
+.solaris-icon-ArrowSquareUpRight:before {
+  content: "\ea18";
+}
+.solaris-icon-ArrowUDownLeft:before {
+  content: "\ea19";
+}
+.solaris-icon-Belt:before {
+  content: "\ea1a";
+}
+.solaris-icon-Binoculars:before {
+  content: "\ea1b";
+}
+.solaris-icon-Boot:before {
+  content: "\ea1c";
+}
+.solaris-icon-BowlFood:before {
+  content: "\ea1d";
+}
+.solaris-icon-BowlSteam:before {
+  content: "\ea1e";
+}
+.solaris-icon-Brandy:before {
+  content: "\ea1f";
+}
+.solaris-icon-Bread:before {
+  content: "\ea20";
+}
+.solaris-icon-Bridge:before {
+  content: "\ea21";
+}
+.solaris-icon-Broom:before {
+  content: "\ea22";
+}
+.solaris-icon-Building:before {
+  content: "\ea23";
+}
+.solaris-icon-BuildingApartment:before {
+  content: "\ea24";
+}
+.solaris-icon-BuildingOffice:before {
+  content: "\ea25";
+}
+.solaris-icon-Buildings:before {
+  content: "\ea26";
+}
+.solaris-icon-Bulldozer:before {
+  content: "\ea27";
+}
+.solaris-icon-Cake:before {
+  content: "\ea28";
+}
+.solaris-icon-CallBell:before {
+  content: "\ea29";
+}
+.solaris-icon-CarBattery:before {
+  content: "\ea2a";
+}
+.solaris-icon-Cardholder:before {
+  content: "\ea2b";
+}
+.solaris-icon-Carrot:before {
+  content: "\ea2c";
+}
+.solaris-icon-CashRegister:before {
+  content: "\ea2d";
+}
+.solaris-icon-Chair:before {
+  content: "\ea2e";
+}
+.solaris-icon-Champagne:before {
+  content: "\ea2f";
+}
+.solaris-icon-Cheers:before {
+  content: "\ea30";
+}
+.solaris-icon-Cheese:before {
+  content: "\ea31";
+}
+.solaris-icon-ChefHat:before {
+  content: "\ea32";
+}
+.solaris-icon-Cherries:before {
+  content: "\ea33";
+}
+.solaris-icon-Cigarette:before {
+  content: "\ea34";
+}
+.solaris-icon-CigaretteSlash:before {
+  content: "\ea35";
+}
+.solaris-icon-City:before {
+  content: "\ea36";
+}
+.solaris-icon-CoatHanger:before {
+  content: "\ea37";
+}
+.solaris-icon-Coffee:before {
+  content: "\ea38";
+}
+.solaris-icon-CoffeeBean:before {
+  content: "\ea39";
+}
+.solaris-icon-Coin:before {
+  content: "\ea3a";
+}
+.solaris-icon-Coins:before {
+  content: "\ea3b";
+}
+.solaris-icon-CoinVertical:before {
+  content: "\ea3c";
+}
+.solaris-icon-ContactlessPayment:before {
+  content: "\ea3d";
+}
+.solaris-icon-Cookie:before {
+  content: "\ea3e";
+}
+.solaris-icon-CookingPot:before {
+  content: "\ea3f";
+}
+.solaris-icon-Couch:before {
+  content: "\ea40";
+}
+.solaris-icon-CowboyHat:before {
+  content: "\ea41";
+}
+.solaris-icon-Crane:before {
+  content: "\ea42";
+}
+.solaris-icon-CraneTower:before {
+  content: "\ea43";
+}
+.solaris-icon-CreditCard:before {
+  content: "\ea44";
+}
+.solaris-icon-CurrencyBtc:before {
+  content: "\ea45";
+}
+.solaris-icon-CurrencyCircleDollar:before {
+  content: "\ea46";
+}
+.solaris-icon-CurrencyCny:before {
+  content: "\ea47";
+}
+.solaris-icon-CurrencyDollar:before {
+  content: "\ea48";
+}
+.solaris-icon-CurrencyDollarSimple:before {
+  content: "\ea49";
+}
+.solaris-icon-CurrencyEth:before {
+  content: "\ea4a";
+}
+.solaris-icon-CurrencyEur:before {
+  content: "\ea4b";
+}
+.solaris-icon-CurrencyGbp:before {
+  content: "\ea4c";
+}
+.solaris-icon-CurrencyInr:before {
+  content: "\ea4d";
+}
+.solaris-icon-CurrencyJpy:before {
+  content: "\ea4e";
+}
+.solaris-icon-CurrencyKrw:before {
+  content: "\ea4f";
+}
+.solaris-icon-CurrencyKzt:before {
+  content: "\ea50";
+}
+.solaris-icon-CurrencyNgn:before {
+  content: "\ea51";
+}
+.solaris-icon-CurrencyRub:before {
+  content: "\ea52";
+}
+.solaris-icon-Desk:before {
+  content: "\ea53";
+}
+.solaris-icon-Door:before {
+  content: "\ea54";
+}
+.solaris-icon-DoorOpen:before {
+  content: "\ea55";
+}
+.solaris-icon-Dress:before {
+  content: "\ea56";
+}
+.solaris-icon-Dresser:before {
+  content: "\ea57";
+}
+.solaris-icon-Egg:before {
+  content: "\ea58";
+}
+.solaris-icon-EggCrack:before {
+  content: "\ea59";
+}
+.solaris-icon-Eyeglasses:before {
+  content: "\ea5a";
+}
+.solaris-icon-Factory:before {
+  content: "\ea5b";
+}
+.solaris-icon-Fan:before {
+  content: "\ea5c";
+}
+.solaris-icon-Farm:before {
+  content: "\ea5d";
+}
+.solaris-icon-ForkKnife:before {
+  content: "\ea5e";
+}
+.solaris-icon-Garage:before {
+  content: "\ea5f";
+}
+.solaris-icon-Gavel:before {
+  content: "\ea60";
+}
+.solaris-icon-Gift:before {
+  content: "\ea61";
+}
+.solaris-icon-Grains:before {
+  content: "\ea62";
+}
+.solaris-icon-GrainsSlash:before {
+  content: "\ea63";
+}
+.solaris-icon-HairDryer:before {
+  content: "\ea64";
+}
+.solaris-icon-Hamburger:before {
+  content: "\ea65";
+}
+.solaris-icon-Hammer:before {
+  content: "\ea66";
+}
+.solaris-icon-Handbag:before {
+  content: "\ea67";
+}
+.solaris-icon-HandbagSimple:before {
+  content: "\ea68";
+}
+.solaris-icon-HandCoins:before {
+  content: "\ea69";
+}
+.solaris-icon-HardHat:before {
+  content: "\ea6a";
+}
+.solaris-icon-HighHeel:before {
+  content: "\ea6b";
+}
+.solaris-icon-Hoodie:before {
+  content: "\ea6c";
+}
+.solaris-icon-IceCream:before {
+  content: "\ea6d";
+}
+.solaris-icon-Invoice:before {
+  content: "\ea6e";
+}
+.solaris-icon-Jar:before {
+  content: "\ea6f";
+}
+.solaris-icon-JarLabel:before {
+  content: "\ea70";
+}
+.solaris-icon-Knife:before {
+  content: "\ea71";
+}
+.solaris-icon-Ladder:before {
+  content: "\ea72";
+}
+.solaris-icon-LadderSimple:before {
+  content: "\ea73";
+}
+.solaris-icon-Lamp:before {
+  content: "\ea74";
+}
+.solaris-icon-LampPendant:before {
+  content: "\ea75";
+}
+.solaris-icon-Martini:before {
+  content: "\ea76";
+}
+.solaris-icon-Money:before {
+  content: "\ea77";
+}
+.solaris-icon-MoneyWavy:before {
+  content: "\ea78";
+}
+.solaris-icon-Needle:before {
+  content: "\ea79";
+}
+.solaris-icon-NuclearPlant:before {
+  content: "\ea7a";
+}
+.solaris-icon-OfficeChair:before {
+  content: "\ea7b";
+}
+.solaris-icon-Onigiri:before {
+  content: "\ea7c";
+}
+.solaris-icon-Orange:before {
+  content: "\ea7d";
+}
+.solaris-icon-OrangeSlice:before {
+  content: "\ea7e";
+}
+.solaris-icon-Oven:before {
+  content: "\ea7f";
+}
+.solaris-icon-Package:before {
+  content: "\ea80";
+}
+.solaris-icon-Pants:before {
+  content: "\ea81";
+}
+.solaris-icon-Pepper:before {
+  content: "\ea82";
+}
+.solaris-icon-PicnicTable:before {
+  content: "\ea83";
+}
+.solaris-icon-PiggyBank:before {
+  content: "\ea84";
+}
+.solaris-icon-PintGlass:before {
+  content: "\ea85";
+}
+.solaris-icon-Pipe:before {
+  content: "\ea86";
+}
+.solaris-icon-PipeWrench:before {
+  content: "\ea87";
+}
+.solaris-icon-PixLogo:before {
+  content: "\ea88";
+}
+.solaris-icon-Pizza:before {
+  content: "\ea89";
+}
+.solaris-icon-Popcorn:before {
+  content: "\ea8a";
+}
+.solaris-icon-Popsicle:before {
+  content: "\ea8b";
+}
+.solaris-icon-PottedPlant:before {
+  content: "\ea8c";
+}
+.solaris-icon-Receipt:before {
+  content: "\ea8d";
+}
+.solaris-icon-ReceiptX:before {
+  content: "\ea8e";
+}
+.solaris-icon-Rug:before {
+  content: "\ea8f";
+}
+.solaris-icon-Scales:before {
+  content: "\ea90";
+}
+.solaris-icon-Screwdriver:before {
+  content: "\ea91";
+}
+.solaris-icon-Seatbelt:before {
+  content: "\ea92";
+}
+.solaris-icon-ShirtFolded:before {
+  content: "\ea93";
+}
+.solaris-icon-ShoppingBag:before {
+  content: "\ea94";
+}
+.solaris-icon-ShoppingBagOpen:before {
+  content: "\ea95";
+}
+.solaris-icon-ShoppingCart:before {
+  content: "\ea96";
+}
+.solaris-icon-ShoppingCartSimple:before {
+  content: "\ea97";
+}
+.solaris-icon-Shovel:before {
+  content: "\ea98";
+}
+.solaris-icon-Shower:before {
+  content: "\ea99";
+}
+.solaris-icon-Sneaker:before {
+  content: "\ea9a";
+}
+.solaris-icon-SneakerMove:before {
+  content: "\ea9b";
+}
+.solaris-icon-Sock:before {
+  content: "\ea9c";
+}
+.solaris-icon-SolarPanel:before {
+  content: "\ea9d";
+}
+.solaris-icon-SolarRoof:before {
+  content: "\ea9e";
+}
+.solaris-icon-Stairs:before {
+  content: "\ea9f";
+}
+.solaris-icon-Stool:before {
+  content: "\eaa0";
+}
+.solaris-icon-Storefront:before {
+  content: "\eaa1";
+}
+.solaris-icon-Sunglasses:before {
+  content: "\eaa2";
+}
+.solaris-icon-Tag:before {
+  content: "\eaa3";
+}
+.solaris-icon-TagChevron:before {
+  content: "\eaa4";
+}
+.solaris-icon-TagSimple:before {
+  content: "\eaa5";
+}
+.solaris-icon-TeaBag:before {
+  content: "\eaa6";
+}
+.solaris-icon-Ticket:before {
+  content: "\eaa7";
+}
+.solaris-icon-TipJar:before {
+  content: "\eaa8";
+}
+.solaris-icon-Tire:before {
+  content: "\eaa9";
+}
+.solaris-icon-Toolbox:before {
+  content: "\eaaa";
+}
+.solaris-icon-Tote:before {
+  content: "\eaab";
+}
+.solaris-icon-ToteSimple:before {
+  content: "\eaac";
+}
+.solaris-icon-Towel:before {
+  content: "\eaad";
+}
+.solaris-icon-Tractor:before {
+  content: "\eaae";
+}
+.solaris-icon-Trademark:before {
+  content: "\eaaf";
+}
+.solaris-icon-TrademarkRegistered:before {
+  content: "\eab0";
+}
+.solaris-icon-TruckTrailer:before {
+  content: "\eab1";
+}
+.solaris-icon-TShirt:before {
+  content: "\eab2";
+}
+.solaris-icon-Wallet:before {
+  content: "\eab3";
+}
+.solaris-icon-Warehouse:before {
+  content: "\eab4";
+}
+.solaris-icon-WashingMachine:before {
+  content: "\eab5";
+}
+.solaris-icon-Windmill:before {
+  content: "\eab6";
+}
+.solaris-icon-Wine:before {
+  content: "\eab7";
+}
+.solaris-icon-Wrench:before {
+  content: "\eab8";
+}
+.solaris-icon-Yarn:before {
+  content: "\eab9";
+}
+.solaris-icon-Archive:before {
+  content: "\eaba";
+}
+.solaris-icon-Armchair:before {
+  content: "\eabb";
+}
+.solaris-icon-Avocado:before {
+  content: "\eabc";
+}
+.solaris-icon-Axe:before {
+  content: "\eabd";
+}
+.solaris-icon-BabyCarriage:before {
+  content: "\eabe";
+}
+.solaris-icon-Backpack:before {
+  content: "\eabf";
+}
+.solaris-icon-Bag:before {
+  content: "\eac0";
+}
+.solaris-icon-BagSimple:before {
+  content: "\eac1";
+}
+.solaris-icon-Balloon:before {
+  content: "\eac2";
+}
+.solaris-icon-Barcode:before {
+  content: "\eac3";
+}
+.solaris-icon-Barn:before {
+  content: "\eac4";
+}
+.solaris-icon-BaseballCap:before {
+  content: "\eac5";
+}
+.solaris-icon-Basket:before {
+  content: "\eac6";
+}
+.solaris-icon-Bathtub:before {
+  content: "\eac7";
+}
+.solaris-icon-Beanie:before {
+  content: "\eac8";
+}
+.solaris-icon-BeerBottle:before {
+  content: "\eac9";
+}
+.solaris-icon-BeerStein:before {
+  content: "\eaca";
+}
+.solaris-icon-BoxArrowDown:before {
+  content: "\eacb";
+}
+.solaris-icon-BoxArrowUp:before {
+  content: "\eacc";
+}
+.solaris-icon-Briefcase:before {
+  content: "\eacd";
+}
+.solaris-icon-BriefcaseMetal:before {
+  content: "\eace";
+}
+.solaris-icon-Cards:before {
+  content: "\eacf";
+}
+.solaris-icon-CardsThree:before {
+  content: "\ead0";
+}
+.solaris-icon-ChartLineDown:before {
+  content: "\ead1";
+}
+.solaris-icon-ChartLineUp:before {
+  content: "\ead2";
+}
+.solaris-icon-ChartPie:before {
+  content: "\ead3";
+}
+.solaris-icon-ChartPieSlice:before {
+  content: "\ead4";
+}
+.solaris-icon-ChartPolar:before {
+  content: "\ead5";
+}
+.solaris-icon-ChartScatter:before {
+  content: "\ead6";
+}
+.solaris-icon-Clipboard:before {
+  content: "\ead7";
+}
+.solaris-icon-ClipboardText:before {
+  content: "\ead8";
+}
+.solaris-icon-Copy:before {
+  content: "\ead9";
+}
+.solaris-icon-CopySimple:before {
+  content: "\eada";
+}
+.solaris-icon-CursorText:before {
+  content: "\eadb";
+}
+.solaris-icon-Divide:before {
+  content: "\eadc";
+}
+.solaris-icon-Empty:before {
+  content: "\eadd";
+}
+.solaris-icon-Equals:before {
+  content: "\eade";
+}
+.solaris-icon-File:before {
+  content: "\eadf";
+}
+.solaris-icon-FileArchive:before {
+  content: "\eae0";
+}
+.solaris-icon-FileArrowDown:before {
+  content: "\eae1";
+}
+.solaris-icon-FileArrowUp:before {
+  content: "\eae2";
+}
+.solaris-icon-FileAudio:before {
+  content: "\eae3";
+}
+.solaris-icon-FileC:before {
+  content: "\eae4";
+}
+.solaris-icon-FileCloud:before {
+  content: "\eae5";
+}
+.solaris-icon-FileCode:before {
+  content: "\eae6";
+}
+.solaris-icon-FileCpp:before {
+  content: "\eae7";
+}
+.solaris-icon-FileCSharp:before {
+  content: "\eae8";
+}
+.solaris-icon-FileCss:before {
+  content: "\eae9";
+}
+.solaris-icon-FileCsv:before {
+  content: "\eaea";
+}
+.solaris-icon-FileDashed:before {
+  content: "\eaeb";
+}
+.solaris-icon-FileDoc:before {
+  content: "\eaec";
+}
+.solaris-icon-FileHtml:before {
+  content: "\eaed";
+}
+.solaris-icon-FileImage:before {
+  content: "\eaee";
+}
+.solaris-icon-FileIni:before {
+  content: "\eaef";
+}
+.solaris-icon-FileJpg:before {
+  content: "\eaf0";
+}
+.solaris-icon-FileJs:before {
+  content: "\eaf1";
+}
+.solaris-icon-FileJsx:before {
+  content: "\eaf2";
+}
+.solaris-icon-FileLock:before {
+  content: "\eaf3";
+}
+.solaris-icon-FileMagnifyingGlass:before {
+  content: "\eaf4";
+}
+.solaris-icon-FileMd:before {
+  content: "\eaf5";
+}
+.solaris-icon-FileMinus:before {
+  content: "\eaf6";
+}
+.solaris-icon-FilePdf:before {
+  content: "\eaf7";
+}
+.solaris-icon-FilePlus:before {
+  content: "\eaf8";
+}
+.solaris-icon-FilePng:before {
+  content: "\eaf9";
+}
+.solaris-icon-FilePpt:before {
+  content: "\eafa";
+}
+.solaris-icon-FilePy:before {
+  content: "\eafb";
+}
+.solaris-icon-FileRs:before {
+  content: "\eafc";
+}
+.solaris-icon-Files:before {
+  content: "\eafd";
+}
+.solaris-icon-FileSql:before {
+  content: "\eafe";
+}
+.solaris-icon-FileSvg:before {
+  content: "\eaff";
+}
+.solaris-icon-FileText:before {
+  content: "\eb00";
+}
+.solaris-icon-FileTs:before {
+  content: "\eb01";
+}
+.solaris-icon-FileTsx:before {
+  content: "\eb02";
+}
+.solaris-icon-FileTxt:before {
+  content: "\eb03";
+}
+.solaris-icon-FileVideo:before {
+  content: "\eb04";
+}
+.solaris-icon-FileVue:before {
+  content: "\eb05";
+}
+.solaris-icon-FileX:before {
+  content: "\eb06";
+}
+.solaris-icon-FileXls:before {
+  content: "\eb07";
+}
+.solaris-icon-FileZip:before {
+  content: "\eb08";
+}
+.solaris-icon-FloppyDisk:before {
+  content: "\eb09";
+}
+.solaris-icon-FloppyDiskBack:before {
+  content: "\eb0a";
+}
+.solaris-icon-Folder:before {
+  content: "\eb0b";
+}
+.solaris-icon-FolderDashed:before {
+  content: "\eb0c";
+}
+.solaris-icon-FolderLock:before {
+  content: "\eb0d";
+}
+.solaris-icon-FolderMinus:before {
+  content: "\eb0e";
+}
+.solaris-icon-FolderOpen:before {
+  content: "\eb0f";
+}
+.solaris-icon-FolderPlus:before {
+  content: "\eb10";
+}
+.solaris-icon-Folders:before {
+  content: "\eb11";
+}
+.solaris-icon-FolderSimple:before {
+  content: "\eb12";
+}
+.solaris-icon-FolderSimpleDashed:before {
+  content: "\eb13";
+}
+.solaris-icon-FolderSimpleLock:before {
+  content: "\eb14";
+}
+.solaris-icon-FolderSimpleMinus:before {
+  content: "\eb15";
+}
+.solaris-icon-FolderSimplePlus:before {
+  content: "\eb16";
+}
+.solaris-icon-FolderSimpleStar:before {
+  content: "\eb17";
+}
+.solaris-icon-FolderSimpleUser:before {
+  content: "\eb18";
+}
+.solaris-icon-FolderStar:before {
+  content: "\eb19";
+}
+.solaris-icon-FolderUser:before {
+  content: "\eb1a";
+}
+.solaris-icon-Function:before {
+  content: "\eb1b";
+}
+.solaris-icon-Funnel:before {
+  content: "\eb1c";
+}
+.solaris-icon-FunnelSimple:before {
+  content: "\eb1d";
+}
+.solaris-icon-FunnelSimpleX:before {
+  content: "\eb1e";
+}
+.solaris-icon-FunnelX:before {
+  content: "\eb1f";
+}
+.solaris-icon-Graph:before {
+  content: "\eb20";
+}
+.solaris-icon-GreaterThan:before {
+  content: "\eb21";
+}
+.solaris-icon-GreaterThanOrEqual:before {
+  content: "\eb22";
+}
+.solaris-icon-Infinity:before {
+  content: "\eb23";
+}
+.solaris-icon-Intersection:before {
+  content: "\eb24";
+}
+.solaris-icon-Kanban:before {
+  content: "\eb25";
+}
+.solaris-icon-LessThan:before {
+  content: "\eb26";
+}
+.solaris-icon-LessThanOrEqual:before {
+  content: "\eb27";
+}
+.solaris-icon-List:before {
+  content: "\eb28";
+}
+.solaris-icon-ListBullets:before {
+  content: "\eb29";
+}
+.solaris-icon-ListChecks:before {
+  content: "\eb2a";
+}
+.solaris-icon-ListDashes:before {
+  content: "\eb2b";
+}
+.solaris-icon-ListNumbers:before {
+  content: "\eb2c";
+}
+.solaris-icon-ListPlus:before {
+  content: "\eb2d";
+}
+.solaris-icon-MathOperations:before {
+  content: "\eb2e";
+}
+.solaris-icon-MemberOf:before {
+  content: "\eb2f";
+}
+.solaris-icon-Minus:before {
+  content: "\eb30";
+}
+.solaris-icon-MinusCircle:before {
+  content: "\eb31";
+}
+.solaris-icon-MinusSquare:before {
+  content: "\eb32";
+}
+.solaris-icon-Note:before {
+  content: "\eb33";
+}
+.solaris-icon-NoteBlank:before {
+  content: "\eb34";
+}
+.solaris-icon-Notebook:before {
+  content: "\eb35";
+}
+.solaris-icon-Notepad:before {
+  content: "\eb36";
+}
+.solaris-icon-NotePencil:before {
+  content: "\eb37";
+}
+.solaris-icon-NotEquals:before {
+  content: "\eb38";
+}
+.solaris-icon-NotMemberOf:before {
+  content: "\eb39";
+}
+.solaris-icon-NotSubsetOf:before {
+  content: "\eb3a";
+}
+.solaris-icon-NotSupersetOf:before {
+  content: "\eb3b";
+}
+.solaris-icon-NumberCircleEight:before {
+  content: "\eb3c";
+}
+.solaris-icon-NumberCircleFive:before {
+  content: "\eb3d";
+}
+.solaris-icon-NumberCircleFour:before {
+  content: "\eb3e";
+}
+.solaris-icon-NumberCircleNine:before {
+  content: "\eb3f";
+}
+.solaris-icon-NumberCircleOne:before {
+  content: "\eb40";
+}
+.solaris-icon-NumberCircleSeven:before {
+  content: "\eb41";
+}
+.solaris-icon-NumberCircleSix:before {
+  content: "\eb42";
+}
+.solaris-icon-NumberCircleThree:before {
+  content: "\eb43";
+}
+.solaris-icon-NumberCircleTwo:before {
+  content: "\eb44";
+}
+.solaris-icon-NumberCircleZero:before {
+  content: "\eb45";
+}
+.solaris-icon-NumberEight:before {
+  content: "\eb46";
+}
+.solaris-icon-NumberFive:before {
+  content: "\eb47";
+}
+.solaris-icon-NumberFour:before {
+  content: "\eb48";
+}
+.solaris-icon-NumberNine:before {
+  content: "\eb49";
+}
+.solaris-icon-NumberOne:before {
+  content: "\eb4a";
+}
+.solaris-icon-NumberSeven:before {
+  content: "\eb4b";
+}
+.solaris-icon-NumberSix:before {
+  content: "\eb4c";
+}
+.solaris-icon-NumberSquareEight:before {
+  content: "\eb4d";
+}
+.solaris-icon-NumberSquareFive:before {
+  content: "\eb4e";
+}
+.solaris-icon-NumberSquareFour:before {
+  content: "\eb4f";
+}
+.solaris-icon-NumberSquareNine:before {
+  content: "\eb50";
+}
+.solaris-icon-NumberSquareOne:before {
+  content: "\eb51";
+}
+.solaris-icon-NumberSquareSeven:before {
+  content: "\eb52";
+}
+.solaris-icon-NumberSquareSix:before {
+  content: "\eb53";
+}
+.solaris-icon-NumberSquareThree:before {
+  content: "\eb54";
+}
+.solaris-icon-NumberSquareTwo:before {
+  content: "\eb55";
+}
+.solaris-icon-NumberSquareZero:before {
+  content: "\eb56";
+}
+.solaris-icon-NumberThree:before {
+  content: "\eb57";
+}
+.solaris-icon-NumberTwo:before {
+  content: "\eb58";
+}
+.solaris-icon-NumberZero:before {
+  content: "\eb59";
+}
+.solaris-icon-Paperclip:before {
+  content: "\eb5a";
+}
+.solaris-icon-PaperclipHorizontal:before {
+  content: "\eb5b";
+}
+.solaris-icon-Paragraph:before {
+  content: "\eb5c";
+}
+.solaris-icon-Percent:before {
+  content: "\eb5d";
+}
+.solaris-icon-Pi:before {
+  content: "\eb5e";
+}
+.solaris-icon-Plus:before {
+  content: "\eb5f";
+}
+.solaris-icon-PlusCircle:before {
+  content: "\eb60";
+}
+.solaris-icon-PlusMinus:before {
+  content: "\eb61";
+}
+.solaris-icon-PlusSquare:before {
+  content: "\eb62";
+}
+.solaris-icon-Presentation:before {
+  content: "\eb63";
+}
+.solaris-icon-PresentationChart:before {
+  content: "\eb64";
+}
+.solaris-icon-Printer:before {
+  content: "\eb65";
+}
+.solaris-icon-ProjectorScreen:before {
+  content: "\eb66";
+}
+.solaris-icon-ProjectorScreenChart:before {
+  content: "\eb67";
+}
+.solaris-icon-PushPin:before {
+  content: "\eb68";
+}
+.solaris-icon-PushPinSimple:before {
+  content: "\eb69";
+}
+.solaris-icon-PushPinSimpleSlash:before {
+  content: "\eb6a";
+}
+.solaris-icon-PushPinSlash:before {
+  content: "\eb6b";
+}
+.solaris-icon-Radical:before {
+  content: "\eb6c";
+}
+.solaris-icon-Sigma:before {
+  content: "\eb6d";
+}
+.solaris-icon-SortAscending:before {
+  content: "\eb6e";
+}
+.solaris-icon-SortDescending:before {
+  content: "\eb6f";
+}
+.solaris-icon-SubsetOf:before {
+  content: "\eb70";
+}
+.solaris-icon-SubsetProperOf:before {
+  content: "\eb71";
+}
+.solaris-icon-SupersetOf:before {
+  content: "\eb72";
+}
+.solaris-icon-SupersetProperOf:before {
+  content: "\eb73";
+}
+.solaris-icon-Table:before {
+  content: "\eb74";
+}
+.solaris-icon-TextAa:before {
+  content: "\eb75";
+}
+.solaris-icon-TextAlignCenter:before {
+  content: "\eb76";
+}
+.solaris-icon-TextAlignJustify:before {
+  content: "\eb77";
+}
+.solaris-icon-TextAlignLeft:before {
+  content: "\eb78";
+}
+.solaris-icon-TextAlignRight:before {
+  content: "\eb79";
+}
+.solaris-icon-TextB:before {
+  content: "\eb7a";
+}
+.solaris-icon-Textbox:before {
+  content: "\eb7b";
+}
+.solaris-icon-TextColumns:before {
+  content: "\eb7c";
+}
+.solaris-icon-TextH:before {
+  content: "\eb7d";
+}
+.solaris-icon-TextHFive:before {
+  content: "\eb7e";
+}
+.solaris-icon-TextHFour:before {
+  content: "\eb7f";
+}
+.solaris-icon-TextHOne:before {
+  content: "\eb80";
+}
+.solaris-icon-TextHSix:before {
+  content: "\eb81";
+}
+.solaris-icon-TextHThree:before {
+  content: "\eb82";
+}
+.solaris-icon-TextHTwo:before {
+  content: "\eb83";
+}
+.solaris-icon-TextIndent:before {
+  content: "\eb84";
+}
+.solaris-icon-TextItalic:before {
+  content: "\eb85";
+}
+.solaris-icon-TextOutdent:before {
+  content: "\eb86";
+}
+.solaris-icon-TextStrikethrough:before {
+  content: "\eb87";
+}
+.solaris-icon-TextSubscript:before {
+  content: "\eb88";
+}
+.solaris-icon-TextSuperscript:before {
+  content: "\eb89";
+}
+.solaris-icon-TextT:before {
+  content: "\eb8a";
+}
+.solaris-icon-TextTSlash:before {
+  content: "\eb8b";
+}
+.solaris-icon-TextUnderline:before {
+  content: "\eb8c";
+}
+.solaris-icon-Tilde:before {
+  content: "\eb8d";
+}
+.solaris-icon-Trash:before {
+  content: "\eb8e";
+}
+.solaris-icon-TrashSimple:before {
+  content: "\eb8f";
+}
+.solaris-icon-Tray:before {
+  content: "\eb90";
+}
+.solaris-icon-TrayArrowDown:before {
+  content: "\eb91";
+}
+.solaris-icon-TrayArrowUp:before {
+  content: "\eb92";
+}
+.solaris-icon-TrendDown:before {
+  content: "\eb93";
+}
+.solaris-icon-TrendUp:before {
+  content: "\eb94";
+}
+.solaris-icon-Union:before {
+  content: "\eb95";
+}
+.solaris-icon-X:before {
+  content: "\eb96";
+}
+.solaris-icon-XCircle:before {
+  content: "\eb97";
+}
+.solaris-icon-XSquare:before {
+  content: "\eb98";
+}
+.solaris-icon-Ambulance:before {
+  content: "\eb99";
+}
+.solaris-icon-ApproximateEquals:before {
+  content: "\eb9a";
+}
+.solaris-icon-AppWindow:before {
+  content: "\eb9b";
+}
+.solaris-icon-Asclepius:before {
+  content: "\eb9c";
+}
+.solaris-icon-Backspace:before {
+  content: "\eb9d";
+}
+.solaris-icon-Bandaids:before {
+  content: "\eb9e";
+}
+.solaris-icon-Bank:before {
+  content: "\eb9f";
+}
+.solaris-icon-Barbell:before {
+  content: "\eba0";
+}
+.solaris-icon-BatteryCharging:before {
+  content: "\eba1";
+}
+.solaris-icon-BatteryChargingVertical:before {
+  content: "\eba2";
+}
+.solaris-icon-BatteryEmpty:before {
+  content: "\eba3";
+}
+.solaris-icon-BatteryFull:before {
+  content: "\eba4";
+}
+.solaris-icon-BatteryHigh:before {
+  content: "\eba5";
+}
+.solaris-icon-BatteryLow:before {
+  content: "\eba6";
+}
+.solaris-icon-BatteryMedium:before {
+  content: "\eba7";
+}
+.solaris-icon-BatteryPlus:before {
+  content: "\eba8";
+}
+.solaris-icon-BatteryPlusVertical:before {
+  content: "\eba9";
+}
+.solaris-icon-BatteryVerticalEmpty:before {
+  content: "\ebaa";
+}
+.solaris-icon-BatteryVerticalFull:before {
+  content: "\ebab";
+}
+.solaris-icon-BatteryVerticalHigh:before {
+  content: "\ebac";
+}
+.solaris-icon-BatteryVerticalLow:before {
+  content: "\ebad";
+}
+.solaris-icon-BatteryVerticalMedium:before {
+  content: "\ebae";
+}
+.solaris-icon-BatteryWarning:before {
+  content: "\ebaf";
+}
+.solaris-icon-BatteryWarningVertical:before {
+  content: "\ebb0";
+}
+.solaris-icon-Bed:before {
+  content: "\ebb1";
+}
+.solaris-icon-Bell:before {
+  content: "\ebb2";
+}
+.solaris-icon-BellRinging:before {
+  content: "\ebb3";
+}
+.solaris-icon-BellSimple:before {
+  content: "\ebb4";
+}
+.solaris-icon-BellSimpleRinging:before {
+  content: "\ebb5";
+}
+.solaris-icon-BellSimpleSlash:before {
+  content: "\ebb6";
+}
+.solaris-icon-BellSimpleZ:before {
+  content: "\ebb7";
+}
+.solaris-icon-BellSlash:before {
+  content: "\ebb8";
+}
+.solaris-icon-BellZ:before {
+  content: "\ebb9";
+}
+.solaris-icon-Bluetooth:before {
+  content: "\ebba";
+}
+.solaris-icon-BluetoothConnected:before {
+  content: "\ebbb";
+}
+.solaris-icon-BluetoothSlash:before {
+  content: "\ebbc";
+}
+.solaris-icon-BluetoothX:before {
+  content: "\ebbd";
+}
+.solaris-icon-Brain:before {
+  content: "\ebbe";
+}
+.solaris-icon-Browser:before {
+  content: "\ebbf";
+}
+.solaris-icon-Browsers:before {
+  content: "\ebc0";
+}
+.solaris-icon-Calculator:before {
+  content: "\ebc1";
+}
+.solaris-icon-CellSignalFull:before {
+  content: "\ebc2";
+}
+.solaris-icon-CellSignalHigh:before {
+  content: "\ebc3";
+}
+.solaris-icon-CellSignalLow:before {
+  content: "\ebc4";
+}
+.solaris-icon-CellSignalMedium:before {
+  content: "\ebc5";
+}
+.solaris-icon-CellSignalNone:before {
+  content: "\ebc6";
+}
+.solaris-icon-CellSignalSlash:before {
+  content: "\ebc7";
+}
+.solaris-icon-CellSignalX:before {
+  content: "\ebc8";
+}
+.solaris-icon-ChartBar:before {
+  content: "\ebc9";
+}
+.solaris-icon-ChartBarHorizontal:before {
+  content: "\ebca";
+}
+.solaris-icon-ChartDonut:before {
+  content: "\ebcb";
+}
+.solaris-icon-ChartLine:before {
+  content: "\ebcc";
+}
+.solaris-icon-Check:before {
+  content: "\ebcd";
+}
+.solaris-icon-CheckCircle:before {
+  content: "\ebce";
+}
+.solaris-icon-CheckFat:before {
+  content: "\ebcf";
+}
+.solaris-icon-Checks:before {
+  content: "\ebd0";
+}
+.solaris-icon-CheckSquare:before {
+  content: "\ebd1";
+}
+.solaris-icon-CheckSquareOffset:before {
+  content: "\ebd2";
+}
+.solaris-icon-Circuitry:before {
+  content: "\ebd3";
+}
+.solaris-icon-CloudArrowDown:before {
+  content: "\ebd4";
+}
+.solaris-icon-CloudArrowUp:before {
+  content: "\ebd5";
+}
+.solaris-icon-CloudCheck:before {
+  content: "\ebd6";
+}
+.solaris-icon-CloudSlash:before {
+  content: "\ebd7";
+}
+.solaris-icon-CloudWarning:before {
+  content: "\ebd8";
+}
+.solaris-icon-CloudX:before {
+  content: "\ebd9";
+}
+.solaris-icon-Command:before {
+  content: "\ebda";
+}
+.solaris-icon-ComputerTower:before {
+  content: "\ebdb";
+}
+.solaris-icon-Control:before {
+  content: "\ebdc";
+}
+.solaris-icon-Cursor:before {
+  content: "\ebdd";
+}
+.solaris-icon-CursorClick:before {
+  content: "\ebde";
+}
+.solaris-icon-Desktop:before {
+  content: "\ebdf";
+}
+.solaris-icon-DesktopTower:before {
+  content: "\ebe0";
+}
+.solaris-icon-DeviceMobile:before {
+  content: "\ebe1";
+}
+.solaris-icon-DeviceMobileCamera:before {
+  content: "\ebe2";
+}
+.solaris-icon-DeviceMobileSlash:before {
+  content: "\ebe3";
+}
+.solaris-icon-DeviceMobileSpeaker:before {
+  content: "\ebe4";
+}
+.solaris-icon-DeviceRotate:before {
+  content: "\ebe5";
+}
+.solaris-icon-Devices:before {
+  content: "\ebe6";
+}
+.solaris-icon-DeviceTablet:before {
+  content: "\ebe7";
+}
+.solaris-icon-DeviceTabletCamera:before {
+  content: "\ebe8";
+}
+.solaris-icon-DeviceTabletSpeaker:before {
+  content: "\ebe9";
+}
+.solaris-icon-Dna:before {
+  content: "\ebea";
+}
+.solaris-icon-Dot:before {
+  content: "\ebeb";
+}
+.solaris-icon-DotOutline:before {
+  content: "\ebec";
+}
+.solaris-icon-DotsNine:before {
+  content: "\ebed";
+}
+.solaris-icon-DotsSix:before {
+  content: "\ebee";
+}
+.solaris-icon-DotsSixVertical:before {
+  content: "\ebef";
+}
+.solaris-icon-DotsThree:before {
+  content: "\ebf0";
+}
+.solaris-icon-DotsThreeCircle:before {
+  content: "\ebf1";
+}
+.solaris-icon-DotsThreeCircleVertical:before {
+  content: "\ebf2";
+}
+.solaris-icon-DotsThreeOutline:before {
+  content: "\ebf3";
+}
+.solaris-icon-DotsThreeOutlineVertical:before {
+  content: "\ebf4";
+}
+.solaris-icon-DotsThreeVertical:before {
+  content: "\ebf5";
+}
+.solaris-icon-Download:before {
+  content: "\ebf6";
+}
+.solaris-icon-DownloadSimple:before {
+  content: "\ebf7";
+}
+.solaris-icon-FaceMask:before {
+  content: "\ebf8";
+}
+.solaris-icon-FireTruck:before {
+  content: "\ebf9";
+}
+.solaris-icon-FirstAid:before {
+  content: "\ebfa";
+}
+.solaris-icon-FirstAidKit:before {
+  content: "\ebfb";
+}
+.solaris-icon-Flask:before {
+  content: "\ebfc";
+}
+.solaris-icon-Gauge:before {
+  content: "\ebfd";
+}
+.solaris-icon-Gear:before {
+  content: "\ebfe";
+}
+.solaris-icon-GearSix:before {
+  content: "\ebff";
+}
+.solaris-icon-HandHeart:before {
+  content: "\ec00";
+}
+.solaris-icon-HandSoap:before {
+  content: "\ec01";
+}
+.solaris-icon-HandSwipeLeft:before {
+  content: "\ec02";
+}
+.solaris-icon-HandSwipeRight:before {
+  content: "\ec03";
+}
+.solaris-icon-HandTap:before {
+  content: "\ec04";
+}
+.solaris-icon-HardDrive:before {
+  content: "\ec05";
+}
+.solaris-icon-HardDrives:before {
+  content: "\ec06";
+}
+.solaris-icon-Heartbeat:before {
+  content: "\ec07";
+}
+.solaris-icon-Keyboard:before {
+  content: "\ec08";
+}
+.solaris-icon-KeyReturn:before {
+  content: "\ec09";
+}
+.solaris-icon-Laptop:before {
+  content: "\ec0a";
+}
+.solaris-icon-LastfmLogo:before {
+  content: "\ec0b";
+}
+.solaris-icon-Lifebuoy:before {
+  content: "\ec0c";
+}
+.solaris-icon-Link:before {
+  content: "\ec0d";
+}
+.solaris-icon-LinkBreak:before {
+  content: "\ec0e";
+}
+.solaris-icon-LinkedinLogo:before {
+  content: "\ec0f";
+}
+.solaris-icon-LinkSimple:before {
+  content: "\ec10";
+}
+.solaris-icon-LinkSimpleBreak:before {
+  content: "\ec11";
+}
+.solaris-icon-LinkSimpleHorizontal:before {
+  content: "\ec12";
+}
+.solaris-icon-LinkSimpleHorizontalBreak:before {
+  content: "\ec13";
+}
+.solaris-icon-LinktreeLogo:before {
+  content: "\ec14";
+}
+.solaris-icon-LinuxLogo:before {
+  content: "\ec15";
+}
+.solaris-icon-ListHeart:before {
+  content: "\ec16";
+}
+.solaris-icon-ListMagnifyingGlass:before {
+  content: "\ec17";
+}
+.solaris-icon-ListStar:before {
+  content: "\ec18";
+}
+.solaris-icon-MagnifyingGlass:before {
+  content: "\ec19";
+}
+.solaris-icon-MagnifyingGlassMinus:before {
+  content: "\ec1a";
+}
+.solaris-icon-MagnifyingGlassPlus:before {
+  content: "\ec1b";
+}
+.solaris-icon-MastodonLogo:before {
+  content: "\ec1c";
+}
+.solaris-icon-MediumLogo:before {
+  content: "\ec1d";
+}
+.solaris-icon-Memory:before {
+  content: "\ec1e";
+}
+.solaris-icon-MessengerLogo:before {
+  content: "\ec1f";
+}
+.solaris-icon-MetaLogo:before {
+  content: "\ec20";
+}
+.solaris-icon-Microscope:before {
+  content: "\ec21";
+}
+.solaris-icon-MicrosoftExcelLogo:before {
+  content: "\ec22";
+}
+.solaris-icon-MicrosoftOutlookLogo:before {
+  content: "\ec23";
+}
+.solaris-icon-MicrosoftPowerpointLogo:before {
+  content: "\ec24";
+}
+.solaris-icon-MicrosoftTeamsLogo:before {
+  content: "\ec25";
+}
+.solaris-icon-MicrosoftWordLogo:before {
+  content: "\ec26";
+}
+.solaris-icon-Monitor:before {
+  content: "\ec27";
+}
+.solaris-icon-MonitorArrowUp:before {
+  content: "\ec28";
+}
+.solaris-icon-MonitorPlay:before {
+  content: "\ec29";
+}
+.solaris-icon-Mouse:before {
+  content: "\ec2a";
+}
+.solaris-icon-MouseLeftClick:before {
+  content: "\ec2b";
+}
+.solaris-icon-MouseMiddleClick:before {
+  content: "\ec2c";
+}
+.solaris-icon-MouseRightClick:before {
+  content: "\ec2d";
+}
+.solaris-icon-MouseScroll:before {
+  content: "\ec2e";
+}
+.solaris-icon-MouseSimple:before {
+  content: "\ec2f";
+}
+.solaris-icon-Network:before {
+  content: "\ec30";
+}
+.solaris-icon-NetworkSlash:before {
+  content: "\ec31";
+}
+.solaris-icon-NetworkX:before {
+  content: "\ec32";
+}
+.solaris-icon-Notification:before {
+  content: "\ec33";
+}
+.solaris-icon-NotionLogo:before {
+  content: "\ec34";
+}
+.solaris-icon-Nut:before {
+  content: "\ec35";
+}
+.solaris-icon-NyTimesLogo:before {
+  content: "\ec36";
+}
+.solaris-icon-OpenAiLogo:before {
+  content: "\ec37";
+}
+.solaris-icon-Option:before {
+  content: "\ec38";
+}
+.solaris-icon-PatreonLogo:before {
+  content: "\ec39";
+}
+.solaris-icon-PaypalLogo:before {
+  content: "\ec3a";
+}
+.solaris-icon-PhosphorLogo:before {
+  content: "\ec3b";
+}
+.solaris-icon-Pill:before {
+  content: "\ec3c";
+}
+.solaris-icon-PinterestLogo:before {
+  content: "\ec3d";
+}
+.solaris-icon-Plug:before {
+  content: "\ec3e";
+}
+.solaris-icon-PlugCharging:before {
+  content: "\ec3f";
+}
+.solaris-icon-Plugs:before {
+  content: "\ec40";
+}
+.solaris-icon-PlugsConnected:before {
+  content: "\ec41";
+}
+.solaris-icon-Power:before {
+  content: "\ec42";
+}
+.solaris-icon-Prescription:before {
+  content: "\ec43";
+}
+.solaris-icon-Pulse:before {
+  content: "\ec44";
+}
+.solaris-icon-QrCode:before {
+  content: "\ec45";
+}
+.solaris-icon-RadioButton:before {
+  content: "\ec46";
+}
+.solaris-icon-ReadCvLogo:before {
+  content: "\ec47";
+}
+.solaris-icon-RedditLogo:before {
+  content: "\ec48";
+}
+.solaris-icon-ReplitLogo:before {
+  content: "\ec49";
+}
+.solaris-icon-Scan:before {
+  content: "\ec4a";
+}
+.solaris-icon-ScanSmiley:before {
+  content: "\ec4b";
+}
+.solaris-icon-SignIn:before {
+  content: "\ec4c";
+}
+.solaris-icon-SignOut:before {
+  content: "\ec4d";
+}
+.solaris-icon-SimCard:before {
+  content: "\ec4e";
+}
+.solaris-icon-SketchLogo:before {
+  content: "\ec4f";
+}
+.solaris-icon-SkypeLogo:before {
+  content: "\ec50";
+}
+.solaris-icon-SlackLogo:before {
+  content: "\ec51";
+}
+.solaris-icon-SnapchatLogo:before {
+  content: "\ec52";
+}
+.solaris-icon-SoundcloudLogo:before {
+  content: "\ec53";
+}
+.solaris-icon-Speedometer:before {
+  content: "\ec54";
+}
+.solaris-icon-Spinner:before {
+  content: "\ec55";
+}
+.solaris-icon-SpinnerBall:before {
+  content: "\ec56";
+}
+.solaris-icon-SpinnerGap:before {
+  content: "\ec57";
+}
+.solaris-icon-SpotifyLogo:before {
+  content: "\ec58";
+}
+.solaris-icon-SquareLogo:before {
+  content: "\ec59";
+}
+.solaris-icon-StackOverflowLogo:before {
+  content: "\ec5a";
+}
+.solaris-icon-SteamLogo:before {
+  content: "\ec5b";
+}
+.solaris-icon-Stethoscope:before {
+  content: "\ec5c";
+}
+.solaris-icon-StripeLogo:before {
+  content: "\ec5d";
+}
+.solaris-icon-Swap:before {
+  content: "\ec5e";
+}
+.solaris-icon-Syringe:before {
+  content: "\ec5f";
+}
+.solaris-icon-Tabs:before {
+  content: "\ec60";
+}
+.solaris-icon-TelegramLogo:before {
+  content: "\ec61";
+}
+.solaris-icon-TestTube:before {
+  content: "\ec62";
+}
+.solaris-icon-ThreadsLogo:before {
+  content: "\ec63";
+}
+.solaris-icon-TidalLogo:before {
+  content: "\ec64";
+}
+.solaris-icon-TiktokLogo:before {
+  content: "\ec65";
+}
+.solaris-icon-ToggleLeft:before {
+  content: "\ec66";
+}
+.solaris-icon-ToggleRight:before {
+  content: "\ec67";
+}
+.solaris-icon-Toilet:before {
+  content: "\ec68";
+}
+.solaris-icon-ToiletPaper:before {
+  content: "\ec69";
+}
+.solaris-icon-Tooth:before {
+  content: "\ec6a";
+}
+.solaris-icon-TreeView:before {
+  content: "\ec6b";
+}
+.solaris-icon-TumblrLogo:before {
+  content: "\ec6c";
+}
+.solaris-icon-TwitchLogo:before {
+  content: "\ec6d";
+}
+.solaris-icon-TwitterLogo:before {
+  content: "\ec6e";
+}
+.solaris-icon-Upload:before {
+  content: "\ec6f";
+}
+.solaris-icon-UploadSimple:before {
+  content: "\ec70";
+}
+.solaris-icon-Usb:before {
+  content: "\ec71";
+}
+.solaris-icon-Vibrate:before {
+  content: "\ec72";
+}
+.solaris-icon-Virus:before {
+  content: "\ec73";
+}
+.solaris-icon-WechatLogo:before {
+  content: "\ec74";
+}
+.solaris-icon-WhatsappLogo:before {
+  content: "\ec75";
+}
+.solaris-icon-WifiHigh:before {
+  content: "\ec76";
+}
+.solaris-icon-WifiLow:before {
+  content: "\ec77";
+}
+.solaris-icon-WifiMedium:before {
+  content: "\ec78";
+}
+.solaris-icon-WifiNone:before {
+  content: "\ec79";
+}
+.solaris-icon-WifiSlash:before {
+  content: "\ec7a";
+}
+.solaris-icon-WifiX:before {
+  content: "\ec7b";
+}
+.solaris-icon-WindowsLogo:before {
+  content: "\ec7c";
+}
+.solaris-icon-XLogo:before {
+  content: "\ec7d";
+}
+.solaris-icon-YoutubeLogo:before {
+  content: "\ec7e";
+}
+.solaris-icon-AlignBottom:before {
+  content: "\ec7f";
+}
+.solaris-icon-AlignBottomSimple:before {
+  content: "\ec80";
+}
+.solaris-icon-AlignCenterHorizontal:before {
+  content: "\ec81";
+}
+.solaris-icon-AlignCenterHorizontalSimple:before {
+  content: "\ec82";
+}
+.solaris-icon-AlignCenterVertical:before {
+  content: "\ec83";
+}
+.solaris-icon-AlignCenterVerticalSimple:before {
+  content: "\ec84";
+}
+.solaris-icon-AlignLeft:before {
+  content: "\ec85";
+}
+.solaris-icon-AlignLeftSimple:before {
+  content: "\ec86";
+}
+.solaris-icon-AlignRight:before {
+  content: "\ec87";
+}
+.solaris-icon-AlignRightSimple:before {
+  content: "\ec88";
+}
+.solaris-icon-AlignTop:before {
+  content: "\ec89";
+}
+.solaris-icon-AlignTopSimple:before {
+  content: "\ec8a";
+}
+.solaris-icon-AmazonLogo:before {
+  content: "\ec8b";
+}
+.solaris-icon-AndroidLogo:before {
+  content: "\ec8c";
+}
+.solaris-icon-Angle:before {
+  content: "\ec8d";
+}
+.solaris-icon-AngularLogo:before {
+  content: "\ec8e";
+}
+.solaris-icon-AppleLogo:before {
+  content: "\ec8f";
+}
+.solaris-icon-ApplePodcastsLogo:before {
+  content: "\ec90";
+}
+.solaris-icon-AppStoreLogo:before {
+  content: "\ec91";
+}
+.solaris-icon-BaseballHelmet:before {
+  content: "\ec92";
+}
+.solaris-icon-Basketball:before {
+  content: "\ec93";
+}
+.solaris-icon-BeachBall:before {
+  content: "\ec94";
+}
+.solaris-icon-BehanceLogo:before {
+  content: "\ec95";
+}
+.solaris-icon-BezierCurve:before {
+  content: "\ec96";
+}
+.solaris-icon-Blueprint:before {
+  content: "\ec97";
+}
+.solaris-icon-Bomb:before {
+  content: "\ec98";
+}
+.solaris-icon-Boules:before {
+  content: "\ec99";
+}
+.solaris-icon-BoundingBox:before {
+  content: "\ec9a";
+}
+.solaris-icon-BowlingBall:before {
+  content: "\ec9b";
+}
+.solaris-icon-BoxingGlove:before {
+  content: "\ec9c";
+}
+.solaris-icon-CastleTurret:before {
+  content: "\ec9d";
+}
+.solaris-icon-Checkerboard:before {
+  content: "\ec9e";
+}
+.solaris-icon-Circle:before {
+  content: "\ec9f";
+}
+.solaris-icon-CircleDashed:before {
+  content: "\eca0";
+}
+.solaris-icon-CircleHalf:before {
+  content: "\eca1";
+}
+.solaris-icon-CircleHalfTilt:before {
+  content: "\eca2";
+}
+.solaris-icon-CircleNotch:before {
+  content: "\eca3";
+}
+.solaris-icon-CirclesFour:before {
+  content: "\eca4";
+}
+.solaris-icon-CirclesThree:before {
+  content: "\eca5";
+}
+.solaris-icon-CirclesThreePlus:before {
+  content: "\eca6";
+}
+.solaris-icon-Club:before {
+  content: "\eca7";
+}
+.solaris-icon-CodaLogo:before {
+  content: "\eca8";
+}
+.solaris-icon-CodepenLogo:before {
+  content: "\eca9";
+}
+.solaris-icon-CodesandboxLogo:before {
+  content: "\ecaa";
+}
+.solaris-icon-Columns:before {
+  content: "\ecab";
+}
+.solaris-icon-ColumnsPlusLeft:before {
+  content: "\ecac";
+}
+.solaris-icon-ColumnsPlusRight:before {
+  content: "\ecad";
+}
+.solaris-icon-CompassTool:before {
+  content: "\ecae";
+}
+.solaris-icon-Confetti:before {
+  content: "\ecaf";
+}
+.solaris-icon-CourtBasketball:before {
+  content: "\ecb0";
+}
+.solaris-icon-Cricket:before {
+  content: "\ecb1";
+}
+.solaris-icon-Crop:before {
+  content: "\ecb2";
+}
+.solaris-icon-Crown:before {
+  content: "\ecb3";
+}
+.solaris-icon-CrownCross:before {
+  content: "\ecb4";
+}
+.solaris-icon-CrownSimple:before {
+  content: "\ecb5";
+}
+.solaris-icon-Cube:before {
+  content: "\ecb6";
+}
+.solaris-icon-CubeFocus:before {
+  content: "\ecb7";
+}
+.solaris-icon-CubeTransparent:before {
+  content: "\ecb8";
+}
+.solaris-icon-Cylinder:before {
+  content: "\ecb9";
+}
+.solaris-icon-DevToLogo:before {
+  content: "\ecba";
+}
+.solaris-icon-Diamond:before {
+  content: "\ecbb";
+}
+.solaris-icon-DiamondsFour:before {
+  content: "\ecbc";
+}
+.solaris-icon-DiceFive:before {
+  content: "\ecbd";
+}
+.solaris-icon-DiceFour:before {
+  content: "\ecbe";
+}
+.solaris-icon-DiceOne:before {
+  content: "\ecbf";
+}
+.solaris-icon-DiceSix:before {
+  content: "\ecc0";
+}
+.solaris-icon-DiceThree:before {
+  content: "\ecc1";
+}
+.solaris-icon-DiceTwo:before {
+  content: "\ecc2";
+}
+.solaris-icon-DiscoBall:before {
+  content: "\ecc3";
+}
+.solaris-icon-DiscordLogo:before {
+  content: "\ecc4";
+}
+.solaris-icon-DribbbleLogo:before {
+  content: "\ecc5";
+}
+.solaris-icon-Drone:before {
+  content: "\ecc6";
+}
+.solaris-icon-DropboxLogo:before {
+  content: "\ecc7";
+}
+.solaris-icon-DropHalf:before {
+  content: "\ecc8";
+}
+.solaris-icon-DropHalfBottom:before {
+  content: "\ecc9";
+}
+.solaris-icon-DropSlash:before {
+  content: "\ecca";
+}
+.solaris-icon-Eraser:before {
+  content: "\eccb";
+}
+.solaris-icon-Exclude:before {
+  content: "\eccc";
+}
+.solaris-icon-ExcludeSquare:before {
+  content: "\eccd";
+}
+.solaris-icon-Eye:before {
+  content: "\ecce";
+}
+.solaris-icon-EyeClosed:before {
+  content: "\eccf";
+}
+.solaris-icon-Eyedropper:before {
+  content: "\ecd0";
+}
+.solaris-icon-EyedropperSample:before {
+  content: "\ecd1";
+}
+.solaris-icon-EyeSlash:before {
+  content: "\ecd2";
+}
+.solaris-icon-FacebookLogo:before {
+  content: "\ecd3";
+}
+.solaris-icon-FediverseLogo:before {
+  content: "\ecd4";
+}
+.solaris-icon-FigmaLogo:before {
+  content: "\ecd5";
+}
+.solaris-icon-FinnTheHuman:before {
+  content: "\ecd6";
+}
+.solaris-icon-FlipHorizontal:before {
+  content: "\ecd7";
+}
+.solaris-icon-FlipVertical:before {
+  content: "\ecd8";
+}
+.solaris-icon-FlowArrow:before {
+  content: "\ecd9";
+}
+.solaris-icon-FlyingSaucer:before {
+  content: "\ecda";
+}
+.solaris-icon-Football:before {
+  content: "\ecdb";
+}
+.solaris-icon-FootballHelmet:before {
+  content: "\ecdc";
+}
+.solaris-icon-FramerLogo:before {
+  content: "\ecdd";
+}
+.solaris-icon-GameController:before {
+  content: "\ecde";
+}
+.solaris-icon-GearFine:before {
+  content: "\ecdf";
+}
+.solaris-icon-Ghost:before {
+  content: "\ece0";
+}
+.solaris-icon-GithubLogo:before {
+  content: "\ece1";
+}
+.solaris-icon-GitlabLogo:before {
+  content: "\ece2";
+}
+.solaris-icon-GitlabLogoSimple:before {
+  content: "\ece3";
+}
+.solaris-icon-Golf:before {
+  content: "\ece4";
+}
+.solaris-icon-GoodreadsLogo:before {
+  content: "\ece5";
+}
+.solaris-icon-GoogleCardboardLogo:before {
+  content: "\ece6";
+}
+.solaris-icon-GoogleChromeLogo:before {
+  content: "\ece7";
+}
+.solaris-icon-GoogleDriveLogo:before {
+  content: "\ece8";
+}
+.solaris-icon-GoogleLogo:before {
+  content: "\ece9";
+}
+.solaris-icon-GooglePhotosLogo:before {
+  content: "\ecea";
+}
+.solaris-icon-GooglePlayLogo:before {
+  content: "\eceb";
+}
+.solaris-icon-GooglePodcastsLogo:before {
+  content: "\ecec";
+}
+.solaris-icon-Gradient:before {
+  content: "\eced";
+}
+.solaris-icon-GridFour:before {
+  content: "\ecee";
+}
+.solaris-icon-GridNine:before {
+  content: "\ecef";
+}
+.solaris-icon-Heart:before {
+  content: "\ecf0";
+}
+.solaris-icon-HeartBreak:before {
+  content: "\ecf1";
+}
+.solaris-icon-HeartHalf:before {
+  content: "\ecf2";
+}
+.solaris-icon-HeartStraight:before {
+  content: "\ecf3";
+}
+.solaris-icon-HeartStraightBreak:before {
+  content: "\ecf4";
+}
+.solaris-icon-Hexagon:before {
+  content: "\ecf5";
+}
+.solaris-icon-Hockey:before {
+  content: "\ecf6";
+}
+.solaris-icon-Horse:before {
+  content: "\ecf7";
+}
+.solaris-icon-InstagramLogo:before {
+  content: "\ecf8";
+}
+.solaris-icon-Intersect:before {
+  content: "\ecf9";
+}
+.solaris-icon-IntersectSquare:before {
+  content: "\ecfa";
+}
+.solaris-icon-IntersectThree:before {
+  content: "\ecfb";
+}
+.solaris-icon-Joystick:before {
+  content: "\ecfc";
+}
+.solaris-icon-Lasso:before {
+  content: "\ecfd";
+}
+.solaris-icon-Layout:before {
+  content: "\ecfe";
+}
+.solaris-icon-Lego:before {
+  content: "\ecff";
+}
+.solaris-icon-LegoSmiley:before {
+  content: "\ed00";
+}
+.solaris-icon-LineSegment:before {
+  content: "\ed01";
+}
+.solaris-icon-LineSegments:before {
+  content: "\ed02";
+}
+.solaris-icon-LineVertical:before {
+  content: "\ed03";
+}
+.solaris-icon-MagicWand:before {
+  content: "\ed04";
+}
+.solaris-icon-MarkerCircle:before {
+  content: "\ed05";
+}
+.solaris-icon-MaskHappy:before {
+  content: "\ed06";
+}
+.solaris-icon-MaskSad:before {
+  content: "\ed07";
+}
+.solaris-icon-Medal:before {
+  content: "\ed08";
+}
+.solaris-icon-MedalMilitary:before {
+  content: "\ed09";
+}
+.solaris-icon-Notches:before {
+  content: "\ed0a";
+}
+.solaris-icon-Octagon:before {
+  content: "\ed0b";
+}
+.solaris-icon-PaintBrush:before {
+  content: "\ed0c";
+}
+.solaris-icon-PaintBrushBroad:before {
+  content: "\ed0d";
+}
+.solaris-icon-PaintBrushHousehold:before {
+  content: "\ed0e";
+}
+.solaris-icon-PaintBucket:before {
+  content: "\ed0f";
+}
+.solaris-icon-PaintRoller:before {
+  content: "\ed10";
+}
+.solaris-icon-Palette:before {
+  content: "\ed11";
+}
+.solaris-icon-Parachute:before {
+  content: "\ed12";
+}
+.solaris-icon-Parallelogram:before {
+  content: "\ed13";
+}
+.solaris-icon-Pen:before {
+  content: "\ed14";
+}
+.solaris-icon-Pencil:before {
+  content: "\ed15";
+}
+.solaris-icon-PencilCircle:before {
+  content: "\ed16";
+}
+.solaris-icon-PencilLine:before {
+  content: "\ed17";
+}
+.solaris-icon-PencilRuler:before {
+  content: "\ed18";
+}
+.solaris-icon-PencilSimple:before {
+  content: "\ed19";
+}
+.solaris-icon-PencilSimpleLine:before {
+  content: "\ed1a";
+}
+.solaris-icon-PencilSimpleSlash:before {
+  content: "\ed1b";
+}
+.solaris-icon-PencilSlash:before {
+  content: "\ed1c";
+}
+.solaris-icon-PenNib:before {
+  content: "\ed1d";
+}
+.solaris-icon-PenNibStraight:before {
+  content: "\ed1e";
+}
+.solaris-icon-Pentagon:before {
+  content: "\ed1f";
+}
+.solaris-icon-Pentagram:before {
+  content: "\ed20";
+}
+.solaris-icon-PersonSimpleSki:before {
+  content: "\ed21";
+}
+.solaris-icon-PersonSimpleSnowboard:before {
+  content: "\ed22";
+}
+.solaris-icon-Perspective:before {
+  content: "\ed23";
+}
+.solaris-icon-PingPong:before {
+  content: "\ed24";
+}
+.solaris-icon-Pinwheel:before {
+  content: "\ed25";
+}
+.solaris-icon-Placeholder:before {
+  content: "\ed26";
+}
+.solaris-icon-PokerChip:before {
+  content: "\ed27";
+}
+.solaris-icon-Polygon:before {
+  content: "\ed28";
+}
+.solaris-icon-PuzzlePiece:before {
+  content: "\ed29";
+}
+.solaris-icon-Racquet:before {
+  content: "\ed2a";
+}
+.solaris-icon-Ranking:before {
+  content: "\ed2b";
+}
+.solaris-icon-Rectangle:before {
+  content: "\ed2c";
+}
+.solaris-icon-RectangleDashed:before {
+  content: "\ed2d";
+}
+.solaris-icon-Resize:before {
+  content: "\ed2e";
+}
+.solaris-icon-Rows:before {
+  content: "\ed2f";
+}
+.solaris-icon-RowsPlusBottom:before {
+  content: "\ed30";
+}
+.solaris-icon-RowsPlusTop:before {
+  content: "\ed31";
+}
+.solaris-icon-Ruler:before {
+  content: "\ed32";
+}
+.solaris-icon-Scissors:before {
+  content: "\ed33";
+}
+.solaris-icon-Scribble:before {
+  content: "\ed34";
+}
+.solaris-icon-ScribbleLoop:before {
+  content: "\ed35";
+}
+.solaris-icon-Scroll:before {
+  content: "\ed36";
+}
+.solaris-icon-Selection:before {
+  content: "\ed37";
+}
+.solaris-icon-SelectionAll:before {
+  content: "\ed38";
+}
+.solaris-icon-SelectionBackground:before {
+  content: "\ed39";
+}
+.solaris-icon-SelectionForeground:before {
+  content: "\ed3a";
+}
+.solaris-icon-SelectionInverse:before {
+  content: "\ed3b";
+}
+.solaris-icon-SelectionPlus:before {
+  content: "\ed3c";
+}
+.solaris-icon-SelectionSlash:before {
+  content: "\ed3d";
+}
+.solaris-icon-Shapes:before {
+  content: "\ed3e";
+}
+.solaris-icon-Sidebar:before {
+  content: "\ed3f";
+}
+.solaris-icon-SidebarSimple:before {
+  content: "\ed40";
+}
+.solaris-icon-Skull:before {
+  content: "\ed41";
+}
+.solaris-icon-SoccerBall:before {
+  content: "\ed42";
+}
+.solaris-icon-Spade:before {
+  content: "\ed43";
+}
+.solaris-icon-Sphere:before {
+  content: "\ed44";
+}
+.solaris-icon-Spiral:before {
+  content: "\ed45";
+}
+.solaris-icon-SplitHorizontal:before {
+  content: "\ed46";
+}
+.solaris-icon-SplitVertical:before {
+  content: "\ed47";
+}
+.solaris-icon-SprayBottle:before {
+  content: "\ed48";
+}
+.solaris-icon-Square:before {
+  content: "\ed49";
+}
+.solaris-icon-SquareHalf:before {
+  content: "\ed4a";
+}
+.solaris-icon-SquareHalfBottom:before {
+  content: "\ed4b";
+}
+.solaris-icon-SquaresFour:before {
+  content: "\ed4c";
+}
+.solaris-icon-SquareSplitHorizontal:before {
+  content: "\ed4d";
+}
+.solaris-icon-SquareSplitVertical:before {
+  content: "\ed4e";
+}
+.solaris-icon-Stack:before {
+  content: "\ed4f";
+}
+.solaris-icon-StackMinus:before {
+  content: "\ed50";
+}
+.solaris-icon-StackPlus:before {
+  content: "\ed51";
+}
+.solaris-icon-StackSimple:before {
+  content: "\ed52";
+}
+.solaris-icon-Stamp:before {
+  content: "\ed53";
+}
+.solaris-icon-Strategy:before {
+  content: "\ed54";
+}
+.solaris-icon-Subtract:before {
+  content: "\ed55";
+}
+.solaris-icon-SubtractSquare:before {
+  content: "\ed56";
+}
+.solaris-icon-Swatches:before {
+  content: "\ed57";
+}
+.solaris-icon-Sword:before {
+  content: "\ed58";
+}
+.solaris-icon-Target:before {
+  content: "\ed59";
+}
+.solaris-icon-TennisBall:before {
+  content: "\ed5a";
+}
+.solaris-icon-TextAUnderline:before {
+  content: "\ed5b";
+}
+.solaris-icon-TreasureChest:before {
+  content: "\ed5c";
+}
+.solaris-icon-TreePalm:before {
+  content: "\ed5d";
+}
+.solaris-icon-Triangle:before {
+  content: "\ed5e";
+}
+.solaris-icon-TriangleDashed:before {
+  content: "\ed5f";
+}
+.solaris-icon-Trophy:before {
+  content: "\ed60";
+}
+.solaris-icon-Unite:before {
+  content: "\ed61";
+}
+.solaris-icon-UniteSquare:before {
+  content: "\ed62";
+}
+.solaris-icon-Vignette:before {
+  content: "\ed63";
+}
+.solaris-icon-VirtualReality:before {
+  content: "\ed64";
+}
+.solaris-icon-Volleyball:before {
+  content: "\ed65";
+}
+.solaris-icon-Airplay:before {
+  content: "\ed66";
+}
+.solaris-icon-Alarm:before {
+  content: "\ed67";
+}
+.solaris-icon-Alien:before {
+  content: "\ed68";
+}
+.solaris-icon-Aperture:before {
+  content: "\ed69";
+}
+.solaris-icon-Article:before {
+  content: "\ed6a";
+}
+.solaris-icon-ArticleMedium:before {
+  content: "\ed6b";
+}
+.solaris-icon-ArticleNyTimes:before {
+  content: "\ed6c";
+}
+.solaris-icon-Baseball:before {
+  content: "\ed6d";
+}
+.solaris-icon-Calendar:before {
+  content: "\ed6e";
+}
+.solaris-icon-CalendarBlank:before {
+  content: "\ed6f";
+}
+.solaris-icon-CalendarCheck:before {
+  content: "\ed70";
+}
+.solaris-icon-CalendarDot:before {
+  content: "\ed71";
+}
+.solaris-icon-CalendarDots:before {
+  content: "\ed72";
+}
+.solaris-icon-CalendarHeart:before {
+  content: "\ed73";
+}
+.solaris-icon-CalendarMinus:before {
+  content: "\ed74";
+}
+.solaris-icon-CalendarPlus:before {
+  content: "\ed75";
+}
+.solaris-icon-CalendarSlash:before {
+  content: "\ed76";
+}
+.solaris-icon-CalendarStar:before {
+  content: "\ed77";
+}
+.solaris-icon-CalendarX:before {
+  content: "\ed78";
+}
+.solaris-icon-Camera:before {
+  content: "\ed79";
+}
+.solaris-icon-CameraPlus:before {
+  content: "\ed7a";
+}
+.solaris-icon-CameraRotate:before {
+  content: "\ed7b";
+}
+.solaris-icon-CameraSlash:before {
+  content: "\ed7c";
+}
+.solaris-icon-Car:before {
+  content: "\ed7d";
+}
+.solaris-icon-CarProfile:before {
+  content: "\ed7e";
+}
+.solaris-icon-CarSimple:before {
+  content: "\ed7f";
+}
+.solaris-icon-CassetteTape:before {
+  content: "\ed80";
+}
+.solaris-icon-ChargingStation:before {
+  content: "\ed81";
+}
+.solaris-icon-Church:before {
+  content: "\ed82";
+}
+.solaris-icon-Clock:before {
+  content: "\ed83";
+}
+.solaris-icon-ClockAfternoon:before {
+  content: "\ed84";
+}
+.solaris-icon-ClockClockwise:before {
+  content: "\ed85";
+}
+.solaris-icon-ClockCountdown:before {
+  content: "\ed86";
+}
+.solaris-icon-ClockCounterClockwise:before {
+  content: "\ed87";
+}
+.solaris-icon-ClockUser:before {
+  content: "\ed88";
+}
+.solaris-icon-ClosedCaptioning:before {
+  content: "\ed89";
+}
+.solaris-icon-Compass:before {
+  content: "\ed8a";
+}
+.solaris-icon-CompassRose:before {
+  content: "\ed8b";
+}
+.solaris-icon-Copyleft:before {
+  content: "\ed8c";
+}
+.solaris-icon-Copyright:before {
+  content: "\ed8d";
+}
+.solaris-icon-CornersIn:before {
+  content: "\ed8e";
+}
+.solaris-icon-CornersOut:before {
+  content: "\ed8f";
+}
+.solaris-icon-Crosshair:before {
+  content: "\ed90";
+}
+.solaris-icon-CrosshairSimple:before {
+  content: "\ed91";
+}
+.solaris-icon-Disc:before {
+  content: "\ed92";
+}
+.solaris-icon-Ear:before {
+  content: "\ed93";
+}
+.solaris-icon-EarSlash:before {
+  content: "\ed94";
+}
+.solaris-icon-Eject:before {
+  content: "\ed95";
+}
+.solaris-icon-EjectSimple:before {
+  content: "\ed96";
+}
+.solaris-icon-Elevator:before {
+  content: "\ed97";
+}
+.solaris-icon-Engine:before {
+  content: "\ed98";
+}
+.solaris-icon-Equalizer:before {
+  content: "\ed99";
+}
+.solaris-icon-EscalatorDown:before {
+  content: "\ed9a";
+}
+.solaris-icon-EscalatorUp:before {
+  content: "\ed9b";
+}
+.solaris-icon-Faders:before {
+  content: "\ed9c";
+}
+.solaris-icon-FadersHorizontal:before {
+  content: "\ed9d";
+}
+.solaris-icon-FastForward:before {
+  content: "\ed9e";
+}
+.solaris-icon-FastForwardCircle:before {
+  content: "\ed9f";
+}
+.solaris-icon-FilmReel:before {
+  content: "\eda0";
+}
+.solaris-icon-FilmScript:before {
+  content: "\eda1";
+}
+.solaris-icon-FilmSlate:before {
+  content: "\eda2";
+}
+.solaris-icon-FilmStrip:before {
+  content: "\eda3";
+}
+.solaris-icon-Flag:before {
+  content: "\eda4";
+}
+.solaris-icon-FlagBanner:before {
+  content: "\eda5";
+}
+.solaris-icon-FlagBannerFold:before {
+  content: "\eda6";
+}
+.solaris-icon-FlagCheckered:before {
+  content: "\eda7";
+}
+.solaris-icon-FlagPennant:before {
+  content: "\eda8";
+}
+.solaris-icon-FourK:before {
+  content: "\eda9";
+}
+.solaris-icon-FrameCorners:before {
+  content: "\edaa";
+}
+.solaris-icon-GasCan:before {
+  content: "\edab";
+}
+.solaris-icon-GasPump:before {
+  content: "\edac";
+}
+.solaris-icon-Gif:before {
+  content: "\edad";
+}
+.solaris-icon-Globe:before {
+  content: "\edae";
+}
+.solaris-icon-GlobeHemisphereEast:before {
+  content: "\edaf";
+}
+.solaris-icon-GlobeHemisphereWest:before {
+  content: "\edb0";
+}
+.solaris-icon-GlobeSimple:before {
+  content: "\edb1";
+}
+.solaris-icon-GlobeSimpleX:before {
+  content: "\edb2";
+}
+.solaris-icon-GlobeStand:before {
+  content: "\edb3";
+}
+.solaris-icon-GlobeX:before {
+  content: "\edb4";
+}
+.solaris-icon-Goggles:before {
+  content: "\edb5";
+}
+.solaris-icon-Gps:before {
+  content: "\edb6";
+}
+.solaris-icon-GpsFix:before {
+  content: "\edb7";
+}
+.solaris-icon-GpsSlash:before {
+  content: "\edb8";
+}
+.solaris-icon-Guitar:before {
+  content: "\edb9";
+}
+.solaris-icon-Headphones:before {
+  content: "\edba";
+}
+.solaris-icon-Headset:before {
+  content: "\edbb";
+}
+.solaris-icon-HighDefinition:before {
+  content: "\edbc";
+}
+.solaris-icon-Hospital:before {
+  content: "\edbd";
+}
+.solaris-icon-Hourglass:before {
+  content: "\edbe";
+}
+.solaris-icon-HourglassHigh:before {
+  content: "\edbf";
+}
+.solaris-icon-HourglassLow:before {
+  content: "\edc0";
+}
+.solaris-icon-HourglassMedium:before {
+  content: "\edc1";
+}
+.solaris-icon-HourglassSimple:before {
+  content: "\edc2";
+}
+.solaris-icon-HourglassSimpleHigh:before {
+  content: "\edc3";
+}
+.solaris-icon-HourglassSimpleLow:before {
+  content: "\edc4";
+}
+.solaris-icon-HourglassSimpleMedium:before {
+  content: "\edc5";
+}
+.solaris-icon-House:before {
+  content: "\edc6";
+}
+.solaris-icon-HouseLine:before {
+  content: "\edc7";
+}
+.solaris-icon-HouseSimple:before {
+  content: "\edc8";
+}
+.solaris-icon-Image:before {
+  content: "\edc9";
+}
+.solaris-icon-ImageBroken:before {
+  content: "\edca";
+}
+.solaris-icon-Images:before {
+  content: "\edcb";
+}
+.solaris-icon-ImageSquare:before {
+  content: "\edcc";
+}
+.solaris-icon-ImagesSquare:before {
+  content: "\edcd";
+}
+.solaris-icon-Jeep:before {
+  content: "\edce";
+}
+.solaris-icon-Lockers:before {
+  content: "\edcf";
+}
+.solaris-icon-MapPin:before {
+  content: "\edd0";
+}
+.solaris-icon-MapPinArea:before {
+  content: "\edd1";
+}
+.solaris-icon-MapPinLine:before {
+  content: "\edd2";
+}
+.solaris-icon-MapPinPlus:before {
+  content: "\edd3";
+}
+.solaris-icon-MapPinSimple:before {
+  content: "\edd4";
+}
+.solaris-icon-MapPinSimpleArea:before {
+  content: "\edd5";
+}
+.solaris-icon-MapPinSimpleLine:before {
+  content: "\edd6";
+}
+.solaris-icon-MapTrifold:before {
+  content: "\edd7";
+}
+.solaris-icon-Metronome:before {
+  content: "\edd8";
+}
+.solaris-icon-Microphone:before {
+  content: "\edd9";
+}
+.solaris-icon-MicrophoneSlash:before {
+  content: "\edda";
+}
+.solaris-icon-MicrophoneStage:before {
+  content: "\eddb";
+}
+.solaris-icon-Moped:before {
+  content: "\eddc";
+}
+.solaris-icon-MopedFront:before {
+  content: "\eddd";
+}
+.solaris-icon-Mosque:before {
+  content: "\edde";
+}
+.solaris-icon-Motorcycle:before {
+  content: "\eddf";
+}
+.solaris-icon-MusicNote:before {
+  content: "\ede0";
+}
+.solaris-icon-MusicNotes:before {
+  content: "\ede1";
+}
+.solaris-icon-MusicNoteSimple:before {
+  content: "\ede2";
+}
+.solaris-icon-MusicNotesMinus:before {
+  content: "\ede3";
+}
+.solaris-icon-MusicNotesPlus:before {
+  content: "\ede4";
+}
+.solaris-icon-MusicNotesSimple:before {
+  content: "\ede5";
+}
+.solaris-icon-NavigationArrow:before {
+  content: "\ede6";
+}
+.solaris-icon-Newspaper:before {
+  content: "\ede7";
+}
+.solaris-icon-NewspaperClipping:before {
+  content: "\ede8";
+}
+.solaris-icon-Panorama:before {
+  content: "\ede9";
+}
+.solaris-icon-Park:before {
+  content: "\edea";
+}
+.solaris-icon-Path:before {
+  content: "\edeb";
+}
+.solaris-icon-Pause:before {
+  content: "\edec";
+}
+.solaris-icon-PauseCircle:before {
+  content: "\eded";
+}
+.solaris-icon-PianoKeys:before {
+  content: "\edee";
+}
+.solaris-icon-PictureInPicture:before {
+  content: "\edef";
+}
+.solaris-icon-Play:before {
+  content: "\edf0";
+}
+.solaris-icon-PlayCircle:before {
+  content: "\edf1";
+}
+.solaris-icon-Playlist:before {
+  content: "\edf2";
+}
+.solaris-icon-PlayPause:before {
+  content: "\edf3";
+}
+.solaris-icon-PoliceCar:before {
+  content: "\edf4";
+}
+.solaris-icon-Queue:before {
+  content: "\edf5";
+}
+.solaris-icon-Record:before {
+  content: "\edf6";
+}
+.solaris-icon-Repeat:before {
+  content: "\edf7";
+}
+.solaris-icon-RepeatOnce:before {
+  content: "\edf8";
+}
+.solaris-icon-Rewind:before {
+  content: "\edf9";
+}
+.solaris-icon-RewindCircle:before {
+  content: "\edfa";
+}
+.solaris-icon-RoadHorizon:before {
+  content: "\edfb";
+}
+.solaris-icon-Rocket:before {
+  content: "\edfc";
+}
+.solaris-icon-RocketLaunch:before {
+  content: "\edfd";
+}
+.solaris-icon-Sailboat:before {
+  content: "\edfe";
+}
+.solaris-icon-Scooter:before {
+  content: "\edff";
+}
+.solaris-icon-Screencast:before {
+  content: "\ee00";
+}
+.solaris-icon-Seat:before {
+  content: "\ee01";
+}
+.solaris-icon-ShippingContainer:before {
+  content: "\ee02";
+}
+.solaris-icon-Shuffle:before {
+  content: "\ee03";
+}
+.solaris-icon-ShuffleAngular:before {
+  content: "\ee04";
+}
+.solaris-icon-ShuffleSimple:before {
+  content: "\ee05";
+}
+.solaris-icon-Signpost:before {
+  content: "\ee06";
+}
+.solaris-icon-SkipBack:before {
+  content: "\ee07";
+}
+.solaris-icon-SkipBackCircle:before {
+  content: "\ee08";
+}
+.solaris-icon-SkipForward:before {
+  content: "\ee09";
+}
+.solaris-icon-SkipForwardCircle:before {
+  content: "\ee0a";
+}
+.solaris-icon-Sliders:before {
+  content: "\ee0b";
+}
+.solaris-icon-SlidersHorizontal:before {
+  content: "\ee0c";
+}
+.solaris-icon-Slideshow:before {
+  content: "\ee0d";
+}
+.solaris-icon-SpeakerHifi:before {
+  content: "\ee0e";
+}
+.solaris-icon-SpeakerHigh:before {
+  content: "\ee0f";
+}
+.solaris-icon-SpeakerLow:before {
+  content: "\ee10";
+}
+.solaris-icon-SpeakerNone:before {
+  content: "\ee11";
+}
+.solaris-icon-SpeakerSimpleHigh:before {
+  content: "\ee12";
+}
+.solaris-icon-SpeakerSimpleLow:before {
+  content: "\ee13";
+}
+.solaris-icon-SpeakerSimpleNone:before {
+  content: "\ee14";
+}
+.solaris-icon-SpeakerSimpleSlash:before {
+  content: "\ee15";
+}
+.solaris-icon-SpeakerSimpleX:before {
+  content: "\ee16";
+}
+.solaris-icon-SpeakerSlash:before {
+  content: "\ee17";
+}
+.solaris-icon-SpeakerX:before {
+  content: "\ee18";
+}
+.solaris-icon-StandardDefinition:before {
+  content: "\ee19";
+}
+.solaris-icon-SteeringWheel:before {
+  content: "\ee1a";
+}
+.solaris-icon-Steps:before {
+  content: "\ee1b";
+}
+.solaris-icon-Stop:before {
+  content: "\ee1c";
+}
+.solaris-icon-StopCircle:before {
+  content: "\ee1d";
+}
+.solaris-icon-Subtitles:before {
+  content: "\ee1e";
+}
+.solaris-icon-SubtitlesSlash:before {
+  content: "\ee1f";
+}
+.solaris-icon-Subway:before {
+  content: "\ee20";
+}
+.solaris-icon-Suitcase:before {
+  content: "\ee21";
+}
+.solaris-icon-SuitcaseRolling:before {
+  content: "\ee22";
+}
+.solaris-icon-SuitcaseSimple:before {
+  content: "\ee23";
+}
+.solaris-icon-SwimmingPool:before {
+  content: "\ee24";
+}
+.solaris-icon-Synagogue:before {
+  content: "\ee25";
+}
+.solaris-icon-Taxi:before {
+  content: "\ee26";
+}
+.solaris-icon-Television:before {
+  content: "\ee27";
+}
+.solaris-icon-TelevisionSimple:before {
+  content: "\ee28";
+}
+.solaris-icon-Tent:before {
+  content: "\ee29";
+}
+.solaris-icon-ThreeD:before {
+  content: "\ee2a";
+}
+.solaris-icon-Timer:before {
+  content: "\ee2b";
+}
+.solaris-icon-Tipi:before {
+  content: "\ee2c";
+}
+.solaris-icon-TrafficCone:before {
+  content: "\ee2d";
+}
+.solaris-icon-TrafficSign:before {
+  content: "\ee2e";
+}
+.solaris-icon-TrafficSignal:before {
+  content: "\ee2f";
+}
+.solaris-icon-Train:before {
+  content: "\ee30";
+}
+.solaris-icon-TrainRegional:before {
+  content: "\ee31";
+}
+.solaris-icon-TrainSimple:before {
+  content: "\ee32";
+}
+.solaris-icon-Tram:before {
+  content: "\ee33";
+}
+.solaris-icon-Trolley:before {
+  content: "\ee34";
+}
+.solaris-icon-TrolleySuitcase:before {
+  content: "\ee35";
+}
+.solaris-icon-Truck:before {
+  content: "\ee36";
+}
+.solaris-icon-Van:before {
+  content: "\ee37";
+}
+.solaris-icon-VideoCamera:before {
+  content: "\ee38";
+}
+.solaris-icon-VideoCameraSlash:before {
+  content: "\ee39";
+}
+.solaris-icon-VideoConference:before {
+  content: "\ee3a";
+}
+.solaris-icon-VinylRecord:before {
+  content: "\ee3b";
+}
+.solaris-icon-Visor:before {
+  content: "\ee3c";
+}
+.solaris-icon-Watch:before {
+  content: "\ee3d";
+}
+.solaris-icon-Waveform:before {
+  content: "\ee3e";
+}
+.solaris-icon-WaveformSlash:before {
+  content: "\ee3f";
+}
+.solaris-icon-WaveSawtooth:before {
+  content: "\ee40";
+}
+.solaris-icon-WaveSine:before {
+  content: "\ee41";
+}
+.solaris-icon-WaveSquare:before {
+  content: "\ee42";
+}
+.solaris-icon-WaveTriangle:before {
+  content: "\ee43";
+}
+.solaris-icon-Webcam:before {
+  content: "\ee44";
+}
+.solaris-icon-WebcamSlash:before {
+  content: "\ee45";
+}
+.solaris-icon-Acorn:before {
+  content: "\ee46";
+}
+.solaris-icon-AddressBook:before {
+  content: "\ee47";
+}
+.solaris-icon-AddressBookTabs:before {
+  content: "\ee48";
+}
+.solaris-icon-Airplane:before {
+  content: "\ee49";
+}
+.solaris-icon-AirplaneLanding:before {
+  content: "\ee4a";
+}
+.solaris-icon-AirplaneTakeoff:before {
+  content: "\ee4b";
+}
+.solaris-icon-AirplaneTaxiing:before {
+  content: "\ee4c";
+}
+.solaris-icon-AirplaneTilt:before {
+  content: "\ee4d";
+}
+.solaris-icon-AirTrafficControl:before {
+  content: "\ee4e";
+}
+.solaris-icon-Anchor:before {
+  content: "\ee4f";
+}
+.solaris-icon-AnchorSimple:before {
+  content: "\ee50";
+}
+.solaris-icon-Asterisk:before {
+  content: "\ee51";
+}
+.solaris-icon-AsteriskSimple:before {
+  content: "\ee52";
+}
+.solaris-icon-At:before {
+  content: "\ee53";
+}
+.solaris-icon-Atom:before {
+  content: "\ee54";
+}
+.solaris-icon-Barricade:before {
+  content: "\ee55";
+}
+.solaris-icon-Bicycle:before {
+  content: "\ee56";
+}
+.solaris-icon-Bird:before {
+  content: "\ee57";
+}
+.solaris-icon-Boat:before {
+  content: "\ee58";
+}
+.solaris-icon-Bone:before {
+  content: "\ee59";
+}
+.solaris-icon-Broadcast:before {
+  content: "\ee5a";
+}
+.solaris-icon-Bus:before {
+  content: "\ee5b";
+}
+.solaris-icon-Butterfly:before {
+  content: "\ee5c";
+}
+.solaris-icon-CableCar:before {
+  content: "\ee5d";
+}
+.solaris-icon-Cactus:before {
+  content: "\ee5e";
+}
+.solaris-icon-Campfire:before {
+  content: "\ee5f";
+}
+.solaris-icon-Cat:before {
+  content: "\ee60";
+}
+.solaris-icon-CellTower:before {
+  content: "\ee61";
+}
+.solaris-icon-Chat:before {
+  content: "\ee62";
+}
+.solaris-icon-ChatCentered:before {
+  content: "\ee63";
+}
+.solaris-icon-ChatCenteredDots:before {
+  content: "\ee64";
+}
+.solaris-icon-ChatCenteredSlash:before {
+  content: "\ee65";
+}
+.solaris-icon-ChatCenteredText:before {
+  content: "\ee66";
+}
+.solaris-icon-ChatCircle:before {
+  content: "\ee67";
+}
+.solaris-icon-ChatCircleDots:before {
+  content: "\ee68";
+}
+.solaris-icon-ChatCircleSlash:before {
+  content: "\ee69";
+}
+.solaris-icon-ChatCircleText:before {
+  content: "\ee6a";
+}
+.solaris-icon-ChatDots:before {
+  content: "\ee6b";
+}
+.solaris-icon-Chats:before {
+  content: "\ee6c";
+}
+.solaris-icon-ChatsCircle:before {
+  content: "\ee6d";
+}
+.solaris-icon-ChatSlash:before {
+  content: "\ee6e";
+}
+.solaris-icon-ChatsTeardrop:before {
+  content: "\ee6f";
+}
+.solaris-icon-ChatTeardrop:before {
+  content: "\ee70";
+}
+.solaris-icon-ChatTeardropDots:before {
+  content: "\ee71";
+}
+.solaris-icon-ChatTeardropSlash:before {
+  content: "\ee72";
+}
+.solaris-icon-ChatTeardropText:before {
+  content: "\ee73";
+}
+.solaris-icon-ChatText:before {
+  content: "\ee74";
+}
+.solaris-icon-Cloud:before {
+  content: "\ee75";
+}
+.solaris-icon-CloudFog:before {
+  content: "\ee76";
+}
+.solaris-icon-CloudMoon:before {
+  content: "\ee77";
+}
+.solaris-icon-CloudRain:before {
+  content: "\ee78";
+}
+.solaris-icon-CloudSnow:before {
+  content: "\ee79";
+}
+.solaris-icon-CloudSun:before {
+  content: "\ee7a";
+}
+.solaris-icon-Clover:before {
+  content: "\ee7b";
+}
+.solaris-icon-Cow:before {
+  content: "\ee7c";
+}
+.solaris-icon-Cross:before {
+  content: "\ee7d";
+}
+.solaris-icon-Dog:before {
+  content: "\ee7e";
+}
+.solaris-icon-Drop:before {
+  content: "\ee7f";
+}
+.solaris-icon-DropSimple:before {
+  content: "\ee80";
+}
+.solaris-icon-Envelope:before {
+  content: "\ee81";
+}
+.solaris-icon-EnvelopeOpen:before {
+  content: "\ee82";
+}
+.solaris-icon-EnvelopeSimple:before {
+  content: "\ee83";
+}
+.solaris-icon-EnvelopeSimpleOpen:before {
+  content: "\ee84";
+}
+.solaris-icon-Export:before {
+  content: "\ee85";
+}
+.solaris-icon-Feather:before {
+  content: "\ee86";
+}
+.solaris-icon-Fire:before {
+  content: "\ee87";
+}
+.solaris-icon-FireSimple:before {
+  content: "\ee88";
+}
+.solaris-icon-Fish:before {
+  content: "\ee89";
+}
+.solaris-icon-FishSimple:before {
+  content: "\ee8a";
+}
+.solaris-icon-Flame:before {
+  content: "\ee8b";
+}
+.solaris-icon-Flower:before {
+  content: "\ee8c";
+}
+.solaris-icon-FlowerLotus:before {
+  content: "\ee8d";
+}
+.solaris-icon-FlowerTulip:before {
+  content: "\ee8e";
+}
+.solaris-icon-Hash:before {
+  content: "\ee8f";
+}
+.solaris-icon-HashStraight:before {
+  content: "\ee90";
+}
+.solaris-icon-Hurricane:before {
+  content: "\ee91";
+}
+.solaris-icon-Island:before {
+  content: "\ee92";
+}
+.solaris-icon-Leaf:before {
+  content: "\ee93";
+}
+.solaris-icon-LetterCircleH:before {
+  content: "\ee94";
+}
+.solaris-icon-LetterCircleP:before {
+  content: "\ee95";
+}
+.solaris-icon-LetterCircleV:before {
+  content: "\ee96";
+}
+.solaris-icon-Log:before {
+  content: "\ee97";
+}
+.solaris-icon-Mailbox:before {
+  content: "\ee98";
+}
+.solaris-icon-MatrixLogo:before {
+  content: "\ee99";
+}
+.solaris-icon-Megaphone:before {
+  content: "\ee9a";
+}
+.solaris-icon-MegaphoneSimple:before {
+  content: "\ee9b";
+}
+.solaris-icon-Meteor:before {
+  content: "\ee9c";
+}
+.solaris-icon-Moon:before {
+  content: "\ee9d";
+}
+.solaris-icon-MoonStars:before {
+  content: "\ee9e";
+}
+.solaris-icon-Mountains:before {
+  content: "\ee9f";
+}
+.solaris-icon-Numpad:before {
+  content: "\eea0";
+}
+.solaris-icon-PaperPlane:before {
+  content: "\eea1";
+}
+.solaris-icon-PaperPlaneRight:before {
+  content: "\eea2";
+}
+.solaris-icon-PaperPlaneTilt:before {
+  content: "\eea3";
+}
+.solaris-icon-PawPrint:before {
+  content: "\eea4";
+}
+.solaris-icon-Peace:before {
+  content: "\eea5";
+}
+.solaris-icon-Phone:before {
+  content: "\eea6";
+}
+.solaris-icon-PhoneCall:before {
+  content: "\eea7";
+}
+.solaris-icon-PhoneDisconnect:before {
+  content: "\eea8";
+}
+.solaris-icon-PhoneIncoming:before {
+  content: "\eea9";
+}
+.solaris-icon-PhoneList:before {
+  content: "\eeaa";
+}
+.solaris-icon-PhoneOutgoing:before {
+  content: "\eeab";
+}
+.solaris-icon-PhonePause:before {
+  content: "\eeac";
+}
+.solaris-icon-PhonePlus:before {
+  content: "\eead";
+}
+.solaris-icon-PhoneSlash:before {
+  content: "\eeae";
+}
+.solaris-icon-PhoneTransfer:before {
+  content: "\eeaf";
+}
+.solaris-icon-PhoneX:before {
+  content: "\eeb0";
+}
+.solaris-icon-Planet:before {
+  content: "\eeb1";
+}
+.solaris-icon-Plant:before {
+  content: "\eeb2";
+}
+.solaris-icon-Quotes:before {
+  content: "\eeb3";
+}
+.solaris-icon-Rabbit:before {
+  content: "\eeb4";
+}
+.solaris-icon-Radio:before {
+  content: "\eeb5";
+}
+.solaris-icon-Rainbow:before {
+  content: "\eeb6";
+}
+.solaris-icon-RainbowCloud:before {
+  content: "\eeb7";
+}
+.solaris-icon-Rss:before {
+  content: "\eeb8";
+}
+.solaris-icon-RssSimple:before {
+  content: "\eeb9";
+}
+.solaris-icon-Share:before {
+  content: "\eeba";
+}
+.solaris-icon-ShareFat:before {
+  content: "\eebb";
+}
+.solaris-icon-ShareNetwork:before {
+  content: "\eebc";
+}
+.solaris-icon-ShootingStar:before {
+  content: "\eebd";
+}
+.solaris-icon-Shrimp:before {
+  content: "\eebe";
+}
+.solaris-icon-Signature:before {
+  content: "\eebf";
+}
+.solaris-icon-Snowflake:before {
+  content: "\eec0";
+}
+.solaris-icon-Sparkle:before {
+  content: "\eec1";
+}
+.solaris-icon-Star:before {
+  content: "\eec2";
+}
+.solaris-icon-StarAndCrescent:before {
+  content: "\eec3";
+}
+.solaris-icon-StarFour:before {
+  content: "\eec4";
+}
+.solaris-icon-StarHalf:before {
+  content: "\eec5";
+}
+.solaris-icon-StarOfDavid:before {
+  content: "\eec6";
+}
+.solaris-icon-Sticker:before {
+  content: "\eec7";
+}
+.solaris-icon-Sun:before {
+  content: "\eec8";
+}
+.solaris-icon-SunDim:before {
+  content: "\eec9";
+}
+.solaris-icon-SunHorizon:before {
+  content: "\eeca";
+}
+.solaris-icon-Thermometer:before {
+  content: "\eecb";
+}
+.solaris-icon-ThermometerCold:before {
+  content: "\eecc";
+}
+.solaris-icon-ThermometerHot:before {
+  content: "\eecd";
+}
+.solaris-icon-ThermometerSimple:before {
+  content: "\eece";
+}
+.solaris-icon-ThumbsDown:before {
+  content: "\eecf";
+}
+.solaris-icon-ThumbsUp:before {
+  content: "\eed0";
+}
+.solaris-icon-Tornado:before {
+  content: "\eed1";
+}
+.solaris-icon-Translate:before {
+  content: "\eed2";
+}
+.solaris-icon-Tree:before {
+  content: "\eed3";
+}
+.solaris-icon-TreeEvergreen:before {
+  content: "\eed4";
+}
+.solaris-icon-Umbrella:before {
+  content: "\eed5";
+}
+.solaris-icon-UmbrellaSimple:before {
+  content: "\eed6";
+}
+.solaris-icon-Voicemail:before {
+  content: "\eed7";
+}
+.solaris-icon-Waves:before {
+  content: "\eed8";
+}
+.solaris-icon-Wind:before {
+  content: "\eed9";
+}
+.solaris-icon-YinYang:before {
+  content: "\eeda";
+}
+
+:root {
+  --size-font-body-16: 16px;
+  --size-font-body-14: 14px;
+  --size-font-body-12: 12px;
+  --size-font-heading-40: 40px;
+  --size-font-heading-32: 32px;
+  --size-font-heading-24: 24px;
+  --size-font-heading-20: 20px;
+  --size-stoke-2: 2px;
+  --size-stoke-1: 1px;
+  --size-stoke-0: 0;
+  --size-radius-999: 999px;
+  --size-radius-16: 16px;
+  --size-radius-8: 8px;
+  --size-radius-4: 4px;
+  --size-radius-0: 0;
+  --size-spacing-32: 32px;
+  --size-spacing-24: 24px;
+  --size-spacing-16: 16px;
+  --size-spacing-12: 12px;
+  --size-spacing-8: 8px;
+  --size-spacing-4: 4px;
+  --size-spacing-0: 0;
+}
+
+:root {
+  --font-family-primary: 'DM Sans', sans-serif;
+}
+html[data-theme="light"][data-brand="solaris-theHouse"] {
+  --color-icons-static-white: rgba(255,255,255,1);
+  --color-icons-static-black: rgba(48,48,48,1);
+  --color-icons-essential-contrast: rgba(255,255,255,1);
+  --color-icons-essential-disabled: rgba(182,192,201,1);
+  --color-icons-essential-low: rgba(110,123,133,1);
+  --color-icons-essential-medium: rgba(55,65,81,1);
+  --color-icons-essential-high: rgba(48,48,48,1);
+  --color-support-colors-neutral: rgba(74,85,96,1);
+  --color-support-colors-orange: rgba(217,119,6,1);
+  --color-support-colors-teal: rgba(15,118,110,1);
+  --color-support-colors-emerald: rgba(5,150,105,1);
+  --color-support-colors-red: rgba(220,38,38,1);
+  --color-support-colors-yellow: rgba(199,135,0,1);
+  --color-support-colors-pink: rgba(219,39,119,1);
+  --color-support-colors-cyan: rgba(8,145,178,1);
+  --color-support-colors-purple: rgba(124,58,237,1);
+  --color-support-colors-green: rgba(101,163,13,1);
+  --color-support-colors-blue: rgba(37,99,235,1);
+  --color-branding-logo-contrast: rgba(2,7,38,1);
+  --color-branding-surface-segundary-base: rgba(2,7,38,1);
+  --color-branding-surface-primary-pressing: rgba(16,96,168,1);
+  --color-branding-surface-primary-hovering: rgba(22,108,186,1);
+  --color-branding-surface-primary-base: rgba(43,135,217,1);
+  --color-state-feedback-informative-surface-pressing: rgba(20,78,160,1);
+  --color-state-feedback-informative-surface-hovering: rgba(26,99,194,1);
+  --color-state-feedback-informative-surface-base: rgba(30,111,217,1);
+  --color-state-feedback-negative-surface-pressing: rgba(140,39,31,1);
+  --color-state-feedback-negative-surface-hovering: rgba(176,51,40,1);
+  --color-state-feedback-negative-surface-base: rgba(192,55,43,1);
+  --color-state-feedback-warning-surface-pressing: rgba(169,111,34,1);
+  --color-state-feedback-warning-surface-hovering: rgba(183,119,25,1);
+  --color-state-feedback-warning-surface-base: rgba(198,135,43,1);
+  --color-state-feedback-positive-surface-pressing: rgba(20,82,53,1);
+  --color-state-feedback-positive-surface-hovering: rgba(27,110,69,1);
+  --color-state-feedback-positive-surface-base: rgba(31,122,77,1);
+  --color-state-system-ghost-pressing-contrast: rgba(255,255,255,0.32);
+  --color-state-system-ghost-hovering-contrast: rgba(255,255,255,0.24);
+  --color-state-system-ghost-pressing: rgba(12,17,20,0.08);
+  --color-state-system-ghost-hovering: rgba(12,17,20,0.04);
+  --color-state-system-hovering: rgba(194,214,228,1);
+  --color-state-system-pressing: rgba(175,201,218,1);
+  --color-state-system-focus: rgba(91,141,239,1);
+  --color-state-system-disabled: rgba(238,242,245,1);
+  --color-state-system-selected: rgba(214,227,237,1);
+  --color-stroke-disable: rgba(182,192,201,1);
+  --color-stroke-list: rgba(229,235,240,1);
+  --color-stroke-frame: rgba(214,220,224,1);
+  --color-theme-overlay: rgba(249,250,251,1);
+  --color-theme-upper: rgba(244,246,248,1);
+  --color-theme-lower: rgba(249,250,251,1);
+  --color-theme-base: rgba(255,255,255,1);
+  --color-text-static-black: rgba(48,48,48,1);
+  --color-text-static-white: rgba(255,255,255,1);
+  --color-text-essential-disabled: rgba(182,192,201,1);
+  --color-text-essential-caption: rgba(110,123,133,1);
+  --color-text-essential-body: rgba(55,65,81,1);
+  --color-text-essential-heading: rgba(48,48,48,1);
+}
+html[data-theme="dark"][data-brand="solaris-theHouse"] {
+  --color-icons-static-white: rgba(255,255,255,1);
+  --color-icons-static-black: rgba(48,48,48,1);
+  --color-icons-essential-contrast: rgba(48,48,48,1);
+  --color-icons-essential-disabled: rgba(82,92,102,1);
+  --color-icons-essential-low: rgba(160,170,178,1);
+  --color-icons-essential-medium: rgba(201,209,217,1);
+  --color-icons-essential-high: rgba(255,255,255,1);
+  --color-support-colors-neutral: rgba(118,129,140,1);
+  --color-support-colors-orange: rgba(202,92,12,1);
+  --color-support-colors-teal: rgba(33,139,125,1);
+  --color-support-colors-emerald: rgba(14,142,95,1);
+  --color-support-colors-red: rgba(226,63,63,1);
+  --color-support-colors-yellow: rgba(162,116,19,1);
+  --color-support-colors-pink: rgba(238,47,147,1);
+  --color-support-colors-cyan: rgba(36,136,151,1);
+  --color-support-colors-purple: rgba(134,93,255,1);
+  --color-support-colors-green: rgba(90,137,19,1);
+  --color-support-colors-blue: rgba(31,117,255,1);
+  --color-branding-logo-contrast: rgba(255,255,255,1);
+  --color-branding-surface-segundary-base: rgba(2,7,38,1);
+  --color-branding-surface-primary-pressing: rgba(16,96,168,1);
+  --color-branding-surface-primary-hovering: rgba(22,108,186,1);
+  --color-branding-surface-primary-base: rgba(43,135,217,1);
+  --color-state-feedback-informative-surface-pressing: rgba(25,84,163,1);
+  --color-state-feedback-informative-surface-hovering: rgba(31,104,199,1);
+  --color-state-feedback-informative-surface-base: rgba(50,127,229,1);
+  --color-state-feedback-negative-surface-pressing: rgba(146,44,34,1);
+  --color-state-feedback-negative-surface-hovering: rgba(202,62,49,1);
+  --color-state-feedback-negative-surface-base: rgba(224,76,63,1);
+  --color-state-feedback-warning-surface-pressing: rgba(176,118,36,1);
+  --color-state-feedback-warning-surface-hovering: rgba(223,148,39,1);
+  --color-state-feedback-warning-surface-base: rgba(198,135,43,1);
+  --color-state-feedback-positive-surface-pressing: rgba(27,91,58,1);
+  --color-state-feedback-positive-surface-hovering: rgba(37,129,84,1);
+  --color-state-feedback-positive-surface-base: rgba(54,147,101,1);
+  --color-state-system-ghost-pressing-contrast: rgba(12,17,20,0.32);
+  --color-state-system-ghost-hovering-contrast: rgba(12,17,20,0.24);
+  --color-state-system-ghost-pressing: rgba(255,255,255,0.08);
+  --color-state-system-ghost-hovering: rgba(255,255,255,0.04);
+  --color-state-system-hovering: rgba(42,63,74,1);
+  --color-state-system-pressing: rgba(49,73,85,1);
+  --color-state-system-focus: rgba(127,168,255,1);
+  --color-state-system-disabled: rgba(27,35,41,1);
+  --color-state-system-selected: rgba(34,52,62,1);
+  --color-stroke-disable: rgba(82,92,102,1);
+  --color-stroke-list: rgba(21,27,31,1);
+  --color-stroke-frame: rgba(46,53,58,1);
+  --color-theme-overlay: rgba(21,27,31,1);
+  --color-theme-upper: rgba(18,23,27,1);
+  --color-theme-lower: rgba(15,20,23,1);
+  --color-theme-base: rgba(12,17,20,1);
+  --color-text-static-black: rgba(48,48,48,1);
+  --color-text-static-white: rgba(255,255,255,1);
+  --color-text-essential-disabled: rgba(81,92,102,1);
+  --color-text-essential-caption: rgba(160,170,178,1);
+  --color-text-essential-body: rgba(201,209,217,1);
+  --color-text-essential-heading: rgba(255,255,255,1);
+}

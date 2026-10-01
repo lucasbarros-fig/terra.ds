@@ -1,0 +1,21 @@
+@if (showAfterIcon()) {
+  <lib-icon
+    class="tag-icon tag-icon--leading"
+    [icon]="afterIcon()"
+    [size]="iconPx"
+    color="inherit"
+  ></lib-icon>
+}
+
+<span class="tag-label"><ng-content></ng-content></span>
+
+@if (showCloseButton()) {
+  <button
+    type="button"
+    class="tag-close"
+    aria-label="Fechar"
+    (click)="onCloseClick($event)"
+  >
+    <lib-icon icon="X" [size]="iconPx" color="inherit"></lib-icon>
+  </button>
+}

@@ -1,0 +1,59 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  font-family: 'DM Sans', sans-serif;
+
+  .item {
+    align-items: center;
+
+    .divider {
+      display: inline-flex;
+      align-items: center;
+      color: var(--color-text-essential-caption, #a0aab2);
+
+      ::ng-deep lib-icon {
+        color: inherit;
+      }
+    }
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      padding: 0 4px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 18px;
+      color: var(--color-text-essential-caption, #a0aab2);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 120ms ease, border-color 120ms ease, border-radius 120ms ease, padding 120ms ease;
+
+      &:hover {
+        color: var(--color-text-essential-body, #d2dadf);
+      }
+
+      &:focus-visible {
+        outline: none;
+        padding: 4px 8px;
+        border-color: var(--color-state-system-focus, #7fa8ff);
+        border-radius: 4px;
+        color: var(--color-text-essential-heading, #fff);
+      }
+
+      &.no-link {
+        cursor: default;
+        pointer-events: none;
+      }
+
+      &.current {
+        color: var(--color-text-essential-heading, #fff);
+      }
+
+      &.ellipsis {
+        padding: 0 6px;
+      }
+    }
+  }
+}

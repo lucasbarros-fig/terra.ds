@@ -1,0 +1,51 @@
+<div class="accordion">
+  <div
+    class="accordion-head"
+    role="button"
+    [attr.tabindex]="disabled() ? -1 : 0"
+    [attr.aria-expanded]="isExpanded()"
+    [attr.aria-disabled]="disabled() || null"
+    (click)="onHeadClick($event)"
+    (keydown)="onHeadKeydown($event)"
+  >
+    @if (showIcon()) {
+      <lib-icon
+        class="accordion-leading-icon"
+        [icon]="icon()"
+        [size]="20"
+        [color]="iconColor()"
+      ></lib-icon>
+    }
+
+    <span class="accordion-label" [attr.title]="label()">{{ label() }}</span>
+
+    @if (showStatus()) {
+      <span class="accordion-status">
+        <lib-status
+          [status]="statusColor()"
+          size="large"
+          [text]="statusText()"
+        ></lib-status>
+      </span>
+    }
+
+    <lib-icon-button
+      class="accordion-toggle"
+      [class.is-rotated]="isExpanded()"
+      type="neutral"
+      variant="bare"
+      icon="CaretDown"
+      [disabled]="disabled()"
+      [ariaLabel]="isExpanded() ? 'Recolher' : 'Expandir'"
+      (clicked)="onToggleClick($event)"
+    ></lib-icon-button>
+  </div>
+
+  @if (isExpanded()) {
+    <div class="accordion-body" role="region">
+      <div class="accordion-content">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  }
+</div>

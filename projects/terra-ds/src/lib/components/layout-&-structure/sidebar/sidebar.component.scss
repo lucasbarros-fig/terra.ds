@@ -1,0 +1,306 @@
+// Sidebar — Figma Terra.ds 377:1692 (Desktop · Navigation=Default · Colapse=No|Yes).
+:host {
+  --sidebar-width: 280px;
+  --sidebar-top-height: 90px;
+
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: var(--sidebar-width);
+  height: 100%;
+  border-right: var(--size-stoke-1) solid var(--color-stroke-frame);
+  background-color: var(--color-theme-lower);
+  font-family: var(--font-family-primary, 'DM Sans', sans-serif);
+  transition: width 200ms ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+:host(.lib-sidebar--collapsed) {
+  --sidebar-width: 84px;
+
+  .sidebar-logo--marca {
+    display: none;
+  }
+
+  .sidebar-logo--simbolo {
+    display: block;
+  }
+}
+
+// ---------- Top (logo) ----------
+.sidebar-top {
+  position: relative;
+  display: flex;
+  flex: 0 0 var(--sidebar-top-height);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0 var(--size-spacing-16);
+  border-bottom: var(--size-stoke-1) solid var(--color-stroke-frame);
+  background-color: var(--color-theme-lower);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  line-height: 0;
+}
+
+.sidebar-brand-default {
+  display: inline-flex;
+}
+
+.sidebar-logo {
+  fill: var(--color-text-essential-heading);
+}
+
+.sidebar-logo--marca {
+  width: 160px;
+  height: 40px;
+}
+
+.sidebar-logo--simbolo {
+  display: none;
+  width: 40px;
+  height: 33px;
+}
+
+.sidebar-top-accent {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 80px;
+  height: 3px;
+  border-radius: var(--size-radius-999);
+  background-color: var(--color-branding-surface-primary-base);
+  transform: translateX(-50%);
+}
+
+:host(.lib-sidebar--collapsed) .sidebar-top-accent {
+  bottom: calc(-1 * var(--size-stoke-1));
+  width: 48px;
+}
+
+// ---------- Botão recolher/expandir (na borda) ----------
+.sidebar-toggle {
+  position: absolute;
+  top: calc(var(--sidebar-top-height) - 18px);
+  right: calc(-1 * var(--size-spacing-16));
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  padding: var(--size-spacing-8);
+  border: var(--size-stoke-1) solid var(--color-stroke-frame);
+  border-radius: var(--size-radius-8);
+  background-color: var(--color-theme-lower);
+  background-image: none;
+  color: var(--color-icons-essential-high);
+  cursor: pointer;
+
+  &:hover {
+    background-image: linear-gradient(
+      var(--color-state-system-ghost-hovering),
+      var(--color-state-system-ghost-hovering)
+    );
+  }
+
+  &:active {
+    background-image: linear-gradient(
+      var(--color-state-system-ghost-pressing),
+      var(--color-state-system-ghost-pressing)
+    );
+  }
+
+  &:focus-visible {
+    outline: var(--size-stoke-2) solid var(--color-state-system-focus);
+    outline-offset: var(--size-stoke-2);
+  }
+
+  lib-icon {
+    line-height: 0;
+  }
+}
+
+// ---------- Body (navegação) ----------
+.sidebar-body {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: var(--size-spacing-12);
+  box-sizing: border-box;
+  min-height: 0;
+  padding: var(--size-spacing-24) var(--size-spacing-16) var(--size-spacing-16);
+  overflow-y: auto;
+}
+
+// Recolhida: o tooltip do item sai da sidebar, então o corpo não pode recortar.
+:host(.lib-sidebar--collapsed) .sidebar-body {
+  overflow: visible;
+}
+
+.sidebar-group-label {
+  padding: 0 var(--size-spacing-16);
+  overflow: hidden;
+  font-size: var(--size-font-body-12);
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--color-text-essential-caption);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-12);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-list-item {
+  display: flex;
+}
+
+// ---------- Item (_Button Side 350:3101) ----------
+.sidebar-item {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--size-spacing-8);
+  box-sizing: border-box;
+  min-width: 0;
+  height: 48px;
+  margin: 0;
+  padding: var(--size-spacing-16);
+  border: 0;
+  border-radius: var(--size-radius-8);
+  background-color: transparent;
+  color: var(--color-icons-essential-high);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--color-state-system-ghost-hovering);
+  }
+
+  &:active {
+    background-color: var(--color-state-system-ghost-pressing);
+  }
+
+  &:focus-visible {
+    outline: var(--size-stoke-2) solid var(--color-state-system-focus);
+    outline-offset: var(--size-spacing-4);
+  }
+
+  &.is-selected {
+    background-color: var(--color-branding-surface-primary-base);
+    color: var(--color-icons-essential-contrast);
+
+    &:hover {
+      background-color: var(--color-branding-surface-primary-hovering);
+    }
+
+    &:active {
+      background-color: var(--color-branding-surface-primary-pressing);
+    }
+  }
+
+  &:disabled {
+    background-color: transparent;
+    color: var(--color-icons-essential-disabled);
+    cursor: not-allowed;
+  }
+}
+
+:host(.lib-sidebar--collapsed) .sidebar-item {
+  flex: 0 0 auto;
+}
+
+.sidebar-item-icon,
+.sidebar-item-caret {
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.sidebar-item-label {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  font-size: var(--size-font-body-14);
+  font-weight: 500;
+  line-height: 21px;
+  color: var(--color-text-essential-heading);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  .sidebar-item.is-selected & {
+    font-weight: 700;
+    color: var(--color-text-static-white);
+  }
+
+  .sidebar-item:disabled & {
+    color: var(--color-text-essential-disabled);
+  }
+}
+
+.sidebar-item-badge {
+  flex-shrink: 0;
+}
+
+// Recolhida: rótulo em tooltip (_Primitive Tooltip), visível no hover e no foco.
+.sidebar-item-tooltip {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + var(--size-spacing-16));
+  z-index: 3;
+  display: none;
+  box-sizing: border-box;
+  min-width: 135px;
+  max-width: 265px;
+  padding: var(--size-spacing-12) var(--size-spacing-16);
+  border: var(--size-stoke-1) solid var(--color-stroke-frame);
+  border-radius: var(--size-radius-4);
+  background-color: var(--color-theme-base);
+  font-size: var(--size-font-body-14);
+  font-weight: 400;
+  line-height: 21px;
+  color: var(--color-text-essential-heading);
+  white-space: nowrap;
+  transform: translateY(-50%);
+  pointer-events: none;
+
+  // Seta (tail) apontando para o item.
+  &::before {
+    position: absolute;
+    top: 50%;
+    left: -5px;
+    width: 8px;
+    height: 8px;
+    border-bottom: var(--size-stoke-1) solid var(--color-stroke-frame);
+    border-left: var(--size-stoke-1) solid var(--color-stroke-frame);
+    background-color: var(--color-theme-base);
+    content: '';
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .sidebar-item:hover:not(:disabled) > &,
+  .sidebar-item:focus-visible > & {
+    display: block;
+  }
+}

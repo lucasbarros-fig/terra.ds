@@ -1,0 +1,115 @@
+:host {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.lib-file-item {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-16, 16px);
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--size-spacing-16, 16px);
+  border: var(--size-stoke-1, 1px) solid var(--color-stroke-frame, #d6dce0);
+  border-radius: var(--size-radius-8, 8px);
+  background: var(--color-theme-lower, #f9fafb);
+}
+
+.lib-file-item__icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
+.lib-file-item__file-svg {
+  display: block;
+  width: 30px;
+  height: 40px;
+}
+
+.lib-file-item__file-body {
+  fill: var(--color-state-system-selected, #d6e3ed);
+}
+
+.lib-file-item__file-fold {
+  fill: var(--color-state-system-pressing, #afc9da);
+}
+
+.lib-file-item__content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--size-spacing-4, 4px);
+  min-width: 0;
+}
+
+.lib-file-item__title,
+.lib-file-item__caption {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-family-primary, 'DM Sans', sans-serif);
+  line-height: var(--tds-line-height-md, 150%);
+}
+
+.lib-file-item__title {
+  font-size: var(--size-font-body-14, 14px);
+  font-weight: var(--tds-ref-font-weight-bold, 700);
+  color: var(--color-text-essential-heading, #303030);
+}
+
+.lib-file-item__caption {
+  font-size: var(--size-font-body-12, 12px);
+  font-weight: var(--tds-ref-font-weight-medium, 500);
+  color: var(--color-text-essential-caption, #6e7b85);
+}
+
+.lib-file-item__action,
+.lib-file-item__slot {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  margin-left: auto;
+}
+
+.lib-file-item__slot--hidden {
+  display: none;
+}
+
+.lib-file-item--selected {
+  border-color: var(--color-branding-surface-primary-base, #db0082);
+}
+
+.lib-file-item--uploading {
+  .lib-file-item__title {
+    color: var(--color-text-essential-disabled, #b6c0c9);
+  }
+}
+
+.lib-file-item--disabled {
+  padding: var(--size-spacing-16, 16px) var(--size-spacing-24, 24px)
+    var(--size-spacing-16, 16px) var(--size-spacing-16, 16px);
+  border-color: var(--color-stroke-disable, #b6c0c9);
+  background: var(--color-state-system-disabled, #eef2f5);
+
+  .lib-file-item__title,
+  .lib-file-item__caption {
+    color: var(--color-text-essential-disabled, #b6c0c9);
+  }
+
+  .lib-file-item__file-body,
+  .lib-file-item__file-fold {
+    opacity: 0.72;
+  }
+}
+
+.lib-file-item--error {
+  border-color: var(--color-state-feedback-negative-surface-base, #c0372b);
+
+  .lib-file-item__caption {
+    color: var(--color-state-feedback-negative-surface-base, #c0372b);
+  }
+}

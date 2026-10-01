@@ -1,0 +1,141 @@
+<lib-sidebar
+	class="screen-sidebar"
+	[items]="sidebarItems"
+	[(activeId)]="activeSidebar"
+></lib-sidebar>
+
+<main class="screen-main">
+	<lib-top
+		title="Crédito Veicular"
+		[breadcrumbs]="[{ label: 'Mesa de análise' }]"
+		userRole="Business Banker"
+		userName="Ana Beatriz Souza"
+		[actions]="topActions"
+	></lib-top>
+
+	<div class="screen-header">
+		<div class="screen-titles">
+			<h1 class="screen-title">Minha mesa de análise</h1>
+			<p class="screen-subtitle">
+				Segunda-feira, 28 de setembro · 8 na sua carteira · 15 na fila da equipe · atualizado há 1 min
+			</p>
+		</div>
+		<form class="screen-actions" role="search" (submit)="$event.preventDefault()">
+			<lib-input-text
+				class="screen-search"
+				variant="outlined"
+				iconBefore="MagnifyingGlass"
+				placeholder="Buscar por ID, CPF ou placa"
+				inputAriaLabel="Buscar propostas por ID, CPF ou placa"
+			></lib-input-text>
+			<lib-button intent="neutral" variant="ghost" icon="plus" label="Nova proposta"></lib-button>
+			<lib-button intent="branding" variant="filled" icon="play" label="Iniciar próxima proposta"></lib-button>
+		</form>
+	</div>
+
+	<lib-alert
+		type="neutral"
+		title="3 propostas da sua carteira vencem em menos de 1 hora"
+		description="#48213 Marcos Vinícius Lima · 18 min  ·  #48207 Fernanda Prado Costa · 42 min  ·  #48215 Luana Martins Ferreira · 51 min"
+		actionLabel="Começar pela #48213"
+	></lib-alert>
+
+	<section class="screen-kpis" aria-label="Indicadores do dia">
+		@for (kpi of kpis; track kpi.id) {
+			<lib-kpi-card
+				[label]="kpi.label"
+				[value]="kpi.value"
+				[icon]="kpi.icon"
+				[statusLabel]="kpi.statusLabel"
+				[statusColor]="kpi.statusColor"
+				[note]="kpi.note"
+				[interactive]="kpi.filters"
+				[selected]="kpi.filters ? filter() === kpi.id : undefined"
+				(cardClick)="toggleFilter(kpi)"
+			></lib-kpi-card>
+		}
+	</section>
+
+	<div class="screen-body">
+		<section class="screen-panel screen-pipeline" aria-labelledby="pipeline-title">
+			<header class="screen-panel-header">
+				<div class="screen-panel-title-row">
+					<h2 id="pipeline-title" class="screen-panel-title">Pipeline da mesa</h2>
+					<span class="screen-hint" aria-live="polite">
+						@if (filterLabel()) {
+							· filtrado por “{{ filterLabel() }}”
+						} @else {
+							· cards ordenados pelo prazo de SLA
+						}
+					</span>
+				</div>
+				<lib-button intent="neutral" variant="ghost" [showIcon]="false" label="Ver em lista"></lib-button>
+			</header>
+
+			<div class="screen-board">
+				@for (etapa of visibleEtapas(); track etapa.name) {
+					<section class="screen-column" [attr.aria-label]="etapa.name + ', ' + etapa.total + ' propostas'">
+						<div class="screen-column-header">
+							<h3 class="screen-column-title">{{ etapa.name }}</h3>
+							<lib-tag emphasis="low" color="neutral" size="small">{{ etapa.total }}</lib-tag>
+						</div>
+						@for (p of etapa.cards; track p.id) {
+							<lib-card-kanban
+								[type]="p.type"
+								[proposalId]="p.id"
+								[clientName]="p.client"
+								[product]="p.product"
+								[amount]="p.amount"
+								[statusLabel]="p.statusLabel"
+								[statusColor]="p.statusColor"
+								[comments]="p.comments"
+								[time]="p.time"
+								[timeLabel]="'há ' + p.time + ' na etapa'"
+							></lib-card-kanban>
+						} @empty {
+							<p class="screen-empty">Nenhuma proposta nesta etapa com o filtro atual.</p>
+						}
+						@if (hiddenCount(etapa) > 0) {
+							<lib-button
+								class="screen-more"
+								intent="neutral"
+								variant="ghost"
+								[showIcon]="false"
+								[fullWidth]="true"
+								[label]="'+' + hiddenCount(etapa) + ' propostas'"
+							></lib-button>
+						}
+					</section>
+				}
+			</div>
+		</section>
+
+		<aside class="screen-rail">
+			<lib-banner
+				[slides]="bannerSlides"
+				[height]="133"
+				[showArrows]="false"
+				ariaLabel="Comunicados Conkey"
+			></lib-banner>
+
+			<section class="screen-panel screen-goals" aria-labelledby="metas-title">
+				<header class="screen-panel-header">
+					<h2 id="metas-title" class="screen-panel-title">Metas do mês</h2>
+					<span class="screen-hint">Setembro · dia 28 de 30</span>
+				</header>
+				@for (m of metas; track m.label) {
+					<lib-goal-progress
+						[label]="m.label"
+						[valueText]="m.valueText"
+						[value]="m.value"
+						[target]="m.target"
+						[status]="m.status"
+						[statusLabel]="m.statusLabel"
+						[note]="m.note"
+						[lowerIsBetter]="!!m.lowerIsBetter"
+					></lib-goal-progress>
+				}
+			</section>
+		</aside>
+	</div>
+</main>

@@ -1,0 +1,19 @@
+<footer
+	#actionBar
+	class="action-bar"
+	[class.action-bar-embedded]="!fixedToViewport"
+	[style.--action-bar-max-width]="maxWidthToken"
+	role="region"
+>
+	<div class="action-bar-inner">
+		<div class="action-bar-column action-bar-column-left">
+			<ng-content select=".left"></ng-content>
+		</div>
+		<div class="action-bar-column action-bar-column-center">
+			<ng-content select=".center"></ng-content>
+		</div>
+		<div class="action-bar-column action-bar-column-right">
+			<ng-content select=".right"></ng-content>
+		</div>
+	</div>
+</footer>

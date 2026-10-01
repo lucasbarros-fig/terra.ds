@@ -1,0 +1,50 @@
+<div [class]="rootClass()">
+  <div class="lib-file-item__icon" aria-hidden="true">
+    <svg
+      class="lib-file-item__file-svg"
+      width="30"
+      height="40"
+      viewBox="0 0 30 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        class="lib-file-item__file-body"
+        d="M29.9998 7.95719V36C29.9998 38.2091 28.209 40 25.9998 40H4C1.79086 40 0 38.2091 0 36V4C0 1.79086 1.79086 0 4 0H21.3367L29.9998 7.95719Z"
+      />
+      <path
+        class="lib-file-item__file-fold"
+        d="M29.9998 7.95719H22.3367C21.7844 7.95719 21.3367 7.50947 21.3367 6.95719L21.3367 0L29.9998 7.95719Z"
+      />
+    </svg>
+  </div>
+
+  <div class="lib-file-item__content">
+    @if (titleText()) {
+      <p class="lib-file-item__title">{{ titleText() }}</p>
+    }
+    @if (captionText()) {
+      <p class="lib-file-item__caption">{{ captionText() }}</p>
+    }
+  </div>
+
+  <div
+    class="lib-file-item__slot"
+    [class.lib-file-item__slot--hidden]="!showSlot()"
+  >
+    <ng-content select="[fileItemSlot]"></ng-content>
+  </div>
+
+  @if (!showSlot()) {
+    <lib-icon-button
+      class="lib-file-item__action"
+      type="neutral"
+      variant="ghost"
+      size="default"
+      [icon]="actionIcon()"
+      [disabled]="isDisabled()"
+      [ariaLabel]="resolvedActionAriaLabel()"
+      (clicked)="onActionClick($event)"
+    ></lib-icon-button>
+  }
+</div>

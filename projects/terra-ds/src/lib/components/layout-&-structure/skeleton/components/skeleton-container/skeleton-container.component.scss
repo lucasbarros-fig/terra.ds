@@ -1,0 +1,49 @@
+@keyframes lib-skeleton-container-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+:host {
+  display: inline-flex;
+  position: relative;
+  box-sizing: border-box;
+  width: fit-content;
+}
+
+:host(.lib-skeleton-container--full-width) {
+  display: flex;
+  width: 100%;
+}
+
+:host(.lib-skeleton-container--column) {
+  flex-direction: column;
+}
+
+:host(.lib-skeleton-container--row) {
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+:host(.lib-skeleton-container--loading) {
+  overflow: hidden;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.lib-skeleton-container__shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    -90deg,
+    var(--color-state-system-ghost-hovering-contrast, hsla(203deg, 25%, 6%, 0.23)) 54%,
+    var(--color-icons-essential-disabled, hsl(210deg, 11%, 36%)) 75%,
+    var(--color-state-system-ghost-hovering-contrast, hsla(203deg, 25%, 6%, 0.23)) 96%
+  );
+  opacity: 0.25;
+  animation: lib-skeleton-container-shimmer 2.3s cubic-bezier(0.68, -0.6, 0.32, 1.6) 1ms infinite;
+}

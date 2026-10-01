@@ -1,0 +1,30 @@
+@if (!skeleton()) {
+  <div class="container-label">
+    <label>
+      <ng-content></ng-content>
+      @if (optional()) {
+        <small> (opcional)</small>
+      }
+      @if (hasTooltip()) {
+        <lib-tooltip
+          [text]="tooltipText()"
+          [arrow]="tooltipArrow()"
+          [indicator]="tooltipIndicator()"
+          [triggerIcon]="tooltipIcon()"
+          [triggerIconColor]="tooltipIconColor()"
+          [triggerSize]="16"
+        ></lib-tooltip>
+      }
+    </label>
+    @if (hasDescription()) {
+      <span>{{ description() }}</span>
+    }
+  </div>
+} @else {
+  <lib-skeleton
+    class="label-skeleton"
+    width="127px"
+    height="21px"
+    aria-hidden="true"
+  ></lib-skeleton>
+}

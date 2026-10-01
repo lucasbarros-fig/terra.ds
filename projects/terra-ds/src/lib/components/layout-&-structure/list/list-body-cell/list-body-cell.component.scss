@@ -1,0 +1,51 @@
+.lib-list-root tbody td {
+  padding: var(--size-spacing-12) var(--size-spacing-16);
+  border-top: 1px solid var(--color-stroke-list);
+  border-bottom: 1px solid var(--color-stroke-list);
+  max-width: 0;
+}
+
+.lib-list-root tbody lib-list-body-cell:first-child td {
+  border-left: 1px solid var(--color-stroke-list);
+  border-top-left-radius: var(--size-radius-8);
+  border-bottom-left-radius: var(--size-radius-8);
+}
+
+.lib-list-root tbody lib-list-body-cell:last-child td {
+  border-right: 1px solid var(--color-stroke-list);
+  border-top-right-radius: var(--size-radius-8);
+  border-bottom-right-radius: var(--size-radius-8);
+}
+
+.lib-list-root tbody lib-list-body-cell td {
+  border-left: 1px solid var(--color-stroke-list);
+}
+
+.lib-list-root tbody td .lib-list-body-cell-content {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-4);
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.lib-list-root tbody td .lib-list-body-cell-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lib-list-root tbody td .lib-list-body-cell-content > lib-icon,
+.lib-list-root tbody td .lib-list-body-cell-content > lib-tooltip {
+  flex-shrink: 0;
+}
+
+.lib-list-root tbody td[style*="center"] .lib-list-body-cell-content {
+  justify-content: center;
+}
+
+.lib-list-root tbody td[style*="right"] .lib-list-body-cell-content {
+  justify-content: flex-end;
+}

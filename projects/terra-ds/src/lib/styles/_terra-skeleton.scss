@@ -1,0 +1,32 @@
+/**
+ * Shimmer do skeleton: composição alinhada a tds-sys para o Terra DS.
+ * Em `:host` ou o componente, pode sub-repor (opcional):
+ *   --terra-skeleton-angle, --terra-skeleton-shimmer-a|b|c, --terra-skeleton-bg-size
+ */
+@mixin skeleton-shimmer-bg {
+  background: linear-gradient(
+    var(--terra-skeleton-angle, 118deg),
+    var(
+        --terra-skeleton-shimmer-a,
+        var(
+          --tds-sys-color-essencial-background-static-alpha-white,
+          #ffffff3d
+        )
+      )
+      8%,
+    var(
+        --terra-skeleton-shimmer-b,
+        var(--tds-sys-color-essencial-background-level-upper, #f7f6f6)
+      )
+      18%,
+    var(
+        --terra-skeleton-shimmer-c,
+        var(
+          --tds-sys-color-essencial-background-static-alpha-white,
+          #ffffff3d
+        )
+      )
+      33%
+  );
+  background-size: var(--terra-skeleton-bg-size, 200% 100%);
+}

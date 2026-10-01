@@ -1,0 +1,200 @@
+:host {
+	font-family: "DM Sans", sans-serif;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: var(--size-spacing-4, 4px);
+	width: 100%;
+	box-sizing: border-box;
+	border: var(--size-stoke-2, 2px) solid transparent;
+	transition:
+		padding 0.14s ease,
+		border-color 0.14s ease,
+		border-radius 0.14s ease;
+
+	&.show-focus-ring:not(:has(.field:disabled, .field.disabled)):focus-within {
+		padding: var(--size-spacing-8, 8px);
+		border-radius: var(--size-spacing-8, 8px);
+		border-color: var(--color-state-system-focus, #7fa8ff);
+	}
+
+	lib-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		align-self: stretch;
+		flex-shrink: 0;
+	}
+}
+
+.label {
+	flex-shrink: 0;
+}
+
+.select-trigger {
+	display: block;
+	width: 100%;
+}
+
+.field {
+	display: flex;
+	gap: var(--size-spacing-8, 8px);
+	align-items: center;
+	box-sizing: border-box;
+	min-height: 42px;
+	width: 100%;
+	padding-inline: var(--size-spacing-12, 12px);
+	border: none;
+	border-bottom: var(--size-stoke-1, 1px) solid var(--color-stroke-frame, #2e353a);
+	background-color: transparent;
+	cursor: pointer;
+	text-align: left;
+	color: var(--color-text-essential-caption, hsl(206deg, 9%, 48%));
+	transition:
+		border-bottom-color 0.15s ease,
+		background-color 0.15s ease,
+		color 0.15s ease;
+
+	&.has-value {
+		color: var(--color-text-essential-heading, hsl(0deg, 0%, 100%));
+	}
+
+	&.searchable {
+		cursor: text;
+
+		.control {
+			cursor: text;
+		}
+	}
+
+	&:hover:not(.outlined, .disabled, .error) {
+		border-radius: var(--size-spacing-0, 0);
+		border-bottom: var(--size-stoke-1, 1px) solid var(--color-branding-surface-primary-hovering, #c20074);
+		background: var(--color-state-system-ghost-hovering, rgba(255, 255, 255, 0.04));
+	}
+
+	&.open:not(.disabled, .error) {
+		border-bottom-color: var(--color-branding-surface-primary-base, hsl(324deg, 100%, 43%));
+	}
+
+	&:focus-visible {
+		outline: none;
+	}
+
+	&.error {
+		border-bottom-color: var(--color-state-feedback-negative-surface-base, #e04c3f);
+
+		&:hover {
+			border-bottom-color: var(--color-state-feedback-negative-surface-base, #e04c3f);
+		}
+
+		&.open {
+			border-bottom-color: var(--color-state-feedback-negative-surface-base, #e04c3f);
+		}
+	}
+
+	&.disabled {
+		opacity: 0.55;
+		pointer-events: none;
+		cursor: not-allowed;
+	}
+
+	&.outlined {
+		border: var(--size-stoke-1, 1px) solid var(--color-stroke-frame, #2e353a);
+		border-radius: var(--size-spacing-8, 8px);
+		transition: border-color 0.15s ease;
+
+		&:hover:not(.disabled, .error) {
+			border-color: var(--color-branding-surface-primary-hovering, #c20074);
+			background: var(--color-state-system-ghost-hovering, rgba(255, 255, 255, 0.04));
+		}
+
+		&.open:not(.disabled, .error) {
+			border-color: var(--color-branding-surface-primary-base, hsl(324deg, 100%, 43%));
+			background: transparent;
+		}
+
+		&.error {
+			border-color: var(--color-state-feedback-negative-surface-base, #e04c3f);
+
+			&:hover {
+				border-color: var(--color-state-feedback-negative-surface-base, #e04c3f);
+			}
+
+			&.open {
+				border-color: var(--color-state-feedback-negative-surface-base, #e04c3f);
+			}
+		}
+	}
+}
+
+.control {
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: inherit;
+	font-family: "DM Sans", sans-serif;
+	font-size: var(--size-font-body-14, 14px);
+	font-weight: 400;
+	line-height: 21px;
+
+	.has-value & {
+		font-weight: 500;
+	}
+}
+
+input.control {
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: transparent;
+	outline: none;
+	appearance: none;
+	cursor: text;
+
+	&::placeholder {
+		color: var(--color-text-essential-caption, hsl(206deg, 9%, 48%));
+		font-weight: 400;
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+	}
+}
+
+.chevron-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+
+	&:focus-visible {
+		outline: none;
+	}
+}
+
+.select-empty {
+	padding: var(--size-spacing-8, 8px);
+	font-family: 'DM Sans', var(--font-family-primary, sans-serif);
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 21px;
+	color: var(--color-text-essential-caption, hsl(206deg, 9%, 48%));
+	cursor: default;
+}
+
+.chevron {
+	transition: transform 0.15s ease;
+
+	&.open {
+		transform: rotate(180deg);
+	}
+}

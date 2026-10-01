@@ -1,0 +1,45 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--Spacing-4, 4px);
+
+  &.small {
+    font-size: 12px;
+  }
+
+  &.large {
+    font-size: 14px;
+  }
+}
+
+.status-dot {
+  flex-shrink: 0;
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 50%;
+  background-color: currentcolor;
+}
+
+:host(.status-positive){
+  color: var(--color-state-feedback-positive-surface-base, #369365);
+}
+
+:host(.status-negative){
+  color: var(--color-state-feedback-negative-surface-base, #e04c3f);
+}
+
+:host(.status-informative){
+  color: var(--color-state-feedback-informative-surface-base, #2873d8);
+}
+
+:host(.status-warning){
+  color: var(--color-state-feedback-warning-surface-base, #c6872b);
+}
+
+:host(.status-neutral){
+  color: var(--color-text-essential-heading, #FFF);
+}
+
+:host(.status-disabled){
+  color: var(--color-text-essential-disabled, #515C66);
+}

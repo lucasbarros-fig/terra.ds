@@ -1,0 +1,23 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "target": "es2022",
+    "types": [
+      "vitest/globals",
+      "node"
+    ],
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true
+  },
+  "files": [
+    "./setup-vitest-zone.ts",
+    "./setup-vitest.ts"
+  ],
+  "include": [
+    "projects/terra-ds/src/**/*.spec.ts",
+    "projects/terra-ds/src/**/*.d.ts"
+  ],
+  "exclude": []
+}

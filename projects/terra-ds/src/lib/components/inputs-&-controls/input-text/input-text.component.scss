@@ -1,0 +1,163 @@
+:host {
+	font-family: "DM Sans", sans-serif;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: var(--size-spacing-4, 4px);
+	width: 100%;
+	box-sizing: border-box;
+	color: var(--color-text-essential-body, hsl(0deg, 0%, 100%));
+	border: var(--size-stoke-2, 2px) solid transparent;
+	transition:
+		padding 0.14s ease,
+		border-color 0.14s ease,
+		border-radius 0.14s ease;
+
+	&.show-focus-ring:not(:has(.control:disabled)):focus-within {
+		padding: var(--size-spacing-8, 8px);
+		border-radius: var(--size-spacing-8, 8px);
+		border-color: var(--color-state-system-focus, #7fa8ff);
+	}
+
+	lib-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		align-self: stretch;
+	}
+}
+
+.label {
+	flex-shrink: 0;
+}
+
+
+.field {
+	display: flex;
+	gap: var(--size-spacing-8, 8px);
+	align-items: center;
+	box-sizing: border-box;
+	min-height: 42px;
+	padding-inline: var(--size-spacing-12, 12px);
+	border-bottom: var(--size-stoke-1, 1px) solid var(--color-stroke-frame, #2e353a);
+	background-color: transparent;
+	transition:
+		border-bottom-color 0.15s ease,
+		background-color 0.15s ease;
+
+	&:hover:not(.outlined) {
+		border-radius: var(--size-spacing-0, 0);
+		border-bottom: var(--size-stoke-1, 1px) solid var(--color-branding-surface-primary-hovering, #c20074);
+		background: var(--color-state-system-ghost-hovering, rgba(255, 255, 255, 0.04));
+		}
+
+	&:focus-within:not(.disabled, .error) {
+		border-bottom-color: var(--color-branding-surface-primary-base, hsl(324deg, 100%, 43%));
+	}
+
+	&.error {
+		border-bottom-color: var(--color-state-feedback-negative-surface-base, #e04c3f);
+
+		&:hover {
+			border-bottom-color: var(--color-state-feedback-negative-surface-base, #e04c3f);
+		}
+
+		&:focus-within {
+			border-bottom-color: var(--color-state-feedback-negative-surface-base, #e04c3f);
+		}
+	}
+
+	&.disabled {
+		opacity: 0.55;
+		pointer-events: none;
+	}
+
+	.field-prefix,
+	.field-text-suffix {
+		flex-shrink: 0;
+		color: var(--color-text-essential-heading);
+		font-size: var(--size-font-body-14, 14px);
+		font-weight: 500;
+		line-height: 21px;
+		user-select: none;
+	}
+
+	.field-suffix {
+		display: flex;
+		flex-shrink: 0;
+		align-items: center;
+		gap: var(--size-spacing-8, 8px);
+		margin-left: auto;
+	}
+
+	&.outlined {
+		border: var(--size-stoke-1, 1px) solid var(--color-stroke-frame, #2e353a);
+		border-radius: var(--size-spacing-8, 8px);
+		transition: border-color 0.15s ease;
+
+		&:hover:not(.disabled, .error) {
+			border-color: var(--color-branding-surface-primary-hovering, #c20074);
+			background: var(--color-state-system-ghost-hovering, rgba(255, 255, 255, 0.04));
+		}
+
+		&:focus-within:not(.disabled, .error) {
+			border-color: var(--color-branding-surface-primary-base, hsl(324deg, 100%, 43%));
+			background: transparent;
+		}
+
+		&.error {
+			border-color: var(--color-state-feedback-negative-surface-base, #e04c3f);
+
+			&:hover {
+				border-color: var(--color-state-feedback-negative-surface-base, #e04c3f);
+			}
+
+			&:focus-within {
+				border-color: var(--color-state-feedback-negative-surface-base, #e04c3f);
+			}
+		}
+	}
+}
+
+.control-wrap {
+	display: flex;
+	flex: 1 1 auto;
+	align-items: center;
+	gap: 4px;
+	min-width: 0;
+}
+
+.control {
+	flex: 1 1 auto;
+	min-width: 0;
+	margin: 0;
+	border: 0;
+	background: transparent;
+	color: var(--color-text-essential-heading, hsl(0deg, 0%, 100%));
+	font-family: "DM Sans", sans-serif;
+	font-size: var(--size-font-body-14, 14px);
+	font-weight: 500;
+	line-height: 21px;
+	outline: none;
+
+	&::placeholder {
+		color: var(--color-text-essential-caption, hsl(206deg, 9%, 48%));
+		font-weight: 400;
+	}
+
+	&:disabled {
+		color: var(--color-text-essential-disabled, hsl(206deg, 9%, 48%));
+		cursor: not-allowed;
+	}
+
+	&:-webkit-autofill,
+	&:-webkit-autofill:hover,
+	&:-webkit-autofill:focus,
+	&:-webkit-autofill:active {
+		-webkit-text-fill-color: var(--color-text-essential-heading, hsl(0deg, 0%, 100%));
+		box-shadow: 0 0 0 1000px transparent inset;
+		caret-color: var(--color-text-essential-heading, hsl(0deg, 0%, 100%));
+		transition: background-color 9999s ease-in-out 0s;
+	}
+}
+

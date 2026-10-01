@@ -1,0 +1,12 @@
+<div [style.display]="loading ? null : 'none'">
+  <ng-content select="[skeleton]"></ng-content>
+</div>
+
+<div
+  [style.display]="loading ? 'none' : 'contents'"
+  [style.pointer-events]="loading ? 'none' : null"
+>
+  <ng-content></ng-content>
+</div>
+
+<span *ngIf="loading" class="lib-skeleton-container__shimmer" aria-hidden="true"></span>

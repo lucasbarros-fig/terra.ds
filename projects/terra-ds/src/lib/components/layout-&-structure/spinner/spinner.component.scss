@@ -1,0 +1,43 @@
+:host {
+  --lib-spinner-size: 20px;
+  --lib-spinner-track-color: var(--color-state-system-ghost-pressing);
+  --lib-spinner-indicator-color: var(--color-icons-essential-disabled);
+  --lib-spinner-duration: 0.8s;
+
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: var(--lib-spinner-size);
+  height: var(--lib-spinner-size);
+  line-height: 0;
+  animation: lib-spinner-rotate var(--lib-spinner-duration) linear infinite;
+}
+
+@keyframes lib-spinner-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.lib-spinner {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.lib-spinner__track {
+  stroke: var(--lib-spinner-track-color);
+}
+
+.lib-spinner__indicator {
+  fill: var(--lib-spinner-indicator-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    --lib-spinner-duration: 1.6s;
+  }
+}

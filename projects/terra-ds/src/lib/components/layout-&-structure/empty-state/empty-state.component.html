@@ -1,0 +1,28 @@
+<div class="empty-state-container" *ngIf="hasAnyContent">
+  <div *ngIf="icon" class="icon-wrap">
+    <lib-icon
+      class="icon-display"
+      [icon]="icon"
+      [size]="20"
+      color="essential-high"
+    ></lib-icon>
+  </div>
+
+  <div *ngIf="hasTextBlock" class="text-stack">
+    <p *ngIf="title?.trim()" class="title-text">{{ title!.trim() }}</p>
+    <p *ngIf="description?.trim()" class="description-text">
+      {{ description }}
+    </p>
+  </div>
+
+  <lib-button
+    *ngIf="buttonLabel?.trim()"
+    [intent]="buttonIntent"
+    variant="filled"
+    [label]="buttonLabel!.trim()"
+    [icon]="buttonIcon ?? ''"
+    [showIcon]="!!buttonIcon"
+    [disabled]="buttonDisabled"
+    (clicked)="buttonClicked.emit($event)"
+  ></lib-button>
+</div>

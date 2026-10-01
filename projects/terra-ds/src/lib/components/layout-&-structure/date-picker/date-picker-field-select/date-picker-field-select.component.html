@@ -1,0 +1,16 @@
+<div class="field-select">
+	<button
+		type="button"
+		class="field-select-trigger"
+		[attr.aria-label]="ariaLabel || null"
+		(click)="onActivate()"
+	>
+		<span class="field-select-value">{{ label }}</span>
+		<lib-icon
+			class="field-select-caret"
+			icon="CaretDown"
+			[size]="16"
+			color="essential-medium"
+		></lib-icon>
+	</button>
+</div>

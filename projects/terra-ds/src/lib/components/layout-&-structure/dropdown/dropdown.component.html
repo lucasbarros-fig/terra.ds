@@ -1,0 +1,32 @@
+<ng-content select="[libDropdownTrigger]"></ng-content>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="triggerOrigin"
+  [cdkConnectedOverlayOpen]="open && !!trigger"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayScrollStrategy]="overlayScrollStrategy"
+  [cdkConnectedOverlayHasBackdrop]="false"
+  [cdkConnectedOverlayPush]="true"
+  (overlayOutsideClick)="onOverlayOutsideClick($event)"
+  (attach)="onOverlayAttached()"
+  (detach)="onBackdropClose()"
+>
+  <div
+    class="terra-dropdown__panel"
+    [attr.role]="panelRole"
+    [id]="panelId"
+    [attr.tabindex]="-1"
+    [style.max-height]="maxHeight"
+    [style.min-width]="matchTriggerWidth ? (triggerWidth + 'px') : panelMinWidth"
+    [attr.aria-multiselectable]="panelRole === 'listbox' ? 'true' : null"
+    cdkTrapFocus
+    [cdkTrapFocusAutoCapture]="false"
+    (keydown.escape)="close(); $event.stopPropagation()"
+    (keydown)="onOverlayKeydown($event)"
+  >
+    <div class="terra-dropdown__scroll">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</ng-template>

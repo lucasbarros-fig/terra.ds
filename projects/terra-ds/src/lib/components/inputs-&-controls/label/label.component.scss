@@ -1,0 +1,35 @@
+.container-label {
+  display: flex;
+  flex-direction: column;
+
+  &:focus-within > label {
+    color: var(--color-branding-surface-primary-base, hsl(324deg, 100%, 43%));
+  }
+
+  > span {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 21px;
+    color: var(--color-text-essential-heading, hsl(0deg, 0%, 19%));
+  }
+}
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--color-text-essential-heading, hsl(0deg, 0%, 19%));
+  font-weight: 700;
+
+  small {
+    font-size: inherit;
+    color: var(--color-text-essential-caption, hsl(206deg, 9%, 48%));
+    font-weight: 400;
+  }
+}
+
+.label-skeleton {
+  flex-shrink: 0;
+}

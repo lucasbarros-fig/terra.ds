@@ -1,0 +1,13 @@
+node_modules/
+dist/
+storybook-static/
+storybook-static-terra/
+coverage/
+out-tsc/
+.angular/
+documentation.json
+package-lock.json
+*.min.js
+*.min.css
+*.min.scss
+scripts/

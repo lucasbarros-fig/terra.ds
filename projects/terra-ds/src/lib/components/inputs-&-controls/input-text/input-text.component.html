@@ -1,0 +1,105 @@
+@if (label()) {
+  <lib-label
+    class="input-text label"
+    [optional]="optional()"
+    [description]="description()"
+    [tooltipText]="textTooltip()"
+    [tooltipArrow]="tooltipArrow()"
+    [tooltipIndicator]="tooltipIndicator()"
+  >
+    {{ label() }}
+  </lib-label>
+}
+
+<div
+  class="input-text field"
+  [class.error]="error()"
+  [class.disabled]="isDisabled"
+  [class.outlined]="variant() === 'outlined'"
+>
+  @if (iconBefore()) {
+    <lib-icon [icon]="iconBefore()" [size]="20" color="inherit"></lib-icon>
+  }
+
+  <div class="control-wrap">
+    @if (effectivePrefix) {
+      <span class="field-prefix">{{ effectivePrefix }}</span>
+    }
+
+    @if (type() === 'currency') {
+      <input
+        type="text"
+        class="control"
+        [attr.aria-label]="inputAriaLabel() || null"
+        [attr.aria-invalid]="error() ? true : null"
+        [placeholder]="placeholder() || '0,00'"
+        [disabled]="isDisabled"
+        [readOnly]="readonly()"
+        [ngModel]="currencyDisplay"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="onCurrencyChange($event)"
+        (blur)="onBlur()"
+        autocomplete="off"
+        inputmode="numeric"
+      />
+    } @else {
+      <input
+        [type]="effectiveInputType"
+        class="control"
+        [attr.aria-label]="inputAriaLabel() || null"
+        [attr.aria-invalid]="error() ? true : null"
+        [placeholder]="placeholder()"
+        [disabled]="isDisabled"
+        [readOnly]="readonly()"
+        [ngModel]="value"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="onInput($event)"
+        (blur)="onBlur()"
+        [mask]="mask()"
+        [dropSpecialCharacters]="dropSpecialCharacters()"
+      >
+    }
+
+    @if (suffix()) {
+      <span class="field-text-suffix">{{ suffix() }}</span>
+    }
+  </div>
+
+  @if (showFieldSuffix) {
+    <div class="field-suffix">
+      @if (showClearButton) {
+        <lib-icon-button
+          [icon]="'X'"
+          [size]="'small'"
+          [variant]="'bare'"
+          [type]="'neutral'"
+          (clicked)="onClear()"
+        ></lib-icon-button>
+      }
+      @if (showPasswordToggle) {
+        <lib-icon-button
+          [icon]="passwordToggleIcon"
+          [size]="'small'"
+          [variant]="'bare'"
+          [type]="'neutral'"
+          [ariaLabel]="passwordToggleAriaLabel"
+          (clicked)="togglePasswordVisibility()"
+        ></lib-icon-button>
+      }
+      @if (isDisabled) {
+        <lib-icon icon="Lock" [size]="20" color="inherit"></lib-icon>
+      }
+      @if (!isDisabled && !showClearButton && iconAfter()) {
+        <lib-icon [icon]="iconAfter()" [size]="20" color="inherit"></lib-icon>
+      }
+    </div>
+  }
+</div>
+
+@if (helperText()) {
+  <lib-helper
+    type="helper"
+    [color]="resolvedHelperColor"
+    [description]="helperText()"
+  ></lib-helper>
+}

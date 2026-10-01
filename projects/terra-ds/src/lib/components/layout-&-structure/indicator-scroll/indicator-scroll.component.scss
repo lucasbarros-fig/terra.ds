@@ -1,0 +1,55 @@
+:host {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: var(--size-spacing-8, 8px);
+  animation: lib-indicator-scroll-nudge 1.25s ease-in-out 4;
+}
+
+:host(.lib-indicator-scroll--hidden),
+:host(.lib-indicator-scroll--no-nudge) {
+  animation: none;
+}
+
+:host(.lib-indicator-scroll--hidden) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    animation: none;
+  }
+}
+
+@keyframes lib-indicator-scroll-nudge {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(var(--size-spacing-8, 8px));
+  }
+}
+
+.lib-indicator-scroll__chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-spacing-4, 4px);
+  height: 21px;
+  padding: 0 var(--size-spacing-8, 8px);
+  border: 1px solid var(--color-stroke-frame, #d6dce0);
+  border-radius: var(--size-radius-999, 999px);
+  background: var(--color-theme-base, #fff);
+  box-sizing: border-box;
+}
+
+.lib-indicator-scroll__label {
+  font-family: var(--font-family-primary, 'DM Sans', sans-serif);
+  font-size: var(--size-font-body-14, 14px);
+  font-weight: 400;
+  line-height: 21px;
+  color: var(--color-text-essential-heading, #303030);
+  white-space: nowrap;
+}

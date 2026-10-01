@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+
+  .body-inner {
+    height: 100% !important;
+    box-sizing: border-box;
+    padding: var(--size-spacing-16, 16px);
+    overflow: auto;
+    font-size: var(--size-font-heading-14, 14px);
+    font-weight: var(--tds-ref-font-weight-regular, 400);
+    line-height: 150%;
+    font-family: var(--font-family-primary, "DM Sans", sans-serif);
+  }
+}

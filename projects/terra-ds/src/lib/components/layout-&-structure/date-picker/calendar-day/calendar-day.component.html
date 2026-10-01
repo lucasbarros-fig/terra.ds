@@ -1,0 +1,20 @@
+<ng-template #dayButton>
+	<button type="button" [class]="rootClass" [disabled]="disabled" (click)="onClick()">
+		<span class="calendar-day-label">{{ label }}</span>
+		<span *ngIf="sublabelVisible" class="calendar-day-sublabel">{{ sublabel }}</span>
+	</button>
+</ng-template>
+
+<lib-tooltip
+	*ngIf="descriptionVisible; else dayButtonOnly"
+	class="calendar-day-tooltip"
+	indicator="top"
+	arrow="middle"
+	[text]="description"
+>
+	<ng-container *ngTemplateOutlet="dayButton"></ng-container>
+</lib-tooltip>
+
+<ng-template #dayButtonOnly>
+	<ng-container *ngTemplateOutlet="dayButton"></ng-container>
+</ng-template>

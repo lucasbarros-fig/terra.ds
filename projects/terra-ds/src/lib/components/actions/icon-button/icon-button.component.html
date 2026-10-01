@@ -1,0 +1,21 @@
+<div [class]="rootClass()">
+  <button
+    class="icon-button"
+    [type]="nativeType()"
+    [disabled]="disabled() || loading()"
+    [attr.aria-label]="ariaLabel() || null"
+    [attr.aria-busy]="loading() ? 'true' : null"
+    (click)="onClick($event)"
+  >
+    @if (loading()) {
+      <lib-spinner class="icon-button-icon" [size]="iconSizeBinding()"></lib-spinner>
+    } @else {
+      <lib-icon
+        class="icon-button-icon"
+        [icon]="icon()"
+        [size]="iconSizeBinding()"
+        color="inherit"
+      ></lib-icon>
+    }
+  </button>
+</div>

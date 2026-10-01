@@ -1,0 +1,61 @@
+<div class="uploader">
+  <div
+    class="uploader-dropzone"
+    [class.is-disabled]="disabled()"
+    [class.is-error]="displayError()"
+    [class.is-dragging]="isDragging()"
+    role="button"
+    [attr.tabindex]="disabled() ? -1 : 0"
+    [attr.aria-disabled]="disabled() ? true : null"
+    [attr.aria-label]="inputAriaLabel() || label()"
+    (click)="openFileDialog()"
+    (keydown)="onKeydown($event)"
+    (dragenter)="onDragEnter($event)"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+  >
+    <div class="uploader-box">
+      <div class="uploader-title">
+        <lib-icon [icon]="icon()" [size]="20" color="inherit"></lib-icon>
+        <span class="uploader-label">{{ label() }}</span>
+      </div>
+
+      <div class="uploader-caption">
+        <span class="uploader-caption-group">{{ acceptedTypes() }}</span>
+
+        <span
+          class="uploader-caption-group"
+          *ngIf="showAdditionalLabel() && additionalLabel()"
+        >
+          <span aria-hidden="true">•</span>
+          <span>{{ additionalLabel() }}</span>
+        </span>
+
+        <span class="uploader-caption-group" *ngIf="maxSize()">
+          <span aria-hidden="true">• até</span>
+          <span>{{ maxSize() }}</span>
+        </span>
+      </div>
+    </div>
+
+    <input
+      #fileInput
+      type="file"
+      class="uploader-input"
+      [attr.accept]="computedAccept() || null"
+      [multiple]="multiple()"
+      [disabled]="disabled()"
+      tabindex="-1"
+      (click)="$event.stopPropagation()"
+      (change)="onFileChange($event)"
+    />
+  </div>
+
+  <lib-helper
+    *ngIf="displayError() && displayHelperText()"
+    type="helper"
+    color="negative"
+    [description]="displayHelperText()"
+  ></lib-helper>
+</div>

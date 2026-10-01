@@ -1,0 +1,49 @@
+<div class="color-picker-scale">
+  <div class="hsv">
+    <lib-color-picker
+      [initialColor]="initialColor()"
+      (colors)="onPickerColors($event)"
+    ></lib-color-picker>
+  </div>
+
+  <div class="hex-row">
+    <div
+      class="swatch"
+      [style.background]="previewRgb || 'transparent'"
+      aria-hidden="true"
+    ></div>
+    <div
+      class="hex-input-wrap"
+      tabindex="0"
+      (focusout)="onHexFieldFocusOut($event)"
+      (keydown.enter)="onHexEnter($event)"
+    >
+      <lib-input-text
+        class="hex-input-text"
+        placeholder="0C1114"
+        iconBefore="Hash"
+        inputAriaLabel="Valor hexadecimal da cor"
+        [(ngModel)]="hexField"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="onHexInput()"
+        [error]="hexInvalid"
+      />
+    </div>
+  </div>
+
+  @if (isScaleVisible) {
+    <div class="tones" role="list">
+      @for (step of scaleStrip; track step.level) {
+        <button
+          type="button"
+          class="tone"
+          [style.background]="step.hex"
+          role="listitem"
+          [attr.title]="step.level + ': ' + step.hex"
+          [attr.aria-label]="'Tom ' + step.level + ', ' + step.hex"
+          (click)="onToneSelect(step.hex)"
+        ></button>
+      }
+    </div>
+  }
+</div>

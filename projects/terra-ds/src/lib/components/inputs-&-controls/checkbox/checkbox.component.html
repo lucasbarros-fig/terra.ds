@@ -1,0 +1,31 @@
+<div class="checkbox" [class.disabled]="isDisabled()">
+  <span class="checkbox-inner">
+    <span class="checkbox-control">
+      <input
+        #inputEl
+        type="checkbox"
+        class="checkbox-native"
+        [id]="resolvedInputId"
+        [checked]="checked()"
+        [disabled]="isDisabled()"
+        [attr.aria-checked]="indeterminate() ? 'mixed' : checked()"
+        [attr.aria-label]="label()"
+        (change)="onInputChange($event)"
+        (blur)="onFocusOut()"
+      />
+      <span class="checkbox-box" [class.filled]="showFilledBox" aria-hidden="true">
+        @if (showCheckIcon) {
+          <lib-icon icon="Check" [size]="8" [color]="iconColor" />
+        }
+        @if (showMinusIcon) {
+          <lib-icon icon="Minus" [size]="8" [color]="iconColor" />
+        }
+      </span>
+    </span>
+    @if (label()) {
+      <label class="checkbox-label" [attr.for]="resolvedInputId">
+        {{ label() }}
+      </label>
+    }
+  </span>
+</div>

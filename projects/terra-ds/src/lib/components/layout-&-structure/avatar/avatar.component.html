@@ -1,0 +1,17 @@
+<div class="lib-avatar-surface">
+  <img
+    *ngIf="showPhoto"
+    class="lib-avatar-img"
+    [src]="imageSrc"
+    [attr.alt]="alt"
+    decoding="async"
+    loading="lazy"
+  />
+  <lib-icon
+    *ngIf="!showPhoto"
+    class="lib-avatar-placeholder-icon"
+    color="essential-low"
+    [icon]="iconType"
+    [size]="placeholderIconSize"
+  />
+</div>

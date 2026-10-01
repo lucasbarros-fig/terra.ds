@@ -1,0 +1,10 @@
+.color-slider {
+  box-sizing: border-box;
+  width: 232px;
+  height: 17px;
+  border: 1px solid var(--color-stroke-frame);
+  border-radius: var(--size-radius-8);
+  overflow: hidden;
+  cursor: pointer;
+  display: block;
+}

@@ -1,0 +1,88 @@
+$_primitive-row-pad: 4px;
+$_item-frame-pad: 8px;
+$_item-frame-gap: 8px;
+$_item-frame-radius: 8px;
+$_item-font-family: 'DM Sans', var(--font-family-primary, sans-serif);
+$_item-font-size: 14px;
+$_item-font-weight: 500;
+$_item-line-height: 21px;
+$_item-text-color: var(--color-text-essential-heading, #fff);
+$_item-bg-hover: var(--color-state-system-ghost-hovering, rgba(255, 255, 255, 0.04));
+$_item-bg-press: var(--color-state-system-ghost-pressing, rgba(255, 255, 255, 0.08));
+$_item-icon-box: 16px;
+$_item-trailing-color: var(--color-text-essential-caption, #a0aab2);
+
+:host {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.terra-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: $_item-frame-gap;
+  width: 100%;
+  box-sizing: border-box;
+  padding: $_item-frame-pad;
+  margin: 0;
+  border: none;
+  border-radius: $_item-frame-radius;
+  background: transparent;
+  appearance: none;
+  font-family: $_item-font-family;
+  font-size: $_item-font-size;
+  font-weight: $_item-font-weight;
+  line-height: $_item-line-height;
+  color: $_item-text-color;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+
+  &:hover:not([aria-disabled='true']),
+  &--active:not([aria-disabled='true']) {
+    background-color: $_item-bg-hover;
+  }
+
+  &:active:not([aria-disabled='true']) {
+    background-color: $_item-bg-press;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-state-system-focus, #3d9dff);
+  }
+
+  &[aria-disabled='true'] {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.terra-dropdown-item__icon {
+  flex: 0 0 $_item-icon-box;
+  width: $_item-icon-box;
+  height: $_item-icon-box;
+}
+
+.terra-dropdown-item__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.terra-dropdown-item__trailing {
+  flex: 0 0 auto;
+  color: $_item-trailing-color;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.terra-dropdown-item__checkbox {
+  flex-shrink: 0;
+  pointer-events: none;
+}

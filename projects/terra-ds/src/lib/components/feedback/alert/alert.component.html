@@ -1,0 +1,19 @@
+<lib-icon class="alert-icon" [icon]="icon()" [size]="24" color="inherit" aria-hidden="true"></lib-icon>
+
+<div class="alert-text">
+  <p class="alert-title">{{ title() }}</p>
+  @if (description()) {
+    <p class="alert-description">{{ description() }}</p>
+  }
+</div>
+
+@if (showAction() && actionLabel()) {
+  <lib-button
+    class="alert-action"
+    [intent]="buttonIntent()"
+    variant="filled"
+    [label]="actionLabel()"
+    [showIcon]="false"
+    (clicked)="action.emit($event)"
+  ></lib-button>
+}

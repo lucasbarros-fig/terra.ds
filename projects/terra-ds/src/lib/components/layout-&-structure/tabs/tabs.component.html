@@ -1,0 +1,20 @@
+<div class="tabs" role="tablist">
+  <button
+    *ngFor="let tab of tabs; let i = index"
+    class="tab"
+    role="tab"
+    type="button"
+    [ngClass]="{
+      'tab--selected': i === selected && !tab.disabled,
+      'tab--disabled': !!tab.disabled
+    }"
+    [attr.aria-selected]="i === selected"
+    [attr.tabindex]="tab.disabled ? -1 : 0"
+    [disabled]="!!tab.disabled"
+    (click)="onTabClick(i)"
+    (keydown)="onKeydown($event, i)"
+  >
+    <lib-icon [icon]="tab.icon" [size]="20" color="inherit"></lib-icon>
+    <span class="tab__label">{{ tab.label }}</span>
+  </button>
+</div>

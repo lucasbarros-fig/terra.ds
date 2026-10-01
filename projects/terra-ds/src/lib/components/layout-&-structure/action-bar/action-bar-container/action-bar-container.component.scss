@@ -1,0 +1,9 @@
+.actions-bar-container {
+  display: block;
+  position: absolute;
+  z-index: 999;
+  bottom: -1px;
+  right: 0;
+  left: 0;
+  transition: all 150ms ease;
+}

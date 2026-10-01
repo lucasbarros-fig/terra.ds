@@ -1,0 +1,161 @@
+@if (label()) {
+  <lib-label
+    class="select label"
+    [optional]="optional()"
+    [description]="description()"
+    [tooltipText]="textTooltip()"
+    [tooltipArrow]="tooltipArrow()"
+    [tooltipIndicator]="tooltipIndicator()"
+  >{{ label() }}</lib-label>
+}
+
+<!--
+  Slot de projeção oculto: instancia os componentes lib-select-option sem
+  renderizá-los visualmente. O contentChildren(SelectOptionComponent) depende
+  desse ng-content para detectar os filhos projetados.
+-->
+<span class="select__options-slot" aria-hidden="true" style="display:none">
+  <ng-content select="lib-select-option"></ng-content>
+</span>
+
+<lib-dropdown
+  #dropdownRef
+  [open]="isOpen()"
+  (openChange)="isOpen.set($event)"
+  placement="bottom-start"
+  [matchTriggerWidth]="true"
+  [closeOnItemClick]="!multiple()"
+  panelRole="listbox"
+  [focusPanelOnOpen]="searchable() ? 'none' : 'first-item'"
+  (opened)="onDropdownOpened()"
+  (closed)="onDropdownClosed()"
+>
+  <div
+    libDropdownTrigger
+    class="select-trigger"
+    [toggleOnClick]="!searchable()"
+    [triggerDisabled]="isDisabled()"
+    [applyHostAria]="false"
+  >
+    @if (searchable()) {
+      <div
+        class="select field searchable"
+        [class.error]="error()"
+        [class.open]="isOpen()"
+        [class.disabled]="isDisabled()"
+        [class.outlined]="variant() === 'outlined'"
+        [class.has-value]="fieldHasValue()"
+      >
+        @if (iconBefore()) {
+          <lib-icon [icon]="iconBefore()" [size]="20" color="inherit"></lib-icon>
+        }
+        <input
+          #searchInput
+          type="text"
+          class="select control"
+          role="combobox"
+          [value]="searchableFieldValue()"
+          [placeholder]="placeholder()"
+          [disabled]="isDisabled()"
+          [attr.aria-label]="selectAriaLabel() || label() || null"
+          [attr.aria-invalid]="error() ? true : null"
+          [attr.aria-expanded]="isOpen()"
+          [attr.aria-controls]="isOpen() ? dropdownRef.panelId : null"
+          aria-autocomplete="list"
+          autocomplete="off"
+          (input)="onSearchInput(searchInput.value)"
+          (keydown)="onSearchableKeydown($event)"
+        />
+        @if (isDisabled()) {
+          <lib-icon icon="Lock" [size]="20" color="inherit"></lib-icon>
+        } @else {
+          <button
+            type="button"
+            class="chevron-btn"
+            tabindex="-1"
+            aria-hidden="true"
+            (mousedown)="$event.preventDefault()"
+            (click)="onChevronClick($event)"
+          >
+            <lib-icon
+              class="chevron"
+              [class.open]="isOpen()"
+              icon="CaretDown"
+              [size]="16"
+              color="inherit"
+            ></lib-icon>
+          </button>
+        }
+      </div>
+    } @else {
+      <button
+        type="button"
+        class="select field"
+        [class.error]="error()"
+        [class.open]="isOpen()"
+        [class.disabled]="isDisabled()"
+        [class.outlined]="variant() === 'outlined'"
+        [class.has-value]="hasValue()"
+        [disabled]="isDisabled()"
+        [attr.aria-label]="selectAriaLabel() || label() || null"
+        [attr.aria-invalid]="error() ? true : null"
+        aria-haspopup="listbox"
+        [attr.aria-expanded]="isOpen()"
+        [attr.aria-controls]="isOpen() ? dropdownRef.panelId : null"
+      >
+        @if (iconBefore()) {
+          <lib-icon [icon]="iconBefore()" [size]="20" color="inherit"></lib-icon>
+        }
+        <span class="select control">
+          {{ hasValue() ? displayValue() : placeholder() }}
+        </span>
+        @if (isDisabled()) {
+          <lib-icon icon="Lock" [size]="20" color="inherit"></lib-icon>
+        } @else {
+          <lib-icon
+            class="chevron"
+            [class.open]="isOpen()"
+            icon="CaretDown"
+            [size]="16"
+            color="inherit"
+          ></lib-icon>
+        }
+      </button>
+    }
+  </div>
+
+  @if (selectOptions().length > 0) {
+    @for (opt of filteredSelectOptions(); track opt.value()) {
+      <lib-dropdown-item
+        [label]="opt.label()"
+        [disabled]="opt.disabled()"
+        [contentTemplate]="opt.templateRef"
+        [selected]="isSelectedValue(opt.value())"
+        [multiple]="multiple()"
+        (itemSelect)="onSelectOption(opt)"
+      ></lib-dropdown-item>
+    }
+  } @else {
+    @for (option of filteredOptions(); track option.value) {
+      <lib-dropdown-item
+        [label]="option.label"
+        [disabled]="option.disabled ?? false"
+        [selected]="isSelectedValue(option.value)"
+        [multiple]="multiple()"
+        (itemSelect)="onSelect(option)"
+      ></lib-dropdown-item>
+    }
+  }
+
+  @if (searchable() && hasNoFilteredResults()) {
+    <div class="select-empty" aria-hidden="true">{{ noResultsText() }}</div>
+  }
+</lib-dropdown>
+
+@if (helperText()) {
+  <lib-helper
+    type="helper"
+    [color]="resolvedHelperColor()"
+    [description]="helperText()"
+  ></lib-helper>
+}

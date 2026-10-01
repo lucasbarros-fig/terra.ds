@@ -1,0 +1,60 @@
+@if (label()) {
+  <lib-label
+    class="input-quantity label"
+    [optional]="optional()"
+    [description]="description()"
+    [tooltipText]="textTooltip()"
+    [tooltipArrow]="tooltipArrow()"
+    [tooltipIndicator]="tooltipIndicator()"
+  >
+    {{ label() }}
+  </lib-label>
+}
+
+<div
+  class="input-quantity field"
+  [class.error]="error()"
+  [class.disabled]="isDisabled"
+  [class.outlined]="variant() === 'outlined'"
+>
+  <lib-icon-button
+    [icon]="'Minus'"
+    [size]="'small'"
+    [variant]="'bare'"
+    [type]="'neutral'"
+    [disabled]="!canDecrement"
+    [ariaLabel]="'Decrementar'"
+    (clicked)="decrement()"
+  ></lib-icon-button>
+
+  <input
+    type="text"
+    inputmode="numeric"
+    class="control"
+    [attr.aria-invalid]="error() ? true : null"
+    [placeholder]="placeholder()"
+    [disabled]="isDisabled"
+    [readOnly]="readonly()"
+    [value]="value"
+    (input)="onInputEvent($event)"
+    (blur)="onBlur()"
+  >
+
+  <lib-icon-button
+    [icon]="'Plus'"
+    [size]="'small'"
+    [variant]="'bare'"
+    [type]="'neutral'"
+    [disabled]="!canIncrement"
+    [ariaLabel]="'Incrementar'"
+    (clicked)="increment()"
+  ></lib-icon-button>
+</div>
+
+@if (helperText()) {
+  <lib-helper
+    type="helper"
+    [color]="resolvedHelperColor"
+    [description]="helperText()"
+  ></lib-helper>
+}

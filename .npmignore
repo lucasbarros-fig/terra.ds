@@ -1,0 +1,26 @@
+# Arquivos de desenvolvimento
+*.spec.ts
+*.spec.js
+.storybook/
+stories/
+.github/
+.vscode/
+.editorconfig
+
+# Arquivos de build e cache
+dist/
+tmp/
+out-tsc/
+.angular/
+.sass-cache/
+coverage/
+libpeerconnection.log
+testem.log
+
+# Configurações de desenvolvimento
+tsconfig.lib.prod.json
+.nyc_output/
+
+# Documentação
+README.md
+documentation.json

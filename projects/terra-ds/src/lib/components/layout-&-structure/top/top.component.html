@@ -1,0 +1,53 @@
+<header class="top">
+  <div class="top-title">
+    <p class="top-title-text">{{ title() }}</p>
+    @if (breadcrumbs().length) {
+      <lib-breadcrumbs class="top-breadcrumbs" [breadcrumbItems]="breadcrumbs()"></lib-breadcrumbs>
+    }
+  </div>
+
+  <div class="top-aside">
+    @if (userName() || userRole()) {
+      <div class="top-profile">
+        <div class="top-profile-text">
+          @if (userRole()) {
+            <span class="top-profile-role">{{ userRole() }}</span>
+          }
+          @if (userName()) {
+            <span class="top-profile-name">{{ userName() }}</span>
+          }
+        </div>
+        <lib-avatar
+          size="large"
+          iconType="User"
+          [variant]="userAvatarSrc() ? 'photo' : 'icon'"
+          [imageSrc]="userAvatarSrc()"
+          [alt]="userName()"
+        ></lib-avatar>
+      </div>
+    }
+
+    @if (actions().length) {
+      @if (userName() || userRole()) {
+        <lib-divisor class="top-divisor" orientation="vertical"></lib-divisor>
+      }
+
+      <div class="top-actions">
+        @for (action of actions().slice(0, 4); track action.id) {
+          <span class="top-action">
+            <lib-icon-button
+              type="neutral"
+              variant="ghost"
+              [icon]="action.icon"
+              [ariaLabel]="actionLabel(action)"
+              (clicked)="actionClick.emit(action)"
+            ></lib-icon-button>
+            @if (action.badge) {
+              <span class="top-action-badge" aria-hidden="true"></span>
+            }
+          </span>
+        }
+      </div>
+    }
+  </div>
+</header>

@@ -1,0 +1,97 @@
+:host {
+  display: inline-block;
+}
+
+.checkbox {
+  cursor: pointer;
+  display: flex;
+
+  .checkbox-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-spacing-8, 8px);
+    border-radius: var(--size-radius-8, 8px);
+    margin: calc(-1 * var(--size-spacing-4, 4px))
+      calc(-1 * var(--size-spacing-8, 8px));
+    padding: var(--size-spacing-4, 4px) var(--size-spacing-8, 8px);
+  }
+
+  &:not(.disabled):focus-within:has(.checkbox-native:focus-visible) .checkbox-inner {
+    box-shadow: 0 0 0 2px var(--color-state-system-focus, hsl(220deg, 82%, 65%));
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    color: var(--color-text-essential-disabled, hsl(208deg, 15%, 75%));
+
+    .checkbox-label {
+      color: var(--color-text-essential-disabled, hsl(208deg, 15%, 75%));
+      cursor: not-allowed;
+    }
+  }
+
+  .checkbox-control {
+    position: relative;
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .checkbox-native {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+    outline: none;
+  }
+
+  .checkbox-box {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--color-icons-essential-medium, hsl(217deg, 19%, 27%));
+    border-radius: var(--size-radius-4, 4px);
+    pointer-events: none;
+
+    &.filled {
+      background: var(--color-icons-essential-medium, hsl(217deg, 19%, 27%));
+    }
+
+    lib-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+    }
+  }
+
+  &.disabled .checkbox-box {
+    border-color: var(--color-state-system-disabled, hsl(206deg, 26%, 95%));
+
+    &.filled {
+      background: var(--color-state-system-disabled, hsl(206deg, 26%, 95%));
+    }
+  }
+
+  .checkbox-label {
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    font-size: var(--size-font-body-14, 14px);
+    font-weight: 500;
+    line-height: 21px;
+    color: var(--color-text-essential-body, hsl(217deg, 19%, 27%));
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,116 @@
+<ng-template #pickerChips>
+	<lib-date-picker-field-select
+		class="date-picker-field-slot"
+		ariaLabel="Mês"
+		[label]="monthFieldLabel"
+		(activate)="onHeaderMonthActivate()"
+	></lib-date-picker-field-select>
+	<lib-date-picker-field-select
+		*ngIf="showYear"
+		class="date-picker-field-slot"
+		ariaLabel="Ano"
+		[label]="yearFieldLabel"
+		(activate)="onHeaderYearActivate()"
+	></lib-date-picker-field-select>
+</ng-template>
+
+<ng-template #calendarDayList let-cells="cells" let-cellKind="cellKind">
+	<lib-calendar-day
+		*ngFor="let c of cells; trackBy: trackDayCell"
+		[cellKind]="cellKind"
+		[label]="c.label"
+		[sublabel]="c.sublabel"
+		[description]="c.description ?? ''"
+		[disabled]="c.disabled"
+		[readOnly]="readOnly && cellKind === 'day'"
+		[today]="c.today"
+		[context]="c.context"
+		[selected]="c.selected"
+		(activate)="onBodyCellActivate(c)"
+	></lib-calendar-day>
+</ng-template>
+
+<ng-template #headerChevron let-goPrev>
+	<lib-icon-button
+		class="date-picker-nav"
+		type="neutral"
+		variant="bare"
+		size="small"
+		[icon]="goPrev ? 'CaretLeft' : 'CaretRight'"
+		[ariaLabel]="goPrev ? 'Anterior' : 'Próximo'"
+		(clicked)="goPrev ? onPrev() : onNext()"
+	></lib-icon-button>
+</ng-template>
+
+<ng-template #weekChevron let-goPrev>
+	<lib-icon-button
+		class="date-picker-nav date-picker-nav-week"
+		type="neutral"
+		variant="bare"
+		size="small"
+		[icon]="goPrev ? 'CaretLeft' : 'CaretRight'"
+		[ariaLabel]="goPrev ? 'Semana anterior' : 'Próxima semana'"
+		(clicked)="goPrev ? onPrev() : onNext()"
+	></lib-icon-button>
+</ng-template>
+
+<div class="date-picker-panel">
+	<header
+		class="date-picker-header"
+		[class.date-picker-header-compact]="isCompactWeekHeader"
+	>
+		<ng-container *ngIf="!isCompactWeekHeader">
+			<ng-container *ngTemplateOutlet="headerChevron; context: { $implicit: true }"></ng-container>
+		</ng-container>
+		<div
+			class="date-picker-header-chips"
+			[class.date-picker-header-chips-only]="isCompactWeekHeader"
+		>
+			<ng-container *ngTemplateOutlet="pickerChips"></ng-container>
+		</div>
+		<ng-container *ngIf="!isCompactWeekHeader">
+			<ng-container *ngTemplateOutlet="headerChevron; context: { $implicit: false }"></ng-container>
+		</ng-container>
+	</header>
+
+	<div class="date-picker-body">
+		<div *ngIf="panelView === 'default' && size === 'default'" class="date-picker-day-default">
+			<div class="date-picker-weekday-row">
+				<div *ngFor="let w of weekdayHeaders" class="date-picker-weekday-cell">
+					{{ w }}
+				</div>
+			</div>
+			<div class="date-picker-day-grid">
+				<ng-container
+					*ngTemplateOutlet="calendarDayList; context: { cells: dayCells, cellKind: 'day' }"
+				></ng-container>
+			</div>
+		</div>
+
+		<div *ngIf="panelView === 'default' && size === 'small'" class="date-picker-week-inline">
+			<ng-container *ngTemplateOutlet="weekChevron; context: { $implicit: true }"></ng-container>
+			<div class="date-picker-day-grid date-picker-day-grid-week">
+				<ng-container
+					*ngTemplateOutlet="calendarDayList; context: { cells: smallWeekCells, cellKind: 'day' }"
+				></ng-container>
+			</div>
+			<ng-container *ngTemplateOutlet="weekChevron; context: { $implicit: false }"></ng-container>
+		</div>
+
+		<div *ngIf="panelView === 'month'" class="date-picker-month-grid">
+			<div class="date-picker-day-grid date-picker-day-grid-month">
+				<ng-container
+					*ngTemplateOutlet="calendarDayList; context: { cells: monthCells, cellKind: 'month' }"
+				></ng-container>
+			</div>
+		</div>
+
+		<div *ngIf="panelView === 'year'" class="date-picker-year-grid">
+			<div class="date-picker-day-grid date-picker-day-grid-year">
+				<ng-container
+					*ngTemplateOutlet="calendarDayList; context: { cells: yearCells, cellKind: 'year' }"
+				></ng-container>
+			</div>
+		</div>
+	</div>
+</div>

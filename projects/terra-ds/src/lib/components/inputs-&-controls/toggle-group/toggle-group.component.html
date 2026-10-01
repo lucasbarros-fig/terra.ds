@@ -1,0 +1,31 @@
+<div
+  class="toggle-group"
+  role="radiogroup"
+  [attr.aria-label]="ariaLabel || null"
+  [attr.aria-disabled]="disabled ? 'true' : null"
+>
+  <button
+    #toggleBtn
+    *ngFor="let opt of options"
+    type="button"
+    class="toggle-group-item"
+    [class.toggle-group-item-selected]="isSelected(opt.id)"
+    [class.toggle-group-item-disabled]="disabled || opt.disabled"
+    role="radio"
+    [attr.aria-checked]="isSelected(opt.id) ? 'true' : 'false'"
+    [attr.aria-label]="optionAriaLabel(opt)"
+    [attr.tabindex]="tabindexFor(opt)"
+    [attr.disabled]="(disabled || opt.disabled) ? '' : null"
+    (click)="onOptionClick(opt)"
+    (keydown)="onOptionKeydown($event, opt)"
+  >
+    <lib-icon
+      *ngIf="showsIcon(opt)"
+      class="toggle-group-icon"
+      [icon]="optionIcon(opt)"
+      [size]="20"
+      [color]="iconColorFor(opt)"
+    ></lib-icon>
+    <span *ngIf="showsLabel(opt)" class="toggle-group-text">{{ optionLabel(opt) }}</span>
+  </button>
+</div>

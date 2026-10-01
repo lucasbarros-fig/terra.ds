@@ -1,0 +1,322 @@
+:host {
+  display: inline-flex;
+}
+
+.tooltip-container {
+  width: 100%;
+  position: relative;
+  display: inline-flex;
+  isolation: isolate;
+}
+
+.trigger {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  color: var(--color-state-feedback-warning-surface-base);
+}
+
+.trigger-projection {
+  display: contents;
+}
+
+.dropdown {
+  position: absolute;
+  z-index: 1;
+  transform: translateZ(0);
+  padding: var(--size-spacing-8) var(--size-spacing-12);
+  border: var(--size-stoke-1) solid var(--color-stroke-frame);
+  border-radius: var(--size-radius-8);
+  box-sizing: border-box;
+  width: max-content;
+  max-width: 200px;
+  background: var(--color-theme-base);
+  color: var(--color-text-essential-heading);
+  font-size: var(--size-font-body-12);
+  line-height: 1.4;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.tooltip-container.has-media .dropdown {
+  width: 220px;
+  padding: var(--size-spacing-8);
+}
+
+.dropdown-media {
+  display: block;
+  width: 100%;
+  height: 96px;
+  border-radius: 6px;
+  margin-bottom: var(--size-spacing-8);
+  background: var(--color-state-system-disabled);
+  object-fit: cover;
+}
+
+.dropdown-text {
+  margin: 0;
+  padding: 0 var(--size-spacing-4) var(--size-spacing-4);
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.tooltip-container:not(.has-media) .dropdown-text {
+  padding: 0;
+}
+
+.tooltip-container.has-media .dropdown-text {
+  width: 100%;
+  max-width: none;
+}
+
+.caret {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  overflow: visible;
+  color: var(--color-stroke-frame);
+}
+
+.dropdown,
+.caret {
+  opacity: 0;
+  scale: 0.94;
+  translate: 0 0;
+  pointer-events: none;
+  transition:
+    opacity 140ms cubic-bezier(0.4, 0, 1, 1),
+    scale 140ms cubic-bezier(0.4, 0, 1, 1),
+    translate 140ms cubic-bezier(0.4, 0, 1, 1);
+  will-change: opacity, scale, translate;
+}
+
+.tooltip-container.top .dropdown,
+.tooltip-container.top .caret {
+  translate: 0 4px;
+  transform-origin: 50% 100%;
+}
+
+.tooltip-container.bottom .dropdown,
+.tooltip-container.bottom .caret {
+  translate: 0 -4px;
+  transform-origin: 50% 0%;
+}
+
+.tooltip-container.left .dropdown,
+.tooltip-container.left .caret {
+  translate: 4px 0;
+  transform-origin: 100% 50%;
+}
+
+.tooltip-container.right .dropdown,
+.tooltip-container.right .caret {
+  translate: -4px 0;
+  transform-origin: 0% 50%;
+}
+
+.tooltip-container.is-open .dropdown,
+.tooltip-container.is-open .caret {
+  opacity: 1;
+  scale: 1;
+  translate: 0 0;
+  pointer-events: auto;
+  transition:
+    opacity 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    translate 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropdown,
+  .caret {
+    transition-duration: 1ms !important;
+    translate: 0 0 !important;
+    scale: 1 !important;
+  }
+}
+
+.caret-fill {
+  fill: var(--color-theme-base);
+  stroke: none;
+}
+
+.caret-stroke {
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 0.75;
+  vector-effect: non-scaling-stroke;
+}
+
+.tooltip-container.top .caret,
+.tooltip-container.bottom .caret {
+  width: 20px;
+  height: 10px;
+}
+
+.tooltip-container.left .caret,
+.tooltip-container.right .caret {
+  width: 10px;
+  height: 20px;
+}
+
+.tooltip-container.top .dropdown {
+  bottom: calc(100% + 2px + 8px - 1px);
+}
+
+.tooltip-container.top .caret {
+  bottom: calc(100% + 2px + 1px - 2px);
+  left: 50%;
+  transform: translate3d(-50%, 0, 0.1px);
+}
+
+.tooltip-container.top.middle .dropdown {
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+}
+
+.tooltip-container.top.start .dropdown {
+  left: -12px;
+  right: auto;
+  transform: none;
+}
+
+.tooltip-container.top.end .dropdown {
+  left: auto;
+  right: -12px;
+  transform: none;
+}
+
+.tooltip-container.bottom .dropdown {
+  top: calc(100% + 2px + 8px - 1px);
+}
+
+.tooltip-container.bottom .caret {
+  top: calc(100% + 2px + 0.5px - 2px);
+  left: 50%;
+  transform: translate3d(-50%, 0, 0.1px);
+}
+
+.tooltip-container.bottom.middle .dropdown {
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+}
+
+.tooltip-container.bottom.start .dropdown {
+  left: -12px;
+  right: auto;
+  transform: none;
+}
+
+.tooltip-container.bottom.end .dropdown {
+  left: auto;
+  right: -12px;
+  transform: none;
+}
+
+.tooltip-container.left .dropdown {
+  right: calc(100% + 2px + 8px - 1px);
+}
+
+.tooltip-container.left.start .caret {
+  right: calc(100% + 2px + 1px - 2px);
+  top: 80%;
+  transform: translate3d(0, -50%, 0.1px);
+}
+
+.tooltip-container.left.middle .caret {
+  right: calc(100% + 2px + 1px - 2px);
+  top: 50%;
+  transform: translate3d(0, -50%, 0.1px);
+}
+
+.tooltip-container.left.end .caret {
+  right: calc(100% + 2px + 1px - 2px);
+  top: 15%;
+  transform: translate3d(0, -50%, 0.1px);
+}
+
+.tooltip-container.left.middle .dropdown {
+  right: 26px;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+}
+
+.tooltip-container.left.start .dropdown {
+  top: -12px;
+  bottom: auto;
+  transform: none;
+}
+
+.tooltip-container.left.end .dropdown {
+  right: 26px;
+  top: auto;
+  bottom: -12px;
+  transform: none;
+}
+
+.tooltip-container.right .dropdown {
+  left: calc(100% + 2px + 8px - 1px);
+}
+
+.tooltip-container.right.start .caret {
+  left: calc(100% + 4px);
+  top: 80%;
+  transform: translate3d(0, -50%, 0.1px);
+}
+
+.tooltip-container.right.middle .caret {
+  left: calc(100% + 4px);
+  top: 50%;
+  transform: translate3d(0, -50%, 0.1px);
+}
+
+.tooltip-container.right.end .caret {
+  left: calc(100% + 4px);
+  top: 15%;
+  transform: translate3d(0, -50%, 0.1px);
+}
+
+.tooltip-container.left.start .caret,
+.tooltip-container.right.start .caret {
+  transform: translate3d(
+    0,
+    calc(-50% - 12px * 0.55),
+    0.1px
+  );
+}
+
+.tooltip-container.left.end .caret,
+.tooltip-container.right.end .caret {
+  transform: translate3d(
+    0,
+    calc(-50% + 12px * 0.55),
+    0.1px
+  );
+}
+
+.tooltip-container.right.middle .dropdown {
+  left: calc(100% + 4px + 9px);
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+}
+
+.tooltip-container.right.start .dropdown {
+  left: calc(100% + 4px + 9px);
+  top: -12px;
+  bottom: auto;
+  transform: none;
+}
+
+.tooltip-container.right.end .dropdown {
+  left: calc(100% + 4px + 9px);
+  top: auto;
+  bottom: -12px;
+  transform: none;
+}

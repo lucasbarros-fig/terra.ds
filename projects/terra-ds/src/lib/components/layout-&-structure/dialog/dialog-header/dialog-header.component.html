@@ -1,0 +1,31 @@
+<div class="header-container">
+  <div class="header-left">
+    @if (title()) {
+      <div class="header-title-row">
+        @if (leadingIcon()) {
+          <lib-icon
+            class="header-leading-icon"
+            [icon]="leadingIcon()!"
+            [size]="20"
+            color="inherit"
+          ></lib-icon>
+        }
+        <h2 class="header-title">{{ title() }}</h2>
+      </div>
+    }
+  </div>
+
+  @if (showCloseButton()) {
+    <div class="header-close">
+      <lib-button
+        intent="neutral"
+        variant="bare"
+        icon="X"
+        [iconSize]="20"
+        [showIcon]="true"
+        [ariaLabel]="closeButtonLabel()"
+        (clicked)="onClose()"
+      ></lib-button>
+    </div>
+  }
+</div>

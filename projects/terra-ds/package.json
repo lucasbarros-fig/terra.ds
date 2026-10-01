@@ -1,0 +1,20 @@
+{
+  "name": "@teddy-conkey/terra-ds",
+  "version": "0.1.0",
+  "peerDependencies": {
+    "@angular/cdk": "~21.2.14",
+    "@angular/common": "~21.2.18",
+    "@angular/core": "~21.2.18"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "files": [
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.mjs",
+    "**/*.css",
+    "assets/**/*"
+  ]
+}

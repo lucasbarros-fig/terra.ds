@@ -1,0 +1,29 @@
+@if (open()) {
+  <div
+    class="dialog-root"
+    [class.dialog-root-no-backdrop]="!showBackdrop()"
+    [attr.data-testid]="testId() || null"
+  >
+    @if (showBackdrop()) {
+      <div
+        class="dialog-backdrop"
+        (mousedown)="onBackdropMouseDown($event)"
+        aria-hidden="true"
+      ></div>
+    }
+
+    <div class="dialog-surface-wrap">
+      <div
+        class="dialog-panel"
+        role="dialog"
+        [attr.aria-modal]="showBackdrop() ? 'true' : null"
+        [attr.aria-label]="ariaLabel() || null"
+        [attr.aria-labelledby]="ariaLabelledBy() || null"
+      >
+        <div class="dialog-stack">
+          <ng-content></ng-content>
+        </div>
+      </div>
+    </div>
+  </div>
+}

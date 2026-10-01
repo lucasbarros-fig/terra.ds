@@ -1,0 +1,128 @@
+:host.date-picker-host {
+	display: block;
+	box-sizing: border-box;
+	font-family: var(--font-family-primary, "DM Sans", sans-serif);
+}
+
+.date-picker-panel {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-spacing-12);
+	width: 100%;
+	padding: var(--size-spacing-12);
+	border: 1px solid var(--color-stroke-frame);
+	border-radius: var(--size-radius-8);
+	background-color: var(--color-theme-overlay);
+}
+
+:host.date-picker-host-size-small .date-picker-panel {
+	background-color: transparent;
+	border: none;
+	border-radius: none;
+	padding: 0;
+}
+
+.date-picker-header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--size-spacing-8);
+}
+
+.date-picker-header-compact {
+	justify-content: center;
+}
+
+.date-picker-header-chips {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	flex: 1;
+	gap: var(--size-spacing-8);
+	min-width: 0;
+}
+
+.date-picker-header-chips-only {
+	flex: none;
+}
+
+.date-picker-field-slot {
+	flex: 0 1 auto;
+	min-width: 0;
+	max-width: 140px;
+
+	&:first-child {
+		width: 104px;
+	}
+
+	&:last-child {
+		width: 74px;
+	}
+}
+
+.date-picker-nav {
+	flex: 0 0 auto;
+}
+
+.date-picker-body {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-spacing-4);
+	min-width: 0;
+}
+
+.date-picker-weekday-row {
+	display: grid;
+	grid-template-columns: repeat(7, minmax(0, 1fr));
+	gap: var(--size-spacing-4);
+}
+
+.date-picker-weekday-cell {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 32px;
+	padding: var(--size-spacing-4);
+	border-radius: var(--size-radius-4);
+	font-size: var(--size-font-body-12);
+	font-weight: 400;
+	line-height: 18px;
+	color: var(--color-text-essential-caption);
+	text-align: center;
+}
+
+.date-picker-day-grid {
+	display: grid;
+	gap: var(--size-spacing-4);
+}
+
+.date-picker-day-default .date-picker-day-grid {
+	grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.date-picker-day-grid-month,
+.date-picker-day-grid-year {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.date-picker-week-inline {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	gap: var(--size-spacing-4);
+}
+
+.date-picker-day-grid-week {
+	display: grid;
+	grid-template-columns: repeat(7, minmax(0, 1fr));
+	align-items: stretch;
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.date-picker-nav-week {
+	align-self: center;
+}

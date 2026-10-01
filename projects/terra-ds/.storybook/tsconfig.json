@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig.lib.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/storybook",
+    "rootDir": "..",
+    "types": ["node"],
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "strict": false,
+    "skipLibCheck": true
+  },
+  "exclude": ["../src/**/*.spec.ts"],
+  "include": [
+    "../src/lib/**/*.ts",
+    "../documentation.json",
+    "./preview.ts",
+    "./storybook-globals.ts",
+    "./storybook-brands.generated.ts"
+  ],
+  "files": ["./typings.d.ts"]
+}

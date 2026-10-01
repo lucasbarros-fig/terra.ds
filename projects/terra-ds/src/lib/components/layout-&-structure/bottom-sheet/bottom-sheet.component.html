@@ -1,0 +1,75 @@
+@if (isMounted()) {
+  <div
+    class="bs-root"
+    [class.bs-root-no-backdrop]="!showBackdrop()"
+    [class.bs-root-closing]="isClosing()"
+    [attr.data-testid]="testId() || null"
+  >
+    @if (showBackdrop()) {
+      <div
+        class="bs-backdrop"
+        [class.bs-backdrop-leave]="isClosing() && !shouldSkipAnimation()"
+        [animate.enter]="!isClosing() && !shouldSkipAnimation() ? 'bs-backdrop-enter' : ''"
+        (mousedown)="onBackdropMouseDown($event)"
+        aria-hidden="true"
+      ></div>
+    }
+
+    <div
+      #panel
+      class="bs-panel"
+      [style]="panelStyle()"
+      [animate.enter]="!isClosing() && !shouldSkipAnimation() ? 'bs-panel-enter' : ''"
+      cdkDrag
+      cdkDragLockAxis="y"
+      role="dialog"
+      [attr.aria-modal]="showBackdrop() ? 'true' : null"
+      [attr.aria-label]="ariaLabel() || null"
+      [attr.aria-labelledby]="ariaLabelledBy() || null"
+      (cdkDragStarted)="onDragStarted()"
+      (cdkDragMoved)="onDragMoved($event)"
+      (cdkDragEnded)="onDragEnded($event)"
+    >
+      <div class="bs-handle-area" cdkDragHandle>
+        <span class="bs-handle" aria-hidden="true"></span>
+      </div>
+
+      @if (hasHeader()) {
+        <header class="bs-header">
+          @if (title()) {
+            <h2 class="bs-title">{{ title() }}</h2>
+          }
+          @if (description()) {
+            <p class="bs-description">{{ description() }}</p>
+          }
+        </header>
+      }
+
+      <div class="bs-body">
+        <ng-content></ng-content>
+      </div>
+
+      @if (hasActions()) {
+        <footer class="bs-footer">
+          @for (action of actions(); track $index) {
+            @if (action.label.trim()) {
+              <lib-button
+                [intent]="resolveActionIntent(action, $index)"
+                variant="filled"
+                [label]="action.label"
+                [showIcon]="!!action.icon"
+                [icon]="action.icon ?? ''"
+                [iconSize]="20"
+                [disabled]="!!action.disabled"
+                [loading]="!!action.loading"
+                [fullWidth]="true"
+                nativeType="button"
+                (clicked)="onActionClick(action)"
+              ></lib-button>
+            }
+          }
+        </footer>
+      }
+    </div>
+  </div>
+}

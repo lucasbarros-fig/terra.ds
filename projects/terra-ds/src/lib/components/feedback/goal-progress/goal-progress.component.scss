@@ -1,0 +1,111 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--size-spacing-8);
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  font-family: var(--font-family-primary, 'DM Sans', sans-serif);
+}
+
+.goal-progress-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-spacing-8);
+  width: 100%;
+  min-width: 0;
+  font-size: var(--size-font-body-14, 14px);
+  line-height: 21px;
+  white-space: nowrap;
+}
+
+.goal-progress-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  color: var(--color-text-essential-heading);
+}
+
+.goal-progress-value {
+  flex-shrink: 0;
+  font-weight: 400;
+  color: var(--color-text-essential-caption);
+}
+
+.goal-progress-track {
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  height: 10px;
+  border: 1px solid var(--color-stroke-frame);
+  border-radius: var(--size-radius-8);
+  background-color: var(--color-theme-upper);
+}
+
+.goal-progress-bar {
+  display: block;
+  height: 100%;
+  min-width: 1px;
+  border-radius: var(--size-radius-8);
+  background-color: var(--goal-progress-bar-color);
+}
+
+.goal-progress-track--positive {
+  --goal-progress-bar-color: var(--color-state-feedback-positive-surface-base);
+}
+
+.goal-progress-track--warning {
+  --goal-progress-bar-color: var(--color-state-feedback-warning-surface-base);
+}
+
+.goal-progress-track--neutral {
+  --goal-progress-bar-color: var(--color-branding-surface-primary-base);
+}
+
+// Camada do marcador: cobre a largura externa do trilho (incluindo a borda) e é mais alta que ele.
+.goal-progress-target-layer {
+  position: absolute;
+  top: 50%;
+  right: -1px;
+  left: -1px;
+  height: 16px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.goal-progress-target {
+  position: absolute;
+  top: 0;
+  left: calc((100% - 2px) * var(--goal-progress-target, 1));
+  width: 2px;
+  height: 100%;
+  background-color: var(--color-text-essential-heading);
+}
+
+.goal-progress-status {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-8);
+  width: 100%;
+  min-width: 0;
+
+  lib-status {
+    flex-shrink: 0;
+    font-weight: 500;
+    line-height: 18px;
+    white-space: nowrap;
+  }
+}
+
+.goal-progress-note {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--size-font-body-12, 12px);
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--color-text-essential-caption);
+}

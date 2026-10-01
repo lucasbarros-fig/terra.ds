@@ -1,0 +1,20 @@
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <div
+    *ngFor="let item of displayItems; trackBy: trackByItem; let first = first; let last = last"
+    class="item"
+  >
+    <a
+      [class.no-link]="!item.link"
+      [class.current]="item.isCurrent"
+      [class.ellipsis]="item.isEllipsis"
+      [attr.aria-current]="item.isCurrent ? 'page' : null"
+      [attr.tabindex]="item.link ? 0 : null"
+      (click)="item.link && navigateRoute(item.link)"
+      (keydown.enter)="item.link && navigateRoute(item.link)"
+    >{{ item.label }}</a>
+
+    <span *ngIf="!last || first" class="divider" aria-hidden="true">
+      <lib-icon icon="CaretRight" [size]="12"></lib-icon>
+    </span>
+  </div>
+</nav>

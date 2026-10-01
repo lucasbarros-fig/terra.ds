@@ -1,0 +1,40 @@
+{
+  "extends": ["stylelint-config-standard-scss"],
+  "plugins": ["stylelint-scss"],
+  "rules": {
+    "color-named": "never",
+    "color-no-invalid-hex": true,
+    "declaration-block-no-duplicate-properties": true,
+    "shorthand-property-no-redundant-values": true,
+
+    "scss/at-rule-no-unknown": true,
+    "scss/no-duplicate-mixins": true,
+    "scss/dollar-variable-pattern": null,
+    "scss/at-mixin-pattern": null,
+    "scss/at-function-pattern": null,
+    "scss/percent-placeholder-pattern": null,
+    "scss/no-duplicate-dollar-variables": true,
+    "scss/no-global-function-names": null,
+
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        "ignorePseudoElements": ["ng-deep"]
+      }
+    ],
+
+    "property-no-unknown": [
+      true,
+      {
+        "ignoreProperties": ["text-edge", "leading-trim"]
+      }
+    ],
+
+    "selector-class-pattern": null,
+    "custom-property-pattern": null,
+    "alpha-value-notation": null,
+    "color-function-notation": null,
+    "import-notation": null,
+    "no-descending-specificity": null
+  }
+}

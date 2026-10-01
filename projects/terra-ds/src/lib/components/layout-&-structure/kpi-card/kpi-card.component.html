@@ -1,0 +1,13 @@
+<div class="kpi-card-label">
+  <lib-icon class="kpi-card-icon" [icon]="icon()" [size]="20" color="inherit" aria-hidden="true"></lib-icon>
+  <span class="kpi-card-label-text">{{ label() }}</span>
+</div>
+
+<p class="kpi-card-value">{{ value() }}</p>
+
+<div class="kpi-card-note">
+  <lib-status size="small" [status]="statusColor()" [text]="statusLabel()"></lib-status>
+  @if (note()) {
+    <span class="kpi-card-note-text">{{ note() }}</span>
+  }
+</div>

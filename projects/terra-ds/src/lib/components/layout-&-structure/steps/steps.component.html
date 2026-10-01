@@ -1,0 +1,13 @@
+<div class="steps-header" *ngIf="label">
+  <span class="steps-label">{{ currentLabel }}</span>
+  <span class="steps-number" *ngIf="showNumber">{{ current }}/{{ total }}</span>
+</div>
+
+<div class="steps-bars">
+  <div
+    *ngFor="let step of steps; let i = index"
+    class="steps-bar"
+    [class.active]="isActive(i)"
+    [attr.data-testid]="'step-' + i"
+  ></div>
+</div>

@@ -1,0 +1,41 @@
+.lib-list-root {
+  display: block;
+}
+
+.lib-list-root .list-wrapper {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.lib-list-root table.list {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 var(--size-spacing-16);
+  font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+}
+
+.lib-list-root table.list.list-striped tbody tr:nth-child(even) {
+  background: transparent;
+}
+
+.lib-list-root table.list.list-hoverable tbody tr:hover {
+  background: var(--color-state-system-ghost-hovering);
+}
+
+.lib-list-root table.list.list-hoverable tbody tr:active {
+  background: var(--color-state-system-ghost-pressing);
+}
+
+.lib-list-root table.list tbody .list-empty {
+  text-align: center;
+  padding: 32px !important;
+  font-style: italic;
+}
+
+.lib-list-root table.list lib-list-header,
+.lib-list-root table.list lib-list-header-item,
+.lib-list-root table.list lib-list-body,
+.lib-list-root table.list lib-list-body-row,
+.lib-list-root table.list lib-list-body-cell {
+  display: contents;
+}

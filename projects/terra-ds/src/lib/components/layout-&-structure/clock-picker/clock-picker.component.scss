@@ -1,0 +1,173 @@
+:host.clock-picker-host {
+	display: block;
+	box-sizing: border-box;
+	width: 272px;
+	max-width: 100%;
+	font-family: var(--font-family-primary, "DM Sans", sans-serif);
+
+	// Altura da lista = N itens de 32px + (N - 1) gaps de 4px.
+	--clock-picker-visible-items: 5;
+}
+
+:host.clock-picker-host-size-small {
+	--clock-picker-visible-items: 3;
+}
+
+.clock-picker-panel {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-spacing-12);
+	width: 100%;
+	padding: var(--size-spacing-12);
+	border: 1px solid var(--color-stroke-frame);
+	border-radius: var(--size-radius-8);
+	background-color: var(--color-theme-overlay);
+}
+
+// Small e embedded seguem o Date Picker Small: sem fundo, borda e padding.
+:host.clock-picker-host-size-small .clock-picker-panel,
+:host.clock-picker-host-embedded .clock-picker-panel {
+	padding: 0;
+	border: none;
+	border-radius: 0;
+	background-color: transparent;
+}
+
+:host.clock-picker-host-embedded .clock-picker-panel {
+	padding: var(--size-spacing-8);
+}
+
+.clock-picker-title {
+	margin: 0;
+	font-size: var(--size-font-body-14);
+	font-weight: 700;
+	line-height: 21px;
+	color: var(--color-text-essential-heading);
+}
+
+.clock-picker-columns {
+	display: flex;
+	align-items: stretch;
+	gap: var(--size-spacing-8);
+	min-width: 0;
+}
+
+.clock-picker-divider {
+	flex: 0 0 1px;
+	background-color: var(--color-stroke-frame);
+}
+
+.clock-picker-column {
+	display: flex;
+	flex: 1 1 0;
+	flex-direction: column;
+	gap: var(--size-spacing-8);
+	min-width: 0;
+}
+
+.clock-picker-column-label {
+	font-size: var(--size-font-body-12);
+	font-weight: 400;
+	line-height: 18px;
+	text-align: center;
+	color: var(--color-text-essential-caption);
+}
+
+.clock-picker-list {
+	$scroll-track: var(--color-theme-lower);
+	$scroll-thumb: var(--color-icons-essential-high);
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-spacing-4);
+	box-sizing: border-box;
+	height: calc(var(--clock-picker-visible-items) * 32px + (var(--clock-picker-visible-items) - 1) * var(--size-spacing-4));
+	padding-right: var(--size-spacing-4);
+	overflow: hidden auto;
+	overscroll-behavior: contain;
+	scrollbar-width: thin;
+	scrollbar-color: $scroll-thumb $scroll-track;
+
+	// Mesmo tratamento da barra de rolagem do Dropdown (Scroll Area do Figma).
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-button {
+		display: none;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: $scroll-track;
+		border-radius: 999px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		box-sizing: border-box;
+		background-color: $scroll-thumb;
+		border-radius: 22px;
+		border: 2px solid $scroll-track;
+	}
+}
+
+// Item — espelha o _CalendarDay do Date Picker.
+.clock-picker-item {
+	appearance: none;
+	box-sizing: border-box;
+	display: flex;
+	flex: 0 0 32px;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 32px;
+	margin: 0;
+	padding: var(--size-spacing-4) var(--size-spacing-8);
+	border: none;
+	border-radius: var(--size-radius-4);
+	background: transparent;
+	font-family: inherit;
+	font-size: var(--size-font-body-14);
+	font-weight: 500;
+	line-height: 21px;
+	color: var(--color-text-essential-heading);
+	cursor: pointer;
+	outline: 2px solid transparent;
+	outline-offset: -2px;
+	transition:
+		background-color 140ms ease,
+		color 140ms ease;
+
+	&:hover:not(:disabled, .is-selected) {
+		background-color: var(--color-state-system-ghost-hovering);
+	}
+
+	&:focus-visible {
+		outline-color: var(--color-state-system-focus);
+	}
+
+	&.is-selected {
+		background-color: var(--color-branding-surface-primary-base);
+		color: var(--color-text-static-white);
+
+		&:hover {
+			background-color: var(--color-branding-surface-primary-hovering);
+		}
+	}
+
+	&:disabled {
+		color: var(--color-text-essential-disabled);
+		cursor: not-allowed;
+	}
+}
+
+.clock-picker-footer {
+	display: flex;
+	gap: var(--size-spacing-8);
+
+	.clock-picker-action {
+		flex: 1 1 0;
+		min-width: 0;
+	}
+}

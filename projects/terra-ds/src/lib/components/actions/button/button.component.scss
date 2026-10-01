@@ -1,0 +1,408 @@
+@use 'sass:map';
+
+/*
+ * Mapa de tokens semânticos por intenção (paleta).
+ * Cada entrada referencia diretamente as CSS custom properties do Terra DS,
+ * garantindo que o CSS final use somente tokens públicos (`--color-*`).
+ *
+ * - `base`  : superfície/cor padrão.
+ * - `border`: cor da borda.
+ * - `hover` : superfície/cor em :hover.
+ * - `press` : superfície/cor em :active (pressing) e selected.
+ * - `on`    : cor de conteúdo (texto/ícone) sobre a superfície "filled".
+ * - `text` (opcional): cores de texto em ghost/bare.
+ *   quando `base` não é adequado (ex.: neutral com base transparente).
+ */
+$intents: (
+  branding: (
+    base: var(--color-branding-surface-primary-base),
+    border: transparent,
+    hover: var(--color-branding-surface-primary-hovering),
+    press: var(--color-branding-surface-primary-pressing),
+    on: var(--color-text-static-white),
+  ),
+  positive: (
+    base: var(--color-state-feedback-positive-surface-base),
+    border: transparent,
+    hover: var(--color-state-feedback-positive-surface-hovering),
+    press: var(--color-state-feedback-positive-surface-pressing),
+    on: var(--color-text-static-white),
+  ),
+  warning: (
+    base: var(--color-state-feedback-warning-surface-base),
+    border: transparent,
+    hover: var(--color-state-feedback-warning-surface-hovering),
+    press: var(--color-state-feedback-warning-surface-pressing),
+    on: var(--color-text-static-black),
+  ),
+  negative: (
+    base: var(--color-state-feedback-negative-surface-base),
+    border: transparent,
+    hover: var(--color-state-feedback-negative-surface-hovering),
+    press: var(--color-state-feedback-negative-surface-pressing),
+    on: var(--color-text-static-white),
+  ),
+  informative: (
+    base: var(--color-state-feedback-informative-surface-base),
+    border: transparent,
+    hover: var(--color-state-feedback-informative-surface-hovering),
+    press: var(--color-state-feedback-informative-surface-pressing),
+    on: var(--color-text-static-white),
+  ),
+  neutral: (
+    base: transparent,
+    border: var(--color-stroke-frame),
+    hover: var(--color-state-system-ghost-hovering),
+    press: var(--color-state-system-ghost-pressing),
+    on: var(--color-text-essential-heading),
+    text: var(--color-text-essential-heading),
+  ),
+);
+
+:host {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+:host(.is-full-width) {
+  display: flex;
+  width: 100%;
+}
+
+:host(.is-highlight) {
+  gap: 4px;
+  padding: 4px 0 0;
+  border-radius: 8px;
+  outline: 2px solid transparent;
+  outline-offset: 8px;
+  background: linear-gradient(
+    270deg,
+    var(--color-branding-surface-primary-base) 0%,
+    var(--color-branding-surface-segundary-base) 100%
+  );
+  transition: outline-color 140ms ease;
+}
+
+:host(.is-highlight):has(.lib-button:focus-visible) {
+  outline-color: var(--color-state-system-focus);
+}
+
+:host(.is-highlight) .lib-button:focus-visible {
+  outline-color: transparent;
+}
+
+:host(.is-highlight) .lib-button {
+  margin-bottom: -1px;
+}
+
+.lib-button__highlight-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0;
+  white-space: nowrap;
+  color: var(--color-text-static-white);
+}
+
+.lib-button {
+  width: 100%;
+  appearance: none;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 12px 24px;
+  margin: 0;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  outline: 2px solid transparent;
+  outline-offset: 8px;
+  transition:
+    background-color 140ms ease,
+    color 140ms ease,
+    border-color 140ms ease,
+    outline-color 140ms ease;
+
+  &:focus-visible {
+    outline-color: var(--color-state-system-focus);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.lib-button__icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
+:host(.is-loading) .lib-button:disabled {
+  cursor: progress;
+}
+
+.lib-button__label {
+  line-height: 1.5;
+}
+
+@each $name, $tokens in $intents {
+  $base: map.get($tokens, base);
+  $border: map.get($tokens, border);
+  $hover: map.get($tokens, hover);
+  $press: map.get($tokens, press);
+  $on: map.get($tokens, on);
+  $ghost-text: if(map.has-key($tokens, text), map.get($tokens, text), $base);
+
+  /* ---- FILLED ---- */
+  :host(.intent-#{$name}.variant-filled) .lib-button {
+    background-color: #{$base};
+    border-color: #{$border};
+    color: #{$on};
+  }
+  :host(.intent-#{$name}.variant-filled) .lib-button:hover:not(:disabled) {
+    background-color: #{$hover};
+    border-color: #{$border};
+  }
+  :host(.intent-#{$name}.variant-filled) .lib-button:active:not(:disabled) {
+    background-color: #{$press};
+    border-color: #{$border};
+  }
+
+  /* ---- GHOST ----  */
+  :host(.intent-#{$name}.variant-ghost) .lib-button {
+    background-color: transparent;
+    border-color: transparent;
+    color: #{$ghost-text};
+  }
+  :host(.intent-#{$name}.variant-ghost) .lib-button:hover:not(:disabled) {
+    background-color: var(--color-state-system-ghost-hovering);
+    border-color: transparent;
+    color: #{$ghost-text};
+  }
+  :host(.intent-#{$name}.variant-ghost) .lib-button:active:not(:disabled) {
+    background-color: var(--color-state-system-ghost-pressing);
+    border-color: transparent;
+    color: #{$ghost-text};
+  }
+
+  /* ---- BARE ---- */
+  :host(.intent-#{$name}.variant-bare) .lib-button {
+    background-color: transparent;
+    border-color: transparent;
+    color: #{$ghost-text};
+  }
+  :host(.intent-#{$name}.variant-bare) .lib-button:hover:not(:disabled) {
+    background-color: transparent;
+    color: #{$ghost-text};
+  }
+  :host(.intent-#{$name}.variant-bare) .lib-button:active:not(:disabled) {
+    background-color: transparent;
+    color: #{$ghost-text};
+  }
+}
+
+:host(.variant-bare:not(.is-highlight, .intent-branding.is-selected)) .lib-button {
+  padding: 0;
+  min-height: 0;
+}
+
+$branding-tokens: map.get($intents, branding);
+$branding-base: map.get($branding-tokens, base);
+$branding-hover: map.get($branding-tokens, hover);
+$branding-press: map.get($branding-tokens, press);
+
+:host(.intent-branding.is-selected.variant-filled) .lib-button,
+:host(.intent-branding.is-selected.variant-ghost) .lib-button,
+:host(.intent-branding.is-selected.variant-bare) .lib-button {
+  background-color: transparent;
+  border-color: #{$branding-base};
+  color: var(--color-text-essential-heading);
+}
+
+:host(.intent-branding.is-selected.variant-filled) .lib-button:hover:not(:disabled),
+:host(.intent-branding.is-selected.variant-ghost) .lib-button:hover:not(:disabled),
+:host(.intent-branding.is-selected.variant-bare) .lib-button:hover:not(:disabled) {
+  background-color: var(--color-state-system-ghost-hovering);
+  border-color: #{$branding-hover};
+  color: var(--color-text-essential-heading);
+}
+
+:host(.intent-branding.is-selected.variant-filled) .lib-button:active:not(:disabled),
+:host(.intent-branding.is-selected.variant-ghost) .lib-button:active:not(:disabled),
+:host(.intent-branding.is-selected.variant-bare) .lib-button:active:not(:disabled) {
+  background-color: var(--color-state-system-ghost-pressing);
+  border-color: #{$branding-press};
+  color: var(--color-text-essential-heading);
+}
+
+:host(.intent-branding.is-selected.variant-filled) .lib-button .lib-button__icon,
+:host(.intent-branding.is-selected.variant-ghost) .lib-button .lib-button__icon,
+:host(.intent-branding.is-selected.variant-bare) .lib-button .lib-button__icon {
+  color: #{$branding-base};
+}
+
+:host(.intent-branding.is-selected.variant-filled) .lib-button:hover:not(:disabled) .lib-button__icon,
+:host(.intent-branding.is-selected.variant-ghost) .lib-button:hover:not(:disabled) .lib-button__icon,
+:host(.intent-branding.is-selected.variant-bare) .lib-button:hover:not(:disabled) .lib-button__icon {
+  color: #{$branding-hover};
+}
+
+:host(.intent-branding.is-selected.variant-filled) .lib-button:active:not(:disabled) .lib-button__icon,
+:host(.intent-branding.is-selected.variant-ghost) .lib-button:active:not(:disabled) .lib-button__icon,
+:host(.intent-branding.is-selected.variant-bare) .lib-button:active:not(:disabled) .lib-button__icon {
+  color: #{$branding-press};
+}
+
+
+@each $variant in (filled, ghost, bare) {
+  :host(.is-highlight.variant-#{$variant}) .lib-button {
+    background-color: var(--color-theme-base);
+    border: 1px solid var(--color-branding-surface-primary-base);
+    color: var(--color-text-essential-heading);
+  }
+
+  :host(.is-highlight.variant-#{$variant}) .lib-button:hover:not(:disabled) {
+    background-color: color-mix(
+      in srgb,
+      var(--color-text-essential-heading) 4%,
+      var(--color-theme-base)
+    );
+    border-color: var(--color-branding-surface-primary-base);
+    color: var(--color-text-essential-heading);
+  }
+
+  :host(.is-highlight.variant-#{$variant}) .lib-button:active:not(:disabled),
+  :host(.intent-branding.is-highlight.is-selected.variant-#{$variant}) .lib-button {
+    background-color: var(--color-theme-base);
+    border-color: var(--color-branding-surface-primary-base);
+    color: var(--color-text-essential-heading);
+  }
+
+  :host(.is-highlight.variant-#{$variant}) .lib-button .lib-button__icon,
+  :host(.is-highlight.variant-#{$variant}) .lib-button:hover:not(:disabled) .lib-button__icon,
+  :host(.is-highlight.variant-#{$variant}) .lib-button:active:not(:disabled) .lib-button__icon,
+  :host(.intent-branding.is-highlight.is-selected.variant-#{$variant}) .lib-button .lib-button__icon {
+    color: var(--color-branding-surface-primary-base);
+  }
+}
+
+@each $variant in (filled, ghost, bare) {
+  :host(.intent-branding.is-highlight.is-selected.variant-#{$variant}) .lib-button:hover:not(:disabled) {
+    background-color: color-mix(
+      in srgb,
+      var(--color-text-essential-heading) 4%,
+      var(--color-theme-base)
+    );
+  }
+}
+
+@each $variant in (filled, ghost, bare) {
+  :host(.intent-neutral.is-highlight.variant-#{$variant}) .lib-button {
+    border-color: var(--color-stroke-frame);
+  }
+
+  :host(.intent-neutral.is-highlight.variant-#{$variant}) .lib-button:hover:not(:disabled) {
+    border-color: var(--color-stroke-frame);
+  }
+
+  :host(.intent-neutral.is-highlight.variant-#{$variant}) .lib-button:active:not(:disabled) {
+    border-color: var(--color-stroke-frame);
+  }
+
+  :host(.intent-neutral.is-highlight.variant-#{$variant}) .lib-button .lib-button__icon,
+  :host(.intent-neutral.is-highlight.variant-#{$variant}) .lib-button:hover:not(:disabled) .lib-button__icon,
+  :host(.intent-neutral.is-highlight.variant-#{$variant}) .lib-button:active:not(:disabled) .lib-button__icon {
+    color: var(--color-text-essential-heading);
+  }
+}
+
+
+:host(.is-disabled.variant-filled:not(.is-highlight)) .lib-button {
+  background-color: var(--color-state-system-disabled);
+  border-color: var(--color-state-system-disabled);
+  color: var(--color-text-essential-disabled);
+}
+
+:host(.is-disabled.variant-ghost:not(.is-highlight)) .lib-button {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-text-essential-disabled);
+}
+
+:host(.is-disabled.variant-bare:not(.is-highlight)) .lib-button {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-text-essential-disabled);
+}
+
+:host(.is-disabled) {
+  cursor: not-allowed;
+}
+
+:host(.is-loading) {
+  cursor: progress;
+}
+
+:host(.is-disabled) .lib-button {
+  box-shadow: none;
+}
+
+:host(.is-disabled.is-highlight.variant-filled) .lib-button,
+:host(.is-disabled.is-highlight.variant-ghost) .lib-button,
+:host(.is-disabled.is-highlight.variant-bare) .lib-button {
+  background-color: var(--color-theme-base);
+  border-color: var(--color-stroke-disable);
+  color: var(--color-text-essential-disabled);
+}
+
+:host(.is-disabled.is-highlight.variant-filled) .lib-button .lib-button__icon,
+:host(.is-disabled.is-highlight.variant-ghost) .lib-button .lib-button__icon,
+:host(.is-disabled.is-highlight.variant-bare) .lib-button .lib-button__icon {
+  color: var(--color-text-essential-disabled);
+}
+
+:host(.is-disabled.is-highlight.is-selected.variant-filled) .lib-button,
+:host(.is-disabled.is-highlight.is-selected.variant-ghost) .lib-button,
+:host(.is-disabled.is-highlight.is-selected.variant-bare) .lib-button {
+  background-color: var(--color-state-system-disabled);
+  color: var(--color-text-essential-disabled) !important;
+}
+
+:host(.is-disabled.intent-branding.is-highlight.is-selected.variant-filled) .lib-button .lib-button__icon,
+:host(.is-disabled.intent-branding.is-highlight.is-selected.variant-ghost) .lib-button .lib-button__icon,
+:host(.is-disabled.intent-branding.is-highlight.is-selected.variant-bare) .lib-button .lib-button__icon {
+  color: var(--color-text-essential-disabled);
+}
+
+:host(.is-disabled.is-highlight) {
+  background: linear-gradient(
+    270deg,
+    color-mix(in srgb, var(--color-branding-surface-primary-base) 60%, transparent) 0%,
+    color-mix(in srgb, var(--color-branding-surface-segundary-base) 60%, transparent) 100%
+  );
+}
+
+:host(.is-disabled.is-highlight) .lib-button__highlight-label {
+  color: var(--color-text-static-white);
+  opacity: 0.6;
+}

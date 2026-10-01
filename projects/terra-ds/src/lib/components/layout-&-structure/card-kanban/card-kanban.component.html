@@ -1,0 +1,74 @@
+<div class="card-kanban-header">
+  <lib-tag
+    class="card-kanban-type"
+    emphasis="high"
+    size="small"
+    [color]="typeConfig().color"
+    [showAfterIcon]="true"
+    [afterIcon]="typeConfig().icon"
+    [attr.title]="typeConfig().label"
+  >
+    <span aria-hidden="true">{{ type() }}</span>
+    <span class="card-kanban-sr-only">{{ typeConfig().label }}</span>
+  </lib-tag>
+
+  <p class="card-kanban-id" [attr.title]="proposalId()">{{ proposalId() }}</p>
+
+  <lib-icon-button
+    class="card-kanban-menu"
+    type="neutral"
+    variant="ghost"
+    size="default"
+    icon="DotsThree"
+    [ariaLabel]="menuAriaLabel()"
+    (clicked)="onMenuClick($event)"
+  ></lib-icon-button>
+</div>
+
+<div class="card-kanban-data">
+  <div class="card-kanban-row">
+    <lib-icon [icon]="typeConfig().icon" [size]="16" color="inherit" aria-hidden="true"></lib-icon>
+    <span class="card-kanban-text" [attr.title]="clientName()">{{ clientName() }}</span>
+  </div>
+
+  <div class="card-kanban-row">
+    <lib-icon icon="Briefcase" [size]="16" color="inherit" aria-hidden="true"></lib-icon>
+    <span class="card-kanban-text" [attr.title]="product()">{{ product() }}</span>
+  </div>
+
+  <div class="card-kanban-row">
+    <lib-icon icon="CurrencyCircleDollar" [size]="16" color="inherit" aria-hidden="true"></lib-icon>
+    <span class="card-kanban-text" [attr.title]="amount()">{{ amount() }}</span>
+  </div>
+
+  <div class="card-kanban-row">
+    @if (statusIcon()) {
+      <lib-icon [icon]="statusIcon()" [size]="16" color="inherit" aria-hidden="true"></lib-icon>
+    }
+    <lib-status
+      class="card-kanban-status"
+      size="small"
+      [status]="statusColor()"
+      [text]="statusLabel()"
+      [attr.title]="statusLabel()"
+    ></lib-status>
+  </div>
+</div>
+
+<div class="card-kanban-footer">
+  <div class="card-kanban-meta card-kanban-meta--comments">
+    @if (showComments()) {
+      <lib-icon icon="ChatDots" [size]="16" color="inherit" aria-hidden="true"></lib-icon>
+      <span aria-hidden="true">{{ comments() }}</span>
+      <span class="card-kanban-sr-only">{{ commentsLabel() }}</span>
+    }
+  </div>
+
+  <div class="card-kanban-meta card-kanban-meta--time" [attr.title]="timeLabel() || null">
+    <lib-icon icon="Clock" [size]="16" color="inherit" aria-hidden="true"></lib-icon>
+    <span [attr.aria-hidden]="timeLabel() ? 'true' : null">{{ time() }}</span>
+    @if (timeLabel()) {
+      <span class="card-kanban-sr-only">{{ timeLabel() }}</span>
+    }
+  </div>
+</div>

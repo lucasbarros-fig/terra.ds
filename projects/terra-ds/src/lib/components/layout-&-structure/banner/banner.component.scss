@@ -1,0 +1,157 @@
+:host {
+  --banner-height: 400px;
+
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+}
+
+// O indicador sobrepõe a borda inferior (como no Figma, 416px no total):
+// reserva o espaço que ele ultrapassa para não colidir com o conteúdo seguinte.
+:host(.lib-banner--with-pagination) {
+  padding-bottom: var(--size-spacing-16);
+}
+
+.banner-viewport {
+  position: relative;
+  box-sizing: border-box;
+  height: var(--banner-height);
+  border: 1px solid var(--color-stroke-frame);
+  border-radius: var(--size-radius-8);
+  background-color: var(--color-theme-base);
+  overflow: hidden;
+  outline: 2px solid transparent;
+  outline-offset: 4px;
+  transition: outline-color 140ms ease;
+
+  &:focus-visible {
+    outline-color: var(--color-state-system-focus);
+  }
+}
+
+.banner-track {
+  display: flex;
+  height: 100%;
+  transition: transform 400ms ease;
+}
+
+.banner-slide {
+  flex: 0 0 100%;
+  height: 100%;
+  min-width: 0;
+}
+
+.banner-link {
+  display: block;
+  height: 100%;
+  outline: none;
+
+  &:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--color-state-system-focus);
+  }
+}
+
+.banner-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+}
+
+// Setas: Icon Button Neutral Filled com fundo theme-base, sobrepostas às laterais (−12px).
+.banner-arrow {
+  position: absolute;
+  top: calc(var(--banner-height) / 2);
+  z-index: 1;
+  transform: translateY(-50%);
+  line-height: 0;
+}
+
+.banner-arrow--previous {
+  left: calc(var(--size-spacing-12) * -1);
+}
+
+.banner-arrow--next {
+  right: calc(var(--size-spacing-12) * -1);
+}
+
+:host lib-icon-button.banner-arrow ::ng-deep .icon-button-root.type-neutral.variant-filled .icon-button {
+  background-color: var(--color-theme-base);
+}
+
+:host lib-icon-button.banner-arrow ::ng-deep .icon-button-root.type-neutral.variant-filled .icon-button:hover:not(:disabled) {
+  background-color: var(--color-theme-base);
+  background-image: linear-gradient(
+    var(--color-state-system-ghost-hovering),
+    var(--color-state-system-ghost-hovering)
+  );
+}
+
+:host lib-icon-button.banner-arrow ::ng-deep .icon-button-root.type-neutral.variant-filled .icon-button:active:not(:disabled) {
+  background-color: var(--color-theme-base);
+  background-image: linear-gradient(
+    var(--color-state-system-ghost-pressing),
+    var(--color-state-system-ghost-pressing)
+  );
+}
+
+// Indicador: pílula centralizada, 18px sobre a imagem e 10px além da borda inferior.
+.banner-pagination {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-8);
+  padding: var(--size-spacing-8) var(--size-spacing-12);
+  border: 1px solid var(--color-stroke-frame);
+  border-radius: var(--size-radius-8);
+  background-color: var(--color-theme-base);
+  transform: translateX(-50%);
+}
+
+.banner-dot {
+  position: relative;
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background-color: var(--color-icons-essential-disabled);
+  cursor: pointer;
+  appearance: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition:
+    background-color 140ms ease,
+    outline-color 140ms ease;
+
+  // Amplia a área de toque sem alterar o visual.
+  &::after {
+    position: absolute;
+    inset: calc(var(--size-spacing-4) * -1);
+    content: '';
+  }
+
+  &:focus-visible {
+    outline-color: var(--color-state-system-focus);
+  }
+}
+
+.banner-dot--active {
+  background-color: var(--color-branding-surface-primary-base);
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner-track,
+  .banner-dot {
+    transition: none;
+  }
+}

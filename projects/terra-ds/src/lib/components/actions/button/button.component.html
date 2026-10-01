@@ -1,0 +1,30 @@
+@if (highlight()) {
+  <span class="lib-button__highlight-label" aria-hidden="true">{{ highlightLabel() }}</span>
+}
+
+<button
+  class="lib-button"
+  [type]="nativeType()"
+  [disabled]="disabled() || loading()"
+  [attr.aria-label]="ariaLabel() || null"
+  [attr.aria-pressed]="selected() ? 'true' : null"
+  [attr.aria-busy]="loading() ? 'true' : null"
+  (click)="onClick($event)"
+>
+  @if (loading()) {
+    <lib-spinner class="lib-button__spinner" [size]="iconSize()"></lib-spinner>
+  }
+
+  @if (showIcon() && icon()) {
+    <lib-icon
+      class="lib-button__icon"
+      [icon]="icon()"
+      [size]="iconSize()"
+      color="inherit"
+    ></lib-icon>
+  }
+
+  @if (label()) {
+    <span class="lib-button__label">{{ label() }}</span>
+  }
+</button>

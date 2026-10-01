@@ -1,0 +1,58 @@
+<div class="lib-list-pagination-root">
+	<div class="lib-list-pagination-container">
+		<div class="lib-list-pagination-page-size-group">
+			<span class="lib-list-pagination-label">{{ label }}</span>
+
+			<lib-dropdown
+				class="lib-list-pagination-page-size"
+				[(open)]="isDropdownOpen"
+				placement="top-start"
+				[matchTriggerWidth]="true"
+			>
+				<button
+					libDropdownTrigger
+					type="button"
+					class="lib-list-pagination-page-size-trigger"
+					[class.is-open]="isDropdownOpen"
+				>
+					<span>{{ pageSize }}</span>
+					<lib-icon icon="CaretDown" [size]="16" color="inherit"></lib-icon>
+				</button>
+
+				<lib-dropdown-item
+					*ngFor="let option of displayPageSizeOptions"
+					[label]="option.toString()"
+					(itemSelect)="selectPageSize(option)"
+				></lib-dropdown-item>
+			</lib-dropdown>
+		</div>
+
+		<div class="lib-list-pagination-nav-group">
+			<lib-icon-button
+				type="neutral"
+				variant="filled"
+				size="small"
+				icon="ArrowLeft"
+				ariaLabel="Página anterior"
+				[disabled]="!canPrev"
+				(clicked)="goPrev()"
+			></lib-icon-button>
+
+			<span class="lib-list-pagination-range">
+				<span>{{ rangeStart }} - {{ rangeEnd }}</span>
+				<span class="lib-list-pagination-range-separator">de</span>
+				<span>{{ total }}</span>
+			</span>
+
+			<lib-icon-button
+				type="neutral"
+				variant="filled"
+				size="small"
+				icon="ArrowRight"
+				ariaLabel="Próxima página"
+				[disabled]="!canNext"
+				(clicked)="goNext()"
+			></lib-icon-button>
+		</div>
+	</div>
+</div>

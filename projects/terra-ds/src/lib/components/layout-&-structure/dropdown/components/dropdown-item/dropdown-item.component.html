@@ -1,0 +1,41 @@
+<button
+  #actionBtn
+  type="button"
+  class="terra-dropdown-item"
+  [class.terra-dropdown-item--active]="active"
+  [attr.role]="itemRole"
+  [attr.aria-disabled]="disabled ? 'true' : null"
+  [attr.aria-selected]="itemRole === 'option' ? (selected() ? 'true' : 'false') : null"
+  [tabindex]="-1"
+  (click)="onClick($event)"
+  (keydown)="onKeydown($event)"
+>
+  @if (multiple()) {
+    <lib-checkbox
+      class="terra-dropdown-item__checkbox"
+      [checked]="selected()"
+      [disabled]="disabled"
+      aria-hidden="true"
+    ></lib-checkbox>
+  }
+
+  @if (icon()) {
+    <lib-icon
+      class="terra-dropdown-item__icon"
+      [icon]="icon()!"
+      [size]="16"
+    ></lib-icon>
+  }
+
+  <span class="terra-dropdown-item__label">
+    @if (contentTemplate()) {
+      <ng-container [ngTemplateOutlet]="contentTemplate()!"></ng-container>
+    } @else {
+      {{ label() }}
+    }
+  </span>
+
+  @if (trailing()) {
+    <span class="terra-dropdown-item__trailing">{{ trailing() }}</span>
+  }
+</button>

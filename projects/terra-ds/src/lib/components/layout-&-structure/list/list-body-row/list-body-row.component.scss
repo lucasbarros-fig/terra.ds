@@ -1,0 +1,29 @@
+.lib-list-root tbody tr {
+  font-size: var(--size-font-body-14);
+  font-weight: 400;
+  color: var(--color-text-essential-heading);
+  outline: none;
+}
+
+.lib-list-root tbody tr:focus-visible {
+  outline: 2px solid var(--color-state-system-focus);
+  outline-offset: 8px;
+  border-radius: var(--size-radius-8);
+}
+
+.lib-list-root tbody tr.selected td {
+  border-top-color: var(--color-branding-surface-primary-base);
+  border-bottom-color: var(--color-branding-surface-primary-base);
+}
+
+.lib-list-root tbody tr.selected lib-list-body-cell:first-child td {
+  border-left-color: var(--color-branding-surface-primary-base);
+}
+
+.lib-list-root tbody tr.selected lib-list-body-cell:last-child td {
+  border-right-color: var(--color-branding-surface-primary-base);
+}
+
+.lib-list-root tbody tr.selected:focus-visible {
+  outline-color: var(--color-branding-surface-primary-base);
+}

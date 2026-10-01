@@ -1,0 +1,133 @@
+:host {
+  display: inline-flex;
+}
+
+.toggle-button-root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-spacing-4);
+}
+
+.toggle-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-spacing-8);
+  cursor: pointer;
+  outline: none;
+  border: var(--size-stoke-2) solid transparent;
+  border-radius: var(--size-radius-8);
+  padding: var(--size-spacing-4);
+  transition: border-color 150ms ease;
+
+  &:focus-visible {
+    border-color: var(--color-state-system-focus);
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+  }
+}
+
+.toggle-track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 28px;
+  height: 18px;
+  border: var(--size-stoke-1) solid var(--color-stroke-frame);
+  border-radius: var(--size-radius-999);
+  background: none;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease;
+}
+
+.toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  box-sizing: border-box;
+  width: 12px;
+  height: 12px;
+  border: var(--size-stoke-1) solid transparent;
+  border-radius: 50%;
+  background-color: var(--color-icons-essential-low);
+  transition:
+    transform 150ms ease,
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.toggle-wrapper-checked .toggle-knob {
+  transform: translateX(10px);
+  background-color: var(--color-state-feedback-positive-surface-base);
+}
+
+.toggle-button-tooltip-wrap {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.toggle-button-tooltip-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  color: inherit;
+  cursor: help;
+  border-radius: var(--size-radius-4);
+
+  &:focus-visible {
+    outline: var(--size-stoke-2) solid var(--color-state-system-focus);
+    outline-offset: 2px;
+  }
+}
+
+:host ::ng-deep lib-label.toggle-button-label {
+  cursor: inherit;
+  min-width: 0;
+
+  .container-label > label {
+    cursor: inherit;
+    font-weight: 700;
+    line-height: 21px;
+    height: auto;
+    user-select: none;
+  }
+}
+
+:host ::ng-deep .toggle-wrapper-disabled lib-label.toggle-button-label {
+  cursor: not-allowed;
+
+  .container-label > label {
+    cursor: not-allowed;
+    color: var(--color-text-essential-disabled);
+  }
+}
+
+.toggle-wrapper-disabled ~ .toggle-button-tooltip-wrap,
+.toggle-wrapper-disabled ~ .toggle-button-tooltip-wrap .toggle-button-tooltip-trigger {
+  cursor: not-allowed;
+}
+
+.toggle-wrapper-disabled .toggle-track,
+.toggle-wrapper-disabled .toggle-knob {
+  cursor: not-allowed;
+}
+
+.toggle-wrapper-disabled .toggle-track {
+  border-color: var(--color-stroke-disable);
+  background-color: var(--color-state-system-disabled);
+}
+
+.toggle-wrapper-disabled .toggle-knob {
+  background-color: transparent;
+  border-color: var(--color-stroke-disable);
+}
+
+.toggle-wrapper-disabled.toggle-wrapper-checked .toggle-knob {
+  background-color: transparent;
+}

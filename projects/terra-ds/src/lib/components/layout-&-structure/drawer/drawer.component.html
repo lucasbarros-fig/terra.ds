@@ -1,0 +1,112 @@
+@if (isRendered()) {
+  <div
+    class="drawer-root"
+    [class.drawer-root-no-backdrop]="!showBackdrop()"
+    [class.drawer-root-closing]="isClosing()"
+    [attr.data-testid]="testId()"
+  >
+    @if (showBackdrop()) {
+      <div
+        class="drawer-backdrop"
+        (mousedown)="onBackdropMouseDown($event)"
+        aria-hidden="true"
+      ></div>
+    }
+
+    <div
+      class="drawer-panel"
+      role="dialog"
+      [attr.aria-modal]="showBackdrop() ? 'true' : null"
+      [attr.aria-label]="ariaLabel() || null"
+      [attr.aria-labelledby]="ariaLabelledBy() || null"
+    >
+      <header class="drawer-header">
+        <div class="drawer-header-content">
+          @if (title()) {
+            <div class="drawer-title-row">
+              @if (prefix()) {
+                <span class="drawer-title-prefix">{{ prefix() }}</span>
+              }
+              <h2 class="drawer-title">{{ title() }}</h2>
+              @if (suffix()) {
+                <span class="drawer-title-suffix">{{ suffix() }}</span>
+              }
+            </div>
+          }
+          @if (description()) {
+            <p class="drawer-description">{{ description() }}</p>
+          }
+        </div>
+
+        @if (showCloseButton()) {
+          <div class="drawer-close">
+            <lib-button
+              intent="neutral"
+              variant="bare"
+              icon="X"
+              [iconSize]="20"
+              [showIcon]="true"
+              [ariaLabel]="closeButtonLabel()"
+              (clicked)="onClose()"
+            ></lib-button>
+          </div>
+        }
+      </header>
+
+      <div class="drawer-body">
+        <ng-content></ng-content>
+      </div>
+
+      @if (showFooter() && hasFooterActions()) {
+        <footer class="drawer-footer">
+          @if (showCustomFooter()) {
+            <ng-content select="[libDrawerFooter]"></ng-content>
+          } @else {
+            @if (showOptionalAction()) {
+              <lib-button
+                class="drawer-action drawer-action-optional"
+                intent="neutral"
+                variant="filled"
+                [label]="optionalActionLabel()"
+                [showIcon]="!!optionalActionIcon()"
+                [icon]="optionalActionIcon() ?? ''"
+                [disabled]="optionalActionDisabled()"
+                [loading]="optionalActionLoading()"
+                nativeType="button"
+                (clicked)="onOptionalActionClick($event)"
+              ></lib-button>
+            }
+            @if (showSecondaryAction()) {
+              <lib-button
+                class="drawer-action drawer-action-secondary"
+                intent="neutral"
+                variant="filled"
+                [label]="secondaryActionLabel()"
+                [showIcon]="!!secondaryActionIcon()"
+                [icon]="secondaryActionIcon() ?? ''"
+                [disabled]="secondaryActionDisabled()"
+                [loading]="secondaryActionLoading()"
+                nativeType="button"
+                (clicked)="onSecondaryActionClick($event)"
+              ></lib-button>
+            }
+            @if (showPrimaryAction()) {
+              <lib-button
+                class="drawer-action drawer-action-primary"
+                intent="branding"
+                variant="filled"
+                [label]="primaryActionLabel()"
+                [showIcon]="!!primaryActionIcon()"
+                [icon]="primaryActionIcon() ?? ''"
+                [disabled]="primaryActionDisabled()"
+                [loading]="primaryActionLoading()"
+                nativeType="button"
+                (clicked)="onPrimaryActionClick($event)"
+              ></lib-button>
+            }
+          }
+        </footer>
+      }
+    </div>
+  </div>
+}

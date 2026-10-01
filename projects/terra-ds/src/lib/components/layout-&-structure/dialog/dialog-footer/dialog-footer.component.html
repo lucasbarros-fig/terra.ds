@@ -1,0 +1,41 @@
+<div
+  class="footer-inner"
+  [class.footer-inner-layout-horizontal]="actionsLayout() === 'horizontal'"
+  [class.footer-inner-layout-vertical]="actionsLayout() === 'vertical'"
+>
+  <ng-content></ng-content>
+
+  @if (showDefaultActions()) {
+    <div class="footer-actions">
+      @if (showCancelButton()) {
+        <div class="footer-action-item">
+          <lib-button
+            intent="neutral"
+            variant="filled"
+            [label]="cancelLabel()"
+            [disabled]="cancelDisabled()"
+            [loading]="cancelLoading()"
+            [showIcon]="showCancelIcon()"
+            [icon]="cancelIcon() ?? ''"
+            nativeType="button"
+            (clicked)="onCancelClick($event)"
+          ></lib-button>
+        </div>
+      }
+      @if (showConfirmButton()) {
+        <div class="footer-action-item">
+          <lib-button
+            [label]="confirmLabel()"
+            [intent]="intent()"
+            [disabled]="confirmDisabled()"
+            [loading]="confirmLoading()"
+            [showIcon]="showConfirmIcon()"
+            [icon]="confirmIcon() ?? ''"
+            nativeType="button"
+            (clicked)="onConfirmClick($event)"
+          ></lib-button>
+        </div>
+      }
+    </div>
+  }
+</div>

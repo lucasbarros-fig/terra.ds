@@ -1,0 +1,50 @@
+<lib-label
+  *ngIf="label"
+  class="input-textarea label"
+  [optional]="optional"
+  [description]="description"
+  [tooltipText]="textTooltip"
+  [tooltipArrow]="tooltipArrow"
+  [tooltipIndicator]="tooltipIndicator"
+  >{{ label }}</lib-label
+>
+
+<div
+  class="input-textarea field"
+  [class.error]="error"
+  [class.disabled]="isDisabled"
+  [class.outlined]="variant === 'outlined'"
+>
+  <ng-container *ngIf="iconBefore">
+    <lib-icon class="field-icon" [icon]="iconBefore" [size]="20" color="inherit"></lib-icon>
+  </ng-container>
+  <div class="control-wrap">
+    <textarea
+      class="control"
+      [attr.aria-invalid]="error ? true : null"
+      [placeholder]="placeholder"
+      [disabled]="isDisabled"
+      [readOnly]="readonly"
+      [rows]="rows"
+      [value]="value"
+      (input)="onInputEvent($event)"
+      (blur)="onBlur()"
+    ></textarea>
+  </div>
+  <div class="field-suffix" *ngIf="showFieldSuffix">
+    <lib-icon *ngIf="isDisabled" icon="Lock" [size]="20" color="inherit"></lib-icon>
+    <lib-icon
+      *ngIf="!isDisabled && iconAfter"
+      [icon]="iconAfter"
+      [size]="20"
+      color="inherit"
+    ></lib-icon>
+  </div>
+</div>
+
+<lib-helper
+  *ngIf="helperText"
+  type="helper"
+  [color]="resolvedHelperColor"
+  [description]="helperText"
+></lib-helper>

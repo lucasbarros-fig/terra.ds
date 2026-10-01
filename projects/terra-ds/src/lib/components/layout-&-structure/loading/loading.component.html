@@ -1,0 +1,30 @@
+<div id="loading-carousel" class="bg" *ngIf="active">
+  <div class="carousel-container">
+    <div class="carousel-images">
+      <div
+        *ngFor="let item of currentItems; trackBy: trackByItemId"
+        [@slideAnimation]="item.phase.toString()"
+        class="image"
+      >
+        <img *ngIf="!isIconMode" [src]="item.value">
+          <lib-icon
+            *ngIf="isIconMode"
+            [icon]="item.value"
+            [size]="24"
+            color="static-white"
+          >
+          </lib-icon>
+      </div>
+
+      <div class="text-container" *ngIf="textRows">
+        <div class="text-wrapper">
+          <ng-container
+            *ngFor="let row of textRows; trackBy: trackByTextKey"
+          >
+            <p @textLine class="text-line">{{ row.text }}</p>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

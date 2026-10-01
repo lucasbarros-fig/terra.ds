@@ -1,0 +1,63 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Source+Code+Pro:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href=".storybook/styles.css">
+<link rel="stylesheet" href="cdk/overlay-prebuilt.css">
+
+<style>
+  /*
+   * Toolbar Storybook → `data-theme` em `html` (preview.ts).
+   * Marca fixa: `data-brand="solaris-theHouse"`.
+   * Tokens: `.storybook/styles.css` (`npm run compile:styles`).
+   */
+  :root {
+    --font-family-primary: 'DM Sans', sans-serif;
+    font-family: var(--font-family-primary, 'DM Sans', sans-serif);
+  }
+
+  body, html {
+    font-family: var(--font-family-primary, 'DM Sans', sans-serif);
+    font-size: var(--tds-font-size-100, 16px);
+    line-height: var(--tds-line-height-md, 150%);
+    color: var(--color-text-essential-body, rgba(255, 255, 255, 1));
+    background-color: var(--color-theme-base, #202020);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Ícones Solaris: não forçar DM Sans (PUA no ::before → quadrado). */
+  *:not([class^="path"]):not([class*=" path"]):not([class*="solaris-"]) {
+    font-family: var(--font-family-primary, 'DM Sans', sans-serif);
+  }
+
+  .os-host,
+  .os-host-overflow,
+  .os-host-resize-disabled,
+  .os-host-scrollbar-horizontal-hidden,
+  .os-host-scrollbar-vertical-hidden,
+  .os-host-transition {
+    background-color: var(--color-theme-base, #202020);
+  }
+
+  .docs-story {
+    background-color: var(--color-theme-base, #202020);
+  }
+
+  .sidebar-container {
+    background-color: var(--color-theme-base, #202020);
+  }
+
+  .os-padding {
+    background-color: var(--color-theme-base, #202020);
+  }
+
+  /* Canvas / zoom: mesma superfície base que muda com a toolbar Tema (preview.ts → data-theme). */
+  .sb-story,
+  .innerZoomElementWrapper {
+    background-color: var(--color-theme-base, #202020) !important;
+  }
+
+  code, pre {
+    font-family: var(--tds-font-family-code, 'Source Code Pro', monospace), serif;
+  }
+</style>

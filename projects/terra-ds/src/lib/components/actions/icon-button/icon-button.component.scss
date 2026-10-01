@@ -1,0 +1,218 @@
+.icon-button-root {
+  display: inline-flex;
+  vertical-align: middle;
+
+  --icon-button-icon-size: var(--size-font-heading-20);
+}
+
+.icon-button-root.size-small {
+  --icon-button-icon-size: var(--size-font-body-16);
+}
+
+.icon-button-root ::ng-deep lib-icon.icon-button-icon .icon {
+  font-size: var(--icon-button-icon-size) !important;
+}
+
+.icon-button-root.is-disabled {
+  cursor: not-allowed;
+}
+
+.icon-button-root.is-loading {
+  cursor: progress;
+}
+
+.icon-button-root.is-loading .icon-button:disabled {
+  cursor: progress;
+}
+
+.icon-button {
+  appearance: none;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  border: 1px solid transparent;
+  border-radius: var(--size-radius-8);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  user-select: none;
+  outline: 2px solid transparent;
+  outline-offset: 8px;
+  transition:
+    background-color 140ms ease,
+    color 140ms ease,
+    border-color 140ms ease,
+    outline-color 140ms ease;
+
+  &:focus-visible {
+    outline-color: var(--color-state-system-focus);
+    border-radius: var(--size-radius-4);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.icon-button-root.size-default .icon-button {
+  min-width: 40px;
+  min-height: 40px;
+  padding: calc((40px - var(--size-font-heading-20)) / 2);
+}
+
+.icon-button-root.size-small .icon-button {
+  min-width: 32px;
+  min-height: 32px;
+  padding: calc((32px - var(--size-font-body-16)) / 2);
+}
+
+.icon-button-icon {
+  display: inline-flex;
+  line-height: 0;
+  flex: 0 0 auto;
+}
+
+.icon-button-root.type-branding.variant-filled .icon-button {
+  background-color: var(--color-branding-surface-primary-base);
+  border-color: var(--color-branding-surface-primary-base);
+  color: var(--color-text-static-white);
+}
+
+.icon-button-root.type-branding.variant-filled .icon-button:hover:not(:disabled) {
+  background-color: var(--color-branding-surface-primary-hovering);
+  border-color: var(--color-branding-surface-primary-hovering);
+}
+
+.icon-button-root.type-branding.variant-filled .icon-button:active:not(:disabled) {
+  background-color: var(--color-branding-surface-primary-pressing);
+  border-color: var(--color-branding-surface-primary-pressing);
+}
+
+.icon-button-root.type-branding.variant-ghost .icon-button {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-branding-surface-primary-base);
+}
+
+.icon-button-root.type-branding.variant-ghost .icon-button:hover:not(:disabled) {
+  background-color: var(--color-state-system-ghost-hovering);
+  border-color: transparent;
+  color: var(--color-branding-surface-primary-hovering);
+}
+
+.icon-button-root.type-branding.variant-ghost .icon-button:active:not(:disabled) {
+  background-color: var(--color-state-system-ghost-pressing);
+  border-color: transparent;
+  color: var(--color-branding-surface-primary-pressing);
+}
+
+.icon-button-root.type-branding.variant-bare .icon-button {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-branding-surface-primary-base);
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+}
+
+.icon-button-root.type-branding.variant-bare .icon-button:hover:not(:disabled) {
+  color: var(--color-branding-surface-primary-hovering);
+}
+
+.icon-button-root.type-branding.variant-bare .icon-button:active:not(:disabled) {
+  color: var(--color-branding-surface-primary-pressing);
+}
+
+.icon-button-root.type-neutral.variant-filled .icon-button {
+  background-color: transparent;
+  border: 1px solid var(--color-stroke-frame);
+  color: var(--color-text-essential-heading);
+}
+
+.icon-button-root.type-neutral.variant-filled .icon-button:hover:not(:disabled) {
+  background-color: var(--color-state-system-ghost-hovering);
+  border-color: var(--color-stroke-frame);
+  color: var(--color-text-essential-body);
+}
+
+.icon-button-root.type-neutral.variant-filled .icon-button:active:not(:disabled) {
+  background-color: var(--color-state-system-ghost-pressing);
+  border-color: var(--color-stroke-frame);
+  color: var(--color-text-essential-caption);
+}
+
+.icon-button-root.type-neutral.variant-ghost .icon-button {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-text-essential-heading);
+}
+
+.icon-button-root.type-neutral.variant-ghost .icon-button:hover:not(:disabled) {
+  background-color: var(--color-state-system-ghost-hovering);
+  border-color: transparent;
+  color: var(--color-text-essential-body);
+}
+
+.icon-button-root.type-neutral.variant-ghost .icon-button:active:not(:disabled) {
+  background-color: var(--color-state-system-ghost-pressing);
+  border-color: transparent;
+  color: var(--color-text-essential-caption);
+}
+
+.icon-button-root.type-neutral.variant-bare .icon-button {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-text-essential-heading);
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+}
+
+.icon-button-root.type-neutral.variant-bare .icon-button:hover:not(:disabled) {
+  background-color: transparent;
+  color: var(--color-text-essential-body);
+}
+
+.icon-button-root.type-neutral.variant-bare .icon-button:active:not(:disabled) {
+  background-color: transparent;
+  color: var(--color-text-essential-caption);
+}
+
+.icon-button-root.is-disabled.type-branding.variant-filled .icon-button {
+  background-color: var(--color-state-system-disabled);
+  border-color: var(--color-state-system-disabled);
+  color: var(--color-text-essential-disabled);
+}
+
+.icon-button-root.is-disabled.type-branding.variant-ghost .icon-button {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-text-essential-disabled);
+}
+
+.icon-button-root.is-disabled.type-branding.variant-bare .icon-button {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-text-essential-disabled);
+}
+
+.icon-button-root.is-disabled.type-neutral.variant-filled .icon-button {
+  background-color: transparent;
+  border-color: var(--color-stroke-disable);
+  color: var(--color-text-essential-disabled);
+}
+
+.icon-button-root.is-disabled.type-neutral.variant-ghost .icon-button {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-text-essential-disabled);
+}
+
+.icon-button-root.is-disabled.type-neutral.variant-bare .icon-button {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-text-essential-disabled);
+}

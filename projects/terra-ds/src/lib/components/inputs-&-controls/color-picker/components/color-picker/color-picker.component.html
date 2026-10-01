@@ -1,0 +1,14 @@
+<div class="color-wrapper">
+  <lib-color-palette
+    [hue]="hue"
+    [initialColor]="initialColor()"
+    [selectedColor]="paletteSyncRgb"
+    (color)="setColor($event)"
+  ></lib-color-palette>
+
+  <lib-color-slider
+    class="slider-container"
+    [externalHue]="externalHue"
+    (color)="setHue($event)"
+  ></lib-color-slider>
+</div>

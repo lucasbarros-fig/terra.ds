@@ -1,0 +1,147 @@
+// Top — Figma Terra.ds 357:2342 (Variation=Desktop).
+:host {
+  --top-height: 90px;
+  --top-padding-x: var(--size-spacing-32);
+
+  // Largura horizontal da diagonal do fundo do bloco do usuário (Figma: 64px em 90px de altura).
+  --top-diagonal: 64px;
+
+  display: block;
+  width: 100%;
+  min-width: 0;
+  font-family: var(--font-family-primary, 'DM Sans', sans-serif);
+}
+
+.top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-16);
+  box-sizing: border-box;
+  height: var(--top-height);
+  padding: 0 var(--top-padding-x);
+  border-bottom: var(--size-stoke-1) solid var(--color-stroke-frame);
+  background-color: var(--color-theme-lower);
+  overflow: hidden;
+}
+
+// ---------- Título + breadcrumb ----------
+.top-title {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--size-spacing-4);
+  min-width: 0;
+}
+
+.top-title-text {
+  margin: 0;
+  overflow: hidden;
+  font-size: var(--size-font-heading-20);
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--color-text-essential-heading);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.top-breadcrumbs {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+}
+
+// ---------- Bloco do usuário com fundo diagonal ----------
+.top-aside {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  align-self: stretch;
+  gap: var(--size-spacing-16);
+
+  // Fundo em diagonal: a camada de trás (stroke) aparece 1px à esquerda da da frente (surface),
+  // desenhando o traço da diagonal. Ambas vão até a borda direita da barra.
+  &::before,
+  &::after {
+    position: absolute;
+    inset: 0 calc(-1 * var(--top-padding-x)) 0 calc(-1 * (var(--top-diagonal) + var(--size-spacing-24)));
+    z-index: -1;
+    content: '';
+  }
+
+  &::before {
+    background-color: var(--color-stroke-frame);
+    clip-path: polygon(var(--top-diagonal) 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  &::after {
+    background-color: var(--color-theme-upper);
+    clip-path: polygon(
+      calc(var(--top-diagonal) + var(--size-stoke-1)) 0,
+      100% 0,
+      100% 100%,
+      var(--size-stoke-1) 100%
+    );
+  }
+}
+
+.top-profile {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-16);
+}
+
+.top-profile-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--size-spacing-4);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.top-profile-role {
+  font-size: var(--size-font-body-12);
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--color-text-essential-caption);
+}
+
+.top-profile-name {
+  font-size: var(--size-font-body-16);
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--color-text-essential-heading);
+}
+
+.top-aside .top-divisor {
+  align-self: center;
+  height: 48px;
+}
+
+// ---------- Ações ----------
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-8);
+}
+
+.top-action {
+  position: relative;
+  display: inline-flex;
+}
+
+// Ponto de notificação no canto superior direito do ícone (20px) — Figma "Notification".
+.top-action-badge {
+  position: absolute;
+  top: calc(50% - 10px);
+  right: calc(50% - 10px);
+  width: 8px;
+  height: 8px;
+  border-radius: var(--size-radius-999);
+  background-color: var(--color-support-colors-red);
+  pointer-events: none;
+}

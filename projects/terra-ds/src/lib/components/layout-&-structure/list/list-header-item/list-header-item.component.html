@@ -1,0 +1,36 @@
+<th
+	[style.width]="computedWidth"
+	[style.text-align]="align"
+	[class.list-th-sortable]="sortable"
+>
+	<span
+		class="lib-list-header-item-content"
+		[class.lib-list-header-item-content--space-between]="
+			icon && iconPosition === 'after'
+		"
+	>
+		<span class="lib-list-header-item-label">
+			<lib-icon
+				*ngIf="icon && iconPosition === 'before'"
+				[icon]="icon"
+				[size]="iconSize"
+				[color]="iconColor"
+			></lib-icon>
+			<ng-content></ng-content>
+			<lib-tooltip
+				*ngIf="tooltip"
+				[text]="tooltip"
+				arrow="middle"
+				indicator="top"
+				triggerIcon="Info"
+				[triggerIconColor]="iconColor"
+			></lib-tooltip>
+		</span>
+		<lib-icon
+			*ngIf="icon && iconPosition === 'after'"
+			[icon]="icon"
+			[size]="iconSize"
+			[color]="iconColor"
+		></lib-icon>
+	</span>
+</th>

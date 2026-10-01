@@ -1,0 +1,34 @@
+@keyframes lib-skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+:host {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-theme-upper);
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.lib-skeleton__shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    -90deg,
+    var(--color-state-system-ghost-hovering-contrast, hsla(203deg, 25%, 6%, 0.23)) 54%,
+    var(--color-icons-essential-disabled, hsl(210deg, 11%, 36%)) 75%,
+    var(--color-state-system-ghost-hovering-contrast, hsla(203deg, 25%, 6%, 0.23)) 96%
+  );
+  opacity: 0.25;
+  animation: lib-skeleton-shimmer 2.3s cubic-bezier(0.68, -0.6, 0.32, 1.6) 1ms infinite;
+}

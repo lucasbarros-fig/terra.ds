@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  align-self: stretch;
+  box-sizing: border-box;
+  padding: 4px;
+  font-family: var(--font-family-primary, 'DM Sans', sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--color-text-essential-caption, #6E7B85);
+}
+
+.terra-dropdown-group-header__label {
+  display: block;
+}

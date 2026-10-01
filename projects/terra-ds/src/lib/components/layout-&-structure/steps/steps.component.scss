@@ -1,0 +1,41 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.steps-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.steps-label,
+.steps-number {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--color-text-essential-caption, #a0aab2);
+}
+
+.steps-bars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.steps-bar {
+  flex: 1;
+  border-radius: var(--size-radius-999, 999px);
+  transition: background-color 0.3s ease;
+ height: 4px;
+  background-color: var(--color-state-system-disabled, #1b2329);
+
+  &.active {
+    background-color: var(--color-branding-surface-primary-base, #db0082);
+
+    &:hover {
+      background-color: var(--color-branding-surface-primary-hovering, #c20074);
+    }
+  }
+}

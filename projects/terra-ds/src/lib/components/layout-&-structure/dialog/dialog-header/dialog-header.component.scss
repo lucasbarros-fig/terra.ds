@@ -1,0 +1,103 @@
+@use "sass:map";
+
+$header-intents: (
+  branding: (
+    title: var(--color-text-essential-heading, hsl(0deg, 0%, 19%)),
+  ),
+  positive: (
+    title: var(--color-state-feedback-positive-surface-base, hsl(150deg, 59%, 30%)),
+  ),
+  warning: (
+    title: var(--color-state-feedback-warning-surface-base, hsl(36deg, 64%, 47%)),
+  ),
+  negative: (
+    title: var(--color-state-feedback-negative-surface-base, hsl(5deg, 63%, 46%)),
+  ),
+  informative: (
+    title: var(--color-state-feedback-informative-surface-base, hsl(214deg, 76%, 48%)),
+  ),
+  neutral: (
+    title: var(--color-text-essential-heading, hsl(0deg, 0%, 19%)),
+  ),
+);
+
+:host {
+  display: block;
+  flex: 0 0 auto;
+}
+
+.header-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: var(--size-spacing-8, 8px);
+  padding: var(--size-spacing-16, 16px);
+  background: var(--color-theme-upper, hsl(210deg, 22%, 96%));
+  border-bottom: var(--size-stoke-1, 1px) solid var(--color-stroke-frame, hsl(207deg, 27%, 92%));
+  box-sizing: border-box;
+
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-spacing-4, 4px);
+    min-width: 0;
+    flex: 1 1 auto;
+
+    .header-title-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: var(--size-spacing-8, 8px);
+      min-width: 0;
+
+      .header-title {
+        margin: 0;
+        flex: 1 1 auto;
+        min-width: 0;
+        font-size: var(--size-font-heading-16, 16px);
+        font-weight: 700;
+        line-height: 150%;
+        font-family: var(--font-family-primary, "DM Sans", sans-serif);
+      }
+    }
+  }
+
+  .header-close {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    margin-top: 2px;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    bottom: -2px;
+    border-radius: 9999px;
+  }
+}
+
+@each $name, $tokens in $header-intents {
+  $title: map.get($tokens, title);
+
+  :host(.intent-#{$name}) .header-title-row {
+    color: #{$title};
+  }
+
+  :host(.intent-#{$name}) .header-container::after {
+    @if $name == 'branding' {
+      background: var(--color-branding-surface-primary-base);
+    } @else if $name == 'neutral' {
+      background: var(--color-icons-essential-high);
+    } @else {
+      background: #{$title};
+    }
+  }
+}

@@ -1,0 +1,88 @@
+:host.clock-field-host {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-spacing-4);
+	box-sizing: border-box;
+	width: 272px;
+	max-width: 100%;
+	font-family: var(--font-family-primary, "DM Sans", sans-serif);
+}
+
+.clock-field-dropdown {
+	display: flex;
+	width: 100%;
+}
+
+// Campo — mesmos estados do Input Outline / lib-select outlined.
+.clock-field-control {
+	appearance: none;
+	display: flex;
+	align-items: center;
+	gap: var(--size-spacing-8);
+	box-sizing: border-box;
+	width: 100%;
+	min-height: 53px;
+	margin: 0;
+	padding: var(--size-spacing-16);
+	border: var(--size-stoke-1, 1px) solid var(--color-stroke-frame);
+	border-radius: var(--size-radius-8);
+	background-color: transparent;
+	font-family: inherit;
+	text-align: left;
+	color: var(--color-text-essential-caption);
+	cursor: pointer;
+	outline: var(--size-stoke-2, 2px) solid transparent;
+	outline-offset: var(--size-spacing-8);
+	transition:
+		border-color 0.15s ease,
+		background-color 0.15s ease,
+		color 0.15s ease;
+
+	&.has-value {
+		color: var(--color-text-essential-heading);
+	}
+
+	&:hover:not(:disabled, .is-error) {
+		border-color: var(--color-branding-surface-primary-hovering);
+		background-color: var(--color-state-system-ghost-hovering);
+	}
+
+	&.is-open:not(:disabled, .is-error) {
+		border-color: var(--color-branding-surface-primary-base);
+		background-color: transparent;
+	}
+
+	&:focus-visible {
+		outline-color: var(--color-state-system-focus);
+	}
+
+	&.is-error {
+		border-color: var(--color-state-feedback-negative-surface-base);
+	}
+
+	&:disabled {
+		opacity: 0.55;
+		cursor: not-allowed;
+	}
+}
+
+.clock-field-icon {
+	display: flex;
+	flex-shrink: 0;
+	line-height: 0;
+}
+
+.clock-field-value {
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: var(--size-font-body-14);
+	font-weight: 400;
+	line-height: 21px;
+}
+
+.clock-field-picker {
+	width: 100%;
+}

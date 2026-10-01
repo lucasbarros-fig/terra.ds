@@ -1,0 +1,32 @@
+<div class="toggle-button-root">
+  <div
+    class="toggle-wrapper"
+    [class.toggle-wrapper-checked]="checked"
+    [class.toggle-wrapper-disabled]="disabled"
+    role="switch"
+    [attr.aria-checked]="checked"
+    [attr.aria-disabled]="disabled"
+    [attr.tabindex]="disabled ? -1 : 0"
+    (click)="toggle()"
+    (keydown)="onKeydown($event)"
+  >
+    <span class="toggle-track">
+      <span class="toggle-knob"></span>
+    </span>
+    <lib-label class="toggle-button-label">{{ label }}</lib-label>
+  </div>
+  <span
+    *ngIf="showTooltipTrigger"
+    class="toggle-button-tooltip-wrap"
+    (click)="$event.stopPropagation()"
+    (keydown)="$event.stopPropagation()"
+  >
+    <lib-tooltip
+      [text]="tooltip || ''"
+      [indicator]="tooltipIndicator"
+      [arrow]="tooltipArrow"
+      [triggerIcon]="triggerIcon"
+      [triggerIconColor]="triggerIconColor"
+    ></lib-tooltip>
+  </span>
+</div>

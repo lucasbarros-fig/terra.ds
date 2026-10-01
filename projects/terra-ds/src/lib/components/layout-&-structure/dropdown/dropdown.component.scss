@@ -1,0 +1,66 @@
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+  font-family: var(--font-family-primary, 'DM Sans', sans-serif);
+}
+
+.terra-dropdown__panel {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 4px;
+  border: 1px solid var(--color-stroke-frame, #2e353a);
+  border-radius: 8px;
+  background-color: var(--color-theme-overlay, #151B1F);
+  outline: none;
+  width: fit-content;
+  overflow: hidden;
+}
+
+.terra-dropdown__scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  max-height: inherit;
+  flex:1 1 auto;
+  min-height: 0;
+  overflow: hidden auto;
+  box-sizing: border-box;
+
+  
+  $scroll-track: var(--color-theme-lower, #0F1417);;
+  $scroll-thumb: var(--color-icons-essential-high, #FFF);
+
+  scrollbar-width: thin;
+  scrollbar-color: $scroll-thumb $scroll-track;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none !important;
+    width: 0;
+    height: 0;
+  }
+
+  &::-webkit-scrollbar-button:vertical:start:decrement,
+  &::-webkit-scrollbar-button:vertical:end:increment,
+  &::-webkit-scrollbar-button:horizontal:start:decrement,
+  &::-webkit-scrollbar-button:horizontal:end:increment {
+    display: none !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $scroll-track;
+    border-radius: 999px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    box-sizing: border-box;
+    background-color: $scroll-thumb;
+    border-radius: 22px;
+    border: 2px solid $scroll-track;
+  }
+}

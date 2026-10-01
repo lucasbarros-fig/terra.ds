@@ -1,0 +1,58 @@
+@if (showLabel() && label()) {
+	<lib-label class="clock-field-label">{{ label() }}</lib-label>
+}
+
+<lib-dropdown
+	#dropdownRef
+	class="clock-field-dropdown"
+	[open]="isOpen()"
+	(openChange)="onOpenChange($event)"
+	placement="bottom-start"
+	[matchTriggerWidth]="true"
+	[closeOnItemClick]="false"
+	maxHeight="none"
+	panelRole="listbox"
+	focusPanelOnOpen="none"
+>
+	<button
+		libDropdownTrigger
+		type="button"
+		class="clock-field-control"
+		[class.is-open]="isOpen()"
+		[class.is-error]="error()"
+		[class.has-value]="hasValue()"
+		[triggerDisabled]="isDisabled()"
+		[applyHostAria]="false"
+		[disabled]="isDisabled()"
+		aria-haspopup="dialog"
+		[attr.aria-expanded]="isOpen()"
+		[attr.aria-controls]="isOpen() ? dropdownRef.panelId : null"
+		[attr.aria-label]="ariaLabel() || label() || null"
+		[attr.aria-invalid]="error() ? true : null"
+	>
+		<lib-icon class="clock-field-icon" icon="clock" [size]="20" color="inherit"></lib-icon>
+		<span class="clock-field-value">{{ hasValue() ? value() : placeholder() }}</span>
+		@if (isDisabled()) {
+			<lib-icon class="clock-field-icon" icon="lock" [size]="20" color="inherit"></lib-icon>
+		}
+	</button>
+
+	@if (isOpen()) {
+		<lib-clock-picker
+			class="clock-field-picker"
+			[embedded]="true"
+			[showHeader]="false"
+			[value]="value()"
+			[minuteStep]="minuteStep()"
+			[minTime]="minTime()"
+			[maxTime]="maxTime()"
+			[showFooter]="showFooter()"
+			(valueChange)="onPickerChange($event)"
+			(cancelled)="close()"
+		></lib-clock-picker>
+	}
+</lib-dropdown>
+
+@if (helperText()) {
+	<lib-helper type="helper" [color]="error() ? 'negative' : 'neutral'" [description]="helperText()"></lib-helper>
+}

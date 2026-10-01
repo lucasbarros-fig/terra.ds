@@ -1,0 +1,65 @@
+:host {
+  display: contents;
+}
+
+.dialog-root {
+  position: fixed;
+  inset: 0;
+  z-index: 120000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--size-spacing-16, 16px);
+  box-sizing: border-box;
+  pointer-events: none;
+
+  &.dialog-root-no-backdrop {
+    position: static;
+    inset: auto;
+    padding: 0;
+    pointer-events: auto;
+  }
+
+  .dialog-backdrop {
+    position: absolute;
+    inset: 0;
+    pointer-events: auto;
+    background: color-mix(
+      in srgb,
+      #000 64%,
+      transparent
+    );
+  }
+
+  .dialog-surface-wrap {
+    position: relative;
+    display: flex;
+    max-width: 100%;
+    max-height: 100%;
+    pointer-events: none;
+
+    .dialog-panel {
+      pointer-events: auto;
+      display: flex;
+      flex-direction: column;
+      width: max-content;
+      max-width: 90dvw;
+      max-height: 90dvh;
+      min-width: min(100%, 100px);
+      box-sizing: border-box;
+      overflow: hidden;
+      border-radius: var(--size-radius-16, 16px);
+      border: var(--size-stoke-1, 1px) solid var(--color-stroke-frame, hsl(204deg, 14%, 86%));
+      background: var(--color-theme-overlay, hsl(210deg, 20%, 98%));
+      font-family: var(--font-family-primary, "DM Sans", sans-serif);
+
+      .dialog-stack {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-height: 0;
+        min-width: 0;
+      }
+    }
+  }
+}

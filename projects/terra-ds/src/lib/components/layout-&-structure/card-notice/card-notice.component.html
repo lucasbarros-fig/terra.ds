@@ -1,0 +1,45 @@
+@if (showMedia()) {
+  <div class="card-notice-media">
+    @if (imageSrc()) {
+      <img class="card-notice-media-img" [src]="imageSrc()" [attr.alt]="imageAlt()" loading="lazy" decoding="async" />
+    }
+    <ng-content select="[cardNoticeMedia]"></ng-content>
+  </div>
+}
+
+<div class="card-notice-content">
+  <p class="card-notice-title">{{ title() }}</p>
+
+  @if (showDescription() && description()) {
+    <p class="card-notice-description">{{ description() }}</p>
+  }
+
+  @if (showTag()) {
+    <div class="card-notice-tags">
+      <lib-tag emphasis="high" size="small" [color]="tagColor()" [showAfterIcon]="!!tagIcon()" [afterIcon]="tagIcon()">
+        {{ tagLabel() }}
+      </lib-tag>
+    </div>
+  }
+</div>
+
+@if (showPublication()) {
+  <div class="card-notice-footer">
+    <span class="card-notice-accent" aria-hidden="true"></span>
+
+    <div class="card-notice-author">
+      <lib-avatar
+        size="small"
+        [variant]="authorImageSrc() ? 'photo' : 'icon'"
+        [imageSrc]="authorImageSrc()"
+        [alt]="authorName()"
+      ></lib-avatar>
+      <span class="card-notice-author-name">{{ authorName() }}</span>
+    </div>
+
+    <div class="card-notice-date">
+      <lib-icon icon="CalendarDot" [size]="20" color="inherit"></lib-icon>
+      <span>{{ date() }}</span>
+    </div>
+  </div>
+}

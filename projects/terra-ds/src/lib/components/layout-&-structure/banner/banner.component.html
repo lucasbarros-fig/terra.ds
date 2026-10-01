@@ -1,0 +1,60 @@
+<div class="banner-viewport" tabindex="0">
+  <div
+    class="banner-track"
+    [style.transform]="trackTransform()"
+    [attr.aria-live]="isRotating() ? 'off' : 'polite'"
+  >
+    @for (slide of slides(); track $index; let i = $index) {
+      <div
+        class="banner-slide"
+        role="group"
+        aria-roledescription="slide"
+        [attr.aria-label]="slideLabel(i)"
+        [attr.aria-hidden]="i === current() ? null : 'true'"
+        [attr.inert]="i === current() ? null : ''"
+      >
+        @if (slide.href) {
+          <a class="banner-link" [href]="slide.href">
+            <img class="banner-img" [src]="slide.src" [alt]="slide.alt" decoding="async" [attr.loading]="i === 0 ? null : 'lazy'" />
+          </a>
+        } @else {
+          <img class="banner-img" [src]="slide.src" [alt]="slide.alt" decoding="async" [attr.loading]="i === 0 ? null : 'lazy'" />
+        }
+      </div>
+    }
+  </div>
+</div>
+
+@if (hasArrows()) {
+  <lib-icon-button
+    class="banner-arrow banner-arrow--previous"
+    type="neutral"
+    variant="filled"
+    icon="ArrowLeft"
+    ariaLabel="Banner anterior"
+    (clicked)="previous()"
+  ></lib-icon-button>
+  <lib-icon-button
+    class="banner-arrow banner-arrow--next"
+    type="neutral"
+    variant="filled"
+    icon="ArrowRight"
+    ariaLabel="Próximo banner"
+    (clicked)="next()"
+  ></lib-icon-button>
+}
+
+@if (hasPagination()) {
+  <div class="banner-pagination">
+    @for (slide of slides(); track $index; let i = $index) {
+      <button
+        type="button"
+        class="banner-dot"
+        [class.banner-dot--active]="i === current()"
+        [attr.aria-label]="'Ir para o banner ' + (i + 1)"
+        [attr.aria-current]="i === current() ? 'true' : null"
+        (click)="goTo(i)"
+      ></button>
+    }
+  </div>
+}

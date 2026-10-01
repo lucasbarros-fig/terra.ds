@@ -1,0 +1,59 @@
+:host {
+	display: block;
+	font-family: var(--font-family-primary, "DM Sans", sans-serif);
+}
+
+.field-select {
+	display: inline-flex;
+	width: 100%;
+}
+
+.field-select-trigger {
+	box-sizing: border-box;
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--size-spacing-4);
+	width: 100%;
+	min-width: 0;
+	margin: 0;
+	padding: var(--size-spacing-4) var(--size-spacing-8);
+	border: 1px solid var(--color-stroke-frame);
+	border-radius: var(--size-radius-8);
+	background-color: transparent;
+	font-family: inherit;
+	font-size: var(--size-font-body-14);
+	font-weight: 500;
+	line-height: 21px;
+	color: var(--color-text-essential-body);
+	cursor: pointer;
+	outline: none;
+	transition:
+		background-color 140ms ease,
+		border-color 140ms ease;
+
+	&:hover:not(:disabled) {
+		background-color: var(--color-state-system-hovering);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--color-state-system-focus);
+		outline-offset: 2px;
+	}
+}
+
+.field-select-value {
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: left;
+}
+
+.field-select-caret {
+	display: inline-flex;
+	line-height: 0;
+	flex: 0 0 auto;
+}
