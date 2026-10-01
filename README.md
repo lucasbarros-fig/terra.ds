@@ -16,9 +16,13 @@ Mesma base de componentes do Plutão DS, com os tokens da marca `solaris-theHous
 
 ## Tokens
 
-As cores vêm de `@teddy-conkey/conkey-ds-tokens` (`dist/solaris/styles/theHouse`).
-Depois de atualizar o pacote de tokens, rode `npm run compile:styles` e `npm run sync:icon-types`.
+Os tokens da marca The House ficam dentro deste repo, em `packages/conkey-ds-tokens`
+(instalados como `@teddy-conkey/conkey-ds-tokens` via `file:`), então não é preciso acesso
+ao registry da Teddy-Conkey. Veja `packages/conkey-ds-tokens/README.md` para atualizar.
 
 ## Deploy
 
-Push na `main` publica o Storybook no GitHub Pages (`.github/workflows/deploy-pages.yml`).
+Push na `main` publica o Storybook no GitHub Pages (`.github/workflows/deploy-pages.yml`):
+https://lucasbarros-fig.github.io/terra.ds/
+
+No GitHub: **Settings → Pages → Source: GitHub Actions**.
