@@ -10,52 +10,84 @@
   background: var(--color-theme-base);
 }
 
-/* ---------- Painel da marca ---------- */
+/* ---------- Painel da marca ----------
+   Fundo: claro no tema claro, azul-marinho no escuro; ilustração de imóvel em traço e o símbolo da The House como marca d'água. */
 .lg-marca {
+  --lg-fg: var(--color-text-essential-heading);
+  --lg-fg-suave: var(--color-text-essential-body);
+  --lg-fg-fraco: var(--color-text-essential-caption);
+  --lg-vidro: color-mix(in srgb, var(--color-theme-lower) 70%, transparent);
+  --lg-vidro-borda: color-mix(in srgb, var(--color-branding-surface-primary-base) 18%, transparent);
+  --lg-traco: color-mix(in srgb, var(--color-branding-surface-primary-base) 38%, transparent);
+  --lg-simbolo: color-mix(in srgb, var(--color-branding-surface-primary-base) 6%, transparent);
+  --lg-sombra: rgba(22, 84, 160, .18);
+
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: var(--size-spacing-24);
   overflow: hidden;
+  isolation: isolate;
   padding: 48px 56px 32px;
   border-radius: 24px;
-  color: var(--color-text-static-white);
+  color: var(--lg-fg);
   background:
-    radial-gradient(120% 80% at 100% 100%, color-mix(in srgb, var(--color-support-colors-cyan) 55%, transparent) 0%, transparent 55%),
-    radial-gradient(90% 70% at 0% 0%, color-mix(in srgb, #ffffff 18%, transparent) 0%, transparent 60%),
-    linear-gradient(150deg, var(--color-branding-surface-primary-hovering) 0%, var(--color-branding-surface-primary-base) 45%, #0b4f96 100%);
+    radial-gradient(60% 50% at 90% 10%, color-mix(in srgb, var(--color-branding-surface-primary-base) 16%, transparent) 0%, transparent 70%),
+    radial-gradient(70% 60% at 0% 100%, color-mix(in srgb, var(--color-support-colors-cyan) 14%, transparent) 0%, transparent 70%),
+    linear-gradient(160deg, #f4f8fd 0%, #e6f0fb 55%, #d7e8f9 100%);
 }
 
-.lg-grade {
-  position: absolute; inset: 0; pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgba(255,255,255,.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,.07) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(80% 70% at 60% 55%, #000 30%, transparent 85%);
+:host-context(html[data-theme="dark"]) .lg-marca {
+  --lg-fg: #ffffff;
+  --lg-fg-suave: rgba(255, 255, 255, .86);
+  --lg-fg-fraco: rgba(255, 255, 255, .62);
+  --lg-vidro: rgba(255, 255, 255, .08);
+  --lg-vidro-borda: rgba(255, 255, 255, .16);
+  --lg-traco: color-mix(in srgb, var(--color-branding-surface-primary-base) 55%, transparent);
+  --lg-simbolo: color-mix(in srgb, var(--color-branding-surface-primary-base) 12%, transparent);
+  --lg-sombra: rgba(0, 0, 0, .5);
+  background:
+    radial-gradient(60% 50% at 90% 8%, color-mix(in srgb, var(--color-branding-surface-primary-base) 45%, transparent) 0%, transparent 70%),
+    radial-gradient(70% 60% at 0% 100%, color-mix(in srgb, var(--color-support-colors-cyan) 22%, transparent) 0%, transparent 70%),
+    linear-gradient(160deg, #0a2140 0%, #071a33 55%, #04101f 100%);
 }
+
+/* Símbolo da The House recortado, como marca d'água */
+.lg-simbolo { position: absolute; z-index: -1; right: -160px; top: -120px; width: 620px; height: 620px; pointer-events: none;
+  path { fill: var(--lg-simbolo); } }
+
+/* Imóvel em traço, no rodapé do painel */
+.lg-imovel { position: absolute; z-index: -1; right: 0; bottom: 0; width: 72%; height: 34%; pointer-events: none;
+  stroke: var(--lg-traco); fill: none; stroke-width: 1.4; stroke-linejoin: round; stroke-linecap: round;
+  mask-image: linear-gradient(to top, #000 30%, transparent 100%), linear-gradient(to right, transparent 0%, #000 30%);
+  mask-composite: intersect;
+  .vidro { fill: color-mix(in srgb, var(--color-branding-surface-primary-base) 7%, transparent); }
+  .chao { stroke-dasharray: 2 6; } }
 
 .lg-marca-topo { position: relative; display: flex; flex-direction: column; gap: var(--size-spacing-20, 20px); max-width: 520px; }
 
 .lg-selo {
   display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
   padding: 6px 12px; border-radius: var(--size-radius-999);
-  background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.22);
+  background: var(--lg-vidro); border: 1px solid var(--lg-vidro-borda); color: var(--color-branding-surface-primary-base);
   font-size: var(--size-font-body-12); font-weight: 500; letter-spacing: .02em;
   backdrop-filter: blur(6px);
 }
+:host-context(html[data-theme="dark"]) .lg-selo { color: #fff; }
 
 h1 {
-  margin: 0; font-size: 40px; line-height: 1.12; font-weight: 700; letter-spacing: -0.02em;
-  em { font-style: normal; background: linear-gradient(90deg, #fff, #bfe3ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  margin: 0; font-size: 40px; line-height: 1.12; font-weight: 700; letter-spacing: -0.02em; color: var(--lg-fg);
+  em { font-style: normal; background: linear-gradient(90deg, var(--color-branding-surface-primary-base), var(--color-support-colors-cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 }
 
 .lg-beneficios {
   display: flex; flex-direction: column; gap: var(--size-spacing-12); margin: 0; padding: 0; list-style: none;
-  li { display: flex; align-items: center; gap: var(--size-spacing-12); font-size: var(--size-font-body-14); line-height: 1.4; color: rgba(255,255,255,.92); }
+  li { display: flex; align-items: center; gap: var(--size-spacing-12); font-size: var(--size-font-body-14); line-height: 1.4; color: var(--lg-fg-suave); }
 }
-.lg-bicon { display: inline-grid; place-items: center; flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,.14); }
+.lg-bicon { display: inline-grid; place-items: center; flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px;
+  background: var(--lg-vidro); border: 1px solid var(--lg-vidro-borda); color: var(--color-branding-surface-primary-base); }
+:host-context(html[data-theme="dark"]) .lg-bicon { color: #fff; }
 
 /* Cena com peças do Terra */
 .lg-cena { position: relative; flex: 1; min-height: 300px; }
@@ -68,7 +100,7 @@ h1 {
   background: var(--color-theme-lower);
   color: var(--color-text-essential-body);
   border: 1px solid var(--color-stroke-frame);
-  box-shadow: 0 24px 48px -12px rgba(4, 30, 66, .45), 0 2px 6px rgba(4, 30, 66, .18);
+  box-shadow: 0 24px 48px -12px var(--lg-sombra), 0 2px 6px var(--lg-sombra);
   animation: lg-flutua 7s ease-in-out infinite;
 }
 .lg-card b { color: var(--color-text-essential-heading); }
@@ -104,19 +136,19 @@ h1 {
   i:last-child { background: var(--color-branding-surface-primary-base); } }
 
 .lg-parceiros {
-  position: absolute; right: 2%; bottom: 4%;
+  position: absolute; right: 2%; top: 8%;
   display: flex; align-items: center; gap: 0;
   padding: 8px 16px 8px 8px; border-radius: var(--size-radius-999);
-  background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.25); backdrop-filter: blur(8px);
-  jv-parceiro { margin-right: -8px; border-radius: 50%; box-shadow: 0 0 0 2px var(--color-branding-surface-primary-base); }
+  background: var(--lg-vidro); border: 1px solid var(--lg-vidro-borda); backdrop-filter: blur(8px); color: var(--lg-fg);
+  jv-parceiro { margin-right: -8px; border-radius: 50%; box-shadow: 0 0 0 2px var(--color-theme-lower); }
   span { margin-left: 18px; font-size: var(--size-font-body-12); font-weight: 500; white-space: nowrap; }
 }
 
 .lg-marca-pe {
   position: relative; display: flex; gap: 40px; font-size: var(--size-font-body-12);
   div { display: flex; flex-direction: column; gap: 4px; }
-  span { color: rgba(255,255,255,.7); }
-  a { color: #fff; font-weight: 500; text-decoration: none; &:hover { text-decoration: underline; } }
+  span { color: var(--lg-fg-fraco); }
+  a { color: var(--lg-fg); font-weight: 500; text-decoration: none; &:hover { text-decoration: underline; } }
 }
 
 @keyframes lg-flutua { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
