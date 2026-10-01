@@ -171,11 +171,11 @@ window.JORNADAS.sideNav = function (brand, journey, onNav) {
       grupos: {
         pf: { title: 'Produtos para pessoa física', items: [
           { value: 'fin', label: 'Financiamentos', icon: 'bank--duotone', text: 'Inclui financiamento para construção e financiamento de imóveis.', partners: ['Bradesco', 'Caixa', 'Itaú', 'Inter', 'Santander'] },
-          { value: 'emp', label: 'Empréstimos', icon: 'dollar-sign-circle--duotone', text: 'Soluções como crédito com garantia de veículos e credito com garantia de imóvel.', partners: ['BV', 'Creditas', 'Porto', 'Daycoval', 'Omni', 'C6 Bank', 'Safra'] }
+          { value: 'emp', label: 'Empréstimos', icon: 'dollar-sign-circle--duotone', text: 'Soluções como crédito com garantia de veículos e credito com garantia de imóvel.', partners: ['BV', 'Creditas', 'CashMe', 'Daycoval', 'Omni', 'C6 Bank', 'Safra'] }
         ] },
         pj: { title: 'Produtos para pessoa jurídica', items: [
           { value: 'fin', label: 'Financiamentos', icon: 'bank--duotone', text: 'Inclui crédito para condomínios, financiamento de imóveis e crédito de garantia de imóveis.', partners: ['Bradesco', 'Caixa', 'Itaú', 'Inter', 'Santander', 'C6 Bank'] },
-          { value: 'emp', label: 'Empréstimos', icon: 'dollar-sign-circle--duotone', text: 'Soluções como capital de giro, crédito com garantia de veículos, credito com garantia de imóvel e crédito para construção.', partners: ['Bradesco', 'BV', 'Safra', 'Santander', 'Porto', 'Omni', 'Daycoval'] }
+          { value: 'emp', label: 'Empréstimos', icon: 'dollar-sign-circle--duotone', text: 'Soluções como capital de giro, crédito com garantia de veículos, credito com garantia de imóvel e crédito para construção.', partners: ['Bradesco', 'BV', 'Safra', 'Santander', 'CashMe', 'Omni', 'Daycoval'] }
         ] }
       },
       /* Opções da pergunta de produto (ordem dos botões) e cards do painel (ordem da lista). */
@@ -207,10 +207,10 @@ window.JORNADAS.sideNav = function (brand, journey, onNav) {
               partnersTitle: 'Aqui você encontra as melhores soluções em Credito com Garantia de Imóvel, com os parceiros:', partners: ['Itaú', 'Santander', 'Inter', 'CashMe', 'C6 Bank', 'Creditas', 'Banco Bari', 'Galleria Bank', 'Direto'],
               about: 'O empréstimo com garantia de imóvel oferece taxas mais baixas, a partir de 1,09% ao mês + IPCA ou juros fixos. Você utiliza seu imóvel como garantia, continua usando normalmente e pode compor renda para aumentar o valor liberado. É uma solução simples, segura e ideal para quem busca mais prazo e melhores condições de pagamento.' } },
           veiculos: { label: 'Crédito com Garantia de Veículos', icon: 'car--duotone',
-            card: { text: 'Empréstimo destinado a quem precisa de dinheiro rápido usando o veículo quitado como garantia. Permite manter o carro em uso enquanto o cliente obtém um valor proporcional ao bem, com taxas reduzidas e prazos flexíveis para pagamento. É uma alternativa acessível e segura para quem busca crédito sem abrir mão do próprio veículo.', partners: ['BV', 'Creditas', 'Porto', 'Daycoval', 'Omni', 'C6 Bank', 'Safra'] },
+            card: { text: 'Empréstimo destinado a quem precisa de dinheiro rápido usando o veículo quitado como garantia. Permite manter o carro em uso enquanto o cliente obtém um valor proporcional ao bem, com taxas reduzidas e prazos flexíveis para pagamento. É uma alternativa acessível e segura para quem busca crédito sem abrir mão do próprio veículo.', partners: ['BV', 'Creditas', 'CashMe', 'Daycoval', 'Omni', 'C6 Bank', 'Safra'] },
             detail: { subtitle: null,
               bullets: ['Crédito de até 90% do valor de avaliação do veículo (sujeito à análise de crédito);', 'Taxas de juros reduzidas em comparação ao empréstimo tradicional;', 'Prazo de pagamento de 3 a 60 meses;', 'Até 60 dias de carência para o pagamento da primeira parcela;', 'Parcelas fixas durante todo o contrato;', { text: 'Elegibilidade dos veículos:', sub: ['Carros, Caminhonetes e SUVs: até 24 anos de uso;', 'Caminhões e Utilitários: até 50 anos;', 'Ônibus: até 20 anos.'] }, 'O cliente continua utilizando o veículo normalmente durante o contrato.'],
-              partnersTitle: 'Aqui você encontra as melhores soluções em Empréstimo com Garantia de Veículos, com os parceiros:', partners: ['BV', 'Creditas', 'Porto', 'Daycoval', 'Omni', 'C6 Bank', 'Safra'],
+              partnersTitle: 'Aqui você encontra as melhores soluções em Empréstimo com Garantia de Veículos, com os parceiros:', partners: ['BV', 'Creditas', 'CashMe', 'Daycoval', 'Omni', 'C6 Bank', 'Safra'],
               about: 'Indicado para clientes que desejam obter crédito utilizando um veículo quitado como garantia. Permite acessar até 90% do valor de avaliação, com taxas mais competitivas, prazos flexíveis e liberdade para utilizar o recurso conforme sua necessidade, mantendo o veículo em sua posse durante toda a operação.' } }
         },
         pj: {
@@ -232,10 +232,10 @@ window.JORNADAS.sideNav = function (brand, journey, onNav) {
               partnersTitle: 'Aqui você encontra as melhores soluções em Crédito para construção, com os parceiros:', partners: ['CashMe', 'Crediblue'],
               about: 'Oferta de crédito personalizada, com pouca burocracia e aprovação do Comitê em até dois dias úteis. Taxas flexíveis conforme análise de crédito, imóvel e prazo. Operações sob medida, pensadas para cada perfil, com ampla aceitação de diferentes tipos de imóveis. Com a garantia, é possível contratar prazos de até 120 meses. Aqui você encontra as melhores soluções em crédito para construção com parceiros especializados.' } },
           veiculos: { label: 'Crédito com Garantia de Veículos', icon: 'car--duotone',
-            card: { text: 'Inclui crédito para condomínios, financiamento de imóveis e crédito de garantia de imóveis.', partners: ['BV', 'Porto', 'Omni', 'Safra'] },
+            card: { text: 'Inclui crédito para condomínios, financiamento de imóveis e crédito de garantia de imóveis.', partners: ['BV', 'CashMe', 'Omni', 'Safra'] },
             detail: { subtitle: 'Descrição do produto',
               bullets: ['Crédito de até 90% do valor de avaliação do veículo (sujeito à análise de crédito);', 'Taxas de juros reduzidas em comparação ao empréstimo tradicional;', 'Prazo de pagamento de 3 a 60 meses;', 'Até 60 dias de carência para o pagamento da primeira parcela;', 'Parcelas fixas durante todo o contrato;', { text: 'Elegibilidade dos veículos:', sub: ['Carros, Caminhonetes e SUVs: até 24 anos de uso;', 'Caminhões e Utilitários: até 50 anos;', 'Ônibus: até 20 anos.'] }, 'O cliente continua utilizando o veículo normalmente durante o contrato.'],
-              partnersTitle: 'Aqui você encontra as melhores soluções em Empréstimo com Garantia de Veículos, com os parceiros:', partners: ['BV', 'Porto', 'Omni', 'Safra'],
+              partnersTitle: 'Aqui você encontra as melhores soluções em Empréstimo com Garantia de Veículos, com os parceiros:', partners: ['BV', 'CashMe', 'Omni', 'Safra'],
               about: 'Indicado para clientes que desejam obter crédito utilizando um veículo quitado como garantia. Permite acessar até 90% do valor de avaliação, com taxas mais competitivas, prazos flexíveis e liberdade para utilizar o recurso conforme sua necessidade, mantendo o veículo em sua posse durante toda a operação.' } },
           giro: { label: 'Capital de giro', icon: 'money-change--duotone',
             card: { text: 'Financiamento voltado para sustentar as operações diárias e equilibrar o fluxo de caixa de empresas. Oferece prazos flexíveis, taxas competitivas e diversas opções de garantia, como recebíveis, veículos ou imóveis, adequando-se ao porte e à necessidade do negócio.', partners: ['Daycoval'] },

@@ -5,7 +5,6 @@ import { ASSET } from './data';
 const LOGOS: Record<string, string> = {
   'Itaú': 'img/parceiros/itau-logo.svg',
   'Santander': 'img/parceiros/santander-logo.svg',
-  'Porto': 'img/parceiros/porto-logo.svg',
 };
 
 /** Logo do banco parceiro: usa lib-partner do Terra DS quando o parceiro existe na biblioteca; senão, logo local ou iniciais. */

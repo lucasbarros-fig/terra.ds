@@ -21,7 +21,7 @@ const meta: Meta<PartnerComponent> = {
   }),
   args: { partner: 'itau', partnerStyle: 'fill', type: 'minimal', shape: 'circle', size: 64 },
   argTypes: {
-    partner: { control: 'select', options: [...PARTNER_NAMES, 'Porto'], description: 'Chave ou nome do parceiro.' },
+    partner: { control: 'select', options: [...PARTNER_NAMES, 'Banco Exemplo'], description: 'Chave ou nome do parceiro.' },
     partnerStyle: { control: 'inline-radio', options: ['fill', 'solid', 'contrast'], table: { defaultValue: { summary: "'fill'" } } },
     type: { control: 'inline-radio', options: ['default', 'minimal'], table: { defaultValue: { summary: "'minimal'" } } },
     shape: { control: 'inline-radio', options: ['circle', 'rounded', 'square'], table: { defaultValue: { summary: "'circle'" } } },
@@ -46,7 +46,7 @@ export const Contrast: Story = {
 
 export const Fallback: Story = {
   name: 'Sem logo (iniciais)',
-  args: { partner: 'Porto Seguro' },
+  args: { partner: 'Banco Exemplo' },
 };
 
 export const Todos: Story = {
