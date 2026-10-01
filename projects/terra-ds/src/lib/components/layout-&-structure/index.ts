@@ -11,6 +11,7 @@ export type { TerraAccordionGroup } from "./accordion-group/accordion-group.toke
 export * from "./action-bar/action-bar.component";
 export * from "./action-bar/action-bar-container/action-bar-container.component";
 export * from "./avatar/avatar.component";
+export * from "./partner/partner.component";
 export * from "./banner/banner.component";
 export * from "./bottom-sheet/bottom-sheet.component";
 export * from "./card-kanban/card-kanban.component";

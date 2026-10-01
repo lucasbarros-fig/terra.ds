@@ -1,0 +1,5 @@
+@if (svg(); as markup) {
+  <span class="lib-partner__logo" [innerHTML]="markup"></span>
+} @else {
+  <span class="lib-partner__iniciais" aria-hidden="true">{{ iniciais() }}</span>
+}

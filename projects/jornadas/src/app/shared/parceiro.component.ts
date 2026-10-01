@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { PartnerComponent, toPartnerName } from 'terra-ds';
 import { ASSET } from './data';
 
 const LOGOS: Record<string, string> = {
@@ -7,13 +8,16 @@ const LOGOS: Record<string, string> = {
   'Porto': 'img/parceiros/porto-logo.svg',
 };
 
-/** Logo do banco parceiro: usa o logo do Terra quando existe; senão, as iniciais (composição com tokens do Terra). */
+/** Logo do banco parceiro: usa lib-partner do Terra DS quando o parceiro existe na biblioteca; senão, logo local ou iniciais. */
 @Component({
   selector: 'jv-parceiro',
   standalone: true,
+  imports: [PartnerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @if (logo()) {
+    @if (terra()) {
+      <lib-partner [partner]="nome()" partnerStyle="fill" type="minimal" [size]="tamanho()"></lib-partner>
+    } @else if (logo()) {
       <img [src]="logo()" [alt]="nome()" [title]="nome()" [style.width.px]="tamanho()" [style.height.px]="tamanho()" />
     } @else {
       <span class="ini" role="img" [attr.aria-label]="nome()" [title]="nome()" [style.width.px]="tamanho()" [style.height.px]="tamanho()">{{ iniciais() }}</span>
@@ -29,6 +33,7 @@ const LOGOS: Record<string, string> = {
 export class ParceiroComponent {
   readonly nome = input.required<string>();
   readonly tamanho = input(40);
+  protected readonly terra = computed(() => !!toPartnerName(this.nome()));
   protected readonly logo = computed(() => LOGOS[this.nome()] ? ASSET + LOGOS[this.nome()] : '');
   protected readonly iniciais = computed(() => {
     const p = this.nome().replace(/[^A-Za-zÀ-ú0-9 ]/g, '').split(/\s+/).filter(Boolean);
