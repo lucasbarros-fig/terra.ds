@@ -24,3 +24,8 @@ Push na `main` publica o Storybook no GitHub Pages (`.github/workflows/deploy-pa
 https://lucasbarros-fig.github.io/terra.ds/
 
 No GitHub: **Settings → Pages → Source: GitHub Actions**.
+
+## Chromatic
+
+Cada push (e PR) publica o Storybook no Chromatic com testes visuais
+(`.github/workflows/chromatic.yml`). O token fica no secret `CHROMATIC_PROJECT_TOKEN`.
