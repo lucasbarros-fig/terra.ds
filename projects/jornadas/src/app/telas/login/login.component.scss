@@ -1,0 +1,159 @@
+:host { display: block; height: 100%; }
+
+.lg {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(420px, 1fr);
+  height: 100%;
+  min-height: 640px;
+  padding: var(--size-spacing-16);
+  gap: var(--size-spacing-16);
+  background: var(--color-theme-base);
+}
+
+/* ---------- Painel da marca ---------- */
+.lg-marca {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--size-spacing-24);
+  overflow: hidden;
+  padding: 48px 56px 32px;
+  border-radius: 24px;
+  color: var(--color-text-static-white);
+  background:
+    radial-gradient(120% 80% at 100% 100%, color-mix(in srgb, var(--color-support-colors-cyan) 55%, transparent) 0%, transparent 55%),
+    radial-gradient(90% 70% at 0% 0%, color-mix(in srgb, #ffffff 18%, transparent) 0%, transparent 60%),
+    linear-gradient(150deg, var(--color-branding-surface-primary-hovering) 0%, var(--color-branding-surface-primary-base) 45%, #0b4f96 100%);
+}
+
+.lg-grade {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.07) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(80% 70% at 60% 55%, #000 30%, transparent 85%);
+}
+
+.lg-marca-topo { position: relative; display: flex; flex-direction: column; gap: var(--size-spacing-20, 20px); max-width: 520px; }
+
+.lg-selo {
+  display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
+  padding: 6px 12px; border-radius: var(--size-radius-999);
+  background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.22);
+  font-size: var(--size-font-body-12); font-weight: 500; letter-spacing: .02em;
+  backdrop-filter: blur(6px);
+}
+
+h1 {
+  margin: 0; font-size: 40px; line-height: 1.12; font-weight: 700; letter-spacing: -0.02em;
+  em { font-style: normal; background: linear-gradient(90deg, #fff, #bfe3ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+}
+
+.lg-beneficios {
+  display: flex; flex-direction: column; gap: var(--size-spacing-12); margin: 0; padding: 0; list-style: none;
+  li { display: flex; align-items: center; gap: var(--size-spacing-12); font-size: var(--size-font-body-14); line-height: 1.4; color: rgba(255,255,255,.92); }
+}
+.lg-bicon { display: inline-grid; place-items: center; flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,.14); }
+
+/* Cena com peças do Terra */
+.lg-cena { position: relative; flex: 1; min-height: 300px; }
+
+.lg-card {
+  position: absolute;
+  display: flex; flex-direction: column; gap: var(--size-spacing-8);
+  padding: var(--size-spacing-16);
+  border-radius: var(--size-radius-16);
+  background: var(--color-theme-lower);
+  color: var(--color-text-essential-body);
+  border: 1px solid var(--color-stroke-frame);
+  box-shadow: 0 24px 48px -12px rgba(4, 30, 66, .45), 0 2px 6px rgba(4, 30, 66, .18);
+  animation: lg-flutua 7s ease-in-out infinite;
+}
+.lg-card b { color: var(--color-text-essential-heading); }
+
+.lg-card--kpi { top: 4%; left: 0; width: 300px; overflow: hidden; padding-top: 20px; }
+.lg-card--proposta { top: 30%; left: 44%; width: 340px; z-index: 2; animation-delay: -2.4s; }
+.lg-card--comissao { top: 60%; left: 8%; width: 230px; animation-delay: -4.6s; }
+
+.lg-faixa { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--color-state-feedback-positive-surface-base); }
+.lg-card-head { display: flex; align-items: center; gap: var(--size-spacing-8); font-size: var(--size-font-body-14); font-weight: 500; color: var(--color-text-essential-heading); }
+.lg-ic { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; color: #fff;
+  &--verde { background: var(--color-state-feedback-positive-surface-base); }
+  &--azul { background: var(--color-branding-surface-primary-base); } }
+.lg-valor { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; &--p { font-size: 20px; } }
+.lg-card-pe { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: var(--size-font-body-12); color: var(--color-text-essential-caption);
+  b { font-weight: 500; } }
+.lg-chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: var(--size-radius-999);
+  background: color-mix(in srgb, var(--color-state-feedback-positive-surface-base) 16%, transparent); color: var(--color-state-feedback-positive-surface-base); font-weight: 700; }
+
+.lg-prop-topo { display: flex; align-items: center; justify-content: space-between; }
+.lg-id { font-size: var(--size-font-body-12); font-weight: 700; color: var(--color-branding-surface-primary-base); }
+.lg-status { padding: 2px 10px; border-radius: var(--size-radius-999); font-size: 11px; font-weight: 700;
+  background: color-mix(in srgb, var(--color-state-feedback-warning-surface-base) 20%, transparent); color: var(--color-support-colors-orange); }
+.lg-card--proposta > b { font-size: var(--size-font-body-16); }
+.lg-cliente { font-size: var(--size-font-body-12); color: var(--color-text-essential-caption); }
+.lg-passos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin: 4px 0;
+  i { height: 4px; border-radius: 4px; background: var(--color-theme-upper); }
+  i.ok { background: var(--color-branding-surface-primary-base); } }
+.lg-prop-pe { display: flex; align-items: center; gap: 8px; padding-top: 8px; border-top: 1px solid var(--color-stroke-list); font-size: var(--size-font-body-12); color: var(--color-text-essential-body); }
+
+.lg-barras { display: flex; align-items: flex-end; gap: 6px; height: 48px;
+  i { flex: 1; border-radius: 4px 4px 2px 2px; background: color-mix(in srgb, var(--color-branding-surface-primary-base) 30%, transparent); }
+  i:last-child { background: var(--color-branding-surface-primary-base); } }
+
+.lg-parceiros {
+  position: absolute; right: 2%; bottom: 4%;
+  display: flex; align-items: center; gap: 0;
+  padding: 8px 16px 8px 8px; border-radius: var(--size-radius-999);
+  background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.25); backdrop-filter: blur(8px);
+  jv-parceiro { margin-right: -8px; border-radius: 50%; box-shadow: 0 0 0 2px var(--color-branding-surface-primary-base); }
+  span { margin-left: 18px; font-size: var(--size-font-body-12); font-weight: 500; white-space: nowrap; }
+}
+
+.lg-marca-pe {
+  position: relative; display: flex; gap: 40px; font-size: var(--size-font-body-12);
+  div { display: flex; flex-direction: column; gap: 4px; }
+  span { color: rgba(255,255,255,.7); }
+  a { color: #fff; font-weight: 500; text-decoration: none; &:hover { text-decoration: underline; } }
+}
+
+@keyframes lg-flutua { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@media (prefers-reduced-motion: reduce) { .lg-card { animation: none; } }
+
+/* ---------- Formulário ---------- */
+.lg-form-lado {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  position: relative; padding: 32px;
+}
+.lg-form-caixa { display: flex; flex-direction: column; gap: var(--size-spacing-24); width: 100%; max-width: 400px; }
+
+.lg-logo svg { display: block; height: 32px; width: auto; fill: var(--color-text-essential-heading); }
+
+.lg-titulo {
+  display: flex; flex-direction: column; gap: 8px;
+  h2 { margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.01em; color: var(--color-text-essential-heading); }
+  p { margin: 0; font-size: var(--size-font-body-14); line-height: 1.5; color: var(--color-text-essential-caption); }
+}
+
+.lg-form { display: flex; flex-direction: column; gap: var(--size-spacing-16); }
+.lg-linha { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: -4px; }
+
+.lg-seg { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 0;
+  font-size: var(--size-font-body-12); color: var(--color-text-essential-caption); }
+
+.lg-ok {
+  display: flex; flex-direction: column; align-items: center; gap: var(--size-spacing-12); text-align: center;
+  h2 { margin: 8px 0 0; font-size: 24px; color: var(--color-text-essential-heading); }
+  p { margin: 0 0 12px; font-size: var(--size-font-body-14); line-height: 1.5; color: var(--color-text-essential-caption); b { color: var(--color-text-essential-heading); } }
+}
+.lg-ok-ic { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 50%;
+  background: color-mix(in srgb, var(--color-branding-surface-primary-base) 14%, transparent); color: var(--color-branding-surface-primary-base); }
+
+.lg-copy { position: absolute; bottom: 16px; margin: 0; font-size: var(--size-font-body-12); color: var(--color-text-essential-caption); }
+
+@media (max-width: 980px) {
+  .lg { grid-template-columns: 1fr; padding: 0; }
+  .lg-marca { display: none; }
+}

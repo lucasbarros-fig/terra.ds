@@ -108,7 +108,7 @@ export class ShellComponent {
 
   protected config(it: any): void {
     this.painel.set(null);
-    if (it.value === 'sair') this.avisos.mostrar('Sair encerra a sessão e volta para o login (fora do protótipo).');
+    if (it.value === 'sair') this.nav.emit('sair');
     else this.avisos.mostrar(`"${it.label}" ainda não tem tela nesta página.`);
   }
 
