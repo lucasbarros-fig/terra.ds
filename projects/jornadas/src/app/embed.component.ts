@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
 import { AvisosService } from './shared/avisos.service';
 import { DashboardComponent } from './telas/dashboard/dashboard.component';
+import { NovaPropostaComponent } from './telas/nova-proposta/nova-proposta.component';
 import { J } from './shared/data';
 
 /**
@@ -11,20 +12,29 @@ import { J } from './shared/data';
 @Component({
   selector: 'jv-embed',
   standalone: true,
-  imports: [DashboardComponent],
+  imports: [DashboardComponent, NovaPropostaComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<jv-dashboard [journey]="journey" (nav)="navegar($event)"></jv-dashboard>`,
+  template: `
+    @switch (tela()) {
+      @case ('nova') { <jv-nova-proposta [journey]="novaProposta" [state]="estadoNova()" (stateChange)="estadoNova.set($event)" (nav)="navegar($event)"></jv-nova-proposta> }
+      @default { <jv-dashboard [journey]="journey" (nav)="navegar($event)"></jv-dashboard> }
+    }
+  `,
   styles: [`:host { display: block; height: 100vh; }`],
 })
 export class EmbedComponent {
   protected readonly journey = J.journeys.find((j: any) => j.id === 'dashboard');
+  protected readonly novaProposta = J.journeys.find((j: any) => j.id === 'nova-proposta');
+  /** Telas desta página: Home (Dashboard) e Nova proposta. */
+  protected readonly tela = signal<'home' | 'nova'>(location.hash.includes('nova') ? 'nova' : 'home');
+  protected readonly estadoNova = signal<any>({});
   private readonly modo = signal('light');
 
   private readonly avisos = inject(AvisosService);
   private readonly sozinha = window.parent === window;
 
   constructor() {
-    const h = location.hash.replace('#', '');
+    const h = location.hash.replace('#', '').replace('nova', '').replace(/^[.-]+|[.-]+$/g, '');
     if (h) this.aplicar(h);
     else if (!document.documentElement.getAttribute('data-theme')) this.aplicar(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   }
@@ -36,7 +46,7 @@ export class EmbedComponent {
   }
 
   @HostListener('window:hashchange')
-  protected aoHash(): void { this.aplicar(location.hash.replace('#', '')); }
+  protected aoHash(): void { const h = location.hash.replace('#', '').replace('nova', '').replace(/^[.-]+|[.-]+$/g, ''); if (h) this.aplicar(h); }
 
   @HostListener('window:message', ['$event'])
   protected aoMensagem(e: MessageEvent): void {
@@ -46,9 +56,15 @@ export class EmbedComponent {
   private readonly nomes: Record<string, string> = { propostas: 'Propostas', nova: 'Nova proposta', simuladores: 'Simuladores' };
 
   protected navegar(v: string): void {
+    if (v === 'home' || v === 'nova') {
+      this.avisos.limpar();
+      if (v === 'nova') this.estadoNova.set({});
+      this.tela.set(v);
+      return;
+    }
     if (this.sozinha) {
       const nome = this.nomes[v] ?? (J.menus.thehouse.find((m: any) => m.value === v)?.label || v);
-      this.avisos.mostrar(`"${nome}" fica fora desta página: aqui está só a Dashboard no Terra DS.`);
+      this.avisos.mostrar(`"${nome}" fica fora desta página: esta página tem a Home e a Nova proposta no Terra DS.`);
       return;
     }
     try { window.parent.postMessage({ type: 'jv-nav', value: v }, '*'); } catch { /* fora do visualizador */ }

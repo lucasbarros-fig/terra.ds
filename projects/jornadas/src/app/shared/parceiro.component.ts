@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ASSET } from './data';
 
 const LOGOS: Record<string, string> = {
   'Itaú': 'img/parceiros/itau-logo.svg',
@@ -28,7 +29,7 @@ const LOGOS: Record<string, string> = {
 export class ParceiroComponent {
   readonly nome = input.required<string>();
   readonly tamanho = input(40);
-  protected readonly logo = computed(() => LOGOS[this.nome()] ?? '');
+  protected readonly logo = computed(() => LOGOS[this.nome()] ? ASSET + LOGOS[this.nome()] : '');
   protected readonly iniciais = computed(() => {
     const p = this.nome().replace(/[^A-Za-zÀ-ú0-9 ]/g, '').split(/\s+/).filter(Boolean);
     return (p.length > 1 ? p[0][0] + p[1][0] : p[0].slice(0, 2)).toUpperCase();
