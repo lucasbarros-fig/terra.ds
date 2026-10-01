@@ -1,7 +1,5 @@
 <jv-shell menu="home" [title]="C.header.welcome + ' ' + C.header.name" [breadcrumbs]="[{ label: 'Home' }]" (nav)="nav.emit($event)">
   <div class="db">
-    <p class="db-sub">{{ C.header.subtitle }}</p>
-
     <section class="db-kpis" aria-label="Indicadores">
       @for (m of numeros; track m.id) {
         <article class="db-panel db-num" [attr.data-cor]="m.cor">
