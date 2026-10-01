@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import {
   BreadcrumbItem, ButtonComponent, IconButtonComponent, DropdownItemComponent, DropdownGroupHeaderComponent, IconComponent,
-  SidebarComponent, SidebarItem, TabsComponent, TopAction, TopComponent, ToastComponent,
+  SidebarComponent, SidebarItem, TabsComponent, ToggleButtonComponent, TopAction, TopComponent, ToastComponent,
 } from './terra';
 import { J, ic } from './data';
 import { AvisosService } from './avisos.service';
@@ -12,7 +12,7 @@ import { inject } from '@angular/core';
 @Component({
   selector: 'jv-shell',
   standalone: true,
-  imports: [SidebarComponent, TopComponent, IconButtonComponent, TabsComponent, ButtonComponent, DropdownItemComponent, DropdownGroupHeaderComponent, IconComponent, ToastComponent],
+  imports: [ToggleButtonComponent, SidebarComponent, TopComponent, IconButtonComponent, TabsComponent, ButtonComponent, DropdownItemComponent, DropdownGroupHeaderComponent, IconComponent, ToastComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
@@ -56,6 +56,26 @@ export class ShellComponent {
   ]);
   protected readonly notifs = computed(() =>
     J.topo.notificacoes.filter((n: any) => this.abaNotif() === 0 || !this.lidas()[n.id]));
+  /** Menu de Configurações do Top (Dropdown do Terra): Sistema, Configurações e Outros. */
+  protected readonly menuConfig = [
+    { grupo: 'Configurações', itens: [
+      { value: 'conta', label: 'Conta e Segurança', icon: 'UserCircle' },
+      { value: 'plano', label: 'Plano', icon: 'Medal' },
+      { value: 'loja', label: 'Personalizar Loja', icon: 'Storefront' },
+    ] },
+    { grupo: 'Outros', itens: [
+      { value: 'termos', label: 'Termos e Condições', icon: 'Article' },
+      { value: 'ajuda', label: 'Central de ajuda', icon: 'Question' },
+      { value: 'sair', label: 'Sair', icon: 'SignOut' },
+    ] },
+  ];
+  protected readonly escuro = signal(document.documentElement.getAttribute('data-theme') === 'dark');
+  protected alternarTema(v?: boolean): void {
+    const escuro = v ?? !this.escuro();
+    this.escuro.set(escuro);
+    document.documentElement.setAttribute('data-theme', escuro ? 'dark' : 'light');
+  }
+
   protected readonly gruposConfig = computed(() => {
     const g: Record<string, any[]> = {};
     for (const it of J.topo.configuracoes) (g[it.group] ??= []).push(it);
@@ -88,8 +108,8 @@ export class ShellComponent {
 
   protected config(it: any): void {
     this.painel.set(null);
-    if (['conta', 'loja', 'seguranca', 'sessoes'].includes(it.value)) this.nav.emit('configuracoes#' + it.value);
-    else this.avisos.mostrar(it.value === 'sair' ? 'Sair encerra a sessão e volta para o login (fora do protótipo).' : `"${it.label}" ainda não tem jornada cadastrada.`);
+    if (it.value === 'sair') this.avisos.mostrar('Sair encerra a sessão e volta para o login (fora do protótipo).');
+    else this.avisos.mostrar(`"${it.label}" ainda não tem tela nesta página.`);
   }
 
   protected loja(v: string): void {

@@ -81,19 +81,20 @@
         </section>
       }
       @case ('configuracoes') {
-        <section class="sh-panel sh-menu" role="menu" aria-label="Configurações">
-          @for (g of gruposConfig(); track g[0]) {
-            <lib-dropdown-group-header [label]="g[0]"></lib-dropdown-group-header>
-            @for (it of g[1]; track it.value) {
-              <lib-dropdown-item
-                [label]="it.emBreve ? it.label + ' (em breve)' : it.label"
-                [icon]="ic(it.icon)"
-                [disabled]="!!it.disabled"
-                (itemSelect)="config(it)"
-              ></lib-dropdown-item>
+        <section class="sh-panel sh-menu sh-config" role="menu" aria-label="Configurações">
+          <lib-dropdown-group-header label="Sistema"></lib-dropdown-group-header>
+          <div class="sh-config-tema" role="menuitemcheckbox" [attr.aria-checked]="escuro()" tabindex="0" (click)="alternarTema()" (keydown.enter)="alternarTema()" (keydown.space)="$event.preventDefault(); alternarTema()">
+            <lib-icon icon="Moon" [size]="20" color="inherit"></lib-icon>
+            <span>Escuro</span>
+            <lib-toggle-button class="sh-config-switch" [checked]="escuro()" (click)="$event.stopPropagation()" (checkedChange)="alternarTema($event)"></lib-toggle-button>
+          </div>
+          @for (g of menuConfig; track g.grupo) {
+            <lib-dropdown-group-header [label]="g.grupo"></lib-dropdown-group-header>
+            @for (it of g.itens; track it.value) {
+              <lib-dropdown-item [label]="it.label" [icon]="it.icon" (itemSelect)="config(it)"></lib-dropdown-item>
             }
           }
-          <p class="sh-versao">by <b>The House®</b><br>{{ topo.versao }}</p>
+          <p class="sh-versao">Versão 0.0.0</p>
         </section>
       }
       @case ('loja') {
