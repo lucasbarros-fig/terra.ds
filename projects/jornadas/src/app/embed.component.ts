@@ -38,7 +38,7 @@ export class EmbedComponent {
   constructor() {
     const h = location.hash.replace('#', '').replace(/nova|home|login/g, '').replace(/^[.-]+|[.-]+$/g, '');
     if (h) this.aplicar(h);
-    else if (!document.documentElement.getAttribute('data-theme')) this.aplicar(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    else if (!document.documentElement.getAttribute('data-theme')) this.aplicar('light');
   }
 
   private aplicar(m: string): void {
