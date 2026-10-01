@@ -101,11 +101,12 @@
 .db-num { --c: var(--color-branding-surface-primary-base); position: relative; gap: var(--size-spacing-12); overflow: hidden; min-height: 164px;
   &[data-cor="vermelho"] { --c: var(--color-state-feedback-negative-surface-base); }
   &[data-cor="verde"] { --c: var(--color-state-feedback-positive-surface-base); }
-  &[data-cor="azul"] { --c: var(--color-support-colors-blue); } }
+  &[data-cor="azul"] { --c: var(--color-support-colors-blue); }
+  &[data-cor="amarelo"] { --c: var(--color-support-colors-yellow); } }
 .db-num-faixa { position: absolute; top: 0; left: var(--size-spacing-16); width: 56px; height: 4px; border-radius: 0 0 var(--size-radius-4) var(--size-radius-4); background: var(--c); }
 .db-num-bolha { position: absolute; right: -48px; bottom: -64px; width: 168px; height: 168px; border-radius: var(--size-radius-999);
   background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--c) 16%, transparent), transparent 70%); pointer-events: none; }
-.db-num-head { position: relative; display: flex; align-items: center; gap: var(--size-spacing-8); padding-top: var(--size-spacing-4);
+.db-num-head { position: relative; display: flex; align-items: center; min-height: 40px; gap: var(--size-spacing-8); padding-top: var(--size-spacing-4);
   h2 { flex: 1 1 auto; margin: 0; font-size: var(--size-font-body-16); font-weight: 500; color: var(--color-text-essential-heading); } }
 .db-num-icone { color: var(--c); }
 .db-num-valor { position: relative; margin: 0; font-size: var(--size-font-heading-24); font-weight: 700; color: var(--color-text-essential-heading); font-variant-numeric: tabular-nums; white-space: nowrap; }

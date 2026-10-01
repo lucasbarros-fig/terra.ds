@@ -8,11 +8,13 @@
           <header class="db-num-head">
             <lib-icon class="db-num-icone" [icon]="m.icone" [size]="20" color="inherit"></lib-icon>
             <h2>{{ m.titulo }}</h2>
-            <lib-icon-button class="db-num-olho" type="neutral" variant="ghost" size="small" [icon]="escondido(m.id) ? 'EyeSlash' : 'Eye'" [ariaLabel]="(escondido(m.id) ? 'Mostrar ' : 'Ocultar ') + m.titulo" (clicked)="esconder(m.id)"></lib-icon-button>
+            @if (m.ocultavel) {
+              <lib-icon-button class="db-num-olho" type="neutral" variant="ghost" size="small" [icon]="escondido(m.id) ? 'EyeSlash' : 'Eye'" [ariaLabel]="(escondido(m.id) ? 'Mostrar ' : 'Ocultar ') + m.titulo" (clicked)="esconder(m.id)"></lib-icon-button>
+            }
           </header>
-          <p class="db-num-valor">{{ escondido(m.id) ? 'R$ ••••••' : m.valor }}</p>
+          <p class="db-num-valor">{{ escondido(m.id) ? m.mascara : m.valor }}</p>
           <div class="db-num-rodape">
-            <div class="db-num-sub"><span>{{ m.legenda }}</span><b>{{ escondido(m.id) && m.comparativo ? 'R$ ••••••' : m.detalhe }}</b></div>
+            <div class="db-num-sub"><span>{{ m.legenda }}</span>@if (m.detalhe) {<b>{{ m.detalhe }}</b>}</div>
             @if (m.variacao) {
               <span class="db-num-var" [attr.aria-label]="'Alta de ' + m.variacao + ' em relação ao mês anterior'"><lib-icon icon="TrendUp" [size]="12" color="inherit"></lib-icon>{{ m.variacao }}</span>
             }

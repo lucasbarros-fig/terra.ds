@@ -26,9 +26,9 @@ export class DashboardComponent {
 
   /** Números do topo (modelo enviado pelo time: Pendências, Aprovados e Suas comissões). */
   protected readonly numeros = [
-    { id: 'pendencias', titulo: 'Pendências', icone: 'Warning', cor: 'vermelho', valor: 'R$ 1.000.000,00', legenda: 'Aguardando avanço', detalhe: '3 propostas', comparativo: false, variacao: '' },
-    { id: 'aprovados', titulo: 'Aprovados', icone: 'Check', cor: 'verde', valor: 'R$ 12.780.000,00', legenda: 'Mês anterior', detalhe: 'R$ 9.650.000,00', comparativo: true, variacao: '32%' },
-    { id: 'comissoes', titulo: 'Suas comissões', icone: 'ChartPieSlice', cor: 'azul', valor: 'R$ 153.360,00', legenda: 'Mês anterior', detalhe: 'R$ 115.800,00', comparativo: true, variacao: '32%' },
+    { id: 'propostas', titulo: 'Propostas ativas', icone: 'Files', cor: 'amarelo', valor: '47', mascara: '••', legenda: 'Em 6 etapas', detalhe: '', ocultavel: false, variacao: '' },
+    { id: 'estoque', titulo: 'Seu estoque', icone: 'ChartBar', cor: 'azul', valor: 'R$ 7.000.600', mascara: 'R$ ••••••', legenda: 'Potencial da sua carteira', detalhe: '', ocultavel: true, variacao: '' },
+    { id: 'comissao', titulo: 'Comissão validada', icone: 'CurrencyCircleDollar', cor: 'verde', valor: 'R$ 18.450,00', mascara: 'R$ ••••••', legenda: 'Últimos 30 dias', detalhe: '', ocultavel: true, variacao: '' },
   ];
   protected escondido(id: string): boolean { return !!this.ocultos()[id]; }
   protected esconder(id: string): void { this.ocultos.update((o) => ({ ...o, [id]: !o[id] })); }
