@@ -1,0 +1,266 @@
+<jv-shell menu="marketing" title="Marketing" [breadcrumbs]="[{ label: 'Home' }, { label: 'Marketing' }]" (nav)="nav.emit($event)">
+  <div class="mk">
+    <!-- Barra: abas + busca -->
+    <div class="mk-barra">
+      <lib-tabs [tabs]="abas" [selected]="aba()" (selectedChange)="trocarAba($event)"></lib-tabs>
+      <lib-input-text class="mk-busca" variant="outlined" iconBefore="MagnifyingGlass" placeholder="O que você procura?" inputAriaLabel="Buscar artes" [clearable]="true" [ngModel]="busca()" (ngModelChange)="busca.set($event ?? ''); aba.set(0)"></lib-input-text>
+    </div>
+
+    @if (carregando()) {
+      <div class="mk-topo" aria-hidden="true">
+        <lib-skeleton height="358px" borderRadius="16px"></lib-skeleton>
+        <lib-skeleton height="358px" borderRadius="16px"></lib-skeleton>
+      </div>
+      <div class="mk-sk-cards" role="status" aria-label="Carregando artes">
+        @for (i of [1, 2, 3, 4, 5]; track i) { <lib-skeleton height="380px" borderRadius="16px"></lib-skeleton> }
+      </div>
+    } @else {
+      <!-- Banner + loja (na aba Mídia) -->
+      @if (aba() === 0) {
+      <section class="mk-topo">
+        <div class="mk-hero">
+          <svg class="mk-hero-casa" viewBox="0 0 200 160" aria-hidden="true"><path d="M14 78 100 12l86 66M34 63v85h132V63M84 148v-46h32v46" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" /></svg>
+          <div class="mk-hero-txt">
+            <jv-marca class="mk-hero-marca"></jv-marca>
+            <h2>Rapidez e eficiência</h2>
+            <p class="mk-hero-sub">Diversas artes prontas para você aproveitar!</p>
+            <p class="mk-hero-desc">Otimize seu tempo e impulsione seu negócio com artes para redes sociais, capas, bios e materiais institucionais. Tudo já sai com a sua marca, é só baixar e postar.</p>
+          </div>
+          <div class="mk-hero-midia">
+            <jv-video-produto titulo="Marketing The House: como usar as artes"></jv-video-produto>
+          </div>
+        </div>
+
+        <aside class="mk-loja" aria-label="Sua marca nas artes">
+          <div class="mk-loja-card">
+            <span class="mk-loja-logo" [style.background]="cor()">{{ iniciais() }}
+              <lib-icon-button class="mk-loja-editar" type="neutral" variant="filled" size="small" icon="PencilSimple" ariaLabel="Personalizar marca" (clicked)="abrirPersonalizar()"></lib-icon-button>
+            </span>
+            <h3>{{ loja() }}</h3>
+            <p class="mk-loja-cor"><span>Cor primária</span><i [style.background]="cor()" aria-hidden="true"></i></p>
+            <lib-button intent="neutral" variant="bare" icon="PencilSimple" label="Personalizar marca" (clicked)="abrirPersonalizar()"></lib-button>
+          </div>
+          <div class="mk-loja-acoes">
+            <lib-button intent="branding" variant="filled" icon="DownloadSimple" [label]="'Downloads' + (downloads().length ? ' (' + downloads().length + ')' : '')" (clicked)="vendoDownloads.set(true)"></lib-button>
+            <lib-button intent="neutral" variant="filled" icon="Heart" [selected]="soFavoritos()" [label]="'Favoritos' + (qtdFavoritos() ? ' (' + qtdFavoritos() + ')' : '')" (clicked)="alternarFavoritos()"></lib-button>
+          </div>
+        </aside>
+      </section>
+      }
+
+      @switch (aba()) {
+        <!-- ===== Mídia ===== -->
+        @case (0) {
+          <section class="mk-sec" aria-labelledby="mk-midia-t">
+            <header class="mk-sec-head">
+              <div>
+                <h2 id="mk-midia-t">{{ soFavoritos() ? 'Seus favoritos' : 'Artes para as redes sociais' }}</h2>
+                <p>{{ soFavoritos() ? 'As artes que você salvou para usar depois.' : 'Posts, stories e reels prontos para deixar seu perfil completo e profissional.' }}</p>
+              </div>
+            </header>
+            <div class="mk-filtros">
+              <lib-toggle-group ariaLabel="Tipo de conteúdo" [options]="opTipo" [selectedIds]="[tipo()]" (selectedIdsChange)="tipo.set($any($event[0]))"></lib-toggle-group>
+              <span class="mk-filtros-dir">
+                @if (soFavoritos()) { <lib-tag emphasis="low" color="blue" size="small" [showCloseButton]="true" (closed)="soFavoritos.set(false)">Só favoritos</lib-tag> }
+                <lib-select class="mk-filtro" variant="outlined" iconBefore="FunnelSimple" placeholder="Filtrar por produto" selectAriaLabel="Filtrar por produto" [multiple]="true" [options]="opCategorias" [ngModel]="filtro()" (selectionChange)="filtro.set($any($event) ?? [])"></lib-select>
+              </span>
+            </div>
+
+            @for (s of secoes(); track s.id) {
+              <div class="mk-cat">
+                <header class="mk-cat-head">
+                  <span class="mk-cat-ic"><lib-icon [icon]="s.icone" [size]="16" color="inherit"></lib-icon></span>
+                  <h3>{{ s.label }}</h3><span class="mk-cat-qtd">{{ s.artes.length }} {{ s.artes.length === 1 ? 'arte' : 'artes' }}</span>
+                  <span class="mk-cat-nav">
+                    <lib-icon-button type="neutral" variant="ghost" size="small" icon="CaretLeft" [ariaLabel]="'Anteriores de ' + s.label" (clicked)="rolar(trilho, -1)"></lib-icon-button>
+                    <lib-icon-button type="neutral" variant="ghost" size="small" icon="CaretRight" [ariaLabel]="'Próximas de ' + s.label" (clicked)="rolar(trilho, 1)"></lib-icon-button>
+                  </span>
+                </header>
+                <div class="mk-trilho" #trilho [class.mk-trilho--reels]="tipo() === 'reels'">
+                  @for (a of s.artes; track a.id) {
+                    <article class="mk-card">
+                      <button type="button" class="mk-card-arte" [attr.aria-label]="'Visualizar ' + a.destaque" (click)="visualizar(a)">
+                        <jv-arte [arte]="a" [formato]="tipo() === 'reels' ? 'story' : 'post'" [cor]="cor()" [loja]="loja()"></jv-arte>
+                        @if (tipo() === 'reels') {
+                          <span class="mk-card-play" aria-hidden="true"><lib-icon icon="Play" [size]="24" color="inherit"></lib-icon></span>
+                          <span class="mk-card-dur" aria-hidden="true">0:15</span>
+                        }
+                      </button>
+                      <div class="mk-card-leg">
+                        <span>Sugestão de legenda</span>
+                        <p>{{ a.legenda }}</p>
+                      </div>
+                      <div class="mk-card-acoes">
+                        <lib-button intent="branding" variant="filled" icon="Eye" label="Visualizar" (clicked)="visualizar(a)"></lib-button>
+                        <lib-icon-button class="mk-fav" [class.mk-fav--on]="favoritos()[a.id]" type="neutral" variant="filled" icon="Heart" [ariaLabel]="favoritos()[a.id] ? 'Remover dos favoritos' : 'Salvar nos favoritos'" (clicked)="favoritar(a, $event)"></lib-icon-button>
+                      </div>
+                    </article>
+                  }
+                </div>
+              </div>
+            } @empty {
+              @if (soFavoritos() && !busca()) {
+                <lib-empty-state class="mk-vazio" icon="Heart" title="Nenhum favorito ainda" description="Toque no coração das artes para salvar aqui e encontrar rápido depois." buttonLabel="Ver todas as artes" buttonIntent="neutral" (buttonClicked)="soFavoritos.set(false)"></lib-empty-state>
+              } @else {
+                <lib-empty-state class="mk-vazio" icon="MagnifyingGlass" title="Nenhuma arte encontrada" description="Tente outra palavra ou limpe os filtros."></lib-empty-state>
+              }
+            }
+          </section>
+        }
+
+        <!-- ===== Capas ===== -->
+        @case (1) {
+          <section class="mk-sec" aria-labelledby="mk-capas-t">
+            <header class="mk-sec-head">
+              <div><h2 id="mk-capas-t">Capas para os destaques</h2><p>Deixe os destaques do Instagram organizados e com a cor da sua marca.</p></div>
+              <lib-button intent="branding" variant="filled" icon="DownloadSimple" label="Baixar todas" (clicked)="baixarCapa({ label: 'todas as capas (.zip)' })"></lib-button>
+            </header>
+            <lib-toggle-group ariaLabel="Estilo das capas" [options]="opEstiloCapa" [selectedIds]="[estiloCapa()]" (selectedIdsChange)="estiloCapa.set($any($event[0]))"></lib-toggle-group>
+            <ul class="mk-capas">
+              @for (c of capas; track c.label) {
+                <li>
+                  <button type="button" class="mk-capa" [class.mk-capa--contorno]="estiloCapa() === 'contorno'" [style.--c]="cor()" [attr.aria-label]="'Baixar capa ' + c.label" (click)="baixarCapa(c)">
+                    <span class="mk-capa-circ"><lib-icon [icon]="c.icone" [size]="32" color="inherit"></lib-icon></span>
+                    <span class="mk-capa-baixar" aria-hidden="true"><lib-icon icon="DownloadSimple" [size]="16" color="inherit"></lib-icon></span>
+                  </button>
+                  <span class="mk-capa-nome">{{ c.label }}</span>
+                </li>
+              }
+            </ul>
+          </section>
+        }
+
+        <!-- ===== Bio ===== -->
+        @case (2) {
+          <section class="mk-sec" aria-labelledby="mk-bio-t">
+            <header class="mk-sec-head"><div><h2 id="mk-bio-t">Bio pronta para o Instagram</h2><p>Escolha um estilo, copie e cole no seu perfil. O nome da sua loja já entra no texto.</p></div></header>
+            <div class="mk-bios">
+              @for (b of bios(); track b.titulo) {
+                <article class="mk-bio">
+                  <header><span class="mk-cat-ic"><lib-icon icon="TextAa" [size]="16" color="inherit"></lib-icon></span><h3>{{ b.titulo }}</h3></header>
+                  <div class="mk-bio-perfil">
+                    <span class="mk-bio-avatar" [style.background]="cor()">{{ iniciais() }}</span>
+                    <div><b>{{ loja() }}</b><pre>{{ b.texto }}</pre><a>{{ linkLoja() }}</a></div>
+                  </div>
+                  <lib-button intent="neutral" variant="filled" icon="Copy" label="Copiar bio" (clicked)="copiar(b.texto + '\n' + linkLoja(), 'Bio copiada. Cole no seu perfil.')"></lib-button>
+                </article>
+              }
+            </div>
+            <div class="mk-link">
+              <span class="mk-cat-ic"><lib-icon icon="Link" [size]="16" color="inherit"></lib-icon></span>
+              <div><b>Link da sua loja</b><span>Use na bio para o cliente simular e enviar a proposta direto para você.</span></div>
+              <code>{{ linkLoja() }}</code>
+              <lib-button intent="branding" variant="filled" icon="Copy" label="Copiar link" (clicked)="copiar('https://' + linkLoja(), 'Link da loja copiado.')"></lib-button>
+            </div>
+          </section>
+        }
+
+        <!-- ===== Institucionais ===== -->
+        @case (3) {
+          <section class="mk-sec" aria-labelledby="mk-inst-t">
+            <header class="mk-sec-head"><div><h2 id="mk-inst-t">Materiais institucionais</h2><p>Apresentações e materiais oficiais da The House para enviar ao cliente.</p></div></header>
+            <div class="mk-inst">
+              @for (m of institucionais; track m.id) {
+                <article class="mk-mat">
+                  <div class="mk-mat-capa" [style.--c]="cor()">
+                    <jv-marca class="mk-mat-marca"></jv-marca>
+                    <b>{{ m.titulo }}</b>
+                    <span class="mk-mat-ic"><lib-icon [icon]="m.icone" [size]="24" color="inherit"></lib-icon></span>
+                  </div>
+                  <div class="mk-mat-info">
+                    <h3>{{ m.titulo }}</h3>
+                    <p>{{ m.descricao }}</p>
+                    <span class="mk-mat-meta"><lib-tag emphasis="low" color="neutral" size="small">{{ m.formato }}</lib-tag>{{ m.detalhe }}</span>
+                  </div>
+                  <lib-button intent="neutral" variant="filled" [icon]="m.formato === 'HTML' ? 'Copy' : 'DownloadSimple'" [label]="m.formato === 'HTML' ? 'Copiar' : 'Baixar'" (clicked)="baixarMaterial(m)"></lib-button>
+                </article>
+              }
+            </div>
+          </section>
+        }
+      }
+    }
+  </div>
+
+  <!-- Visualizar arte -->
+  @if (aberta(); as a) {
+    <lib-drawer class="mk-drawer" [open]="true" title="Visualizar arte" [showFooter]="true" [showCustomFooter]="true" [ariaLabel]="'Arte ' + a.destaque" (closeClick)="fechar()" (backdropClick)="fechar()">
+      <div class="mk-dr">
+        <div class="mk-dr-previa">
+          <lib-toggle-group ariaLabel="Formato" [options]="opFormato" [selectedIds]="[formato()]" (selectedIdsChange)="formato.set($any($event[0]))"></lib-toggle-group>
+          <div class="mk-dr-palco" #previa [class.mk-dr-palco--story]="formato() === 'story'">
+            <jv-arte [arte]="a" [formato]="formato()" [cor]="cor()" [loja]="loja()"></jv-arte>
+          </div>
+          <p class="mk-dr-dica"><lib-icon icon="Info" [size]="16" color="inherit"></lib-icon>A arte sai em 1080px com o nome e a cor da sua loja.</p>
+        </div>
+        <div class="mk-dr-info">
+          <lib-tag emphasis="low" color="blue" size="small">{{ a.categoria }}</lib-tag>
+          <h3>{{ a.chamada }} {{ a.destaque }}</h3>
+          <section class="mk-dr-bloco">
+            <header><h4>Legenda sugerida</h4><lib-button intent="branding" variant="bare" icon="Copy" label="Copiar" (clicked)="copiar(legendaCompleta(a), 'Legenda copiada.')"></lib-button></header>
+            <p class="mk-dr-legenda">{{ a.legenda }}</p>
+            <div class="mk-dr-tags">@for (h of a.hashtags; track h) { <span>{{ h }}</span> }</div>
+          </section>
+          <section class="mk-dr-bloco">
+            <header><h4>Dicas para postar</h4></header>
+            <ul class="mk-dr-dicas">
+              <li><lib-icon icon="Clock" [size]="16" color="inherit"></lib-icon>Melhores horários: 12h e entre 18h e 21h.</li>
+              <li><lib-icon icon="ChatCircleDots" [size]="16" color="inherit"></lib-icon>Responda os comentários na primeira hora.</li>
+              <li><lib-icon icon="Link" [size]="16" color="inherit"></lib-icon>Coloque o link da sua loja nos stories.</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+      <div libDrawerFooter class="mk-dr-rodape">
+        <lib-button intent="neutral" variant="ghost" icon="Heart" [selected]="!!favoritos()[a.id]" [label]="favoritos()[a.id] ? 'Favoritada' : 'Favoritar'" (clicked)="favoritar(a)"></lib-button>
+        <span class="mk-dr-rodape-dir">
+          <lib-button intent="neutral" variant="filled" icon="ShareNetwork" label="Compartilhar" (clicked)="compartilhar(a)"></lib-button>
+          <lib-button intent="branding" variant="filled" icon="DownloadSimple" label="Baixar arte" [loading]="baixando()" (clicked)="baixar(a)"></lib-button>
+        </span>
+      </div>
+    </lib-drawer>
+  }
+
+  <!-- Downloads -->
+  @if (vendoDownloads()) {
+    <lib-drawer class="mk-drawer-dl" [open]="true" title="Seus downloads" [showFooter]="false" ariaLabel="Seus downloads" (closeClick)="vendoDownloads.set(false)" (backdropClick)="vendoDownloads.set(false)">
+      @if (downloads().length) {
+        <ul class="mk-dl">
+          @for (d of downloads(); track d.arte.id + d.formato) {
+            <li>
+              <span class="mk-dl-mini"><jv-arte [arte]="d.arte" formato="post" [cor]="cor()" [loja]="loja()"></jv-arte></span>
+              <div><b>{{ d.arte.destaque }}</b><span>{{ d.arte.categoria }} · {{ d.formato === 'story' ? 'Story' : 'Post' }} · hoje às {{ d.quando }}</span></div>
+              <lib-icon-button type="neutral" variant="ghost" size="small" icon="Eye" [ariaLabel]="'Abrir ' + d.arte.destaque" (clicked)="vendoDownloads.set(false); visualizar(d.arte)"></lib-icon-button>
+            </li>
+          }
+        </ul>
+      } @else {
+        <lib-empty-state class="mk-vazio" icon="DownloadSimple" title="Nenhum download ainda" description="As artes que você baixar ficam aqui para baixar de novo quando quiser."></lib-empty-state>
+      }
+    </lib-drawer>
+  }
+
+  <!-- Personalizar marca -->
+  @if (personalizando()) {
+    <lib-dialog [open]="true" intent="branding" ariaLabel="Personalizar marca" (backdropClick)="personalizando.set(false)">
+      <lib-dialog-header intent="branding" title="Personalizar marca" icon="PaintBrush" (closeClick)="personalizando.set(false)"></lib-dialog-header>
+      <lib-dialog-body>
+        <div class="mk-pers">
+          <div class="mk-pers-previa"><jv-arte [arte]="previaPersonalizacao" formato="post" [cor]="rascunho().cor" [loja]="rascunho().loja || loja()"></jv-arte></div>
+          <lib-input-text label="Nome que aparece nas artes" variant="outlined" [ngModel]="rascunho().loja" (ngModelChange)="rascunho.set({ cor: rascunho().cor, loja: $event ?? '' })"></lib-input-text>
+          <div class="mk-pers-cores">
+            <span>Cor primária</span>
+            <div role="radiogroup" aria-label="Cor primária">
+              @for (c of cores; track c) {
+                <button type="button" role="radio" class="mk-cor" [style.background]="c" [class.mk-cor--on]="rascunho().cor === c" [attr.aria-checked]="rascunho().cor === c" [attr.aria-label]="'Cor ' + c" (click)="rascunho.set({ cor: c, loja: rascunho().loja })">
+                  @if (rascunho().cor === c) { <lib-icon icon="Check" [size]="16" color="inherit"></lib-icon> }
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+      </lib-dialog-body>
+      <lib-dialog-footer intent="branding" cancelLabel="Cancelar" confirmLabel="Aplicar nas artes" (cancelClick)="personalizando.set(false)" (confirmClick)="salvarPersonalizacao()"></lib-dialog-footer>
+    </lib-dialog>
+  }
+</jv-shell>
