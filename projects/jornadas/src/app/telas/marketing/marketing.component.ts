@@ -112,8 +112,15 @@ export class MarketingComponent {
   protected fechar(): void { this.aberta.set(null); }
 
   protected copiar(texto: string, aviso = 'Copiado.'): void {
-    const ok = () => this.avisos.mostrar(aviso, 'success', 3000);
-    navigator.clipboard?.writeText(texto).then(ok, ok);
+    const ok = () => { if (aviso) this.avisos.mostrar(aviso, 'success', 3000); };
+    const reserva = () => {
+      // Fallback para iframes sem permissão de clipboard.
+      const t = document.createElement('textarea'); t.value = texto; t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); ok(); } catch { this.avisos.mostrar('Não foi possível copiar automaticamente.', 'warning'); }
+      t.remove();
+    };
+    if (navigator.clipboard?.writeText) navigator.clipboard.writeText(texto).then(ok, reserva); else reserva();
   }
   protected legendaCompleta(a: Arte): string { return `${a.legenda}\n\n${a.hashtags.join(' ')}`; }
 
@@ -122,6 +129,11 @@ export class MarketingComponent {
     const el = this.previa()?.nativeElement.querySelector<HTMLElement>('jv-arte');
     if (!el || this.baixando()) return;
     this.baixando.set(true);
+    const ok = await this.gerarPng(el, a, this.formato());
+    this.baixando.set(false);
+    if (ok) this.avisos.mostrar('Arte baixada em alta resolução.', 'success', 3500);
+  }
+  private async gerarPng(el: HTMLElement, a: Arte, formato: ArteFormato): Promise<boolean> {
     try {
       const { toPng } = await import('html-to-image');
       const escala = 1080 / el.getBoundingClientRect().width;
@@ -131,22 +143,50 @@ export class MarketingComponent {
       let url = '';
       try { url = await toPng(el, { pixelRatio: escala, cacheBust: true }); } finally { el.setAttribute('style', antes); }
       const link = document.createElement('a');
-      link.href = url; link.download = `${a.id}-${this.formato()}.png`; link.click();
-      this.registrarDownload(a);
-      this.avisos.mostrar('Arte baixada em alta resolução.', 'success', 3500);
+      link.href = url; link.download = `${a.id}-${formato}.png`; link.click();
+      this.registrarDownload(a, formato);
+      return true;
     } catch {
       this.avisos.mostrar('Não foi possível gerar a imagem agora. Tente de novo.', 'error');
-    } finally { this.baixando.set(false); }
+      return false;
+    }
   }
-  private registrarDownload(a: Arte): void {
+  private registrarDownload(a: Arte, formato: ArteFormato = this.formato()): void {
     const quando = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-    this.downloads.update((l) => [{ arte: a, formato: this.formato(), quando }, ...l.filter((d) => !(d.arte.id === a.id && d.formato === this.formato()))].slice(0, 20));
+    this.downloads.update((l) => [{ arte: a, formato, quando }, ...l.filter((d) => !(d.arte.id === a.id && d.formato === formato))].slice(0, 20));
   }
-  protected compartilhar(a: Arte): void {
-    const nav = navigator as Navigator & { share?: (d: ShareData) => Promise<void> };
-    const texto = this.legendaCompleta(a);
-    if (nav.share) nav.share({ title: a.destaque, text: texto }).catch(() => {});
-    else this.copiar(texto, 'Legenda copiada. Agora é só colar na sua rede social.');
+  /* Compartilhar: folha própria (o share nativo é bloqueado dentro de iframes e em vários navegadores). */
+  protected readonly compartilhando = signal<Arte | null>(null);
+  private readonly previaComp = viewChild<ElementRef<HTMLElement>>('previaComp');
+  protected readonly redes = [
+    { id: 'whatsapp', label: 'WhatsApp', icon: 'WhatsappLogo' },
+    { id: 'instagram', label: 'Instagram', icon: 'InstagramLogo' },
+    { id: 'facebook', label: 'Facebook', icon: 'FacebookLogo' },
+    { id: 'linkedin', label: 'LinkedIn', icon: 'LinkedinLogo' },
+    { id: 'email', label: 'E-mail', icon: 'EnvelopeSimple' },
+    { id: 'copiar', label: 'Copiar legenda', icon: 'Copy' },
+  ] as const;
+  protected compartilhar(a: Arte): void { this.compartilhando.set(a); }
+  protected async compartilharEm(rede: (typeof this.redes)[number]['id']): Promise<void> {
+    const a = this.compartilhando(); if (!a) return;
+    const texto = this.legendaCompleta(a), link = 'https://' + this.linkLoja();
+    const msg = `${texto}\n\n${link}`;
+    if (rede === 'whatsapp') this.abrir('https://wa.me/?text=' + encodeURIComponent(msg));
+    if (rede === 'facebook') this.abrir('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link) + '&quote=' + encodeURIComponent(texto));
+    if (rede === 'linkedin') this.abrir('https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(link));
+    if (rede === 'email') this.abrir(`mailto:?subject=${encodeURIComponent(a.chamada + ' ' + a.destaque)}&body=${encodeURIComponent(msg)}`);
+    if (rede === 'copiar') this.copiar(texto, 'Legenda copiada. Agora é só colar na sua rede social.');
+    if (rede === 'instagram') {
+      // O Instagram não aceita post pelo navegador: baixa a arte e copia a legenda para colar no app.
+      this.copiar(texto, '');
+      const el = this.previaComp()?.nativeElement.querySelector<HTMLElement>('jv-arte');
+      if (el) await this.gerarPng(el, a, 'post');
+      this.avisos.mostrar('Arte baixada e legenda copiada. Abra o Instagram, escolha a arte e cole a legenda.', 'success', 6000);
+    }
+  }
+  private abrir(url: string): void {
+    const w = window.open(url, '_blank', 'noopener');
+    if (!w && !url.startsWith('mailto:')) this.avisos.mostrar('O navegador bloqueou a nova aba. Copie a legenda e cole na rede social.', 'warning', 6000);
   }
 
   protected criarLoja(): void { this.nav.emit('loja-minha'); }

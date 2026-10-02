@@ -246,4 +246,24 @@
     </lib-drawer>
   }
 
+  <!-- Compartilhar -->
+  @if (compartilhando(); as a) {
+    <lib-dialog [open]="true" ariaLabel="Compartilhar arte" (backdropClick)="compartilhando.set(null)">
+      <lib-dialog-header title="Compartilhar arte" icon="ShareNetwork" (closeClick)="compartilhando.set(null)"></lib-dialog-header>
+      <lib-dialog-body>
+        <div class="mk-comp">
+          <div class="mk-comp-previa" #previaComp><jv-arte [arte]="a" formato="post" [cor]="corArte()" [loja]="nomeArte()" [identidade]="identidade()"></jv-arte></div>
+          <p class="mk-comp-leg">{{ a.legenda }}</p>
+          <ul class="mk-comp-redes" aria-label="Onde compartilhar">
+            @for (r of redes; track r.id) {
+              <li>
+                <lib-icon-button type="branding" variant="filled" [icon]="r.icon" [ariaLabel]="r.label" (clicked)="compartilharEm(r.id)"></lib-icon-button>
+                <span aria-hidden="true">{{ r.label }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+      </lib-dialog-body>
+    </lib-dialog>
+  }
 </jv-shell>

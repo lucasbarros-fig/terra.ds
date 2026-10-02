@@ -204,3 +204,12 @@
 .mk-th-marca { height: 32px; }
 .mk-loja-desc { max-width: 260px; margin: 0; font-size: var(--size-font-body-14); line-height: 1.45; color: var(--color-text-essential-caption); }
 .mk-dr-previa .mk-subtabs { align-self: center; }
+
+/* Compartilhar */
+.mk-comp { display: flex; flex-direction: column; align-items: center; gap: var(--size-spacing-16); }
+.mk-comp-previa { width: 168px; overflow: hidden; border-radius: var(--size-radius-8); box-shadow: 0 12px 28px -16px rgba(0, 0, 0, .4); }
+.mk-comp-leg { display: -webkit-box; margin: 0; overflow: hidden; font-size: var(--size-font-body-14); line-height: 1.5; text-align: center; color: var(--color-text-essential-body);
+  -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+.mk-comp-redes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--size-spacing-16) var(--size-spacing-8); width: 100%; margin: 0; padding: 0; list-style: none;
+  li { display: flex; flex-direction: column; align-items: center; gap: var(--size-spacing-8); }
+  span { font-size: var(--size-font-body-12); text-align: center; color: var(--color-text-essential-body); } }
