@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal } from '@angular/core';
 import { ActionBarComponent, ButtonComponent, DivisorComponent, PartnerComponent, IconComponent, TagComponent } from '../../shared/terra';
 import { ShellComponent } from '../../shared/shell.component';
 import { ParceiroComponent } from '../../shared/parceiro.component';
+import { CompartilharPropostaComponent, PropostaCompartilhada } from '../../shared/compartilhar-proposta.component';
 import { VideoProdutoComponent } from '../../shared/video-produto.component';
 import { AvisosService } from '../../shared/avisos.service';
 import { ic } from '../../shared/data';
@@ -10,7 +11,7 @@ import { ic } from '../../shared/data';
 @Component({
   selector: 'jv-nova-proposta',
   standalone: true,
-  imports: [ShellComponent, ActionBarComponent, ButtonComponent, DivisorComponent, IconComponent, TagComponent, ParceiroComponent, VideoProdutoComponent, PartnerComponent],
+  imports: [ShellComponent, ActionBarComponent, ButtonComponent, DivisorComponent, IconComponent, TagComponent, ParceiroComponent, VideoProdutoComponent, PartnerComponent, CompartilharPropostaComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './nova-proposta.component.html',
   styleUrl: './nova-proposta.component.scss',
@@ -58,6 +59,13 @@ export class NovaPropostaComponent {
   protected preencher(): void {
     this.avisos.mostrar(`Próximo passo: preenchimento da proposta de ${this.produto().label}. Essa jornada ainda não foi cadastrada.`);
   }
-  protected copiarLink(): void { this.avisos.mostrar('Envio disponível após criar sua loja.', 'warning', 7000); }
+  protected readonly compartilhando = signal(false);
+  protected readonly compartilhar = computed<PropostaCompartilhada | null>(() => {
+    const p = this.produto(); const s = this.s();
+    if (!p) return null;
+    const nome = (l: any[], v: string) => l.find((o) => o.value === v)?.label ?? v;
+    return { produto: p.label, icone: ic(p.icon), perfil: nome(this.C().perfis, s.perfil), solucao: nome(this.C().solucoes, s.solucao), parceiros: p.detail?.partners ?? p.card?.partners ?? [] };
+  });
+  protected copiarLink(): void { this.compartilhando.set(true); }
   protected documentacao(): void { this.avisos.mostrar('Abre a documentação do produto no portal do parceiro (fora do protótipo).'); }
 }

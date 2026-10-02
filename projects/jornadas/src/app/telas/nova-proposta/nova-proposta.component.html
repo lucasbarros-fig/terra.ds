@@ -101,4 +101,7 @@
       }
     </aside>
   </div>
+  @if (compartilhar(); as d) {
+    <jv-compartilhar-proposta [aberto]="compartilhando()" [dados]="d" (fechar)="compartilhando.set(false)"></jv-compartilhar-proposta>
+  }
 </jv-shell>
