@@ -33,18 +33,16 @@
 
         <aside class="mk-loja" aria-label="Sua marca nas artes">
           <div class="mk-loja-card">
-            <lib-tabs class="mk-subtabs mk-ident" [tabs]="abasIdentidade" [selected]="identidade() === 'thehouse' ? 1 : 0" (selectedChange)="identidade.set($event === 1 ? 'thehouse' : 'loja')"></lib-tabs>
-            @if (identidade() === 'thehouse') {
-              <span class="mk-loja-logo mk-loja-logo--th"><jv-marca class="mk-th-marca"></jv-marca></span>
-              <h3>Identidade The House</h3>
-              <p class="mk-loja-desc">Artes com o logo e a cor da The House e o seu nome como consultor.</p>
-            } @else {
-              <span class="mk-loja-logo" [style.background]="cor()">{{ iniciais() }}
-                <lib-icon-button class="mk-loja-editar" type="neutral" variant="filled" size="small" icon="PencilSimple" ariaLabel="Personalizar marca" (clicked)="abrirPersonalizar()"></lib-icon-button>
-              </span>
+            @if (temLoja()) {
+              <span class="mk-loja-logo" [style.background]="cor()">{{ iniciais() }}</span>
               <h3>{{ loja() }}</h3>
               <p class="mk-loja-cor"><span>Cor primária</span><i [style.background]="cor()" aria-hidden="true"></i></p>
-              <lib-button intent="neutral" variant="bare" icon="PencilSimple" label="Personalizar marca" (clicked)="abrirPersonalizar()"></lib-button>
+              <p class="mk-loja-desc">As artes saem com o logo e a cor da sua loja.</p>
+            } @else {
+              <span class="mk-loja-th"><jv-marca class="mk-th-marca"></jv-marca></span>
+              <h3>Identidade The House</h3>
+              <p class="mk-loja-desc">Enquanto você não tem loja, as artes saem com a marca The House e o seu nome.</p>
+              <lib-button intent="branding" variant="bare" icon="Storefront" label="Criar minha loja" (clicked)="criarLoja()"></lib-button>
             }
           </div>
           <div class="mk-loja-acoes">
@@ -248,27 +246,4 @@
     </lib-drawer>
   }
 
-  <!-- Personalizar marca -->
-  @if (personalizando()) {
-    <lib-dialog [open]="true" intent="branding" ariaLabel="Personalizar marca" (backdropClick)="personalizando.set(false)">
-      <lib-dialog-header intent="branding" title="Personalizar marca" icon="PaintBrush" (closeClick)="personalizando.set(false)"></lib-dialog-header>
-      <lib-dialog-body>
-        <div class="mk-pers">
-          <div class="mk-pers-previa"><jv-arte [arte]="previaPersonalizacao" formato="post" [cor]="rascunho().cor" [loja]="rascunho().loja || loja()"></jv-arte></div>
-          <lib-input-text label="Nome que aparece nas artes" variant="outlined" [ngModel]="rascunho().loja" (ngModelChange)="rascunho.set({ cor: rascunho().cor, loja: $event ?? '' })"></lib-input-text>
-          <div class="mk-pers-cores">
-            <span>Cor primária</span>
-            <div role="radiogroup" aria-label="Cor primária">
-              @for (c of cores; track c) {
-                <button type="button" role="radio" class="mk-cor" [style.background]="c" [class.mk-cor--on]="rascunho().cor === c" [attr.aria-checked]="rascunho().cor === c" [attr.aria-label]="'Cor ' + c" (click)="rascunho.set({ cor: c, loja: rascunho().loja })">
-                  @if (rascunho().cor === c) { <lib-icon icon="Check" [size]="16" color="inherit"></lib-icon> }
-                </button>
-              }
-            </div>
-          </div>
-        </div>
-      </lib-dialog-body>
-      <lib-dialog-footer intent="branding" cancelLabel="Cancelar" confirmLabel="Aplicar nas artes" (cancelClick)="personalizando.set(false)" (confirmClick)="salvarPersonalizacao()"></lib-dialog-footer>
-    </lib-dialog>
-  }
 </jv-shell>

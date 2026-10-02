@@ -44,7 +44,7 @@ export class EmbedComponent {
   private readonly sozinha = window.parent === window;
 
   constructor() {
-    const h = location.hash.replace('#', '').replace(/marketing|clientes|nova|home|login|propostas/g, '').replace(/^[.-]+|[.-]+$/g, '');
+    const h = location.hash.replace('#', '').replace(/semloja|marketing|clientes|nova|home|login|propostas/g, '').replace(/^[.-]+|[.-]+$/g, '');
     if (h) this.aplicar(h);
     else this.aplicar('light');
   }
@@ -56,7 +56,7 @@ export class EmbedComponent {
   }
 
   @HostListener('window:hashchange')
-  protected aoHash(): void { const h = location.hash.replace('#', '').replace(/marketing|clientes|nova|home|login|propostas/g, '').replace(/^[.-]+|[.-]+$/g, ''); if (h) this.aplicar(h); }
+  protected aoHash(): void { const h = location.hash.replace('#', '').replace(/semloja|marketing|clientes|nova|home|login|propostas/g, '').replace(/^[.-]+|[.-]+$/g, ''); if (h) this.aplicar(h); }
 
   @HostListener('window:message', ['$event'])
   protected aoMensagem(e: MessageEvent): void {

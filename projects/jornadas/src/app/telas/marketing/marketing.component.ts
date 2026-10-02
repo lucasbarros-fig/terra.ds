@@ -10,13 +10,13 @@ import { VideoProdutoComponent } from '../../shared/video-produto.component';
 import { MarcaComponent } from '../../shared/marca.component';
 import { Arte, ArteComponent, ArteFormato } from '../../shared/arte.component';
 import { J, semAcento } from '../../shared/data';
-import { BIOS, CAPAS, CORES, INSTITUCIONAIS, SECOES, Secao } from './marketing-dados';
+import { BIOS, CAPAS, INSTITUCIONAIS, SECOES, Secao } from './marketing-dados';
 
 type Aba = 0 | 1 | 2 | 3;
 
 /**
  * Marketing (ideia do Figma Otto · Posts & Stories, visual 100% Terra):
- * banner com vídeo, cartão da loja (personalização de cor e nome), artes por categoria em carrossel,
+ * banner com vídeo, cartão da marca (loja do banker ou The House), artes por categoria em carrossel,
  * Reels, capas de destaque, bios e materiais institucionais. Visualizar abre o Drawer da arte.
  */
 @Component({
@@ -42,21 +42,21 @@ export class MarketingComponent {
   protected readonly busca = signal('');
   protected readonly carregando = signal(true);
 
-  /* Loja do banker (personalizável) */
-  protected readonly cores = CORES;
-  protected readonly cor = signal(CORES[0]);
+  /**
+   * Marca das artes: vem da loja criada no fluxo de criação de loja (não se edita aqui).
+   * Sem loja, as artes usam a identidade The House com o nome do consultor.
+   * Protótipo: #marketing-semloja mostra o banker sem loja.
+   */
+  protected readonly temLoja = signal(!location.hash.includes('semloja'));
+  protected readonly cor = signal('#2b7de9');
   protected readonly loja = signal(`${J.topo.account.name} Imóveis`);
   protected readonly iniciais = computed(() => {
     const p = this.loja().trim().split(/\s+/).filter(Boolean);
     return ((p[0]?.[0] ?? '') + (p.length > 1 ? p[p.length - 1][0] : '')).toUpperCase() || 'TH';
   });
-  /** Identidade das artes: a marca do banker ou a da The House. */
-  protected readonly identidade = signal<'loja' | 'thehouse'>('loja');
-  protected readonly abasIdentidade = [{ label: 'Minha marca', icon: 'Storefront' }, { label: 'The House', icon: 'HouseLine' }];
+  protected readonly identidade = computed<'loja' | 'thehouse'>(() => (this.temLoja() ? 'loja' : 'thehouse'));
   protected readonly corArte = computed(() => (this.identidade() === 'thehouse' ? '#1684E6' : this.cor()));
   protected readonly nomeArte = computed(() => (this.identidade() === 'thehouse' ? J.topo.account.name : this.loja()));
-  protected readonly personalizando = signal(false);
-  protected readonly rascunho = signal({ cor: CORES[0], loja: '' });
 
   /* Mídia */
   protected readonly tipo = signal<'posts' | 'reels'>('posts');
@@ -149,15 +149,7 @@ export class MarketingComponent {
     else this.copiar(texto, 'Legenda copiada. Agora é só colar na sua rede social.');
   }
 
-  /* Personalização */
-  protected abrirPersonalizar(): void { this.rascunho.set({ cor: this.cor(), loja: this.loja() }); this.personalizando.set(true); }
-  protected salvarPersonalizacao(): void {
-    const r = this.rascunho();
-    this.cor.set(r.cor); this.loja.set(r.loja.trim() || this.loja());
-    this.personalizando.set(false);
-    this.avisos.mostrar('Pronto! Todas as artes já estão com a sua marca.', 'success');
-  }
-  protected readonly previaPersonalizacao = SECOES[0].artes[0];
+  protected criarLoja(): void { this.nav.emit('loja-minha'); }
 
   protected baixarCapa(c: { label: string }): void { this.avisos.mostrar(`Capa "${c.label}" baixada.`, 'success', 3000); }
   protected baixarMaterial(m: { titulo: string; formato: string }): void {

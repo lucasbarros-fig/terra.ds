@@ -199,7 +199,8 @@
 .mk-subtabs { align-self: flex-start; max-width: 100%; border-bottom: var(--size-stoke-1) solid var(--color-stroke-frame); ::ng-deep .tab { height: 56px; } }
 .mk-ident { align-self: stretch; margin: calc(-1 * var(--size-spacing-24)) calc(-1 * var(--size-spacing-24)) var(--size-spacing-8); padding: 0 var(--size-spacing-8);
   ::ng-deep .tabs { display: flex; width: 100%; } ::ng-deep .tab { flex: 1 1 0; } }
-.mk-loja-logo--th { background: var(--color-theme-base); border: var(--size-stoke-1) solid var(--color-stroke-frame); }
-.mk-th-marca { height: 18px; }
+.mk-loja-th { display: inline-flex; align-items: center; justify-content: center; width: min(100%, 248px); height: 96px; padding: 0 var(--size-spacing-24);
+  border: var(--size-stoke-1) solid var(--color-stroke-frame); border-radius: var(--size-radius-16); background: var(--color-theme-base); }
+.mk-th-marca { height: 32px; }
 .mk-loja-desc { max-width: 260px; margin: 0; font-size: var(--size-font-body-14); line-height: 1.45; color: var(--color-text-essential-caption); }
 .mk-dr-previa .mk-subtabs { align-self: center; }
