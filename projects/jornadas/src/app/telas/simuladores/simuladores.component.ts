@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, computed, inject, input, ou
 import { DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
-  ActionBarComponent, BannerComponent, ButtonComponent, DivisorComponent, DrawerComponent, EmptyStateComponent, IconButtonComponent, IconComponent, InputTextComponent,
+  ActionBarComponent, BannerComponent, ButtonComponent, DivisorComponent, DrawerComponent, EmptyStateComponent, IconComponent, InputTextComponent,
   ListBodyCellComponent, ListBodyComponent, ListBodyRowComponent, ListComponent, ListHeaderComponent, ListHeaderItemComponent,
   KpiCardComponent, PartnerComponent, SkeletonComponent, TagComponent,
 } from '../../shared/terra';
@@ -27,7 +27,7 @@ const VAZIO: Form = { produto: 'fi', perfil: null, tipo: null, nascimento: '', v
 
 /** Produtos simuláveis (taxas de exemplo a.a.; no back vêm das APIs dos parceiros). */
 const PRODUTOS: Produto[] = [
-  { id: 'fi', tema: 'var(--color-branding-surface-primary-base)', chamada: 'Compare 6 bancos de uma vez', chips: ['Até 80% do imóvel', 'Até 35 anos', 'Uso do FGTS'],  label: 'Financiamento Imobiliário', curto: 'Financiamento', text: 'Aquisição de imóvel residencial, comercial ou terreno.', icon: 'HouseLine', perfis: ['pf', 'pj'], sistema: 'sac', modo: 'financiamento',
+  { id: 'fi', tema: 'var(--color-branding-surface-primary-base)', chamada: 'Compare 6 parceiros de uma vez', chips: ['Até 80% do imóvel', 'Até 35 anos', 'Uso do FGTS'],  label: 'Financiamento Imobiliário', curto: 'Financiamento', text: 'Aquisição de imóvel residencial, comercial ou terreno.', icon: 'HouseLine', perfis: ['pf', 'pj'], sistema: 'sac', modo: 'financiamento',
     bem: 'imóvel', rotuloValor: 'Valor do imóvel', rotuloEntrada: 'Valor de entrada', tipos: ['residencial', 'comercial', 'terreno'], prazo: { min: 12, max: 420, atalhos: [180, 240, 360, 420] }, cartorio: true, fgts: true, bancos: null },
   { id: 'construcao', tema: 'var(--color-support-colors-teal)', chamada: 'Do terreno à casa pronta', chips: ['Aprovação em até 2 dias', 'Até 120 meses'],  label: 'Financiamento para Construção', curto: 'Construção', text: 'Crédito para construir no terreno do cliente, com aprovação rápida.', icon: 'HardHat', perfis: ['pf'], sistema: 'sac', modo: 'financiamento',
     bem: 'obra', rotuloValor: 'Valor total da obra', rotuloEntrada: 'Recursos próprios', tipos: ['residencial', 'comercial'], prazo: { min: 12, max: 120, atalhos: [36, 60, 96, 120] }, cartorio: false, fgts: false,
@@ -52,7 +52,7 @@ const PRODUTOS: Produto[] = [
   selector: 'jv-simuladores',
   standalone: true,
   imports: [
-    ShellComponent, FormsModule, DecimalPipe, ActionBarComponent, BannerComponent, ButtonComponent, DivisorComponent, DrawerComponent, EmptyStateComponent, IconButtonComponent, IconComponent,
+    ShellComponent, FormsModule, DecimalPipe, ActionBarComponent, BannerComponent, ButtonComponent, DivisorComponent, DrawerComponent, EmptyStateComponent, IconComponent,
     InputTextComponent, KpiCardComponent, PartnerComponent, SkeletonComponent, TagComponent,
     ListComponent, ListHeaderComponent, ListHeaderItemComponent, ListBodyComponent, ListBodyRowComponent, ListBodyCellComponent,
   ],
@@ -240,8 +240,8 @@ export class SimuladoresComponent implements OnInit {
   protected ajustar(): void { this.enviado.set(false); this.etapa.set('form'); }
   protected novaSimulacao(): void { this.f.set({ ...VAZIO, produto: this.prod().id }); this.enviado.set(false); this.etapa.set('form'); }
   protected inicio(): void { this.etapa.set('inicio'); }
-  protected gerarProposta(banco?: string): void {
-    this.avisos.mostrar(banco ? `Proposta iniciada com ${banco}. Os dados da simulação já vão preenchidos.` : 'Os dados da simulação já vão preenchidos na proposta.', 'success');
+  protected gerarProposta(): void {
+    this.avisos.mostrar('Os dados da simulação já vão preenchidos na proposta.', 'success');
     this.nav.emit('nova');
   }
   protected compartilhar(): void {

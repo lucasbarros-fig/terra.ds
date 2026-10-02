@@ -30,7 +30,7 @@
             <lib-kpi-card label="Simulações no mês" icon="Calculator" [value]="kpis().total" statusLabel="+3" statusColor="positive" note="em todos os produtos"></lib-kpi-card>
             <lib-kpi-card label="Viraram proposta" icon="FileText" [value]="kpis().propostas" [statusLabel]="kpis().conversao + '%'" statusColor="informative" note="de conversão"></lib-kpi-card>
             <lib-kpi-card label="Volume simulado" icon="CurrencyCircleDollar" [value]="curto(kpis().volume)" [statusLabel]="curto(kpis().media)" statusColor="neutral" note="de ticket médio"></lib-kpi-card>
-            <lib-kpi-card label="Produtos para simular" icon="SquaresFour" [value]="produtos.length" [statusLabel]="kpis().bancos + ' bancos'" statusColor="positive" note="parceiros"></lib-kpi-card>
+            <lib-kpi-card label="Produtos para simular" icon="SquaresFour" [value]="produtos.length" [statusLabel]="kpis().bancos + ' parceiros'" statusColor="positive" note="para comparar"></lib-kpi-card>
           </div>
         </div>
 
@@ -50,7 +50,7 @@
                   <span class="sm-produto-bancos">
                     @for (b of (p.bancos ?? C().bancos).slice(0, 4); track b.nome) { <lib-partner [partner]="b.nome" partnerStyle="fill" [size]="24"></lib-partner> }
                     @if ((p.bancos ?? C().bancos).length > 4) { <small>+{{ (p.bancos ?? C().bancos).length - 4 }}</small> }
-                    <em>{{ (p.bancos ?? C().bancos).length }} {{ (p.bancos ?? C().bancos).length === 1 ? 'banco' : 'bancos' }}</em>
+                    <em>{{ (p.bancos ?? C().bancos).length }} {{ (p.bancos ?? C().bancos).length === 1 ? 'parceiro' : 'parceiros' }}</em>
                   </span>
                   <lib-button class="sm-cta" intent="branding" variant="filled" icon="Calculator" label="Simular" [ariaLabel]="'Simular ' + p.label"></lib-button>
                 </span>
@@ -91,7 +91,7 @@
                   </dl>
                   <footer class="sm-rec-rodape">
                     <lib-button class="sm-rec-ver" intent="neutral" variant="ghost" icon="Eye" label="Detalhes" ariaLabel="Ver detalhes da simulação" (clicked)="vendo.set(r)"></lib-button>
-                    <lib-button class="sm-cta" intent="branding" variant="filled" icon="FileText" label="Gerar proposta" (clicked)="gerarProposta(melhorDe(r)?.parceiro)"></lib-button>
+                    <lib-button class="sm-cta" intent="branding" variant="filled" icon="FileText" label="Gerar proposta" (clicked)="gerarProposta()"></lib-button>
                   </footer>
                 </article>
               }
@@ -159,7 +159,7 @@
                   [error]="erroEntrada() || (enviado() && credito() && !f().entrada)" [helperColor]="entradaBaixa() ? 'warning' : 'neutral'"
                   [helperText]="credito()
                     ? (erroEntrada() ? 'Máximo de ' + (prod().ltv! * 100) + '% do valor do ' + prod().bem + ' (' + moeda(limite()) + ').' : limite() ? 'Até ' + moeda(limite()) + ' (' + (prod().ltv! * 100) + '% do ' + prod().bem + ')' : '')
-                    : (erroEntrada() ? 'Precisa ser menor que o ' + prod().rotuloValor.toLowerCase() + '.' : entradaBaixa() ? 'A maioria dos bancos pede no mínimo 20% de entrada.' : f().valor && f().entrada != null ? pctEntrada() + '% do valor' : '')"
+                    : (erroEntrada() ? 'Precisa ser menor que o ' + prod().rotuloValor.toLowerCase() + '.' : entradaBaixa() ? 'A maioria dos parceiros pede no mínimo 20% de entrada.' : f().valor && f().entrada != null ? pctEntrada() + '% do valor' : '')"
                   [ngModel]="f().entrada" (ngModelChange)="set('entrada', $event)"></lib-input-text>
                 <div class="sf-prazo">
                   <lib-input-text label="Prazo de pagamento" variant="outlined" mask="000" suffix="meses" [placeholder]="'Ex.: ' + prod().prazo.atalhos[2]" helperColor="neutral"
@@ -243,7 +243,7 @@
             <h3>Como funciona</h3>
             <ol>
               <li><span>1</span><div><b>Informe os dados</b><p>Do cliente e da operação.</p></div></li>
-              <li><span>2</span><div><b>Simule</b><p>Calculamos as condições de {{ bancosProd().length > 1 ? 'cada banco parceiro' : bancosProd()[0].nome }}.</p></div></li>
+              <li><span>2</span><div><b>Simule</b><p>Calculamos as condições de {{ bancosProd().length > 1 ? 'cada parceiro' : bancosProd()[0].nome }}.</p></div></li>
               <li><span>3</span><div><b>Compare e gere a proposta</b><p>Escolha a melhor condição e siga para a proposta.</p></div></li>
             </ol>
           </section>
@@ -255,7 +255,7 @@
     @case ('resultado') {
       <div class="sr">
         <header class="sr-head">
-          <div><p><lib-icon icon="CheckCircle" [size]="16" color="inherit"></lib-icon>Simulação concluída</p><h2>{{ bancosProd().length > 1 ? 'Compare os bancos e transforme a melhor condição em proposta' : 'Confira a condição e transforme em proposta' }}</h2></div>
+          <div><p><lib-icon icon="CheckCircle" [size]="16" color="inherit"></lib-icon>Simulação concluída</p><h2>{{ bancosProd().length > 1 ? 'Compare os parceiros e transforme a melhor condição em proposta' : 'Confira a condição e transforme em proposta' }}</h2></div>
           <lib-button intent="neutral" variant="filled" icon="ShareNetwork" label="Compartilhar" (clicked)="compartilhar()"></lib-button>
         </header>
 
@@ -309,7 +309,6 @@
               <lib-list-header-item width="96px">Parcelas</lib-list-header-item>
               <lib-list-header-item>{{ prod().sistema === 'sac' ? '1ª parcela' : 'Parcela' }}</lib-list-header-item>
               @if (prod().sistema === 'sac') { <lib-list-header-item>Última parcela</lib-list-header-item> }
-              <lib-list-header-item width="156px">Ações</lib-list-header-item>
             </lib-list-header>
             <lib-list-body>
               @for (l of linhas(); track l.parceiro) {
@@ -324,12 +323,11 @@
                   <lib-list-body-cell label="Parcelas">{{ l.parcelas }}</lib-list-body-cell>
                   <lib-list-body-cell [label]="prod().sistema === 'sac' ? '1ª parcela' : 'Parcela'"><b class="sr-forte">{{ moeda(l.primeira) }}</b></lib-list-body-cell>
                   @if (prod().sistema === 'sac') { <lib-list-body-cell label="Última parcela">{{ moeda(l.ultima) }}</lib-list-body-cell> }
-                  <lib-list-body-cell kind="actions"><lib-button intent="neutral" variant="filled" label="Escolher" [showIcon]="false" (clicked)="gerarProposta(l.parceiro)"></lib-button></lib-list-body-cell>
                 </lib-list-body-row>
               }
             </lib-list-body>
           </lib-list>
-          <p class="sr-nota"><lib-icon icon="Info" [size]="16" color="inherit"></lib-icon>Valores de referência pela tabela {{ prod().sistema === 'sac' ? 'SAC' : 'Price' }}, sujeitos à análise de crédito de cada banco.</p>
+          <p class="sr-nota"><lib-icon icon="Info" [size]="16" color="inherit"></lib-icon>Valores de referência pela tabela {{ prod().sistema === 'sac' ? 'SAC' : 'Price' }}, sujeitos à análise de crédito de cada parceiro.</p>
         </section>
 
         <div class="sr-rodape">
@@ -337,7 +335,7 @@
             <div class="left"><lib-button intent="neutral" variant="ghost" icon="ArrowLeft" label="Voltar" (clicked)="inicio()"></lib-button></div>
             <div class="right">
               <lib-button class="sr-ajustar-bar" intent="neutral" variant="filled" icon="PencilSimple" label="Ajustar simulação" (clicked)="ajustar()"></lib-button>
-              <lib-button intent="branding" variant="filled" icon="FileText" label="Gerar proposta" (clicked)="gerarProposta(melhor().parceiro)"></lib-button>
+              <lib-button intent="branding" variant="filled" icon="FileText" label="Gerar proposta" (clicked)="gerarProposta()"></lib-button>
             </div>
           </lib-action-bar>
         </div>
@@ -370,14 +368,13 @@
           </section>
         }
         <section class="sd-bancos">
-          <h3>Bancos comparados <span>{{ d.linhas.length }}</span></h3>
+          <h3>Parceiros comparados <span>{{ d.linhas.length }}</span></h3>
           <ul>
             @for (l of d.linhas; track l.parceiro; let i = $index) {
               <li>
                 <lib-partner [partner]="l.parceiro" partnerStyle="fill" [size]="28"></lib-partner>
                 <span class="sd-banco"><b>{{ l.parceiro }}</b><small>{{ pct(l.taxa) }} · {{ l.parcelas }}x</small></span>
                 <span class="sd-valor"><small>1ª parcela</small><b>{{ moeda(l.primeira) }}</b></span>
-                <lib-icon-button type="neutral" variant="ghost" icon="FileText" [ariaLabel]="'Gerar proposta com ' + l.parceiro" (clicked)="gerarProposta(l.parceiro)"></lib-icon-button>
               </li>
             }
           </ul>
@@ -386,7 +383,7 @@
       </div>
       <div libDrawerFooter class="sd-rodape">
         <lib-button intent="neutral" variant="ghost" icon="ArrowsClockwise" label="Abrir no simulador" (clicked)="abrirRecente(d.r)"></lib-button>
-        <lib-button intent="branding" variant="filled" icon="FileText" label="Gerar proposta" (clicked)="gerarProposta(d.melhor?.parceiro)"></lib-button>
+        <lib-button intent="branding" variant="filled" icon="FileText" label="Gerar proposta" (clicked)="gerarProposta()"></lib-button>
       </div>
     </lib-drawer>
   }
