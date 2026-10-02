@@ -4,7 +4,7 @@ import {
   ButtonComponent, DialogBodyComponent, DialogComponent, DialogFooterComponent, DialogHeaderComponent, DivisorComponent, DrawerComponent,
   IconButtonComponent, IconComponent, InputTextComponent, InputTextareaComponent, ListBodyCellComponent, ListBodyComponent,
   ListBodyRowComponent, ListComponent, ListHeaderComponent, ListHeaderItemComponent, ListPaginationComponent, StatusColor, StatusComponent,
-  TabsComponent, TagComponent, TooltipComponent,
+  TabsComponent, TagComponent,
 } from '../../shared/terra';
 import { ShellComponent } from '../../shared/shell.component';
 import { AvisosService } from '../../shared/avisos.service';
@@ -23,7 +23,7 @@ const PRODUTOS = ['Crédito com Garantia de Imóvel', 'Financiamento / Aquisiç�
   standalone: true,
   imports: [
     ShellComponent, FormsModule, ButtonComponent, DialogComponent, DialogHeaderComponent, DialogBodyComponent, DialogFooterComponent, DivisorComponent,
-    DrawerComponent, IconButtonComponent, IconComponent, InputTextComponent, InputTextareaComponent, StatusComponent, TabsComponent, TagComponent, TooltipComponent,
+    DrawerComponent, IconButtonComponent, IconComponent, InputTextComponent, InputTextareaComponent, StatusComponent, TabsComponent, TagComponent,
     ListComponent, ListHeaderComponent, ListHeaderItemComponent, ListBodyComponent, ListBodyRowComponent, ListBodyCellComponent, ListPaginationComponent,
     MenuFlutuanteComponent,
   ],
@@ -79,8 +79,9 @@ export class ClientesComponent {
   protected readonly rowAberto = computed(() => this.acharRow(this.aberto()));
   protected readonly d = computed(() => (this.rowAberto() ? this.detalhe(this.rowAberto()) : null));
   protected readonly abasDet = computed(() => this.d()?.tipo === 'pj'
-    ? [{ label: 'Dados da empresa', icon: 'Buildings' }, { label: 'Representante legal', icon: 'User' }, { label: 'Atividades secundárias', icon: 'Pulse' }]
-    : [{ label: 'Dados pessoais', icon: 'IdentificationCard' }, { label: 'Telefones', icon: 'Phone' }, { label: 'Vínculos', icon: 'Users' }, { label: 'Empresas', icon: 'Buildings' }].map((t, i) => ({ ...t, disabled: this.editando() && i > 0 })));
+    ? [{ label: 'Dados da empresa', icon: 'Buildings' }, { label: 'Representante legal', icon: 'User' }, { label: 'Atividades secundárias', icon: 'Pulse' }, { label: 'Histórico', icon: 'ClockCounterClockwise' }]
+    : [{ label: 'Dados pessoais', icon: 'IdentificationCard' }, { label: 'Telefones', icon: 'Phone' }, { label: 'Vínculos', icon: 'Users' }, { label: 'Empresas', icon: 'Buildings' }, { label: 'Histórico', icon: 'ClockCounterClockwise' }].map((t, i) => ({ ...t, disabled: this.editando() && i > 0 })));
+  protected readonly abaHistorico = computed(() => this.abaDet() === this.abasDet().length - 1);
   protected readonly mudou = computed(() => { const d = this.d(), f = this.form(); return !!d && (f.email !== d.email || (f.obs || '') !== (d.obs || '')); });
   protected readonly rowExcluir = computed(() => this.acharRow(this.excluir()));
 
@@ -122,6 +123,8 @@ export class ClientesComponent {
   protected iniciais(n: string): string { const p = n.trim().split(/\s+/); return (p[0][0] + (p.length > 1 ? p[p.length - 1][0] : '')).toUpperCase(); }
   protected telefone(d: any): string { return d.tipo === 'pf' ? (d.telefones?.find((t: any) => t.principal)?.numero ?? d.telefones?.[0]?.numero ?? '') : (d.representante?.telefone !== '—' ? d.representante?.telefone : this.rowAberto()?.telefone) ?? ''; }
   protected cidadeUf(d: any): string { const e = d.endereco?.[1] ?? ''; const m = e.match(/,\s*([^,]+?)\s*-\s*([A-Z]{2})/); return m ? `${m[1]} - ${m[2]}` : e; }
+  /** Histórico do mais recente para o mais antigo (o cadastro do cliente fica no fim). */
+  protected recentes(d: any): any[] { return [...d.historico].reverse(); }
   protected emAndamento(d: any): number { return d.historico.filter((n: any) => n.intent !== 'negative' && n.intent !== 'positive').length; }
   protected copiar(texto: string, aviso: string): void {
     navigator.clipboard?.writeText(texto).then(() => this.avisos.mostrar(aviso, 'success', 3000), () => this.avisos.mostrar(aviso, 'success', 3000));

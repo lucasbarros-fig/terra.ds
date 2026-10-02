@@ -4,7 +4,6 @@
       <lib-tabs [tabs]="[{ label: 'Pessoa Física', icon: 'User' }, { label: 'Pessoa Jurídica', icon: 'BuildingApartment' }]" [selected]="aba()" (selectedChange)="trocarAba($event)"></lib-tabs>
       <span class="cl-barra-dir">
         <lib-input-text class="cl-busca" variant="outlined" iconBefore="MagnifyingGlass" placeholder="Pesquise por cliente" inputAriaLabel="Pesquisar cliente pelo nome ou documento" [clearable]="true" [ngModel]="busca()" (ngModelChange)="buscar($event)"></lib-input-text>
-        <lib-tooltip class="cl-info" indicator="top" arrow="end" triggerIcon="Info" triggerIconColor="essential-medium" [triggerSize]="20" text="Na The House o cliente é criado automaticamente quando uma proposta é preenchida, por você ou pelo próprio cliente."></lib-tooltip>
       </span>
     </div>
 
@@ -107,7 +106,7 @@
             </span></div>
         </div>
 
-        <div class="cd-cols">
+        <div class="cd-cols cd-cols--uma">
           <div class="cd-main">
             <lib-tabs [tabs]="abasDet()" [selected]="abaDet()" (selectedChange)="abaDet.set($event)"></lib-tabs>
 
@@ -130,6 +129,29 @@
                   <lib-input-text class="cd-s3" label="E-mail pessoal" type="email" variant="outlined" [clearable]="true" [ngModel]="form().email" (ngModelChange)="campo('email', $event)"></lib-input-text>
                   <lib-input-textarea class="cd-s3" label="Observações" [optional]="true" variant="outlined" placeholder="Digite uma observação..." [rows]="3" [ngModel]="form().obs" (ngModelChange)="campo('obs', $event)"></lib-input-textarea>
                 </div>
+              </section>
+            } @else if (abaHistorico()) {
+              <section class="cd-card cd-hist" aria-labelledby="cd-hist-t">
+                <header><h4 id="cd-hist-t">Histórico</h4><p>{{ d.historico.length }} {{ d.historico.length === 1 ? 'proposta' : 'propostas' }} com este cliente, da mais recente à criação do cadastro.</p></header>
+            <ol class="cd-tl">
+              @for (n of recentes(d); track $index) {
+                <li [attr.data-intent]="n.intent">
+                  <span class="cd-tl-ponto" aria-hidden="true"></span>
+                  <div class="cd-tl-corpo">
+                    <b>{{ n.produto }}</b>
+                    <span class="cd-tl-linha"><time>{{ n.data }}</time><lib-status size="small" [status]="cor(n.intent)" [text]="n.status"></lib-status></span>
+                  </div>
+                </li>
+              }
+              <li class="cd-tl-origem">
+                <span class="cd-tl-ponto" aria-hidden="true"><lib-icon icon="UserPlus" [size]="12" color="inherit"></lib-icon></span>
+                <div class="cd-tl-corpo">
+                  <b>Cliente criado</b>
+                  <span class="cd-tl-txt">Automaticamente pela proposta {{ origem(rowAberto()).proposta }} · {{ origem(rowAberto()).produto }}</span>
+                  <time>{{ d.criado }}</time>
+                </div>
+              </li>
+            </ol>
               </section>
             } @else {
               @switch (d.tipo + '-' + abaDet()) {
@@ -183,29 +205,6 @@
             }
           </div>
 
-          <!-- Linha do tempo -->
-          <aside class="cd-hist" aria-labelledby="cd-hist-t">
-            <header><h4 id="cd-hist-t">Histórico</h4><span>{{ d.historico.length }} {{ d.historico.length === 1 ? 'proposta' : 'propostas' }}</span></header>
-            <ol class="cd-tl">
-              @for (n of d.historico; track $index) {
-                <li [attr.data-intent]="n.intent">
-                  <span class="cd-tl-ponto" aria-hidden="true"></span>
-                  <div class="cd-tl-corpo">
-                    <b>{{ n.produto }}</b>
-                    <span class="cd-tl-linha"><time>{{ n.data }}</time><lib-status size="small" [status]="cor(n.intent)" [text]="n.status"></lib-status></span>
-                  </div>
-                </li>
-              }
-              <li class="cd-tl-origem">
-                <span class="cd-tl-ponto" aria-hidden="true"><lib-icon icon="UserPlus" [size]="12" color="inherit"></lib-icon></span>
-                <div class="cd-tl-corpo">
-                  <b>Cliente criado</b>
-                  <span class="cd-tl-txt">Automaticamente pela proposta {{ origem(rowAberto()).proposta }} · {{ origem(rowAberto()).produto }}</span>
-                  <time>{{ d.criado }}</time>
-                </div>
-              </li>
-            </ol>
-          </aside>
         </div>
       </div>
       <div libDrawerFooter class="cl-rodape">
