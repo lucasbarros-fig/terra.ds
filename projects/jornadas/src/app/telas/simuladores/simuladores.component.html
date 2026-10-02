@@ -18,10 +18,7 @@
                   <span class="sm-hero-logos" aria-hidden="true">@for (b of (p.bancos ?? C().bancos).slice(0, 6); track b.nome) { <lib-partner [partner]="b.nome" partnerStyle="fill" [size]="28"></lib-partner> }</span>
                 </span>
               </div>
-              <span class="sm-hero-glass" aria-hidden="true">
-                <span class="sm-hero-glass-tras"></span>
-                <span class="sm-hero-glass-frente"><lib-icon [icon]="p.icon" [size]="32" color="inherit"></lib-icon></span>
-              </span>
+              <img class="sm-hero-img" [src]="asset + p.imagem" alt="" aria-hidden="true" />
             </div>
           </ng-template>
 
@@ -42,7 +39,7 @@
             @for (p of produtos; track p.id) {
               <div class="sm-produto" [style.--tema]="p.tema" (click)="escolherProduto(p)">
                 <span class="sm-produto-topo">
-                  <span class="sm-produto-ic"><lib-icon [icon]="p.icon" [size]="24" color="inherit"></lib-icon></span>
+                  <img class="sm-produto-img" [src]="asset + p.imagem" alt="" aria-hidden="true" />
                   <span class="sm-produto-perfis">@for (pf of p.perfis; track pf) { <lib-tag emphasis="low" [color]="pf === 'pf' ? 'blue' : 'purple'" size="small">{{ pf === 'pf' ? 'PF' : 'PJ' }}</lib-tag> }</span>
                 </span>
                 <span class="sm-produto-txt"><b>{{ p.label }}</b><span>{{ p.text }}</span></span>
