@@ -85,11 +85,9 @@
 
         <!-- Contato rápido -->
         <ul class="cd-contato" aria-label="Contato">
-          <li><lib-icon icon="EnvelopeSimple" [size]="16" color="inherit"></lib-icon><span>{{ d.email }}</span>
-            <lib-icon-button type="neutral" variant="bare" size="small" icon="Copy" ariaLabel="Copiar e-mail" (clicked)="copiar(d.email, 'E-mail copiado.')"></lib-icon-button></li>
+          <li><lib-icon icon="EnvelopeSimple" [size]="16" color="inherit"></lib-icon><span>{{ d.email }}</span></li>
           @if (telefone(d); as t) {
-            <li><lib-icon icon="Phone" [size]="16" color="inherit"></lib-icon><span>{{ t }}</span>
-              <lib-icon-button type="neutral" variant="bare" size="small" icon="WhatsappLogo" ariaLabel="Chamar no WhatsApp" (clicked)="avisar('Abre a conversa no WhatsApp (fora do protótipo).')"></lib-icon-button></li>
+            <li><lib-icon icon="WhatsappLogo" [size]="16" color="inherit"></lib-icon><span>{{ t }}</span></li>
           }
           <li><lib-icon icon="MapPin" [size]="16" color="inherit"></lib-icon><span>{{ cidadeUf(d) }}</span></li>
         </ul>
