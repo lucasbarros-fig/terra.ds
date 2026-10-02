@@ -6,6 +6,7 @@ import { PropostasComponent } from './telas/propostas/propostas.component';
 import { NovaPropostaComponent } from './telas/nova-proposta/nova-proposta.component';
 import { ClientesComponent } from './telas/clientes/clientes.component';
 import { MarketingComponent } from './telas/marketing/marketing.component';
+import { SimuladoresComponent } from './telas/simuladores/simuladores.component';
 import { J } from './shared/data';
 
 /**
@@ -16,11 +17,12 @@ import { J } from './shared/data';
 @Component({
   selector: 'jv-embed',
   standalone: true,
-  imports: [DashboardComponent, NovaPropostaComponent, LoginComponent, PropostasComponent, ClientesComponent, MarketingComponent],
+  imports: [DashboardComponent, NovaPropostaComponent, LoginComponent, PropostasComponent, ClientesComponent, MarketingComponent, SimuladoresComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @switch (tela()) {
       @case ('propostas') { <jv-propostas [journey]="propostas" (nav)="navegar($event)"></jv-propostas> }
+      @case ('simuladores') { <jv-simuladores [journey]="simuladores" (nav)="navegar($event)"></jv-simuladores> }
       @case ('marketing') { <jv-marketing (nav)="navegar($event)"></jv-marketing> }
       @case ('clientes') { <jv-clientes [journey]="clientes" (nav)="navegar($event)"></jv-clientes> }
       @case ('login') { <jv-login (entrar)="navegar('home')"></jv-login> }
@@ -35,8 +37,9 @@ export class EmbedComponent {
   protected readonly novaProposta = J.journeys.find((j: any) => j.id === 'nova-proposta');
   protected readonly propostas = J.journeys.find((j: any) => j.id === 'propostas');
   protected readonly clientes = J.journeys.find((j: any) => j.id === 'clientes');
+  protected readonly simuladores = J.journeys.find((j: any) => j.id === 'simuladores');
   /** Telas desta página: Login, Home (Dashboard), Nova proposta, Propostas e Clientes. */
-  protected readonly tela = signal<'login' | 'home' | 'nova' | 'propostas' | 'clientes' | 'marketing'>(location.hash.includes('marketing') ? 'marketing' : location.hash.includes('clientes') ? 'clientes' : location.hash.includes('nova') ? 'nova' : location.hash.includes('propostas') ? 'propostas' : location.hash.includes('home') ? 'home' : 'login');
+  protected readonly tela = signal<'login' | 'home' | 'nova' | 'propostas' | 'clientes' | 'marketing' | 'simuladores'>(location.hash.includes('simuladores') ? 'simuladores' : location.hash.includes('marketing') ? 'marketing' : location.hash.includes('clientes') ? 'clientes' : location.hash.includes('nova') ? 'nova' : location.hash.includes('propostas') ? 'propostas' : location.hash.includes('home') ? 'home' : 'login');
   protected readonly estadoNova = signal<any>({});
   private readonly modo = signal('light');
 
@@ -44,7 +47,7 @@ export class EmbedComponent {
   private readonly sozinha = window.parent === window;
 
   constructor() {
-    const h = location.hash.replace('#', '').replace(/semloja|marketing|clientes|nova|home|login|propostas/g, '').replace(/^[.-]+|[.-]+$/g, '');
+    const h = location.hash.replace('#', '').replace(/semloja|simuladores|marketing|clientes|nova|home|login|propostas/g, '').replace(/^[.-]+|[.-]+$/g, '');
     if (h) this.aplicar(h);
     else this.aplicar('light');
   }
@@ -56,7 +59,7 @@ export class EmbedComponent {
   }
 
   @HostListener('window:hashchange')
-  protected aoHash(): void { const h = location.hash.replace('#', '').replace(/semloja|marketing|clientes|nova|home|login|propostas/g, '').replace(/^[.-]+|[.-]+$/g, ''); if (h) this.aplicar(h); }
+  protected aoHash(): void { const h = location.hash.replace('#', '').replace(/semloja|simuladores|marketing|clientes|nova|home|login|propostas/g, '').replace(/^[.-]+|[.-]+$/g, ''); if (h) this.aplicar(h); }
 
   @HostListener('window:message', ['$event'])
   protected aoMensagem(e: MessageEvent): void {
@@ -68,7 +71,7 @@ export class EmbedComponent {
   protected navegar(v: string): void {
     if (v === 'sair') { this.avisos.limpar(); this.tela.set('login'); return; }
     if (v === 'base' || v === 'base-minha') v = 'clientes';
-    if (v === 'home' || v === 'nova' || v === 'propostas' || v === 'clientes' || v === 'marketing') {
+    if (v === 'home' || v === 'nova' || v === 'propostas' || v === 'clientes' || v === 'marketing' || v === 'simuladores') {
       this.avisos.limpar();
       if (v === 'nova') this.estadoNova.set({});
       this.tela.set(v);
@@ -76,7 +79,7 @@ export class EmbedComponent {
     }
     if (this.sozinha) {
       const nome = this.nomes[v] ?? (J.menus.thehouse.find((m: any) => m.value === v)?.label || v);
-      this.avisos.mostrar(`"${nome}" fica fora desta página: esta página tem a Home, a Nova proposta, as Propostas, os Clientes e o Marketing no Terra DS.`);
+      this.avisos.mostrar(`"${nome}" fica fora desta página: esta página tem a Home, a Nova proposta, as Propostas, os Clientes, o Marketing e os Simuladores no Terra DS.`);
       return;
     }
     try { window.parent.postMessage({ type: 'jv-nav', value: v }, '*'); } catch { /* fora do visualizador */ }
