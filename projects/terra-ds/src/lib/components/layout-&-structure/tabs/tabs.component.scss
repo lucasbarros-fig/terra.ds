@@ -1,10 +1,23 @@
 :host {
   display: block;
+  max-width: 100%;
+  min-width: 0;
+  /* Quando as abas não cabem, só elas rolam para o lado (sem barra visível). */
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .tabs {
   display: inline-flex;
   gap: 10px;
+  min-width: max-content;
 }
 
 .tab {
@@ -12,7 +25,9 @@
   align-items: center;
   justify-content: center;
   gap: var(--size-spacing-8);
-  width: 100%;
+  flex: 0 0 auto;
+  width: auto;
+  white-space: nowrap;
   height: 72px;
   padding: 0 var(--size-spacing-16);
   border: none;

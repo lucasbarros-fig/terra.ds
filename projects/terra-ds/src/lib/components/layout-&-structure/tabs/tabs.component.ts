@@ -2,7 +2,9 @@ import { NgFor, NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
+  inject,
   Input,
   Output,
 } from '@angular/core';
@@ -34,6 +36,19 @@ export class TabsComponent {
     if (tab?.disabled) return;
     this.selected = index;
     this.selectedChange.emit(index);
+    this.mostrarAba(index);
+  }
+
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+
+  /** Com abas roladas para o lado, traz a aba escolhida para a área visível. */
+  private mostrarAba(index: number): void {
+    const el = this.host.nativeElement;
+    const tab = el.querySelectorAll<HTMLElement>('.tab')[index];
+    if (!tab || el.scrollWidth <= el.clientWidth) return;
+    const ini = tab.offsetLeft, fim = ini + tab.offsetWidth;
+    if (ini < el.scrollLeft) el.scrollTo({ left: ini - 16, behavior: 'smooth' });
+    else if (fim > el.scrollLeft + el.clientWidth) el.scrollTo({ left: fim - el.clientWidth + 16, behavior: 'smooth' });
   }
 
   onKeydown(event: KeyboardEvent, index: number): void {
