@@ -81,6 +81,7 @@
         @if (p.detail.about) {
           <div class="np-bloco"><b>Conheça o produto:</b><p>{{ p.detail.about }}</p></div>
         }
+        <jv-video-produto class="np-video" [titulo]="p.label + ': conheça em vídeo'"></jv-video-produto>
       } @else if (listaPainel(); as lp) {
         <div class="np-p-head"><h2>{{ lp.title }}</h2></div>
         <div class="np-cards">

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, output } f
 import { ActionBarComponent, ButtonComponent, DivisorComponent, IconComponent, TagComponent } from '../../shared/terra';
 import { ShellComponent } from '../../shared/shell.component';
 import { ParceiroComponent } from '../../shared/parceiro.component';
+import { VideoProdutoComponent } from '../../shared/video-produto.component';
 import { AvisosService } from '../../shared/avisos.service';
 import { ic } from '../../shared/data';
 
@@ -9,7 +10,7 @@ import { ic } from '../../shared/data';
 @Component({
   selector: 'jv-nova-proposta',
   standalone: true,
-  imports: [ShellComponent, ActionBarComponent, ButtonComponent, DivisorComponent, IconComponent, TagComponent, ParceiroComponent],
+  imports: [ShellComponent, ActionBarComponent, ButtonComponent, DivisorComponent, IconComponent, TagComponent, ParceiroComponent, VideoProdutoComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './nova-proposta.component.html',
   styleUrl: './nova-proposta.component.scss',
