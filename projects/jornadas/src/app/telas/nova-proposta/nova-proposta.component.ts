@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
-import { ButtonComponent, DivisorComponent, IconComponent, TagComponent } from '../../shared/terra';
+import { ActionBarComponent, ButtonComponent, DivisorComponent, IconComponent, TagComponent } from '../../shared/terra';
 import { ShellComponent } from '../../shared/shell.component';
 import { ParceiroComponent } from '../../shared/parceiro.component';
 import { AvisosService } from '../../shared/avisos.service';
@@ -9,7 +9,7 @@ import { ic } from '../../shared/data';
 @Component({
   selector: 'jv-nova-proposta',
   standalone: true,
-  imports: [ShellComponent, ButtonComponent, DivisorComponent, IconComponent, TagComponent, ParceiroComponent],
+  imports: [ShellComponent, ActionBarComponent, ButtonComponent, DivisorComponent, IconComponent, TagComponent, ParceiroComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './nova-proposta.component.html',
   styleUrl: './nova-proposta.component.scss',

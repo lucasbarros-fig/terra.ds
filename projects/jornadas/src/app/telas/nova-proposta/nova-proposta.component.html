@@ -51,12 +51,18 @@
       </div>
 
       @if (s().perfil) {
-        <footer class="np-rodape">
-          <lib-button intent="neutral" variant="ghost" icon="ArrowLeft" label="Voltar" (clicked)="voltar()"></lib-button>
-        </footer>
+        <div class="np-rodape">
+          <lib-action-bar [fixedToViewport]="false">
+            <div class="left">
+              <lib-button intent="neutral" variant="ghost" icon="ArrowLeft" label="Voltar" (clicked)="voltar()"></lib-button>
+            </div>
+          </lib-action-bar>
+        </div>
       }
     </div>
 
+    <lib-divisor class="np-div np-div--v" orientation="vertical"></lib-divisor>
+    <lib-divisor class="np-div np-div--h" orientation="horizontal"></lib-divisor>
     <aside class="np-painel" aria-label="Painel de produtos">
       @if (produto(); as p) {
         <div class="np-p-head"><h2>{{ p.label }}</h2>@if (p.detail.subtitle) { <p>{{ p.detail.subtitle }}</p> }</div>
