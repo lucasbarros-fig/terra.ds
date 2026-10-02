@@ -44,6 +44,7 @@ export class NovaPropostaComponent {
 
   protected escolher(campo: 'perfil' | 'solucao' | 'produto', v: string): void {
     const s = this.s();
+    if (s[campo] === v) return; // clicar no já selecionado não apaga as escolhas seguintes
     if (campo === 'perfil') this.stateChange.emit({ perfil: v });
     if (campo === 'solucao') this.stateChange.emit({ perfil: s.perfil, solucao: v });
     if (campo === 'produto') this.stateChange.emit({ perfil: s.perfil, solucao: s.solucao, produto: v });

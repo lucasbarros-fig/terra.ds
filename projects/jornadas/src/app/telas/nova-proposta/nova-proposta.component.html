@@ -6,7 +6,7 @@
           <div class="np-q-head"><p>{{ C().questions.perfil.caption }}</p><h2>{{ C().questions.perfil.title }}</h2></div>
           <div class="np-op" role="group" [attr.aria-label]="C().questions.perfil.title">
             @for (o of C().perfis; track o.value) {
-              <lib-button [intent]="s().perfil === o.value ? 'branding' : 'neutral'" variant="filled" [selected]="s().perfil === o.value" [disabled]="!!s().perfil && s().perfil !== o.value" [icon]="ic(o.icon)" [label]="o.label" (clicked)="escolher('perfil', o.value)"></lib-button>
+              <lib-button [intent]="s().perfil === o.value ? 'branding' : 'neutral'" variant="filled" [selected]="s().perfil === o.value" [icon]="ic(o.icon)" [label]="o.label" (clicked)="escolher('perfil', o.value)"></lib-button>
             }
           </div>
         </section>
@@ -17,7 +17,7 @@
             <div class="np-q-head"><p>{{ C().questions.solucao.caption }}</p><h2>{{ C().questions.solucao.title }}</h2></div>
             <div class="np-op" role="group" [attr.aria-label]="C().questions.solucao.title">
               @for (o of C().solucoes; track o.value) {
-                <lib-button [intent]="s().solucao === o.value ? 'branding' : 'neutral'" variant="filled" [selected]="s().solucao === o.value" [disabled]="!!s().solucao && s().solucao !== o.value" [icon]="ic(o.icon)" [label]="o.label" (clicked)="escolher('solucao', o.value)"></lib-button>
+                <lib-button [intent]="s().solucao === o.value ? 'branding' : 'neutral'" variant="filled" [selected]="s().solucao === o.value" [icon]="ic(o.icon)" [label]="o.label" (clicked)="escolher('solucao', o.value)"></lib-button>
               }
             </div>
           </section>
@@ -30,7 +30,7 @@
             <div class="np-op" role="group" [attr.aria-label]="C().questions.produto.title">
               @for (v of cfg().options; track v) {
                 <span class="np-op-item">
-                  <lib-button [intent]="s().produto === v ? 'branding' : 'neutral'" variant="filled" [selected]="s().produto === v" [disabled]="emBreve(v) || (!!s().produto && s().produto !== v)" [icon]="ic(cat()[v].icon)" [label]="cat()[v].label" (clicked)="escolher('produto', v)"></lib-button>
+                  <lib-button [intent]="s().produto === v ? 'branding' : 'neutral'" variant="filled" [selected]="s().produto === v" [disabled]="emBreve(v)" [icon]="ic(cat()[v].icon)" [label]="cat()[v].label" (clicked)="escolher('produto', v)"></lib-button>
                   @if (emBreve(v)) { <lib-tag emphasis="low" color="neutral" size="small">Em breve</lib-tag> }
                 </span>
               }
@@ -74,7 +74,7 @@
           <b>Nossos parceiros</b>
           <div class="np-parceiros">
             @for (n of p.detail.partners; track n) {
-              <lib-partner [partner]="n" partnerStyle="solid" type="default" [size]="64"></lib-partner>
+              <lib-partner [partner]="n" partnerStyle="fill" type="default" [size]="64"></lib-partner>
             }
           </div>
         </div>
