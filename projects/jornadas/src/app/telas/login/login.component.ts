@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, computed, output, signal } from '@a
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent, CheckboxComponent, IconComponent, InputTextComponent } from 'terra-ds';
 import { ParceiroComponent } from '../../shared/parceiro.component';
+import { MarcaComponent } from '../../shared/marca.component';
+import { MarcaLoaderComponent } from '../../shared/marca-loader.component';
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -9,7 +11,7 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 @Component({
   selector: 'jv-login',
   standalone: true,
-  imports: [FormsModule, ButtonComponent, CheckboxComponent, IconComponent, InputTextComponent, ParceiroComponent],
+  imports: [FormsModule, ButtonComponent, CheckboxComponent, IconComponent, InputTextComponent, ParceiroComponent, MarcaComponent, MarcaLoaderComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -23,6 +25,14 @@ export class LoginComponent {
   protected readonly manter = signal(true);
   protected readonly tocado = signal(false);
   protected readonly carregando = signal(false);
+  /** Splash com o logo subindo ao abrir o login. */
+  protected readonly splash = signal(true);
+  /** Se a entrada passar de 400ms, cobre a tela com o logo carregando. */
+  protected readonly demorando = signal(false);
+
+  constructor() {
+    setTimeout(() => this.splash.set(false), 1850);
+  }
 
   protected readonly emailValido = computed(() => EMAIL.test(this.email().trim()));
   protected readonly erroEmail = computed(() => this.tocado() && !!this.email() && !this.emailValido());
@@ -40,7 +50,9 @@ export class LoginComponent {
     this.tocado.set(true);
     if (!this.podeEntrar() || this.carregando()) return;
     this.carregando.set(true);
-    setTimeout(() => { this.carregando.set(false); this.entrar.emit(); }, 900);
+    const aviso = setTimeout(() => this.demorando.set(true), 400);
+    // Protótipo: simula a resposta do servidor.
+    setTimeout(() => { clearTimeout(aviso); this.carregando.set(false); this.entrar.emit(); }, 2600);
   }
 
   protected enviarLink(): void {
