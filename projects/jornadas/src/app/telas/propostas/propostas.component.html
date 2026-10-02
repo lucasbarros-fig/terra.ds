@@ -50,6 +50,8 @@
       }
     </div>
 
+    <lib-tooltip class="pp-mapa-pos" indicator="top" arrow="end" [openDelay]="600" text="Use o scroll lateral para navegar entre as etapas.">
+    <jv-anim-scroll-lateral tooltipMedia></jv-anim-scroll-lateral>
     <nav class="pp-mapa" aria-label="Ir para a etapa">
       <div class="pp-mapa-trilho">
       @for (c of colunas(); track c.id; let i = $index) {
@@ -58,6 +60,7 @@
       <span class="pp-mapa-janela" aria-hidden="true" [style.left.%]="janela().ini" [style.width.%]="janela().larg"></span>
       </div>
     </nav>
+    </lib-tooltip>
 
     @if (menu(); as m) {
       <jv-menu-flutuante

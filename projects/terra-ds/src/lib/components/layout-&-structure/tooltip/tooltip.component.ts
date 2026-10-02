@@ -34,6 +34,8 @@ export class TooltipComponent implements AfterContentInit, OnDestroy {
   @Input() triggerSize: IconSizeType = 16;
   @Input() media: string | null = null;
   @Input() mediaAlt = '';
+  /** Espera (ms) com o mouse parado sobre o gatilho antes de abrir. 0 abre na hora. */
+  @Input() openDelay = 0;
 
   get resolvedTriggerIconColor(): string {
     return resolveIconColor(this.triggerIconColor);
@@ -41,6 +43,12 @@ export class TooltipComponent implements AfterContentInit, OnDestroy {
 
   @ViewChild('projection', { static: true })
   private projection!: ElementRef<HTMLElement>;
+
+  /** Mídia projetada com o atributo `tooltipMedia` (ex.: animação que acompanha o tema). */
+  @ViewChild('mediaSlot', { static: true })
+  private mediaSlot!: ElementRef<HTMLElement>;
+  protected hasProjectedMedia = false;
+  private openTimer: ReturnType<typeof setTimeout> | null = null;
 
   protected hoverInside = false;
   protected hasProjectedTrigger = false;
@@ -63,22 +71,39 @@ export class TooltipComponent implements AfterContentInit, OnDestroy {
       this.hasProjectedTrigger = hasContent;
       this.cdr.markForCheck();
     }
+    const hasMedia = this.mediaSlot.nativeElement.childElementCount > 0;
+    if (hasMedia !== this.hasProjectedMedia) {
+      this.hasProjectedMedia = hasMedia;
+      this.cdr.markForCheck();
+    }
   }
 
   ngOnDestroy(): void {
     this.clearHoverCloseTimer();
+    if (this.openTimer !== null) clearTimeout(this.openTimer);
   }
 
-  onContainerEnter(): void {
+  onContainerEnter(imediato = false): void {
     this.clearHoverCloseTimer();
-    if (!this.hoverInside) {
+    if (this.hoverInside) return;
+    const abrir = () => {
+      this.openTimer = null;
       this.hoverInside = true;
       this.cdr.markForCheck();
+    };
+    if (this.openDelay > 0 && !imediato) {
+      if (this.openTimer === null) this.openTimer = setTimeout(abrir, this.openDelay);
+    } else {
+      abrir();
     }
   }
 
   onContainerLeave(): void {
     this.clearHoverCloseTimer();
+    if (this.openTimer !== null) {
+      clearTimeout(this.openTimer);
+      this.openTimer = null;
+    }
     this.hoverCloseTimer = setTimeout(() => {
       this.hoverInside = false;
       this.hoverCloseTimer = null;

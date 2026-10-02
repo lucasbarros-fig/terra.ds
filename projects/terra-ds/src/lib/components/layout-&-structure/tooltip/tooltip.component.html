@@ -2,9 +2,11 @@
   class="tooltip-container"
   [ngClass]="[indicator, arrow]"
   [class.is-open]="hoverInside"
-  [class.has-media]="!!media"
+  [class.has-media]="!!media || hasProjectedMedia"
   (mouseenter)="onContainerEnter()"
   (mouseleave)="onContainerLeave()"
+  (focusin)="onContainerEnter(true)"
+  (focusout)="onContainerLeave()"
 >
   <span class="trigger">
     <span class="trigger-projection" #projection>
@@ -19,8 +21,11 @@
   </span>
 
   <div class="dropdown" role="tooltip" [attr.aria-hidden]="!hoverInside">
+    <span class="dropdown-media-slot" #mediaSlot [class.is-empty]="!hasProjectedMedia">
+      <ng-content select="[tooltipMedia]"></ng-content>
+    </span>
     <img
-      *ngIf="media"
+      *ngIf="media && !hasProjectedMedia"
       class="dropdown-media"
       [src]="media"
       [attr.alt]="mediaAlt"

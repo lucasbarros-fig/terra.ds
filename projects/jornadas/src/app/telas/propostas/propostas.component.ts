@@ -3,12 +3,13 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-  ButtonComponent, CardKanbanComponent, IconButtonComponent, IconComponent, InputTextComponent, SelectComponent, StatusColor,
+  ButtonComponent, CardKanbanComponent, IconButtonComponent, IconComponent, InputTextComponent, SelectComponent, StatusColor, TooltipComponent,
 } from '../../shared/terra';
 import { ShellComponent } from '../../shared/shell.component';
 import { AvisosService } from '../../shared/avisos.service';
 import { MenuFlutuanteComponent, PosicaoMenu, ancorar } from '../../shared/menu-flutuante.component';
 import { brl, semAcento } from '../../shared/data';
+import { AnimScrollLateralComponent } from '../../shared/anim-scroll-lateral.component';
 
 /** Etapas do quadro (Figma "The House - New Ds Test" › 4 - Propostas): rótulo, ícone e cor da faixa. */
 const ETAPAS: Record<string, { label: string; icon: string; cor: string }> = {
@@ -31,7 +32,7 @@ const PERIODOS = [
 @Component({
   selector: 'jv-propostas',
   standalone: true,
-  imports: [ShellComponent, FormsModule, ButtonComponent, CardKanbanComponent, IconButtonComponent, IconComponent, InputTextComponent, SelectComponent, MenuFlutuanteComponent],
+  imports: [ShellComponent, FormsModule, ButtonComponent, CardKanbanComponent, IconButtonComponent, IconComponent, InputTextComponent, SelectComponent, MenuFlutuanteComponent, TooltipComponent, AnimScrollLateralComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './propostas.component.html',
   styleUrl: './propostas.component.scss',

@@ -53,8 +53,9 @@
 }
 
 /* Minimapa das colunas */
+.pp-mapa-pos { position: absolute; right: var(--size-spacing-32); bottom: var(--size-spacing-16); z-index: 3; }
 .pp-mapa {
-  position: absolute; right: var(--size-spacing-32); bottom: var(--size-spacing-16); z-index: 3;
+  display: block;
   padding: var(--size-spacing-8);
   border: var(--size-stoke-1) solid var(--color-stroke-frame); border-radius: var(--size-radius-8);
   background: var(--color-theme-base);
@@ -72,7 +73,7 @@
   .pp { padding: var(--size-spacing-24) var(--size-spacing-24) 0; }
   .pp-campos { flex: 1 1 100%; flex-wrap: nowrap; }
   .pp-campo { flex: 1 1 0; min-width: 0; }
-  .pp-mapa { right: var(--size-spacing-24); }
+  .pp-mapa-pos { right: var(--size-spacing-24); }
 }
 @media (max-width: 767px) {
   .pp { gap: var(--size-spacing-16); padding: var(--size-spacing-16) var(--size-spacing-16) 0; }
@@ -82,5 +83,5 @@
   .pp-acoes lib-button { flex: 1 1 auto; }
   .pp-acoes lib-button ::ng-deep button { width: 100%; justify-content: center; }
   .pp-col { flex-basis: calc(100% - 32px); }
-  .pp-mapa { right: 50%; transform: translateX(50%); }
+  .pp-mapa-pos { right: var(--size-spacing-16); }
 }
