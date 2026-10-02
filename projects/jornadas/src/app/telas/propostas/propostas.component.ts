@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-  ButtonComponent, CardKanbanComponent, IconButtonComponent, IconComponent, InputTextComponent, SelectComponent, StatusColor, TooltipComponent,
+  ButtonComponent, CardKanbanComponent, IconButtonComponent, IconComponent, InputTextComponent, SelectComponent, StatusColor, TooltipComponent, SkeletonComponent,
 } from '../../shared/terra';
 import { ShellComponent } from '../../shared/shell.component';
 import { AvisosService } from '../../shared/avisos.service';
@@ -32,7 +32,7 @@ const PERIODOS = [
 @Component({
   selector: 'jv-propostas',
   standalone: true,
-  imports: [ShellComponent, FormsModule, ButtonComponent, CardKanbanComponent, IconButtonComponent, IconComponent, InputTextComponent, SelectComponent, MenuFlutuanteComponent, TooltipComponent, AnimScrollLateralComponent],
+  imports: [ShellComponent, FormsModule, ButtonComponent, CardKanbanComponent, IconButtonComponent, IconComponent, InputTextComponent, SelectComponent, MenuFlutuanteComponent, TooltipComponent, AnimScrollLateralComponent, SkeletonComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './propostas.component.html',
   styleUrl: './propostas.component.scss',
@@ -53,6 +53,9 @@ export class PropostasComponent implements AfterViewInit {
   protected readonly periodo = signal('todos');
   protected readonly produto = signal<string[]>([]);
   protected readonly menu = signal<{ pos: PosicaoMenu; p: any } | null>(null);
+  /** Skeleton enquanto as propostas carregam (protótipo: simula a resposta do servidor). */
+  protected readonly carregando = signal(true);
+  protected readonly esqueleto = [[1, 2], [1], [1, 2], [1], [1, 2], [1]];
 
   protected readonly opPeriodos = PERIODOS.map((p) => ({ value: p.value, label: p.label }));
   protected readonly opProdutos = computed(() => this.C().produtos.map((p: string) => ({ value: p, label: p })));
@@ -76,7 +79,16 @@ export class PropostasComponent implements AfterViewInit {
   /** Minimapa: parte do quadro visível (início e largura em %), atualizada ao rolar. */
   protected readonly janela = signal({ ini: 0, larg: 100 });
 
-  ngAfterViewInit(): void {
+  constructor() {
+    setTimeout(() => {
+      this.carregando.set(false);
+      setTimeout(() => this.ligarMinimapa());
+    }, 1400);
+  }
+
+  ngAfterViewInit(): void { this.ligarMinimapa(); }
+
+  private ligarMinimapa(): void {
     const el = this.quadro()?.nativeElement;
     if (!el) return;
     const medir = () => this.janela.set({ ini: (el.scrollLeft / el.scrollWidth) * 100, larg: Math.min(100, (el.clientWidth / el.scrollWidth) * 100) });

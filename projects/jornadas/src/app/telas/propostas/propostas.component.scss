@@ -85,3 +85,9 @@
   .pp-col { flex-basis: calc(100% - 32px); }
   .pp-mapa-pos { right: var(--size-spacing-16); }
 }
+
+/* Skeleton do carregamento */
+.pp-sk { display: contents; }
+.pp-sk-quadro { overflow: hidden; }
+.pp-sk-txt { gap: var(--size-spacing-8); }
+.pp-col-qtd lib-skeleton { display: block; }

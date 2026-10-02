@@ -1,5 +1,33 @@
 <jv-shell menu="propostas" title="Propostas" [breadcrumbs]="[{ label: 'Home' }, { label: 'Propostas' }]" (nav)="nav.emit($event)">
   <div class="pp" #area>
+    @if (carregando()) {
+      <div class="pp-sk" role="status" aria-live="polite" aria-label="Carregando propostas">
+        <div class="pp-barra pp-sk-barra">
+          <div class="pp-campos">
+            @for (i of [1, 2, 3]; track i) { <lib-skeleton class="pp-campo" height="53px" borderRadius="8px"></lib-skeleton> }
+          </div>
+          <div class="pp-acoes">
+            <lib-skeleton width="192px" height="45px" borderRadius="8px"></lib-skeleton>
+            <lib-skeleton width="44px" height="44px" borderRadius="8px"></lib-skeleton>
+          </div>
+        </div>
+        <div class="pp-quadro pp-sk-quadro">
+          @for (n of esqueleto; track $index) {
+            <div class="pp-col">
+              <div class="pp-col-titulo">
+                <lib-skeleton width="52px" height="52px" borderRadius="8px"></lib-skeleton>
+                <div class="pp-col-txt pp-sk-txt"><lib-skeleton width="120px" height="24px"></lib-skeleton><lib-skeleton width="96px" height="16px"></lib-skeleton></div>
+              </div>
+              <div class="pp-col-div"></div>
+              <p class="pp-col-qtd"><lib-skeleton width="64px" height="12px"></lib-skeleton><lib-skeleton width="12px" height="12px"></lib-skeleton></p>
+              <div class="pp-col-lista">
+                @for (k of n; track $index) { <lib-skeleton height="232px" borderRadius="8px"></lib-skeleton> }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    } @else {
     <div class="pp-barra" role="search">
       <div class="pp-campos">
         <lib-input-text class="pp-campo" variant="outlined" iconBefore="MagnifyingGlass" placeholder="Pesquise por clientes" inputAriaLabel="Pesquisar propostas por cliente" [clearable]="true" [ngModel]="busca()" (ngModelChange)="busca.set($event ?? '')"></lib-input-text>
@@ -61,6 +89,8 @@
       </div>
     </nav>
     </lib-tooltip>
+
+    }
 
     @if (menu(); as m) {
       <jv-menu-flutuante
