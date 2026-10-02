@@ -481,9 +481,12 @@ window.JORNADAS.sideNav = function (brand, journey, onNav) {
         { id: 'r2', origem: 'Simulador', cliente: null, produto: 'Financiamento Imobiliário', valor: 450000, data: '01 set. às 20:15' }
       ],
       tipos: [
-        { value: 'residencial', label: 'Residencial', image: 'img/simuladores/residencial.png' },
-        { value: 'comercial', label: 'Comercial', image: 'img/simuladores/comercial.png' },
-        { value: 'terreno', label: 'Terreno', image: 'img/simuladores/terreno.png' }
+        { value: 'residencial', label: 'Residencial', image: 'img/simuladores/produtos/casa.webp' },
+        { value: 'comercial', label: 'Comercial', image: 'img/simuladores/produtos/comercial.webp' },
+        { value: 'terreno', label: 'Terreno', image: 'img/simuladores/produtos/terreno.webp' },
+        { value: 'carro', label: 'Carro', image: 'img/simuladores/produtos/carro.webp' },
+        { value: 'moto', label: 'Moto', image: 'img/simuladores/produtos/moto.webp' },
+        { value: 'caminhao', label: 'Caminhão', image: 'img/simuladores/produtos/caminhao.webp' }
       ],
       exemplo: { pf: { tipo: 'residencial', nascimento: '20/12/1986', valor: '450.000,00', entrada: '100.000,00', prazo: '420', cartorio: 'sim', fgts: 'nao' },
                  pj: { tipo: 'residencial', valor: '450.000,00', entrada: '100.000,00', prazo: '420', cartorio: 'sim' } },

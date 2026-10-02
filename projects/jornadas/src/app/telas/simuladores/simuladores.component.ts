@@ -17,7 +17,7 @@ interface Produto {
   bem: string | null; rotuloValor: string; rotuloEntrada: string; ltv?: number; tipos: string[]; prazo: { min: number; max: number; atalhos: number[] };
   cartorio: boolean; fgts: boolean; bancos: Banco[] | null;
   /** Banner do produto no início: cor (token do Terra), chamada e destaques. */
-  tema: string; chamada: string; chips: string[]; imagem: string;
+  tema: string; chamada: string; chips: string[];
 }
 interface Form { produto: string; perfil: 'pf' | 'pj' | null; tipo: string | null; nascimento: string; valor: number | null; entrada: number | null; prazo: number | null; cartorio: 'sim' | 'nao' | null; fgts: 'sim' | 'nao' | null }
 interface Recente { id: string; origem: string; cliente: string | null; produto: string; valor: number; data: string; form?: Form }
@@ -27,20 +27,20 @@ const VAZIO: Form = { produto: 'fi', perfil: null, tipo: null, nascimento: '', v
 
 /** Produtos simuláveis (taxas de exemplo a.a.; no back vêm das APIs dos parceiros). */
 const PRODUTOS: Produto[] = [
-  { id: 'fi', imagem: 'img/simuladores/produtos/casa.webp', tema: 'var(--color-branding-surface-primary-base)', chamada: 'Compare 6 bancos de uma vez', chips: ['Até 80% do imóvel', 'Até 35 anos', 'Uso do FGTS'],  label: 'Financiamento Imobiliário', curto: 'Financiamento', text: 'Aquisição de imóvel residencial, comercial ou terreno.', icon: 'HouseLine', perfis: ['pf', 'pj'], sistema: 'sac', modo: 'financiamento',
+  { id: 'fi', tema: 'var(--color-branding-surface-primary-base)', chamada: 'Compare 6 bancos de uma vez', chips: ['Até 80% do imóvel', 'Até 35 anos', 'Uso do FGTS'],  label: 'Financiamento Imobiliário', curto: 'Financiamento', text: 'Aquisição de imóvel residencial, comercial ou terreno.', icon: 'HouseLine', perfis: ['pf', 'pj'], sistema: 'sac', modo: 'financiamento',
     bem: 'imóvel', rotuloValor: 'Valor do imóvel', rotuloEntrada: 'Valor de entrada', tipos: ['residencial', 'comercial', 'terreno'], prazo: { min: 12, max: 420, atalhos: [180, 240, 360, 420] }, cartorio: true, fgts: true, bancos: null },
-  { id: 'construcao', imagem: 'img/simuladores/produtos/terreno.webp', tema: 'var(--color-support-colors-teal)', chamada: 'Do terreno à casa pronta', chips: ['Aprovação em até 2 dias', 'Até 120 meses'],  label: 'Financiamento para Construção', curto: 'Construção', text: 'Crédito para construir no terreno do cliente, com aprovação rápida.', icon: 'HardHat', perfis: ['pf'], sistema: 'sac', modo: 'financiamento',
+  { id: 'construcao', tema: 'var(--color-support-colors-teal)', chamada: 'Do terreno à casa pronta', chips: ['Aprovação em até 2 dias', 'Até 120 meses'],  label: 'Financiamento para Construção', curto: 'Construção', text: 'Crédito para construir no terreno do cliente, com aprovação rápida.', icon: 'HardHat', perfis: ['pf'], sistema: 'sac', modo: 'financiamento',
     bem: 'obra', rotuloValor: 'Valor total da obra', rotuloEntrada: 'Recursos próprios', tipos: ['residencial', 'comercial'], prazo: { min: 12, max: 120, atalhos: [36, 60, 96, 120] }, cartorio: false, fgts: false,
     bancos: [{ nome: 'CashMe', taxa: 13.2 }, { nome: 'Crediblue', taxa: 13.9 }] },
-  { id: 'cgi', imagem: 'img/simuladores/produtos/apartamento.webp', tema: 'var(--color-support-colors-purple)', chamada: 'O imóvel vira crédito mais barato', chips: ['Até 60% do imóvel', 'Juros a partir de 1,09% a.m.', 'Até 240 meses'],  label: 'Crédito com Garantia de Imóvel', curto: 'Garantia de imóvel', text: 'Até 60% do valor do imóvel quitado, com juros menores.', icon: 'Key', perfis: ['pf', 'pj'], sistema: 'price', modo: 'credito',
+  { id: 'cgi', tema: 'var(--color-support-colors-purple)', chamada: 'O imóvel vira crédito mais barato', chips: ['Até 60% do imóvel', 'Juros a partir de 1,09% a.m.', 'Até 240 meses'],  label: 'Crédito com Garantia de Imóvel', curto: 'Garantia de imóvel', text: 'Até 60% do valor do imóvel quitado, com juros menores.', icon: 'Key', perfis: ['pf', 'pj'], sistema: 'price', modo: 'credito',
     bem: 'imóvel', rotuloValor: 'Valor do imóvel em garantia', rotuloEntrada: 'Valor desejado', ltv: 0.6, tipos: ['residencial', 'comercial'], prazo: { min: 12, max: 240, atalhos: [60, 120, 180, 240] }, cartorio: false, fgts: false,
     bancos: [{ nome: 'Galleria Bank', taxa: 13.8 }, { nome: 'Itaú', taxa: 13.9 }, { nome: 'Santander', taxa: 14.2 }, { nome: 'CashMe', taxa: 14.6 }, { nome: 'C6 Bank', taxa: 14.9 }, { nome: 'Creditas', taxa: 15.1 }, { nome: 'Direto', taxa: 15.4 }] },
-  { id: 'veiculos', imagem: 'img/simuladores/produtos/carro.webp', tema: 'var(--color-support-colors-orange)', chamada: 'O carro quitado vira crédito', chips: ['Até 90% do veículo', 'Até 60 meses', 'Continua com o carro'],  label: 'Crédito com Garantia de Veículos', curto: 'Garantia de veículo', text: 'Até 90% do valor do veículo quitado, que continua com o cliente.', icon: 'Car', perfis: ['pf', 'pj'], sistema: 'price', modo: 'credito',
-    bem: 'veículo', rotuloValor: 'Valor do veículo', rotuloEntrada: 'Valor desejado', ltv: 0.9, tipos: [], prazo: { min: 3, max: 60, atalhos: [12, 24, 36, 60] }, cartorio: false, fgts: false,
+  { id: 'veiculos', tema: 'var(--color-support-colors-orange)', chamada: 'O carro quitado vira crédito', chips: ['Até 90% do veículo', 'Até 60 meses', 'Continua com o carro'],  label: 'Crédito com Garantia de Veículos', curto: 'Garantia de veículo', text: 'Até 90% do valor do veículo quitado, que continua com o cliente.', icon: 'Car', perfis: ['pf', 'pj'], sistema: 'price', modo: 'credito',
+    bem: 'veículo', rotuloValor: 'Valor do veículo', rotuloEntrada: 'Valor desejado', ltv: 0.9, tipos: ['carro', 'moto', 'caminhao'], prazo: { min: 3, max: 60, atalhos: [12, 24, 36, 60] }, cartorio: false, fgts: false,
     bancos: [{ nome: 'Safra', taxa: 20.9 }, { nome: 'BV', taxa: 21.5 }, { nome: 'Daycoval', taxa: 21.9 }, { nome: 'C6 Bank', taxa: 22.4 }, { nome: 'Creditas', taxa: 22.9 }, { nome: 'CashMe', taxa: 23.4 }, { nome: 'Omni', taxa: 25.8 }] },
-  { id: 'giro', imagem: 'img/simuladores/produtos/empresa.webp', tema: 'var(--color-support-colors-green)', chamada: 'Fôlego para o caixa da empresa', chips: ['Para PJ', 'De 18 a 62 meses'],  label: 'Capital de giro', curto: 'Capital de giro', text: 'Fôlego para o caixa da empresa, com prazos flexíveis.', icon: 'Coins', perfis: ['pj'], sistema: 'price', modo: 'credito',
+  { id: 'giro', tema: 'var(--color-support-colors-green)', chamada: 'Fôlego para o caixa da empresa', chips: ['Para PJ', 'De 18 a 62 meses'],  label: 'Capital de giro', curto: 'Capital de giro', text: 'Fôlego para o caixa da empresa, com prazos flexíveis.', icon: 'Coins', perfis: ['pj'], sistema: 'price', modo: 'credito',
     bem: null, rotuloValor: '', rotuloEntrada: 'Valor desejado', tipos: [], prazo: { min: 18, max: 62, atalhos: [18, 24, 36, 60] }, cartorio: false, fgts: false, bancos: [{ nome: 'Daycoval', taxa: 17.5 }] },
-  { id: 'condominios', imagem: 'img/simuladores/produtos/predio.webp', tema: 'var(--color-support-colors-cyan)', chamada: 'Melhorias no condomínio sem pesar', chips: ['Portaria, energia solar, reformas', 'Até 90 meses'],  label: 'Crédito para Condomínios', curto: 'Condomínios', text: 'Obras e melhorias no condomínio, com carência para começar a pagar.', icon: 'Buildings', perfis: ['pj'], sistema: 'price', modo: 'credito',
+  { id: 'condominios', tema: 'var(--color-support-colors-cyan)', chamada: 'Melhorias no condomínio sem pesar', chips: ['Portaria, energia solar, reformas', 'Até 90 meses'],  label: 'Crédito para Condomínios', curto: 'Condomínios', text: 'Obras e melhorias no condomínio, com carência para começar a pagar.', icon: 'Buildings', perfis: ['pj'], sistema: 'price', modo: 'credito',
     bem: null, rotuloValor: '', rotuloEntrada: 'Valor desejado', tipos: [], prazo: { min: 12, max: 90, atalhos: [24, 48, 72, 90] }, cartorio: false, fgts: false, bancos: [{ nome: 'CashMe', taxa: 16.9 }] },
 ];
 
@@ -130,7 +130,7 @@ export class SimuladoresComponent implements OnInit {
   protected readonly faltando = computed(() => {
     const f = this.f(), pr = this.prod(), l: string[] = [];
     if (!f.perfil) l.push('perfil do cliente');
-    if (pr.tipos.length && !f.tipo) l.push('tipo de imóvel');
+    if (pr.tipos.length && !f.tipo) l.push('tipo de ' + pr.bem);
     if (!this.pj() && f.nascimento.replace(/\D/g, '').length !== 8) l.push('nascimento');
     if (this.temBem() && !(f.valor && f.valor > 0)) l.push(pr.rotuloValor.toLowerCase());
     if (f.entrada == null || (this.credito() && !f.entrada)) l.push(pr.rotuloEntrada.toLowerCase());

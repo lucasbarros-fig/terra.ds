@@ -18,7 +18,10 @@
                   <span class="sm-hero-logos" aria-hidden="true">@for (b of (p.bancos ?? C().bancos).slice(0, 6); track b.nome) { <lib-partner [partner]="b.nome" partnerStyle="fill" [size]="28"></lib-partner> }</span>
                 </span>
               </div>
-              <img class="sm-hero-img" [src]="asset + p.imagem" alt="" aria-hidden="true" />
+              <span class="sm-hero-glass" aria-hidden="true">
+                <span class="sm-hero-glass-tras"></span>
+                <span class="sm-hero-glass-frente"><lib-icon [icon]="p.icon" [size]="32" color="inherit"></lib-icon></span>
+              </span>
             </div>
           </ng-template>
 
@@ -39,7 +42,7 @@
             @for (p of produtos; track p.id) {
               <div class="sm-produto" [style.--tema]="p.tema" (click)="escolherProduto(p)">
                 <span class="sm-produto-topo">
-                  <img class="sm-produto-img" [src]="asset + p.imagem" alt="" aria-hidden="true" />
+                  <span class="sm-produto-ic"><lib-icon [icon]="p.icon" [size]="24" color="inherit"></lib-icon></span>
                   <span class="sm-produto-perfis">@for (pf of p.perfis; track pf) { <lib-tag emphasis="low" [color]="pf === 'pf' ? 'blue' : 'purple'" size="small">{{ pf === 'pf' ? 'PF' : 'PJ' }}</lib-tag> }</span>
                 </span>
                 <span class="sm-produto-txt"><b>{{ p.label }}</b><span>{{ p.text }}</span></span>
@@ -125,8 +128,8 @@
             <lib-divisor></lib-divisor>
 
             <section class="sf-q">
-              <h3>Qual o tipo de imóvel?</h3>
-              <div class="sf-tipos" role="radiogroup" aria-label="Tipo de imóvel">
+              <h3>Qual o tipo de {{ prod().bem }}?</h3>
+              <div class="sf-tipos" role="radiogroup" [attr.aria-label]="'Tipo de ' + prod().bem">
                 @for (t of tiposProd(); track t.value) {
                   <button type="button" role="radio" class="sf-tipo" [class.is-on]="f().tipo === t.value" [attr.aria-checked]="f().tipo === t.value" (click)="set('tipo', t.value)">
                     <img [src]="asset + t.image" alt="" />
@@ -135,7 +138,7 @@
                   </button>
                 }
               </div>
-              @if (enviado() && !f().tipo) { <p class="sf-erro">Escolha o tipo de imóvel.</p> }
+              @if (enviado() && !f().tipo) { <p class="sf-erro">Escolha o tipo de {{ prod().bem }}.</p> }
             </section>
             }
 
@@ -257,7 +260,7 @@
         </header>
 
         <section class="sr-resumo">
-          @if (tipoAtual(); as t) { <div class="sr-tipo"><img [src]="asset + t.image" alt="" /><div><span>Tipo de imóvel</span><b>{{ t.label }}</b></div></div> }
+          @if (tipoAtual(); as t) { <div class="sr-tipo"><img [src]="asset + t.image" alt="" /><div><span>Tipo de {{ prod().bem }}</span><b>{{ t.label }}</b></div></div> }
           @else { <div class="sr-tipo"><span class="sr-tipo-ic"><lib-icon [icon]="prod().icon" [size]="32" color="inherit"></lib-icon></span><div><span>Produto</span><b>{{ prod().curto }}</b></div></div> }
           <dl>@for (i of resumo(); track i[0]) { <div><dt>{{ i[0] }}</dt><dd>{{ i[1] }}</dd></div> }</dl>
           <lib-button class="sr-ajustar" intent="branding" variant="bare" icon="PencilSimple" label="Ajustar" (clicked)="ajustar()"></lib-button>
