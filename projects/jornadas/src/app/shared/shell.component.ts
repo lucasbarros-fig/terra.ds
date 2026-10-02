@@ -31,24 +31,27 @@ export class ShellComponent {
 
   /** Resoluções: Desktop L 1728x972, Desktop S 1366x768, Tablet 768x1024, Mobile 390x844. */
   protected readonly bp = signal(ShellComponent.faixa(window.innerWidth));
-  /** Tablet começa com a sidebar recolhida (só ícones); desktop, aberta. */
-  protected readonly recolhida = signal(this.bp() === 'tablet');
+  /**
+   * Desktop L: sidebar aberta, dividindo a tela com o conteúdo.
+   * Desktop S e tablet: sempre recolhida (só ícones); ao abrir, sobrepõe o conteúdo (overlay) e fecha ao escolher um item.
+   */
+  protected readonly recolhida = signal(this.bp() !== 'desktop');
   /** Mobile: sidebar vira gaveta, aberta pelo botão de menu no topo. */
   protected readonly gaveta = signal(false);
-  private static faixa(w: number): 'desktop' | 'tablet' | 'mobile' { return w < 768 ? 'mobile' : w < 1280 ? 'tablet' : 'desktop'; }
+  private static faixa(w: number): 'desktop' | 'compacto' | 'mobile' { return w < 768 ? 'mobile' : w < 1536 ? 'compacto' : 'desktop'; }
 
   @HostListener('window:resize')
   protected aoRedimensionar(): void {
     const nova = ShellComponent.faixa(window.innerWidth);
     if (nova === this.bp()) return;
     this.bp.set(nova);
-    this.recolhida.set(nova === 'tablet');
+    this.recolhida.set(nova !== 'desktop');
     this.gaveta.set(false);
     this.painel.set(null);
   }
 
   @HostListener('document:keydown.escape')
-  protected aoEsc(): void { this.gaveta.set(false); }
+  protected aoEsc(): void { this.gaveta.set(false); if (this.bp() === 'compacto') this.recolhida.set(true); }
   protected readonly painel = signal<null | 'notificacoes' | 'loja' | 'configuracoes'>(null);
   protected readonly abaNotif = signal(0);
   protected readonly lidas = signal<Record<string, boolean>>(Object.fromEntries(J.topo.notificacoes.map((n: any) => [n.id, n.lida])));
@@ -109,6 +112,7 @@ export class ShellComponent {
 
   protected selecionar(item: SidebarItem): void {
     this.gaveta.set(false);
+    if (this.bp() === 'compacto') this.recolhida.set(true);
     const destino = item.id === 'base' ? 'base-minha' : item.id;
     if (destino !== this.menu()) this.nav.emit(destino);
   }

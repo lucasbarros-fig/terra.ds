@@ -2,10 +2,17 @@
   @if (bp() === 'mobile' && gaveta()) {
     <div class="sh-gaveta-fundo" (click)="gaveta.set(false)" aria-hidden="true"></div>
   }
+  @if (bp() === 'compacto') {
+    <div class="sh-trilho" aria-hidden="true"></div>
+  }
+  @if (bp() === 'compacto' && !recolhida()) {
+    <div class="sh-gaveta-fundo sh-gaveta-fundo--claro" (click)="recolhida.set(true)" aria-hidden="true"></div>
+  }
   <lib-sidebar
     class="sh-side"
     [class.sh-side--marca]="home()"
     [class.sh-side--gaveta]="bp() === 'mobile'"
+    [class.sh-side--overlay]="bp() === 'compacto'"
     [class.is-aberta]="gaveta()"
     [attr.inert]="bp() === 'mobile' && !gaveta() ? '' : null"
     [items]="itens"

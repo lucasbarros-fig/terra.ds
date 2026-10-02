@@ -131,6 +131,11 @@
 .sh-config .sh-versao { border-top: 0; padding-top: var(--size-spacing-4); }
 
 /* ---------- Responsivo (Desktop L 1728, Desktop S 1366, Tablet 768, Mobile 390) ---------- */
+/* Desktop S e tablet: a sidebar ocupa só o trilho de ícones (84px); aberta, passa por cima do conteúdo. */
+.sh-trilho { flex: 0 0 84px; }
+.sh-side--overlay { position: absolute; top: 0; bottom: 0; left: 0; z-index: 50; }
+.sh-side--overlay:not(.lib-sidebar--collapsed) { box-shadow: 0 16px 48px rgba(0, 0, 0, .18); }
+.sh-gaveta-fundo--claro { position: absolute; inset: 0; z-index: 49; background: rgba(15, 20, 23, .24); }
 .sh-menu-btn { flex: 0 0 auto; margin-left: calc(-1 * var(--size-spacing-8)); }
 
 @media (max-width: 767px) {
