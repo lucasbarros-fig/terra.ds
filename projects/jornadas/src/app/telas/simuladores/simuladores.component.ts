@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import {
   ActionBarComponent, ButtonComponent, DivisorComponent, EmptyStateComponent, IconButtonComponent, IconComponent, InputTextComponent,
   ListBodyCellComponent, ListBodyComponent, ListBodyRowComponent, ListComponent, ListHeaderComponent, ListHeaderItemComponent,
-  PartnerComponent, SkeletonComponent, TagComponent,
+  KpiCardComponent, PartnerComponent, SkeletonComponent, TagComponent,
 } from '../../shared/terra';
 import { ShellComponent } from '../../shared/shell.component';
 import { AvisosService } from '../../shared/avisos.service';
@@ -27,7 +27,7 @@ const PRAZO_MAX = 420;
   standalone: true,
   imports: [
     ShellComponent, FormsModule, DecimalPipe, ActionBarComponent, ButtonComponent, DivisorComponent, EmptyStateComponent, IconButtonComponent, IconComponent,
-    InputTextComponent, PartnerComponent, SkeletonComponent, TagComponent,
+    InputTextComponent, KpiCardComponent, PartnerComponent, SkeletonComponent, TagComponent,
     ListComponent, ListHeaderComponent, ListHeaderItemComponent, ListBodyComponent, ListBodyRowComponent, ListBodyCellComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -53,7 +53,12 @@ export class SimuladoresComponent implements OnInit {
   protected readonly recentes = signal<Recente[]>([]);
 
   ngOnInit(): void {
-    this.recentes.set(this.journey().content.recentes.map((r: any) => ({ ...r })));
+    const base: Recente[] = this.journey().content.recentes.map((r: any) => ({ ...r }));
+    const extras: Recente[] = [
+      { id: 'r3', origem: 'Simulador', cliente: 'Mariana Costa | 412.887.553-10', produto: 'Financiamento Imobiliário', valor: 620000, data: '30 ago. às 16:40' },
+      { id: 'r4', origem: 'Nova proposta', cliente: 'Rafael Almeida | 158.302.774-91', produto: 'Financiamento Imobiliário', valor: 380000, data: '28 ago. às 10:05' },
+    ];
+    this.recentes.set([...base, ...extras]);
     setTimeout(() => this.carregando.set(false), 1100);
   }
 
@@ -62,6 +67,33 @@ export class SimuladoresComponent implements OnInit {
     { value: 'cgi', label: 'Crédito com Garantia de Imóvel', text: 'Crédito usando um imóvel quitado como garantia.', icon: 'Key', ativo: false },
   ];
   protected readonly breadcrumbs = computed(() => this.etapa() === 'inicio' ? [{ label: 'Home' }, { label: 'Simuladores' }] : [{ label: 'Simuladores' }, { label: 'Financiamento Imobiliário' }]);
+
+  /* ---------- Painel inicial ---------- */
+  protected readonly kpis = computed(() => {
+    const l = this.recentes(), propostas = l.filter((r) => r.origem === 'Nova proposta').length;
+    const media = l.length ? l.reduce((t, r) => t + r.valor, 0) / l.length : 0;
+    return { total: l.length, propostas, conversao: l.length ? Math.round((propostas / l.length) * 100) : 0, media };
+  });
+  /** Simulação rápida: só valor, entrada e prazo; mostra a parcela estimada e leva para o formulário preenchido. */
+  protected readonly rapida = signal<{ valor: number | null; entrada: number | null; prazo: number }>({ valor: 450000, entrada: 90000, prazo: 360 });
+  protected readonly rapidaRes = computed(() => {
+    const r = this.rapida();
+    if (!r.valor || r.entrada == null || r.entrada >= r.valor) return null;
+    const l = this.calcular({ ...VAZIO, valor: r.valor, entrada: r.entrada, prazo: r.prazo, cartorio: 'nao' });
+    const melhor = [...l].sort((a, b) => a.primeira - b.primeira)[0];
+    return { melhor, pct: Math.round((r.entrada / r.valor) * 100) };
+  });
+  protected setRapida(k: 'valor' | 'entrada' | 'prazo', v: any): void { this.rapida.update((r) => ({ ...r, [k]: v })); }
+  protected continuarRapida(): void {
+    const r = this.rapida();
+    this.f.set({ ...VAZIO, valor: r.valor, entrada: r.entrada, prazo: r.prazo }); this.enviado.set(false); this.etapa.set('form');
+  }
+  /** Melhor condição de uma simulação recente (entrada de 20% e 360 meses quando não há dados completos). */
+  protected melhorDe(r: Recente): Linha {
+    const f = r.form ?? { ...VAZIO, valor: r.valor, entrada: r.valor * 0.2, prazo: 360, cartorio: 'nao' as const };
+    return [...this.calcular(f)].sort((a, b) => a.primeira - b.primeira)[0];
+  }
+  protected prazoDe(r: Recente): number { return r.form?.prazo ?? 360; }
 
   /* ---------- Formulário ---------- */
   protected readonly pj = computed(() => this.f().perfil === 'pj');

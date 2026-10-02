@@ -3,54 +3,92 @@
     <!-- ===== Início ===== -->
     @case ('inicio') {
       <div class="sm">
-        <section class="sm-sec" aria-labelledby="sm-nova-t">
-          <header class="sm-head"><h2 id="sm-nova-t">Nova simulação</h2><p>Escolha o produto que deseja simular.</p></header>
-          <div class="sm-produtos">
-            @for (p of produtos; track p.value) {
-              <button type="button" class="sm-produto" [class.is-off]="!p.ativo" (click)="escolherProduto(p)">
-                <span class="sm-produto-ic"><lib-icon [icon]="p.icon" [size]="24" color="inherit"></lib-icon></span>
-                <span class="sm-produto-txt"><b>{{ p.label }}</b><span>{{ p.text }}</span></span>
-                @if (p.ativo) { <lib-icon class="sm-produto-seta" icon="CaretRight" [size]="20" color="inherit"></lib-icon> }
-                @else { <lib-tag emphasis="low" color="neutral" size="small">Em breve</lib-tag> }
-              </button>
-            }
-          </div>
-        </section>
+        <header class="sm-topo">
+          <div><h2>Simule e compare em segundos</h2><p>Encontre a melhor condição entre os bancos parceiros e transforme em proposta.</p></div>
+          <lib-button intent="branding" variant="filled" icon="Calculator" label="Nova simulação" (clicked)="escolherProduto(produtos[0])"></lib-button>
+        </header>
 
+        <div class="sm-grade">
+          <!-- Produto principal -->
+          <button type="button" class="sm-hero" (click)="escolherProduto(produtos[0])">
+            <svg class="sm-hero-casa" viewBox="0 0 200 160" aria-hidden="true"><path d="M14 78 100 12l86 66M34 63v85h132V63M84 148v-46h32v46" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" /></svg>
+            <span class="sm-hero-tag"><lib-icon icon="HouseLine" [size]="16" color="inherit"></lib-icon>Financiamento Imobiliário</span>
+            <b class="sm-hero-tit">Compare {{ C().bancos.length }} bancos de uma vez</b>
+            <span class="sm-hero-txt">Residencial, comercial ou terreno. Informe os dados do cliente e veja parcela, taxa e custo total de cada parceiro.</span>
+            <span class="sm-hero-tipos" aria-hidden="true">@for (t of C().tipos; track t.value) { <img [src]="asset + t.image" alt="" /> }</span>
+            <span class="sm-hero-logos" aria-hidden="true">@for (b of C().bancos; track b.nome) { <lib-partner [partner]="b.nome" partnerStyle="fill" [size]="32"></lib-partner> }</span>
+            <span class="sm-hero-cta">Simular agora <lib-icon icon="ArrowRight" [size]="16" color="inherit"></lib-icon></span>
+          </button>
+
+          <!-- Simulação rápida -->
+          <section class="sm-rapida" aria-labelledby="sm-rap-t">
+            <header><span class="sm-ic"><lib-icon icon="MagicWand" [size]="20" color="inherit"></lib-icon></span><div><h3 id="sm-rap-t">Simulação rápida</h3><p>Uma prévia antes de abrir o simulador completo.</p></div></header>
+            <div class="sm-rapida-campos">
+              <lib-input-text label="Valor do imóvel" variant="outlined" type="currency" prefix="R$" [ngModel]="rapida().valor" (ngModelChange)="setRapida('valor', $event)"></lib-input-text>
+              <lib-input-text label="Entrada" variant="outlined" type="currency" prefix="R$" [error]="!!rapida().valor && rapida().entrada != null && rapida().entrada! >= rapida().valor!" [ngModel]="rapida().entrada" (ngModelChange)="setRapida('entrada', $event)"></lib-input-text>
+            </div>
+            <div class="sf-chips" aria-label="Prazo">
+              @for (m of [180, 240, 360, 420]; track m) { <button type="button" class="sf-chip" [class.is-on]="rapida().prazo === m" (click)="setRapida('prazo', m)">{{ m / 12 }} anos</button> }
+            </div>
+            <div class="sm-rapida-res">
+              @if (rapidaRes(); as r) {
+                <span>1ª parcela a partir de</span>
+                <b>{{ moeda(r.melhor.primeira) }}</b>
+                <small><lib-partner [partner]="r.melhor.parceiro" partnerStyle="fill" [size]="20"></lib-partner>{{ r.melhor.parceiro }} · {{ pct(r.melhor.taxa) }} · entrada de {{ r.pct }}%</small>
+              } @else { <span>Informe um valor de imóvel maior que a entrada.</span> }
+            </div>
+            <lib-button intent="neutral" variant="filled" icon="ArrowRight" label="Continuar no simulador" [disabled]="!rapidaRes()" (clicked)="continuarRapida()"></lib-button>
+          </section>
+        </div>
+
+        <!-- Indicadores -->
+        <div class="sm-kpis">
+          <lib-kpi-card label="Simulações no mês" icon="Calculator" [value]="kpis().total" statusLabel="+3" statusColor="positive" note="vs. mês anterior"></lib-kpi-card>
+          <lib-kpi-card label="Viraram proposta" icon="FileText" [value]="kpis().propostas" [statusLabel]="kpis().conversao + '%'" statusColor="informative" note="de conversão"></lib-kpi-card>
+          <lib-kpi-card label="Valor médio dos imóveis" icon="HouseLine" [value]="moeda(kpis().media)" statusLabel="Ticket médio" statusColor="neutral" note="das simulações"></lib-kpi-card>
+          <button type="button" class="sm-breve" (click)="escolherProduto(produtos[1])">
+            <span class="sm-ic sm-ic--mudo"><lib-icon icon="Key" [size]="20" color="inherit"></lib-icon></span>
+            <span><b>Crédito com Garantia de Imóvel</b><small>Simulador chegando em breve</small></span>
+            <lib-tag emphasis="low" color="neutral" size="small">Em breve</lib-tag>
+          </button>
+        </div>
+
+        <!-- Recentes -->
         <section class="sm-sec" aria-labelledby="sm-rec-t">
-          <header class="sm-head"><h2 id="sm-rec-t">Suas simulações recentes</h2><p>Continue a partir de uma simulação feita antes.</p></header>
+          <header class="sm-head"><h2 id="sm-rec-t">Suas simulações recentes</h2><p>Retome uma simulação ou transforme direto em proposta.</p></header>
           @if (carregando()) {
-            <div class="sm-sk" role="status" aria-label="Carregando simulações">
-              @for (i of [1, 2, 3]; track i) { <lib-skeleton height="58px" borderRadius="8px"></lib-skeleton> }
+            <div class="sm-recentes" role="status" aria-label="Carregando simulações">
+              @for (i of [1, 2, 3, 4]; track i) { <lib-skeleton height="196px" borderRadius="16px"></lib-skeleton> }
             </div>
           } @else if (recentes().length) {
-            <lib-list [striped]="false" [hoverable]="true">
-              <lib-list-header>
-                <lib-list-header-item width="150px">Origem</lib-list-header-item>
-                <lib-list-header-item>Cliente</lib-list-header-item>
-                <lib-list-header-item>Produto</lib-list-header-item>
-                <lib-list-header-item width="170px">Valor solicitado</lib-list-header-item>
-                <lib-list-header-item width="150px">Simulado em</lib-list-header-item>
-                <lib-list-header-item width="252px">Ações</lib-list-header-item>
-              </lib-list-header>
-              <lib-list-body>
-                @for (r of recentes(); track r.id) {
-                  <lib-list-body-row tabindex="0" class="sm-linha" (click)="abrirRecente(r)" (keydown.enter)="abrirRecente(r)">
-                    <lib-list-body-cell kind="title"><lib-tag emphasis="low" [color]="r.origem === 'Simulador' ? 'blue' : 'purple'" size="small">{{ r.origem }}</lib-tag></lib-list-body-cell>
-                    <lib-list-body-cell label="Cliente">@if (r.cliente) { {{ r.cliente }} } @else { <span class="sm-mudo">Não informado</span> }</lib-list-body-cell>
-                    <lib-list-body-cell label="Produto">{{ r.produto }}</lib-list-body-cell>
-                    <lib-list-body-cell label="Valor solicitado">{{ moeda(r.valor) }}</lib-list-body-cell>
-                    <lib-list-body-cell label="Simulado em">{{ r.data }}</lib-list-body-cell>
-                    <lib-list-body-cell kind="actions">
-                      <span class="sm-acoes">
-                        <lib-icon-button class="lib-list-action-inline" type="neutral" variant="ghost" size="small" icon="Eye" ariaLabel="Ver resultado" (clicked)="abrirRecente(r)"></lib-icon-button>
-                        <lib-button intent="neutral" variant="filled" icon="FileText" label="Gerar proposta" (clicked)="gerarProposta()"></lib-button>
-                      </span>
-                    </lib-list-body-cell>
-                  </lib-list-body-row>
-                }
-              </lib-list-body>
-            </lib-list>
+            <div class="sm-recentes">
+              @for (r of recentes(); track r.id) {
+                <article class="sm-rec">
+                  <header>
+                    <lib-tag emphasis="low" [color]="r.origem === 'Simulador' ? 'blue' : 'purple'" size="small">{{ r.origem }}</lib-tag>
+                    <time>{{ r.data }}</time>
+                  </header>
+                  <div class="sm-rec-cli">
+                    @if (r.cliente) { <b>{{ r.cliente.split(' | ')[0] }}</b><span>{{ r.cliente.split(' | ')[1] }}</span> }
+                    @else { <b class="sm-mudo">Cliente não informado</b><span>{{ r.produto }}</span> }
+                  </div>
+                  <dl>
+                    <div><dt>Imóvel</dt><dd>{{ moeda(r.valor) }}</dd></div>
+                    <div><dt>Prazo</dt><dd>{{ prazoDe(r) }} meses</dd></div>
+                  </dl>
+                  @if (melhorDe(r); as m) {
+                    <div class="sm-rec-melhor">
+                      <lib-partner [partner]="m.parceiro" partnerStyle="fill" [size]="28"></lib-partner>
+                      <span><small>Melhor 1ª parcela</small><b>{{ moeda(m.primeira) }}</b></span>
+                    </div>
+                  }
+                  <footer>
+                    <lib-icon-button type="neutral" variant="ghost" icon="Eye" ariaLabel="Ver resultado" (clicked)="abrirRecente(r)"></lib-icon-button>
+                    <lib-button intent="neutral" variant="filled" icon="FileText" label="Gerar proposta" (clicked)="gerarProposta()"></lib-button>
+                  </footer>
+                </article>
+              }
+            </div>
           } @else {
             <lib-empty-state icon="Calculator" title="Nenhuma simulação ainda" description="Suas simulações aparecem aqui para você continuar depois." buttonLabel="Simular financiamento" buttonIntent="branding" (buttonClicked)="escolherProduto(produtos[0])"></lib-empty-state>
           }
