@@ -33,12 +33,19 @@
 
         <aside class="mk-loja" aria-label="Sua marca nas artes">
           <div class="mk-loja-card">
-            <span class="mk-loja-logo" [style.background]="cor()">{{ iniciais() }}
-              <lib-icon-button class="mk-loja-editar" type="neutral" variant="filled" size="small" icon="PencilSimple" ariaLabel="Personalizar marca" (clicked)="abrirPersonalizar()"></lib-icon-button>
-            </span>
-            <h3>{{ loja() }}</h3>
-            <p class="mk-loja-cor"><span>Cor primária</span><i [style.background]="cor()" aria-hidden="true"></i></p>
-            <lib-button intent="neutral" variant="bare" icon="PencilSimple" label="Personalizar marca" (clicked)="abrirPersonalizar()"></lib-button>
+            <lib-tabs class="mk-subtabs mk-ident" [tabs]="abasIdentidade" [selected]="identidade() === 'thehouse' ? 1 : 0" (selectedChange)="identidade.set($event === 1 ? 'thehouse' : 'loja')"></lib-tabs>
+            @if (identidade() === 'thehouse') {
+              <span class="mk-loja-logo mk-loja-logo--th"><jv-marca class="mk-th-marca"></jv-marca></span>
+              <h3>Identidade The House</h3>
+              <p class="mk-loja-desc">Artes com o logo e a cor da The House e o seu nome como consultor.</p>
+            } @else {
+              <span class="mk-loja-logo" [style.background]="cor()">{{ iniciais() }}
+                <lib-icon-button class="mk-loja-editar" type="neutral" variant="filled" size="small" icon="PencilSimple" ariaLabel="Personalizar marca" (clicked)="abrirPersonalizar()"></lib-icon-button>
+              </span>
+              <h3>{{ loja() }}</h3>
+              <p class="mk-loja-cor"><span>Cor primária</span><i [style.background]="cor()" aria-hidden="true"></i></p>
+              <lib-button intent="neutral" variant="bare" icon="PencilSimple" label="Personalizar marca" (clicked)="abrirPersonalizar()"></lib-button>
+            }
           </div>
           <div class="mk-loja-acoes">
             <lib-button intent="branding" variant="filled" icon="DownloadSimple" [label]="'Downloads' + (downloads().length ? ' (' + downloads().length + ')' : '')" (clicked)="vendoDownloads.set(true)"></lib-button>
@@ -59,7 +66,7 @@
               </div>
             </header>
             <div class="mk-filtros">
-              <lib-toggle-group ariaLabel="Tipo de conteúdo" [options]="opTipo" [selectedIds]="[tipo()]" (selectedIdsChange)="tipo.set($any($event[0]))"></lib-toggle-group>
+              <lib-tabs class="mk-subtabs" [tabs]="abasTipo" [selected]="tipo() === 'reels' ? 1 : 0" (selectedChange)="tipo.set($event === 1 ? 'reels' : 'posts')"></lib-tabs>
               <span class="mk-filtros-dir">
                 @if (soFavoritos()) { <lib-tag emphasis="low" color="blue" size="small" [showCloseButton]="true" (closed)="soFavoritos.set(false)">Só favoritos</lib-tag> }
                 <lib-select class="mk-filtro" variant="outlined" iconBefore="FunnelSimple" placeholder="Filtrar por produto" selectAriaLabel="Filtrar por produto" [multiple]="true" [options]="opCategorias" [ngModel]="filtro()" (selectionChange)="filtro.set($any($event) ?? [])"></lib-select>
@@ -80,7 +87,7 @@
                   @for (a of s.artes; track a.id) {
                     <article class="mk-card">
                       <button type="button" class="mk-card-arte" [attr.aria-label]="'Visualizar ' + a.destaque" (click)="visualizar(a)">
-                        <jv-arte [arte]="a" [formato]="tipo() === 'reels' ? 'story' : 'post'" [cor]="cor()" [loja]="loja()"></jv-arte>
+                        <jv-arte [arte]="a" [formato]="tipo() === 'reels' ? 'story' : 'post'" [cor]="corArte()" [loja]="nomeArte()" [identidade]="identidade()"></jv-arte>
                         @if (tipo() === 'reels') {
                           <span class="mk-card-play" aria-hidden="true"><lib-icon icon="Play" [size]="24" color="inherit"></lib-icon></span>
                           <span class="mk-card-dur" aria-hidden="true">0:15</span>
@@ -115,11 +122,11 @@
               <div><h2 id="mk-capas-t">Capas para os destaques</h2><p>Deixe os destaques do Instagram organizados e com a cor da sua marca.</p></div>
               <lib-button intent="branding" variant="filled" icon="DownloadSimple" label="Baixar todas" (clicked)="baixarCapa({ label: 'todas as capas (.zip)' })"></lib-button>
             </header>
-            <lib-toggle-group ariaLabel="Estilo das capas" [options]="opEstiloCapa" [selectedIds]="[estiloCapa()]" (selectedIdsChange)="estiloCapa.set($any($event[0]))"></lib-toggle-group>
+            <lib-tabs class="mk-subtabs" [tabs]="abasEstiloCapa" [selected]="estiloCapa() === 'contorno' ? 1 : 0" (selectedChange)="estiloCapa.set($event === 1 ? 'contorno' : 'cheia')"></lib-tabs>
             <ul class="mk-capas">
               @for (c of capas; track c.label) {
                 <li>
-                  <button type="button" class="mk-capa" [class.mk-capa--contorno]="estiloCapa() === 'contorno'" [style.--c]="cor()" [attr.aria-label]="'Baixar capa ' + c.label" (click)="baixarCapa(c)">
+                  <button type="button" class="mk-capa" [class.mk-capa--contorno]="estiloCapa() === 'contorno'" [style.--c]="corArte()" [attr.aria-label]="'Baixar capa ' + c.label" (click)="baixarCapa(c)">
                     <span class="mk-capa-circ"><lib-icon [icon]="c.icone" [size]="32" color="inherit"></lib-icon></span>
                     <span class="mk-capa-baixar" aria-hidden="true"><lib-icon icon="DownloadSimple" [size]="16" color="inherit"></lib-icon></span>
                   </button>
@@ -162,7 +169,7 @@
             <div class="mk-inst">
               @for (m of institucionais; track m.id) {
                 <article class="mk-mat">
-                  <div class="mk-mat-capa" [style.--c]="cor()">
+                  <div class="mk-mat-capa" [style.--c]="corArte()">
                     <jv-marca class="mk-mat-marca"></jv-marca>
                     <b>{{ m.titulo }}</b>
                     <span class="mk-mat-ic"><lib-icon [icon]="m.icone" [size]="24" color="inherit"></lib-icon></span>
@@ -187,11 +194,11 @@
     <lib-drawer class="mk-drawer" [open]="true" title="Visualizar arte" [showFooter]="true" [showCustomFooter]="true" [ariaLabel]="'Arte ' + a.destaque" (closeClick)="fechar()" (backdropClick)="fechar()">
       <div class="mk-dr">
         <div class="mk-dr-previa">
-          <lib-toggle-group ariaLabel="Formato" [options]="opFormato" [selectedIds]="[formato()]" (selectedIdsChange)="formato.set($any($event[0]))"></lib-toggle-group>
+          <lib-tabs class="mk-subtabs" [tabs]="abasFormato" [selected]="formato() === 'story' ? 1 : 0" (selectedChange)="formato.set($event === 1 ? 'story' : 'post')"></lib-tabs>
           <div class="mk-dr-palco" #previa [class.mk-dr-palco--story]="formato() === 'story'">
-            <jv-arte [arte]="a" [formato]="formato()" [cor]="cor()" [loja]="loja()"></jv-arte>
+            <jv-arte [arte]="a" [formato]="formato()" [cor]="corArte()" [loja]="nomeArte()" [identidade]="identidade()"></jv-arte>
           </div>
-          <p class="mk-dr-dica"><lib-icon icon="Info" [size]="16" color="inherit"></lib-icon>A arte sai em 1080px com o nome e a cor da sua loja.</p>
+          <p class="mk-dr-dica"><lib-icon icon="Info" [size]="16" color="inherit"></lib-icon>A arte sai em 1080px {{ identidade() === 'thehouse' ? 'com a identidade The House e o seu nome' : 'com o nome e a cor da sua loja' }}.</p>
         </div>
         <div class="mk-dr-info">
           <lib-tag emphasis="low" color="blue" size="small">{{ a.categoria }}</lib-tag>
@@ -228,7 +235,7 @@
         <ul class="mk-dl">
           @for (d of downloads(); track d.arte.id + d.formato) {
             <li>
-              <span class="mk-dl-mini"><jv-arte [arte]="d.arte" formato="post" [cor]="cor()" [loja]="loja()"></jv-arte></span>
+              <span class="mk-dl-mini"><jv-arte [arte]="d.arte" formato="post" [cor]="corArte()" [loja]="nomeArte()" [identidade]="identidade()"></jv-arte></span>
               <div><b>{{ d.arte.destaque }}</b><span>{{ d.arte.categoria }} · {{ d.formato === 'story' ? 'Story' : 'Post' }} · hoje às {{ d.quando }}</span></div>
               <lib-icon-button type="neutral" variant="ghost" size="small" icon="Eye" [ariaLabel]="'Abrir ' + d.arte.destaque" (clicked)="vendoDownloads.set(false); visualizar(d.arte)"></lib-icon-button>
             </li>

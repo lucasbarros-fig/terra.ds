@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { IconComponent } from './terra';
+import { MarcaComponent } from './marca.component';
 
 export type ArteModelo = 'cor' | 'claro' | 'escuro' | 'dividido';
 export type ArteFormato = 'post' | 'story';
@@ -24,7 +25,7 @@ export interface Arte {
 @Component({
   selector: 'jv-arte',
   standalone: true,
-  imports: [IconComponent],
+  imports: [IconComponent, MarcaComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '[class]': "'ar ar--' + arte().modelo + ' ar--' + formato()", '[style.--ar-cor]': 'cor()', role: 'img', '[attr.aria-label]': 'rotulo()' },
   template: `
@@ -51,8 +52,13 @@ export interface Arte {
       </div>
 
       <div class="ar-rodape">
-        <span class="ar-logo" aria-hidden="true">{{ iniciais() }}</span>
-        <span class="ar-loja"><b>{{ loja() }}</b><small>Parceiro The House</small></span>
+        @if (identidade() === 'thehouse') {
+          <jv-marca class="ar-marca"></jv-marca>
+          <span class="ar-loja ar-loja--th"><b>{{ loja() }}</b><small>Consultor The House</small></span>
+        } @else {
+          <span class="ar-logo" aria-hidden="true">{{ iniciais() }}</span>
+          <span class="ar-loja"><b>{{ loja() }}</b><small>Parceiro The House</small></span>
+        }
         @if (formato() === 'story') { <span class="ar-cta">Fale comigo</span> }
       </div>
     </div>
@@ -88,6 +94,12 @@ export interface Arte {
       font-size: 3.6cqw; font-weight: 800; }
     .ar-loja { display: flex; flex: 1 1 auto; flex-direction: column; min-width: 0; line-height: 1.2;
       b { overflow: hidden; font-size: 3.8cqw; text-overflow: ellipsis; white-space: nowrap; } small { font-size: 2.8cqw; opacity: .8; } }
+    .ar-marca { flex: 0 0 auto; height: 5.6cqw; color: #fff; --jv-marca-simbolo: #fff; }
+    .ar-loja--th { padding-left: 2.6cqw; border-left: .4cqw solid rgba(255, 255, 255, .3); }
+    :host(.ar--story) .ar-loja--th small { display: none; }
+    :host(.ar--story) .ar-marca { height: 5cqw; }
+    :host(.ar--claro) .ar-marca, :host(.ar--dividido) .ar-marca { color: var(--ar-escuro); --jv-marca-simbolo: var(--ar-cor); }
+    :host(.ar--claro) .ar-loja--th, :host(.ar--dividido) .ar-loja--th { border-left-color: color-mix(in srgb, var(--ar-escuro) 15%, transparent); }
     .ar-cta { padding: 2cqw 4cqw; border-radius: 2.4cqw; background: #fff; color: var(--ar-cor); font-size: 3.8cqw; font-weight: 700; white-space: nowrap; }
 
     /* Claro: fundo branco, destaque na cor da loja */
@@ -125,6 +137,8 @@ export class ArteComponent {
   readonly formato = input<ArteFormato>('post');
   readonly cor = input('#2b7de9');
   readonly loja = input('Sua loja');
+  /** `loja`: logo e nome do banker. `thehouse`: identidade da The House (logo e cor da marca) com o nome do consultor. */
+  readonly identidade = input<'loja' | 'thehouse'>('loja');
 
   protected readonly iniciais = computed(() => {
     const p = this.loja().trim().split(/\s+/).filter(Boolean);

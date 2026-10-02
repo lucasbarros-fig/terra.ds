@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, computed, inject, outpu
 import { FormsModule } from '@angular/forms';
 import {
   ButtonComponent, DialogBodyComponent, DialogComponent, DialogFooterComponent, DialogHeaderComponent, DrawerComponent, EmptyStateComponent,
-  IconButtonComponent, IconComponent, InputTextComponent, SelectComponent, SkeletonComponent, TabsComponent, TagComponent, ToggleGroupComponent,
+  IconButtonComponent, IconComponent, InputTextComponent, SelectComponent, SkeletonComponent, TabsComponent, TagComponent,
 } from '../../shared/terra';
 import { ShellComponent } from '../../shared/shell.component';
 import { AvisosService } from '../../shared/avisos.service';
@@ -25,7 +25,7 @@ type Aba = 0 | 1 | 2 | 3;
   imports: [
     ShellComponent, FormsModule, ButtonComponent, DialogComponent, DialogHeaderComponent, DialogBodyComponent, DialogFooterComponent, DrawerComponent,
     EmptyStateComponent, IconButtonComponent, IconComponent, InputTextComponent, SelectComponent, SkeletonComponent, TabsComponent, TagComponent,
-    ToggleGroupComponent, VideoProdutoComponent, MarcaComponent, ArteComponent,
+    VideoProdutoComponent, MarcaComponent, ArteComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './marketing.component.html',
@@ -50,15 +50,17 @@ export class MarketingComponent {
     const p = this.loja().trim().split(/\s+/).filter(Boolean);
     return ((p[0]?.[0] ?? '') + (p.length > 1 ? p[p.length - 1][0] : '')).toUpperCase() || 'TH';
   });
+  /** Identidade das artes: a marca do banker ou a da The House. */
+  protected readonly identidade = signal<'loja' | 'thehouse'>('loja');
+  protected readonly abasIdentidade = [{ label: 'Minha marca', icon: 'Storefront' }, { label: 'The House', icon: 'HouseLine' }];
+  protected readonly corArte = computed(() => (this.identidade() === 'thehouse' ? '#1684E6' : this.cor()));
+  protected readonly nomeArte = computed(() => (this.identidade() === 'thehouse' ? J.topo.account.name : this.loja()));
   protected readonly personalizando = signal(false);
   protected readonly rascunho = signal({ cor: CORES[0], loja: '' });
 
   /* Mídia */
   protected readonly tipo = signal<'posts' | 'reels'>('posts');
-  protected readonly opTipo = [
-    { id: 'posts', content: 'icon-text' as const, icon: 'Images', label: 'Posts e Stories' },
-    { id: 'reels', content: 'icon-text' as const, icon: 'FilmStrip', label: 'Reels' },
-  ];
+  protected readonly abasTipo = [{ label: 'Posts e Stories', icon: 'Images' }, { label: 'Reels', icon: 'FilmStrip' }];
   protected readonly filtro = signal<string[]>([]);
   protected readonly opCategorias = SECOES.map((s) => ({ value: s.id, label: s.label }));
   protected readonly soFavoritos = signal(false);
@@ -77,10 +79,7 @@ export class MarketingComponent {
   /* Visualizar */
   protected readonly aberta = signal<Arte | null>(null);
   protected readonly formato = signal<ArteFormato>('post');
-  protected readonly opFormato = [
-    { id: 'post', content: 'text' as const, label: 'Post 1:1' },
-    { id: 'story', content: 'text' as const, label: 'Story 9:16' },
-  ];
+  protected readonly abasFormato = [{ label: 'Post 1:1', icon: 'Square' }, { label: 'Story 9:16', icon: 'DeviceMobile' }];
   private readonly previa = viewChild<ElementRef<HTMLElement>>('previa');
   protected readonly baixando = signal(false);
 
@@ -91,10 +90,7 @@ export class MarketingComponent {
   /* Capas, bio, institucionais */
   protected readonly capas = CAPAS;
   protected readonly estiloCapa = signal<'cheia' | 'contorno'>('cheia');
-  protected readonly opEstiloCapa = [
-    { id: 'cheia', content: 'text' as const, label: 'Preenchida' },
-    { id: 'contorno', content: 'text' as const, label: 'Contorno' },
-  ];
+  protected readonly abasEstiloCapa = [{ label: 'Preenchida', icon: 'Circle' }, { label: 'Contorno', icon: 'CircleDashed' }];
   protected readonly bios = computed(() => BIOS.map((b) => ({ ...b, texto: b.texto.replace('{loja}', this.loja()) })));
   protected readonly linkLoja = computed(() => 'thehouse.com.br/' + semAcento(this.loja()).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''));
   protected readonly institucionais = INSTITUCIONAIS;
@@ -129,7 +125,11 @@ export class MarketingComponent {
     try {
       const { toPng } = await import('html-to-image');
       const escala = 1080 / el.getBoundingClientRect().width;
-      const url = await toPng(el, { pixelRatio: escala, cacheBust: true, style: { borderRadius: '0', boxShadow: 'none' } });
+      // Arte sai quadrada, sem o arredondamento e a sombra da prévia.
+      const antes = el.getAttribute('style') ?? '';
+      el.style.borderRadius = '0'; el.style.boxShadow = 'none';
+      let url = '';
+      try { url = await toPng(el, { pixelRatio: escala, cacheBust: true }); } finally { el.setAttribute('style', antes); }
       const link = document.createElement('a');
       link.href = url; link.download = `${a.id}-${this.formato()}.png`; link.click();
       this.registrarDownload(a);
