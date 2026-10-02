@@ -99,7 +99,9 @@ export class SimuladoresComponent implements OnInit {
   protected readonly kpis = computed(() => {
     const l = this.recentes(), propostas = l.filter((r) => r.origem === 'Nova proposta').length;
     const media = l.length ? l.reduce((t, r) => t + r.valor, 0) / l.length : 0;
-    return { total: l.length, propostas, conversao: l.length ? Math.round((propostas / l.length) * 100) : 0, media };
+    const volume = l.reduce((t, r) => t + r.valor, 0);
+    const bancos = new Set(PRODUTOS.flatMap((p) => (p.bancos ?? this.C().bancos).map((b: { nome: string }) => b.nome))).size;
+    return { total: l.length, propostas, conversao: l.length ? Math.round((propostas / l.length) * 100) : 0, media, volume, bancos };
   });
   /** Melhor condição de uma simulação recente (entrada de 20% e 360 meses quando não há dados completos). */
   protected melhorDe(r: Recente): Linha {
@@ -226,6 +228,11 @@ export class SimuladoresComponent implements OnInit {
     });
   }
   protected pct(v: number): string { return v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '% a.a.'; }
+  /** Valor curto para indicadores (R$ 1,9 mi · R$ 475 mil). */
+  protected curto(v: number): string {
+    const f = (n: number) => n.toLocaleString('pt-BR', { maximumFractionDigits: 1 });
+    return v >= 1e6 ? `R$ ${f(v / 1e6)} mi` : v >= 1e3 ? `R$ ${f(v / 1e3)} mil` : this.moeda(v);
+  }
   protected moeda(v: number): string { return 'R$ ' + brl(v); }
 
   protected ajustar(): void { this.enviado.set(false); this.etapa.set('form'); }
