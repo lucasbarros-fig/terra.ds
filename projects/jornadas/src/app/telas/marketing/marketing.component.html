@@ -99,6 +99,7 @@
                       </div>
                       <div class="mk-card-acoes">
                         <lib-button intent="branding" variant="filled" icon="Eye" label="Visualizar" (clicked)="visualizar(a)"></lib-button>
+                        <lib-icon-button type="neutral" variant="filled" icon="ShareNetwork" [ariaLabel]="'Compartilhar ' + a.destaque" (clicked)="compartilhar(a)"></lib-icon-button>
                         <lib-icon-button class="mk-fav" [class.mk-fav--on]="favoritos()[a.id]" type="neutral" variant="filled" icon="Heart" [ariaLabel]="favoritos()[a.id] ? 'Remover dos favoritos' : 'Salvar nos favoritos'" (clicked)="favoritar(a, $event)"></lib-icon-button>
                       </div>
                     </article>
