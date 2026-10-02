@@ -165,9 +165,18 @@
 
 /* Destaques: abaixo do Desktop L o banner ocupa a linha toda e mantém a proporção da arte (1660x330), sem cortar o texto. */
 .db-destaques { container-type: inline-size; }
-@media (max-width: 1535px) {
-  .db-meio { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 1279px) {
   .db-destaques lib-banner { --banner-height: calc(100cqw * 0.1988) !important; }
+}
+
+/* Desktop (L e S): Destaques ocupa 3 colunas da grade dos números e o Meu funil fica ao lado, com a largura do card da gerente. */
+@media (min-width: 1280px) {
+  .db-meio { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .db-destaques { grid-column: span 3; }
+}
+@media (min-width: 1280px) and (max-width: 1535px) {
+  .db-funil { padding: var(--size-spacing-16); }
+  .db-funil-lista li { width: 100% !important; min-width: 0; }
 }
 
 @media (max-width: 767px) {
