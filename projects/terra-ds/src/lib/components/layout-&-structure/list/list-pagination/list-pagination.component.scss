@@ -93,3 +93,10 @@ lib-list-pagination {
 .lib-list-pagination-root .lib-list-pagination-range-separator {
   color: var(--color-text-essential-caption);
 }
+
+/* Compacto: some o rótulo "Visualizar por página" para caber em telas estreitas. */
+lib-list-pagination { container-type: inline-size; }
+@container (max-width: 520px) {
+  .lib-list-pagination-root .lib-list-pagination-label { display: none; }
+  .lib-list-pagination-root .lib-list-pagination-container { justify-content: space-between; width: 100%; }
+}

@@ -30,7 +30,7 @@ import { ASSET } from './data';
       </button>
     </div>
 
-    <lib-dialog [open]="aberto()" [ariaLabel]="titulo()" (backdropClick)="fechar()">
+    <lib-dialog size="content" [open]="aberto()" [ariaLabel]="titulo()" (backdropClick)="fechar()">
       <lib-dialog-header [title]="titulo()" (closeClick)="fechar()"></lib-dialog-header>
       <lib-dialog-body>
         <div class="vp-grande">

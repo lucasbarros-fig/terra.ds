@@ -49,3 +49,7 @@
 .lib-list-root tbody td[style*="right"] .lib-list-body-cell-content {
   justify-content: flex-end;
 }
+
+.lib-list-root tbody td .lib-list-body-cell-label {
+  display: none;
+}

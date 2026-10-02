@@ -18,4 +18,10 @@ export class ListComponent {
 	@Input() striped = true;
 
 	@Input() hoverable = true;
+
+	/**
+	 * Padrão do DS: abaixo de 900px de largura (mobile/tablet) cada linha vira um cartão —
+	 * célula `kind="title"` no cabeçalho, ações no "⋯" e as demais como rótulo/valor.
+	 */
+	@Input() responsive = true;
 }

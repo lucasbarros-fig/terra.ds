@@ -1,8 +1,11 @@
 <td
+	[class.lib-list-td--title]="kind === 'title'"
+	[class.lib-list-td--actions]="kind === 'actions'"
 	[style.text-align]="align"
 	[attr.colspan]="colspan === null ? null : colspan"
 >
 	<span class="lib-list-body-cell-content">
+		<span *ngIf="label && kind === 'default'" class="lib-list-body-cell-label" aria-hidden="true">{{ label }}</span>
 		<lib-icon
 			*ngIf="icon && iconPosition === 'before'"
 			[icon]="icon"

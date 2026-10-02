@@ -103,13 +103,13 @@ lib-list-header-item { cursor: pointer; }
   .cd-contato li { max-width: 100%; } .cd-contato span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
 
-@media (max-width: 767px) {
-  .cl { padding: var(--size-spacing-16); }
+@media (max-width: 1023px) {
   .cl-barra { flex-direction: column; align-items: stretch; padding-top: var(--size-spacing-12); }
   .cl-barra-dir { order: -1; align-self: stretch; padding-top: var(--size-spacing-4); }
   .cl-busca { flex: 1 1 auto; width: auto; }
-  .cl-lista { overflow-x: auto; }
-  .cl-lista lib-list { display: block; min-width: 760px; }
+}
+@media (max-width: 767px) {
+  .cl { padding: var(--size-spacing-16); }
   .cl-sk-cab, .cl-sk-linha { grid-template-columns: 1.4fr 1fr 96px; > lib-skeleton:nth-child(n+3):not(:last-child) { display: none; } }
   .cl-sk-pag > lib-skeleton:first-child { display: none; }
 }

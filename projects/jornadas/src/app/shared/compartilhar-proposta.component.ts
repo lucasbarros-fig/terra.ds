@@ -21,7 +21,7 @@ export interface PropostaCompartilhada {
   imports: [DialogComponent, DialogHeaderComponent, DialogBodyComponent, IconButtonComponent, IconComponent, PartnerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <lib-dialog [open]="aberto()" [ariaLabel]="'Enviar ' + dados().produto + ' para o cliente'" (backdropClick)="fechar.emit()">
+    <lib-dialog size="content" [open]="aberto()" [ariaLabel]="'Enviar ' + dados().produto + ' para o cliente'" (backdropClick)="fechar.emit()">
       <lib-dialog-header [title]="'Enviar ' + dados().produto" (closeClick)="fechar.emit()"></lib-dialog-header>
       <lib-dialog-body>
         <div class="cp">

@@ -39,3 +39,93 @@
 .lib-list-root table.list lib-list-body-cell {
   display: contents;
 }
+
+/* ---------- Layout compacto (mobile/tablet): linhas viram cartões ---------- */
+.lib-list-root.list-responsive {
+  container-type: inline-size;
+  container-name: lib-list;
+}
+
+@container lib-list (max-width: 899px) {
+  .lib-list-root table.list,
+  .lib-list-root table.list tbody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-spacing-16);
+  }
+
+  .lib-list-root table.list thead {
+    display: none;
+  }
+
+  .lib-list-root table.list tbody tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    overflow: hidden;
+    border: 1px solid var(--color-stroke-list);
+    border-radius: var(--size-radius-8);
+    background: var(--color-theme-base);
+  }
+
+  .lib-list-root table.list tbody tr:focus-visible {
+    outline-offset: 2px;
+  }
+
+  .lib-list-root table.list tbody td,
+  .lib-list-root table.list tbody lib-list-body-cell td,
+  .lib-list-root table.list tbody lib-list-body-cell:first-child td,
+  .lib-list-root table.list tbody lib-list-body-cell:last-child td {
+    display: flex;
+    grid-column: 1 / -1;
+    max-width: none;
+    padding: var(--size-spacing-12) var(--size-spacing-16);
+    border: 0;
+    border-radius: 0;
+    text-align: left !important;
+  }
+
+  .lib-list-root.list-responsive tbody td .lib-list-body-cell-content {
+    justify-content: space-between !important;
+    gap: var(--size-spacing-16);
+  }
+
+  .lib-list-root.list-responsive tbody td .lib-list-body-cell-label {
+    display: inline;
+    flex: 0 0 auto;
+    color: var(--color-text-essential-caption);
+  }
+
+  .lib-list-root.list-responsive tbody td:not(.lib-list-td--title):not(.lib-list-td--actions) .lib-list-body-cell-text {
+    text-align: right;
+  }
+
+  /* Cabeçalho do cartão: título + "⋯" */
+  .lib-list-root.list-responsive table.list tbody td.lib-list-td--title,
+  .lib-list-root.list-responsive table.list tbody td.lib-list-td--actions {
+    grid-row: 1;
+    align-items: center;
+    min-height: 52px;
+    background: var(--color-theme-upper);
+    border-bottom: 1px solid var(--color-stroke-list);
+  }
+
+  .lib-list-root.list-responsive table.list tbody td.lib-list-td--title {
+    grid-column: 1;
+    font-weight: 700;
+  }
+
+  .lib-list-root.list-responsive table.list tbody td.lib-list-td--actions {
+    grid-column: 2;
+    padding-left: 0;
+    padding-right: var(--size-spacing-8);
+  }
+
+  .lib-list-root.list-responsive tbody td.lib-list-td--actions .lib-list-action-inline {
+    display: none !important;
+  }
+
+  .lib-list-root.list-responsive table.list tbody td.lib-list-td--title + td,
+  .lib-list-root table.list tbody lib-list-body-cell:has(td.lib-list-td--title) + lib-list-body-cell td {
+    padding-top: var(--size-spacing-16);
+  }
+}

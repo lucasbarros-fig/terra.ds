@@ -22,7 +22,7 @@
         <div class="cl-sk-pag"><lib-skeleton width="140px" height="16px"></lib-skeleton><lib-skeleton width="64px" height="36px" borderRadius="8px"></lib-skeleton><lib-skeleton width="140px" height="36px" borderRadius="8px"></lib-skeleton></div>
       </div>
     } @else if (linhas().length) {
-      <div class="cl-lista">
+      <div class="cl-lista" #lista>
         <lib-list [striped]="false" [hoverable]="true">
           <lib-list-header>
             @for (c of colunas(); track c.k) {
@@ -33,21 +33,21 @@
           <lib-list-body>
             @for (r of paginaAtual(); track r.id) {
               <lib-list-body-row tabindex="0" class="cl-linha" (click)="abrir(r)" (keydown.enter)="abrir(r)">
-                <lib-list-body-cell><span class="cl-nome">{{ r.nome }}</span></lib-list-body-cell>
-                <lib-list-body-cell>{{ r.doc }}</lib-list-body-cell>
+                <lib-list-body-cell kind="title"><span class="cl-nome">{{ r.nome }}</span></lib-list-body-cell>
+                <lib-list-body-cell [label]="tipo() === 'pf' ? 'CPF' : 'CNPJ'">{{ r.doc }}</lib-list-body-cell>
                 @if (tipo() === 'pf') {
-                  <lib-list-body-cell>{{ r.telefone }}</lib-list-body-cell>
-                  <lib-list-body-cell><span class="cl-nome">{{ r.email }}</span></lib-list-body-cell>
+                  <lib-list-body-cell label="Telefone">{{ r.telefone }}</lib-list-body-cell>
+                  <lib-list-body-cell label="E-mail"><span class="cl-nome">{{ r.email }}</span></lib-list-body-cell>
                 } @else {
-                  <lib-list-body-cell>R$ {{ brl(r.faturamento) }}</lib-list-body-cell>
-                  <lib-list-body-cell>{{ r.representante }}</lib-list-body-cell>
+                  <lib-list-body-cell label="Faturamento">R$ {{ brl(r.faturamento) }}</lib-list-body-cell>
+                  <lib-list-body-cell label="Representante legal">{{ r.representante }}</lib-list-body-cell>
                 }
-                <lib-list-body-cell>{{ data(r.atualizado) }}</lib-list-body-cell>
-                <lib-list-body-cell>
+                <lib-list-body-cell label="Atualizado">{{ data(r.atualizado) }}</lib-list-body-cell>
+                <lib-list-body-cell kind="actions">
                   <span class="cl-acoes">
-                    <lib-icon-button type="neutral" variant="ghost" size="small" icon="ShieldCheck" [disabled]="lgpdOk(r)" [ariaLabel]="lgpdOk(r) ? 'LGPD já assinado por ' + r.nome : 'Enviar LGPD para ' + r.nome" (clicked)="lgpd($event, r)"></lib-icon-button>
-                    <lib-icon-button type="neutral" variant="ghost" size="small" icon="Eye" [ariaLabel]="'Ver detalhes de ' + r.nome" (clicked)="ver($event, r)"></lib-icon-button>
-                    <lib-icon-button type="neutral" variant="ghost" size="small" icon="DotsThreeVertical" [ariaLabel]="'Mais ações de ' + r.nome" (clicked)="abrirMenu($event, r)"></lib-icon-button>
+                    <lib-icon-button class="lib-list-action-inline" type="neutral" variant="ghost" size="small" icon="ShieldCheck" [disabled]="lgpdOk(r)" [ariaLabel]="lgpdOk(r) ? 'LGPD já assinado por ' + r.nome : 'Enviar LGPD para ' + r.nome" (clicked)="lgpd($event, r)"></lib-icon-button>
+                    <lib-icon-button class="lib-list-action-inline" type="neutral" variant="ghost" size="small" icon="Eye" [ariaLabel]="'Ver detalhes de ' + r.nome" (clicked)="ver($event, r)"></lib-icon-button>
+                    <lib-icon-button type="neutral" variant="ghost" size="small" [icon]="compacto() ? 'DotsThree' : 'DotsThreeVertical'" [ariaLabel]="'Mais ações de ' + r.nome" (clicked)="abrirMenu($event, r)"></lib-icon-button>
                   </span>
                 </lib-list-body-cell>
               </lib-list-body-row>
@@ -63,7 +63,7 @@
     }
 
     @if (menu(); as m) {
-      <jv-menu-flutuante [itens]="[{ value: 'proposta', label: 'Gerar nova proposta', icon: 'PlusCircle' }, { value: 'docs', label: 'Documentos', icon: 'folder-open--duotone' }, { value: 'excluir', label: 'Excluir cliente', icon: 'trash-can--duotone' }]" [pos]="m.pos" [largura]="200" rotulo="Ações do cliente" (escolher)="acaoMenu($event)" (fechar)="menu.set(null)"></jv-menu-flutuante>
+      <jv-menu-flutuante [itens]="itensMenu(m.r)" [pos]="m.pos" [largura]="200" rotulo="Ações do cliente" (escolher)="acaoMenu($event)" (fechar)="menu.set(null)"></jv-menu-flutuante>
     }
   </div>
 

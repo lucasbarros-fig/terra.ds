@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, computed, inject, input, output, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, computed, effect, inject, input, output, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   ButtonComponent, DialogBodyComponent, DialogComponent, DialogFooterComponent, DialogHeaderComponent, DivisorComponent, DrawerComponent,
@@ -39,6 +39,10 @@ export class ClientesComponent {
 
   private readonly avisos = inject(AvisosService);
   private readonly area = viewChild<ElementRef<HTMLElement>>('area');
+  private readonly lista = viewChild<ElementRef<HTMLElement>>('lista');
+  /** Lista em cartões (padrão do DS abaixo de 900px): as ações da linha vão todas para o "⋯". */
+  protected readonly compacto = signal(false);
+  private obs?: ResizeObserver;
   protected readonly brl = brl;
   protected readonly C = computed(() => this.journey().content);
   private readonly s0 = this.state() || {};
@@ -91,6 +95,14 @@ export class ClientesComponent {
 
   constructor() {
     this.carregar(1400);
+    effect(() => {
+      const el = this.lista()?.nativeElement;
+      this.obs?.disconnect();
+      if (!el || typeof ResizeObserver === 'undefined') return;
+      this.obs = new ResizeObserver(([e]) => this.compacto.set(e.contentRect.width < 900));
+      this.obs.observe(el);
+    });
+    inject(DestroyRef).onDestroy(() => this.obs?.disconnect());
     if (this.aberto()) this.form.set({ ...this.detalhe(this.acharRow(this.aberto())) });
   }
 
@@ -139,6 +151,12 @@ export class ClientesComponent {
   protected copiar(texto: string, aviso: string): void {
     navigator.clipboard?.writeText(texto).then(() => this.avisos.mostrar(aviso, 'success', 3000), () => this.avisos.mostrar(aviso, 'success', 3000));
   }
+  protected itensMenu(r: any): { value: string; label: string; icon: string }[] {
+    const extras = this.compacto()
+      ? [{ value: 'ver', label: 'Ver detalhes', icon: 'Eye' }, ...(this.lgpdOk(r) ? [] : [{ value: 'lgpd', label: 'Enviar LGPD', icon: 'ShieldCheck' }])]
+      : [];
+    return [...extras, { value: 'proposta', label: 'Gerar nova proposta', icon: 'PlusCircle' }, { value: 'docs', label: 'Documentos', icon: 'folder-open--duotone' }, { value: 'excluir', label: 'Excluir cliente', icon: 'trash-can--duotone' }];
+  }
   protected ver(ev: Event, r: any): void { ev?.stopPropagation?.(); this.abrir(r); }
   protected buscar(v: string): void { this.busca.set(v ?? ''); this.pagina.set(1); }
 
@@ -164,6 +182,7 @@ export class ClientesComponent {
     const r = this.menu()!.r; this.menu.set(null);
     if (v === 'ver') this.abrir(r);
     else if (v === 'proposta') this.nav.emit('nova');
+    else if (v === 'lgpd') this.avisos.mostrar(`Termo LGPD enviado para ${r.email}.`, 'success');
     else if (v === 'docs') this.avisos.mostrar(`Os documentos de ${r.nome} ainda não têm tela no Figma.`);
     else this.excluir.set(r.id);
   }

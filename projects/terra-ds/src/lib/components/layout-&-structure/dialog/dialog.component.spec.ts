@@ -200,14 +200,19 @@ describe('DialogComponent', () => {
       fixture.componentRef.setInput('intent', 'branding');
       fixture.detectChanges();
 
-      expect(component.hostClass()).toBe('intent-branding');
+      expect(component.hostClass()).toBe('intent-branding size-text');
     });
 
     it('should update host class when intent changes', () => {
       fixture.componentRef.setInput('intent', 'negative');
       fixture.detectChanges();
 
-      expect(component.hostClass()).toBe('intent-negative');
+      expect(component.hostClass()).toBe('intent-negative size-text');
+    });
+    it('should apply size-content when size is content', () => {
+      fixture.componentRef.setInput('size', 'content');
+      fixture.detectChanges();
+      expect(component.hostClass()).toContain('size-content');
     });
   });
 });

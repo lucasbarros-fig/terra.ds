@@ -52,6 +52,26 @@ $drawer-viewport-padding: 20px;
   }
 }
 
+@keyframes drawer-slide-out-bottom {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(105%);
+  }
+}
+
+@keyframes drawer-slide-up-sheet {
+  from {
+    transform: translateY(105%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
 @keyframes drawer-fade-in {
   from {
     opacity: 0;
@@ -253,6 +273,43 @@ $drawer-viewport-padding: 20px;
 
   &.drawer-root-closing .drawer-panel {
     animation: drawer-slide-out-center $drawer-exit-duration ease-in both;
+  }
+}
+
+/* Padrão do DS: em mobile/tablet todo Drawer vira bottom drawer, subindo devagar de baixo. */
+@media (max-width: 1023px) {
+  :host(.position-right) .drawer-root,
+  :host(.position-center) .drawer-root {
+    justify-content: center;
+    align-items: flex-end;
+    padding: var(--size-spacing-24, 24px) 0 0;
+
+    .drawer-panel {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      max-height: calc(100dvh - var(--size-spacing-24, 24px));
+      padding-top: var(--size-spacing-12, 12px);
+      border-bottom: 0;
+      border-radius: var(--size-radius-16, 16px) var(--size-radius-16, 16px) 0 0;
+      animation: drawer-slide-up-sheet 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        width: 40px;
+        height: 4px;
+        border-radius: 999px;
+        background: var(--color-stroke-frame, hsl(204deg, 14%, 86%));
+        transform: translateX(-50%);
+      }
+    }
+
+    &.drawer-root-closing .drawer-panel {
+      animation: drawer-slide-out-bottom $drawer-exit-duration ease-in both;
+    }
   }
 }
 

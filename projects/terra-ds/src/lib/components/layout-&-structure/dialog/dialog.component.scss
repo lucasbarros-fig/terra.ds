@@ -72,3 +72,15 @@
 @media (prefers-reduced-motion: reduce) {
   .dialog-root .dialog-backdrop, .dialog-root .dialog-surface-wrap .dialog-panel { animation-duration: 1ms; }
 }
+
+/* Largura dos modais de texto: 448px no desktop, 358px no mobile. */
+:host(.size-text) .dialog-root .dialog-surface-wrap .dialog-panel {
+  width: 448px;
+  max-width: min(448px, calc(100vw - 32px));
+}
+@media (max-width: 599px) {
+  :host(.size-text) .dialog-root .dialog-surface-wrap .dialog-panel {
+    width: 358px;
+    max-width: calc(100vw - 32px);
+  }
+}

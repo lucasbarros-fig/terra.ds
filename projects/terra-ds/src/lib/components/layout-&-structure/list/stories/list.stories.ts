@@ -528,3 +528,51 @@ export const HeaderEbodyComIconsETooltip: Story = {
     `,
 	}),
 };
+
+/**
+ * Padrão do DS para mobile/tablet: abaixo de 900px de largura cada linha vira um cartão.
+ * Use `kind="title"` na célula principal, `kind="actions"` nas ações e `label` nas demais.
+ * Ações rápidas levam a classe `lib-list-action-inline` (somem no cartão) e também entram no menu "⋯".
+ */
+export const ResponsivoCartoes: Story = {
+	name: "Responsivo (cartões no mobile/tablet)",
+	args: { striped: false, hoverable: true },
+	render: (args) => ({
+		props: {
+			...args,
+			linhas: [
+				{ nome: "Lucas Ferreira", cpf: "123.456.789-09", tel: "(11) 98765-4321", email: "lucas.ferreira@email.com", data: "16/06/2026" },
+				{ nome: "Mariana Silva", cpf: "987.654.321-00", tel: "(11) 91234-5678", email: "mariana.silva@email.com", data: "16/06/2026" },
+			],
+		},
+		template: `
+			<div style="max-width: 390px">
+				<lib-list [striped]="striped" [hoverable]="hoverable">
+					<lib-list-header>
+						<lib-list-header-item>Nome</lib-list-header-item>
+						<lib-list-header-item>CPF</lib-list-header-item>
+						<lib-list-header-item>Telefone</lib-list-header-item>
+						<lib-list-header-item>E-mail</lib-list-header-item>
+						<lib-list-header-item>Atualizado</lib-list-header-item>
+						<lib-list-header-item width="120px">Ações</lib-list-header-item>
+					</lib-list-header>
+					<lib-list-body>
+						@for (l of linhas; track l.cpf) {
+							<lib-list-body-row>
+								<lib-list-body-cell kind="title">{{ l.nome }}</lib-list-body-cell>
+								<lib-list-body-cell label="CPF">{{ l.cpf }}</lib-list-body-cell>
+								<lib-list-body-cell label="Telefone">{{ l.tel }}</lib-list-body-cell>
+								<lib-list-body-cell label="E-mail">{{ l.email }}</lib-list-body-cell>
+								<lib-list-body-cell label="Atualizado">{{ l.data }}</lib-list-body-cell>
+								<lib-list-body-cell kind="actions">
+									<lib-icon-button class="lib-list-action-inline" type="neutral" variant="ghost" size="small" icon="Eye" ariaLabel="Ver detalhes"></lib-icon-button>
+									<lib-icon-button type="neutral" variant="ghost" size="small" icon="DotsThree" ariaLabel="Mais ações"></lib-icon-button>
+								</lib-list-body-cell>
+							</lib-list-body-row>
+						}
+					</lib-list-body>
+				</lib-list>
+			</div>
+		`,
+	}),
+};

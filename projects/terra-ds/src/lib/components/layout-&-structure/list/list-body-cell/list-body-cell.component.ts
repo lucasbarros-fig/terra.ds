@@ -34,6 +34,17 @@ export class ListBodyCellComponent {
 
 	@Input() tooltip = "";
 
+	/** Rótulo mostrado no layout compacto (cartão), antes do valor. Ex.: "CPF". */
+	@Input() label = "";
+
+	/**
+	 * Papel da célula no layout compacto (mobile/tablet):
+	 * - `title`: vira o cabeçalho do cartão;
+	 * - `actions`: fica no canto do cabeçalho; só o último elemento (o "⋯") aparece —
+	 *   os demais devem ter a classe `lib-list-action-inline` e entrar também no menu.
+	 */
+	@Input() kind: "default" | "title" | "actions" = "default";
+
 	protected syncOverflowTitle(el: HTMLElement): void {
 		const text = (el.textContent ?? "").trim();
 
