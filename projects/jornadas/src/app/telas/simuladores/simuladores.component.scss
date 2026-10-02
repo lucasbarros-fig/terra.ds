@@ -35,7 +35,7 @@
   background: color-mix(in srgb, var(--color-branding-surface-primary-base) 12%, transparent); color: var(--color-branding-surface-primary-base); }
 .sm-ic--mudo { background: var(--color-theme-upper); color: var(--color-icons-essential-medium); }
 
-.sm-kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: var(--size-spacing-16); align-content: stretch;
+.sm-kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: var(--size-spacing-16); align-self: start; height: 340px;
   lib-kpi-card { display: block; height: 100%; min-width: 0; } }
 .sm-breve { display: flex; align-items: center; gap: var(--size-spacing-12); padding: var(--size-spacing-16); text-align: left; cursor: pointer;
   border: var(--size-stoke-1) dashed var(--color-stroke-frame); border-radius: var(--size-radius-16); background: transparent;
@@ -234,7 +234,7 @@
 }
 @media (max-width: 1200px) {
   .sm-grade { grid-template-columns: minmax(0, 1fr); }
-  .sm-kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .sm-kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); height: auto; }
   .sf { grid-template-columns: minmax(0, 1fr); }
   .sf-div { display: none !important; }
   .sf-painel { padding-top: 0; flex-direction: row; flex-wrap: wrap; > * { flex: 1 1 280px; } }
