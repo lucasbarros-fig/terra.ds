@@ -13,7 +13,6 @@
           <lib-banner class="sm-banners" [items]="produtos" [slideTemplate]="slideProduto" [height]="340" [autoplay]="true" [interval]="6000" ariaLabel="Produtos para simular" [(activeIndex)]="bannerAtivo"></lib-banner>
           <ng-template #slideProduto let-p>
             <div class="sm-hero" [style.--tema]="p.tema">
-              <svg class="sm-hero-casa" viewBox="0 0 200 160" aria-hidden="true"><path d="M14 78 100 12l86 66M34 63v85h132V63M84 148v-46h32v46" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" /></svg>
               <div class="sm-hero-conteudo">
                 <span class="sm-hero-tag"><lib-icon [icon]="p.icon" [size]="16" color="inherit"></lib-icon>{{ p.label }}</span>
                 <b class="sm-hero-tit">{{ p.chamada }}</b>
@@ -24,11 +23,59 @@
                   <span class="sm-hero-logos" aria-hidden="true">@for (b of (p.bancos ?? C().bancos).slice(0, 6); track b.nome) { <lib-partner [partner]="b.nome" partnerStyle="fill" [size]="28"></lib-partner> }</span>
                 </span>
               </div>
-              @if (p.tipos.length && p.id === 'fi') {
-                <span class="sm-hero-tipos" aria-hidden="true">@for (t of C().tipos; track t.value) { <img [src]="asset + t.image" alt="" /> }</span>
-              } @else {
-                <span class="sm-hero-icone" aria-hidden="true"><lib-icon [icon]="p.icon" [size]="32" color="inherit"></lib-icon></span>
-              }
+              <span class="sm-hero-ilus" aria-hidden="true">
+                <svg viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                  @switch (p.id) {
+                    @case ('fi') {
+                      <path d="M30 190h180" opacity=".5" />
+                      <path class="f" d="M50 190V95l70-55 70 55v95z" />
+                      <path d="M38 104l82-64 82 64" />
+                      <path class="f2" d="M102 190v-48h36v48" />
+                      <rect class="f2" x="66" y="112" width="26" height="26" rx="3" />
+                      <rect class="f2" x="148" y="112" width="26" height="26" rx="3" />
+                      <path d="M168 50v-22h16v34" />
+                    }
+                    @case ('construcao') {
+                      <path d="M20 190h200" opacity=".5" />
+                      <path d="M60 190V30M60 30h150M60 30l-30 16M60 54l26-24M84 30l-24 24M108 30l-24 24M132 30l-24 24" />
+                      <path d="M186 30v40" /><path d="M178 70h16l-8 14z" class="f2" />
+                      <rect class="f" x="120" y="110" width="80" height="80" rx="4" />
+                      <path d="M120 136h80M120 162h80M146 110v80M174 110v80" opacity=".7" />
+                    }
+                    @case ('cgi') {
+                      <path class="f" d="M30 190v-70l55-42 55 42v70z" />
+                      <path d="M20 128l65-50 65 50" />
+                      <path class="f2" d="M70 190v-36h30v36" />
+                      <circle class="f2" cx="170" cy="96" r="30" />
+                      <circle cx="170" cy="96" r="10" />
+                      <path d="M158 122l-38 58M134 160l14 9M126 172l12 8" />
+                    }
+                    @case ('veiculos') {
+                      <path d="M10 176h220" opacity=".5" />
+                      <path class="f" d="M24 150v-22l26-6 30-34h70l34 34 28 6v22z" />
+                      <path class="f2" d="M88 96h28v28H66zM126 96h20l28 28h-48z" />
+                      <circle class="f2" cx="66" cy="152" r="18" /><circle cx="66" cy="152" r="6" />
+                      <circle class="f2" cx="180" cy="152" r="18" /><circle cx="180" cy="152" r="6" />
+                    }
+                    @case ('giro') {
+                      <path d="M24 190h192" opacity=".5" />
+                      <rect class="f" x="40" y="140" width="30" height="50" rx="4" />
+                      <rect class="f" x="88" y="110" width="30" height="80" rx="4" />
+                      <rect class="f" x="136" y="80" width="30" height="110" rx="4" />
+                      <path d="M40 100l50-30 34 18 64-50" /><path d="M164 38h24v24" />
+                      <circle class="f2" cx="196" cy="140" r="20" /><path d="M196 130v20M190 136h10a4 4 0 010 8h-8" opacity=".8" />
+                    }
+                    @case ('condominios') {
+                      <path d="M14 190h212" opacity=".5" />
+                      <rect class="f" x="30" y="90" width="56" height="100" rx="4" />
+                      <rect class="f" x="96" y="40" width="64" height="150" rx="4" />
+                      <rect class="f" x="170" y="110" width="44" height="80" rx="4" />
+                      <path d="M44 110h28M44 130h28M44 150h28M110 60h36M110 80h36M110 100h36M110 120h36M110 140h36M182 128h20M182 148h20" opacity=".7" />
+                      <path class="f2" d="M118 190v-26h20v26" />
+                    }
+                  }
+                </svg>
+              </span>
             </div>
           </ng-template>
 
