@@ -213,3 +213,22 @@
 .mk-comp-redes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--size-spacing-16) var(--size-spacing-8); width: 100%; margin: 0; padding: 0; list-style: none;
   li { display: flex; flex-direction: column; align-items: center; gap: var(--size-spacing-8); }
   span { font-size: var(--size-font-body-12); text-align: center; color: var(--color-text-essential-body); } }
+
+/* Baixar: escolha da marca */
+.mk-bx { display: flex; flex-direction: column; gap: var(--size-spacing-16); width: min(560px, calc(100vw - 80px));
+  > p { margin: 0; font-size: var(--size-font-body-14); color: var(--color-text-essential-body); } }
+.mk-bx-opcoes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--size-spacing-16); }
+.mk-bx-opcoes--story { grid-template-columns: repeat(2, minmax(0, 200px)); justify-content: center; }
+.mk-bx-op { display: flex; flex-direction: column; gap: var(--size-spacing-12); padding: var(--size-spacing-12); text-align: left; cursor: pointer;
+  border: var(--size-stoke-2, 2px) solid var(--color-stroke-frame); border-radius: var(--size-radius-16); background: var(--color-theme-lower);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+  jv-arte { border-radius: var(--size-radius-8); }
+  &:hover { border-color: var(--color-state-system-hovering, var(--color-stroke-frame)); }
+  &.is-on { border-color: var(--color-branding-surface-primary-base); box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-branding-surface-primary-base) 18%, transparent); }
+  &:focus-visible { outline: var(--size-stoke-2) solid var(--color-state-system-focus); outline-offset: 2px; } }
+.mk-bx-rot { display: grid; grid-template-columns: auto 1fr; column-gap: var(--size-spacing-8); align-items: center;
+  i { grid-row: span 2; width: 18px; height: 18px; border: 2px solid var(--color-stroke-frame); border-radius: 50%; }
+  b { font-size: var(--size-font-body-14); color: var(--color-text-essential-heading); }
+  small { overflow: hidden; font-size: var(--size-font-body-12); text-overflow: ellipsis; white-space: nowrap; color: var(--color-text-essential-caption); } }
+.mk-bx-op.is-on .mk-bx-rot i { border: 5px solid var(--color-branding-surface-primary-base); }
+@media (max-width: 599px) { .mk-bx { width: calc(100vw - 64px); } .mk-bx-opcoes { gap: var(--size-spacing-8); } .mk-bx-op { padding: var(--size-spacing-8); } }

@@ -246,6 +246,29 @@
     </lib-drawer>
   }
 
+  <!-- Baixar: escolher a marca -->
+  @if (escolhendo(); as a) {
+    <lib-dialog size="content" [open]="true" intent="branding" ariaLabel="Baixar arte" (backdropClick)="escolhendo.set(null)">
+      <lib-dialog-header intent="branding" title="Baixar arte" icon="DownloadSimple" (closeClick)="escolhendo.set(null)"></lib-dialog-header>
+      <lib-dialog-body>
+        <div class="mk-bx">
+          <p>Com qual marca a arte vai sair?</p>
+          <div class="mk-bx-opcoes" #opcoesBaixar role="radiogroup" aria-label="Marca da arte" [class.mk-bx-opcoes--story]="formato() === 'story'">
+            <button type="button" role="radio" class="mk-bx-op" data-ident="loja" [class.is-on]="escolha() === 'loja'" [attr.aria-checked]="escolha() === 'loja'" (click)="escolha.set('loja')">
+              <jv-arte [arte]="a" [formato]="formato()" [cor]="cor()" [loja]="loja()" identidade="loja"></jv-arte>
+              <span class="mk-bx-rot"><i aria-hidden="true"></i><b>Minha loja</b><small>{{ loja() }}</small></span>
+            </button>
+            <button type="button" role="radio" class="mk-bx-op" data-ident="thehouse" [class.is-on]="escolha() === 'thehouse'" [attr.aria-checked]="escolha() === 'thehouse'" (click)="escolha.set('thehouse')">
+              <jv-arte [arte]="a" [formato]="formato()" cor="#1684E6" [loja]="nomeTh" identidade="thehouse"></jv-arte>
+              <span class="mk-bx-rot"><i aria-hidden="true"></i><b>The House</b><small>Com o seu nome como consultor</small></span>
+            </button>
+          </div>
+        </div>
+      </lib-dialog-body>
+      <lib-dialog-footer intent="branding" cancelLabel="Cancelar" confirmLabel="Baixar arte" confirmIcon="DownloadSimple" [confirmLoading]="baixando()" (cancelClick)="escolhendo.set(null)" (confirmClick)="confirmarDownload()"></lib-dialog-footer>
+    </lib-dialog>
+  }
+
   <!-- Compartilhar -->
   @if (compartilhando(); as a) {
     <lib-dialog [open]="true" ariaLabel="Compartilhar arte" (backdropClick)="compartilhando.set(null)">

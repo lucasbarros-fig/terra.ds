@@ -56,6 +56,7 @@ export class MarketingComponent {
   });
   protected readonly identidade = computed<'loja' | 'thehouse'>(() => (this.temLoja() ? 'loja' : 'thehouse'));
   protected readonly corArte = computed(() => (this.identidade() === 'thehouse' ? '#1684E6' : this.cor()));
+  protected readonly nomeTh = J.topo.account.name;
   protected readonly nomeArte = computed(() => (this.identidade() === 'thehouse' ? J.topo.account.name : this.loja()));
 
   /* Mídia */
@@ -125,9 +126,22 @@ export class MarketingComponent {
   protected legendaCompleta(a: Arte): string { return `${a.legenda}\n\n${a.hashtags.join(' ')}`; }
 
   /** Gera o PNG da arte a partir da prévia (1080px de largura). */
-  protected async baixar(a: Arte): Promise<void> {
+  /* Baixar: com loja, a pessoa escolhe se a arte sai com a marca da loja ou da The House. */
+  protected readonly escolhendo = signal<Arte | null>(null);
+  protected readonly escolha = signal<'loja' | 'thehouse'>('loja');
+  private readonly opcoesBaixar = viewChild<ElementRef<HTMLElement>>('opcoesBaixar');
+  protected baixar(a: Arte): void {
+    if (this.temLoja()) { this.escolha.set('loja'); this.escolhendo.set(a); return; }
     const el = this.previa()?.nativeElement.querySelector<HTMLElement>('jv-arte');
-    if (!el || this.baixando()) return;
+    if (el) void this.executarDownload(el, a);
+  }
+  protected confirmarDownload(): void {
+    const a = this.escolhendo(); if (!a) return;
+    const el = this.opcoesBaixar()?.nativeElement.querySelector<HTMLElement>(`[data-ident="${this.escolha()}"] jv-arte`);
+    if (el) void this.executarDownload(el, a).then(() => this.escolhendo.set(null));
+  }
+  private async executarDownload(el: HTMLElement, a: Arte): Promise<void> {
+    if (this.baixando()) return;
     this.baixando.set(true);
     const ok = await this.gerarPng(el, a, this.formato());
     this.baixando.set(false);
