@@ -11,12 +11,36 @@ import { AvisosService } from '../../shared/avisos.service';
 import { ASSET, brl } from '../../shared/data';
 
 type Etapa = 'inicio' | 'form' | 'resultado';
-interface Form { perfil: 'pf' | 'pj' | null; tipo: string | null; nascimento: string; valor: number | null; entrada: number | null; prazo: number | null; cartorio: 'sim' | 'nao' | null; fgts: 'sim' | 'nao' | null }
+interface Banco { nome: string; taxa: number }
+interface Produto {
+  id: string; label: string; curto: string; text: string; icon: string; perfis: ('pf' | 'pj')[]; sistema: 'sac' | 'price'; modo: 'financiamento' | 'credito';
+  bem: string | null; rotuloValor: string; rotuloEntrada: string; ltv?: number; tipos: string[]; prazo: { min: number; max: number; atalhos: number[] };
+  cartorio: boolean; fgts: boolean; bancos: Banco[] | null;
+}
+interface Form { produto: string; perfil: 'pf' | 'pj' | null; tipo: string | null; nascimento: string; valor: number | null; entrada: number | null; prazo: number | null; cartorio: 'sim' | 'nao' | null; fgts: 'sim' | 'nao' | null }
 interface Recente { id: string; origem: string; cliente: string | null; produto: string; valor: number; data: string; form?: Form }
 interface Linha { parceiro: string; financiado: number; taxa: number; cet: number; parcelas: number; primeira: number; ultima: number; total: number }
 
-const VAZIO: Form = { perfil: null, tipo: null, nascimento: '', valor: null, entrada: null, prazo: null, cartorio: null, fgts: null };
-const PRAZO_MAX = 420;
+const VAZIO: Form = { produto: 'fi', perfil: null, tipo: null, nascimento: '', valor: null, entrada: null, prazo: null, cartorio: null, fgts: null };
+
+/** Produtos simuláveis (taxas de exemplo a.a.; no back vêm das APIs dos parceiros). */
+const PRODUTOS: Produto[] = [
+  { id: 'fi', label: 'Financiamento Imobiliário', curto: 'Financiamento', text: 'Aquisição de imóvel residencial, comercial ou terreno.', icon: 'HouseLine', perfis: ['pf', 'pj'], sistema: 'sac', modo: 'financiamento',
+    bem: 'imóvel', rotuloValor: 'Valor do imóvel', rotuloEntrada: 'Valor de entrada', tipos: ['residencial', 'comercial', 'terreno'], prazo: { min: 12, max: 420, atalhos: [180, 240, 360, 420] }, cartorio: true, fgts: true, bancos: null },
+  { id: 'construcao', label: 'Financiamento para Construção', curto: 'Construção', text: 'Crédito para construir no terreno do cliente, com aprovação rápida.', icon: 'HardHat', perfis: ['pf'], sistema: 'sac', modo: 'financiamento',
+    bem: 'obra', rotuloValor: 'Valor total da obra', rotuloEntrada: 'Recursos próprios', tipos: ['residencial', 'comercial'], prazo: { min: 12, max: 120, atalhos: [36, 60, 96, 120] }, cartorio: false, fgts: false,
+    bancos: [{ nome: 'CashMe', taxa: 13.2 }, { nome: 'Crediblue', taxa: 13.9 }] },
+  { id: 'cgi', label: 'Crédito com Garantia de Imóvel', curto: 'Garantia de imóvel', text: 'Até 60% do valor do imóvel quitado, com juros menores.', icon: 'Key', perfis: ['pf', 'pj'], sistema: 'price', modo: 'credito',
+    bem: 'imóvel', rotuloValor: 'Valor do imóvel em garantia', rotuloEntrada: 'Valor desejado', ltv: 0.6, tipos: ['residencial', 'comercial'], prazo: { min: 12, max: 240, atalhos: [60, 120, 180, 240] }, cartorio: false, fgts: false,
+    bancos: [{ nome: 'Galleria Bank', taxa: 13.8 }, { nome: 'Itaú', taxa: 13.9 }, { nome: 'Santander', taxa: 14.2 }, { nome: 'CashMe', taxa: 14.6 }, { nome: 'C6 Bank', taxa: 14.9 }, { nome: 'Creditas', taxa: 15.1 }, { nome: 'Direto', taxa: 15.4 }] },
+  { id: 'veiculos', label: 'Crédito com Garantia de Veículos', curto: 'Garantia de veículo', text: 'Até 90% do valor do veículo quitado, que continua com o cliente.', icon: 'Car', perfis: ['pf', 'pj'], sistema: 'price', modo: 'credito',
+    bem: 'veículo', rotuloValor: 'Valor do veículo', rotuloEntrada: 'Valor desejado', ltv: 0.9, tipos: [], prazo: { min: 3, max: 60, atalhos: [12, 24, 36, 60] }, cartorio: false, fgts: false,
+    bancos: [{ nome: 'Safra', taxa: 20.9 }, { nome: 'BV', taxa: 21.5 }, { nome: 'Daycoval', taxa: 21.9 }, { nome: 'C6 Bank', taxa: 22.4 }, { nome: 'Creditas', taxa: 22.9 }, { nome: 'CashMe', taxa: 23.4 }, { nome: 'Omni', taxa: 25.8 }] },
+  { id: 'giro', label: 'Capital de giro', curto: 'Capital de giro', text: 'Fôlego para o caixa da empresa, com prazos flexíveis.', icon: 'Coins', perfis: ['pj'], sistema: 'price', modo: 'credito',
+    bem: null, rotuloValor: '', rotuloEntrada: 'Valor desejado', tipos: [], prazo: { min: 18, max: 62, atalhos: [18, 24, 36, 60] }, cartorio: false, fgts: false, bancos: [{ nome: 'Daycoval', taxa: 17.5 }] },
+  { id: 'condominios', label: 'Crédito para Condomínios', curto: 'Condomínios', text: 'Obras e melhorias no condomínio, com carência para começar a pagar.', icon: 'Buildings', perfis: ['pj'], sistema: 'price', modo: 'credito',
+    bem: null, rotuloValor: '', rotuloEntrada: 'Valor desejado', tipos: [], prazo: { min: 12, max: 90, atalhos: [24, 48, 72, 90] }, cartorio: false, fgts: false, bancos: [{ nome: 'CashMe', taxa: 16.9 }] },
+];
 
 /**
  * Simuladores (Figma Simuladores | The House 5513:3864, visual Terra):
@@ -62,11 +86,11 @@ export class SimuladoresComponent implements OnInit {
     setTimeout(() => this.carregando.set(false), 1100);
   }
 
-  protected readonly produtos = [
-    { value: 'fi', label: 'Financiamento Imobiliário', text: 'Crédito para aquisição de imóveis residenciais, comerciais ou terrenos.', icon: 'HouseLine', ativo: true },
-    { value: 'cgi', label: 'Crédito com Garantia de Imóvel', text: 'Crédito usando um imóvel quitado como garantia.', icon: 'Key', ativo: false },
-  ];
-  protected readonly breadcrumbs = computed(() => this.etapa() === 'inicio' ? [{ label: 'Home' }, { label: 'Simuladores' }] : [{ label: 'Simuladores' }, { label: 'Financiamento Imobiliário' }]);
+  protected readonly produtos = PRODUTOS;
+  protected readonly prod = computed(() => PRODUTOS.find((p) => p.id === this.f().produto) ?? PRODUTOS[0]);
+  protected readonly tiposProd = computed(() => this.C().tipos.filter((t: any) => this.prod().tipos.includes(t.value)));
+  protected readonly bancosProd = computed<Banco[]>(() => this.prod().bancos ?? this.C().bancos);
+  protected readonly breadcrumbs = computed(() => this.etapa() === 'inicio' ? [{ label: 'Home' }, { label: 'Simuladores' }] : [{ label: 'Simuladores' }, { label: this.prod().label }]);
 
   /* ---------- Painel inicial ---------- */
   protected readonly kpis = computed(() => {
@@ -79,49 +103,60 @@ export class SimuladoresComponent implements OnInit {
   protected readonly rapidaRes = computed(() => {
     const r = this.rapida();
     if (!r.valor || r.entrada == null || r.entrada >= r.valor) return null;
-    const l = this.calcular({ ...VAZIO, valor: r.valor, entrada: r.entrada, prazo: r.prazo, cartorio: 'nao' });
+    const l = this.calcular({ ...VAZIO, produto: 'fi', valor: r.valor, entrada: r.entrada, prazo: r.prazo, cartorio: 'nao' });
     const melhor = [...l].sort((a, b) => a.primeira - b.primeira)[0];
     return { melhor, pct: Math.round((r.entrada / r.valor) * 100) };
   });
   protected setRapida(k: 'valor' | 'entrada' | 'prazo', v: any): void { this.rapida.update((r) => ({ ...r, [k]: v })); }
   protected continuarRapida(): void {
     const r = this.rapida();
-    this.f.set({ ...VAZIO, valor: r.valor, entrada: r.entrada, prazo: r.prazo }); this.enviado.set(false); this.etapa.set('form');
+    this.f.set({ ...VAZIO, produto: 'fi', valor: r.valor, entrada: r.entrada, prazo: r.prazo }); this.enviado.set(false); this.etapa.set('form');
   }
   /** Melhor condição de uma simulação recente (entrada de 20% e 360 meses quando não há dados completos). */
   protected melhorDe(r: Recente): Linha {
-    const f = r.form ?? { ...VAZIO, valor: r.valor, entrada: r.valor * 0.2, prazo: 360, cartorio: 'nao' as const };
+    const f = r.form ?? { ...VAZIO, produto: 'fi', valor: r.valor, entrada: r.valor * 0.2, prazo: 360, cartorio: 'nao' as const };
     return [...this.calcular(f)].sort((a, b) => a.primeira - b.primeira)[0];
   }
   protected prazoDe(r: Recente): number { return r.form?.prazo ?? 360; }
 
   /* ---------- Formulário ---------- */
   protected readonly pj = computed(() => this.f().perfil === 'pj');
-  protected readonly financiado = computed(() => Math.max(0, (this.f().valor ?? 0) - (this.f().entrada ?? 0)));
+  protected readonly credito = computed(() => this.prod().modo === 'credito');
+  protected readonly temBem = computed(() => !!this.prod().bem);
+  protected readonly financiado = computed(() => this.credito() ? (this.f().entrada ?? 0) : Math.max(0, (this.f().valor ?? 0) - (this.f().entrada ?? 0)));
+  protected readonly limite = computed(() => (this.prod().ltv && this.f().valor ? this.f().valor! * this.prod().ltv! : 0));
   protected readonly pctEntrada = computed(() => { const v = this.f().valor ?? 0; return v ? Math.round(((this.f().entrada ?? 0) / v) * 100) : 0; });
-  protected readonly erroEntrada = computed(() => { const f = this.f(); return !!(f.valor && f.entrada != null && f.entrada >= f.valor); });
-  protected readonly entradaBaixa = computed(() => { const f = this.f(); return !!(f.valor && f.entrada != null && !this.erroEntrada() && this.pctEntrada() < 20); });
-  protected readonly erroPrazo = computed(() => { const p = this.f().prazo; return p != null && (p < 12 || p > PRAZO_MAX); });
+  protected readonly erroEntrada = computed(() => {
+    const f = this.f();
+    if (this.credito()) return !!(this.limite() && f.entrada != null && f.entrada > this.limite());
+    return !!(f.valor && f.entrada != null && f.entrada >= f.valor);
+  });
+  protected readonly entradaBaixa = computed(() => { const f = this.f(); return this.prod().id === 'fi' && !!(f.valor && f.entrada != null && !this.erroEntrada() && this.pctEntrada() < 20); });
+  protected readonly erroPrazo = computed(() => { const p = this.f().prazo, r = this.prod().prazo; return p != null && (p < r.min || p > r.max); });
   protected readonly erroNascimento = computed(() => { const d = this.f().nascimento.replace(/\D/g, ''); return !this.pj() && d.length > 0 && d.length < 8; });
   protected readonly faltando = computed(() => {
-    const f = this.f(), l: string[] = [];
+    const f = this.f(), pr = this.prod(), l: string[] = [];
     if (!f.perfil) l.push('perfil do cliente');
-    if (!f.tipo) l.push('tipo de imóvel');
+    if (pr.tipos.length && !f.tipo) l.push('tipo de imóvel');
     if (!this.pj() && f.nascimento.replace(/\D/g, '').length !== 8) l.push('nascimento');
-    if (!(f.valor && f.valor > 0)) l.push('valor do imóvel');
-    if (f.entrada == null) l.push('valor de entrada');
+    if (this.temBem() && !(f.valor && f.valor > 0)) l.push(pr.rotuloValor.toLowerCase());
+    if (f.entrada == null || (this.credito() && !f.entrada)) l.push(pr.rotuloEntrada.toLowerCase());
     if (!f.prazo) l.push('prazo');
-    if (!f.cartorio) l.push('custos de cartório');
-    if (!this.pj() && !f.fgts) l.push('uso do FGTS');
+    if (pr.cartorio && !f.cartorio) l.push('custos de cartório');
+    if (pr.fgts && !this.pj() && !f.fgts) l.push('uso do FGTS');
     return l;
   });
   protected readonly completo = computed(() => !this.faltando().length && !this.erroEntrada() && !this.erroPrazo() && !this.erroNascimento());
-  protected readonly progresso = computed(() => { const total = this.pj() ? 6 : 8; return Math.round(((total - this.faltando().length) / total) * 100); });
+  protected readonly progresso = computed(() => {
+    const pr = this.prod();
+    const total = 1 + (pr.tipos.length ? 1 : 0) + (this.pj() ? 0 : 1) + (this.temBem() ? 1 : 0) + 2 + (pr.cartorio ? 1 : 0) + (pr.fgts && !this.pj() ? 1 : 0);
+    return Math.round(((total - this.faltando().length) / total) * 100);
+  });
 
   /** Estimativa ao vivo no painel (faixa entre o menor e o maior banco). */
   protected readonly estimativa = computed(() => {
     const f = this.f();
-    if (!this.financiado() || !f.prazo || this.erroEntrada() || this.erroPrazo()) return null;
+    if (!this.financiado() || !f.prazo || this.erroEntrada() || this.erroPrazo() || (!this.credito() && !f.valor)) return null;
     const l = this.calcular(f);
     const p = l.map((x) => x.primeira);
     return { min: Math.min(...p), max: Math.max(...p), renda: Math.min(...p) / 0.3 };
@@ -134,13 +169,17 @@ export class SimuladoresComponent implements OnInit {
   }
   protected prazoRapido(m: number): void { this.set('prazo', m); }
 
-  protected escolherProduto(p: { value: string; label: string; ativo: boolean }): void {
-    if (!p.ativo) { this.avisos.mostrar(`O simulador de ${p.label} chega em breve.`); return; }
-    this.f.set({ ...VAZIO }); this.enviado.set(false); this.etapa.set('form');
+  protected escolherProduto(p: Produto): void {
+    this.f.set({ ...VAZIO, produto: p.id, perfil: p.perfis.length === 1 ? p.perfis[0] : null }); this.enviado.set(false); this.etapa.set('form');
   }
   protected exemplo(): void {
-    const ex = this.C().exemplo.pf;
-    this.f.set({ perfil: 'pf', tipo: ex.tipo, nascimento: ex.nascimento, valor: 450000, entrada: 100000, prazo: 420, cartorio: 'sim', fgts: 'nao' });
+    const pr = this.prod(), ex = this.C().exemplo.pf;
+    const base = { ...VAZIO, produto: pr.id, perfil: pr.perfis.includes('pf') ? 'pf' as const : 'pj' as const, tipo: pr.tipos[0] ?? null, nascimento: pr.perfis.includes('pf') ? ex.nascimento : '', cartorio: pr.cartorio ? 'sim' as const : null, fgts: pr.fgts ? 'nao' as const : null };
+    const valores: Record<string, [number | null, number, number]> = {
+      fi: [450000, 100000, 420], construcao: [380000, 80000, 120], cgi: [800000, 300000, 180], veiculos: [90000, 50000, 48], giro: [null, 250000, 36], condominios: [null, 400000, 72],
+    };
+    const [valor, entrada, prazo] = valores[pr.id];
+    this.f.set({ ...base, perfil: base.perfil, valor, entrada, prazo });
   }
   protected simular(): void {
     this.enviado.set(true);
@@ -156,7 +195,7 @@ export class SimuladoresComponent implements OnInit {
     const f = this.f();
     const agora = new Date();
     const data = agora.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' }).replace('.', '') + ' às ' + agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-    this.recentes.update((l) => [{ id: 'n' + agora.getTime(), origem: 'Simulador', cliente: null, produto: 'Financiamento Imobiliário', valor: f.valor ?? 0, data, form: { ...f } }, ...l].slice(0, 8));
+    this.recentes.update((l) => [{ id: 'n' + agora.getTime(), origem: 'Simulador', cliente: null, produto: this.prod().label, valor: (this.credito() ? f.entrada : f.valor) ?? 0, data, form: { ...f } }, ...l].slice(0, 8));
   }
 
   /* ---------- Resultado ---------- */
@@ -168,24 +207,32 @@ export class SimuladoresComponent implements OnInit {
   protected readonly melhor = computed(() => [...this.calcular(this.f())].sort((a, b) => a.primeira - b.primeira)[0]);
   protected readonly menorTaxa = computed(() => [...this.calcular(this.f())].sort((a, b) => a.taxa - b.taxa)[0]);
   protected readonly menorTotal = computed(() => [...this.calcular(this.f())].sort((a, b) => a.total - b.total)[0]);
-  protected readonly tipoAtual = computed(() => this.C().tipos.find((t: any) => t.value === this.f().tipo) ?? this.C().tipos[0]);
+  protected readonly tipoAtual = computed(() => this.C().tipos.find((t: any) => t.value === this.f().tipo) ?? null);
   protected readonly resumo = computed(() => {
-    const f = this.f();
-    const l: [string, string][] = [['Perfil do cliente', f.perfil === 'pj' ? 'Pessoa Jurídica' : 'Pessoa Física']];
+    const f = this.f(), pr = this.prod();
+    const l: [string, string][] = [['Produto', pr.label], ['Perfil do cliente', f.perfil === 'pj' ? 'Pessoa Jurídica' : 'Pessoa Física']];
     if (f.perfil !== 'pj') l.push(['Nascimento', f.nascimento || '—']);
-    l.push(['Valor do imóvel', 'R$ ' + brl(f.valor ?? 0)], ['Entrada', `R$ ${brl(f.entrada ?? 0)} (${this.pctEntrada()}%)`], ['Prazo', `${f.prazo} meses`], ['Custos de cartório', f.cartorio === 'sim' ? 'Incluídos' : 'Não incluídos']);
-    if (f.perfil !== 'pj') l.push(['FGTS', f.fgts === 'sim' ? 'Vai usar' : 'Não vai usar']);
+    if (this.temBem()) l.push([pr.rotuloValor, 'R$ ' + brl(f.valor ?? 0)]);
+    l.push(this.credito() ? [pr.rotuloEntrada, 'R$ ' + brl(f.entrada ?? 0)] : [pr.rotuloEntrada, `R$ ${brl(f.entrada ?? 0)} (${this.pctEntrada()}%)`]);
+    l.push(['Prazo', `${f.prazo} meses`], ['Sistema', pr.sistema === 'sac' ? 'SAC (parcelas decrescentes)' : 'Price (parcelas fixas)']);
+    if (pr.cartorio) l.push(['Custos de cartório', f.cartorio === 'sim' ? 'Incluídos' : 'Não incluídos']);
+    if (pr.fgts && f.perfil !== 'pj') l.push(['FGTS', f.fgts === 'sim' ? 'Vai usar' : 'Não vai usar']);
     return l;
   });
-
-  /** Tabela SAC com taxas de exemplo por banco (no back, vem da API de cada parceiro). */
+  /** SAC (financiamentos) ou Price (créditos) com taxas de exemplo por banco. */
   private calcular(f: Form): Linha[] {
-    const custas = f.cartorio === 'sim' ? (f.valor ?? 0) * 0.04 : 0;
-    const fin = Math.max(0, (f.valor ?? 0) - (f.entrada ?? 0)) + custas;
+    const pr = PRODUTOS.find((p) => p.id === f.produto) ?? PRODUTOS[0];
+    const custas = pr.cartorio && f.cartorio === 'sim' ? (f.valor ?? 0) * 0.04 : 0;
+    const fin = (pr.modo === 'credito' ? (f.entrada ?? 0) : Math.max(0, (f.valor ?? 0) - (f.entrada ?? 0))) + custas;
     const n = Math.max(1, Math.round(f.prazo ?? 1));
-    return this.C().bancos.map((b: any) => {
-      const im = Math.pow(1 + b.taxa / 100, 1 / 12) - 1, amort = fin / n;
-      const primeira = amort + fin * im, ultima = amort + amort * im;
+    const bancos: Banco[] = pr.bancos ?? this.C().bancos;
+    return bancos.map((b) => {
+      const im = Math.pow(1 + b.taxa / 100, 1 / 12) - 1;
+      if (pr.sistema === 'price') {
+        const pmt = (fin * im) / (1 - Math.pow(1 + im, -n));
+        return { parceiro: b.nome, financiado: fin, taxa: b.taxa, cet: b.taxa + 0.9, parcelas: n, primeira: pmt, ultima: pmt, total: pmt * n };
+      }
+      const amort = fin / n, primeira = amort + fin * im, ultima = amort + amort * im;
       return { parceiro: b.nome, financiado: fin, taxa: b.taxa, cet: b.taxa + 0.63, parcelas: n, primeira, ultima, total: ((primeira + ultima) / 2) * n };
     });
   }
@@ -193,19 +240,19 @@ export class SimuladoresComponent implements OnInit {
   protected moeda(v: number): string { return 'R$ ' + brl(v); }
 
   protected ajustar(): void { this.enviado.set(false); this.etapa.set('form'); }
-  protected novaSimulacao(): void { this.f.set({ ...VAZIO }); this.enviado.set(false); this.etapa.set('form'); }
+  protected novaSimulacao(): void { this.f.set({ ...VAZIO, produto: this.prod().id }); this.enviado.set(false); this.etapa.set('form'); }
   protected inicio(): void { this.etapa.set('inicio'); }
   protected gerarProposta(banco?: string): void {
     this.avisos.mostrar(banco ? `Proposta iniciada com ${banco}. Os dados da simulação já vão preenchidos.` : 'Os dados da simulação já vão preenchidos na proposta.', 'success');
     this.nav.emit('nova');
   }
   protected compartilhar(): void {
-    const texto = `Simulação The House · ${this.moeda(this.f().valor ?? 0)} em ${this.f().prazo} meses · melhor 1ª parcela: ${this.moeda(this.melhor().primeira)} (${this.melhor().parceiro})`;
+    const texto = `Simulação The House · ${this.prod().label} · ${this.moeda(this.financiado())} em ${this.f().prazo} meses · melhor 1ª parcela: ${this.moeda(this.melhor().primeira)} (${this.melhor().parceiro})`;
     const ok = () => this.avisos.mostrar('Resumo da simulação copiado. Cole no WhatsApp ou e-mail do cliente.', 'success');
     navigator.clipboard?.writeText(texto).then(ok, ok);
   }
   protected abrirRecente(r: Recente): void {
     if (r.form) { this.f.set({ ...r.form }); this.etapa.set('resultado'); return; }
-    this.exemplo(); this.f.update((f) => ({ ...f, valor: r.valor })); this.etapa.set('resultado');
+    this.f.set({ ...VAZIO, produto: 'fi' }); this.exemplo(); this.f.update((f) => ({ ...f, valor: r.valor })); this.etapa.set('resultado');
   }
 }

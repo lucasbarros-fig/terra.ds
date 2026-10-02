@@ -5,7 +5,7 @@
       <div class="sm">
         <header class="sm-topo">
           <div><h2>Simule e compare em segundos</h2><p>Encontre a melhor condição entre os bancos parceiros e transforme em proposta.</p></div>
-          <lib-button intent="branding" variant="filled" icon="Calculator" label="Nova simulação" (clicked)="escolherProduto(produtos[0])"></lib-button>
+          <lib-button intent="branding" variant="filled" icon="Calculator" label="Nova simulação" (clicked)="todos.scrollIntoView({ behavior: 'smooth', block: 'start' })"></lib-button>
         </header>
 
         <div class="sm-grade">
@@ -46,12 +46,29 @@
           <lib-kpi-card label="Simulações no mês" icon="Calculator" [value]="kpis().total" statusLabel="+3" statusColor="positive" note="vs. mês anterior"></lib-kpi-card>
           <lib-kpi-card label="Viraram proposta" icon="FileText" [value]="kpis().propostas" [statusLabel]="kpis().conversao + '%'" statusColor="informative" note="de conversão"></lib-kpi-card>
           <lib-kpi-card label="Valor médio dos imóveis" icon="HouseLine" [value]="moeda(kpis().media)" statusLabel="Ticket médio" statusColor="neutral" note="das simulações"></lib-kpi-card>
-          <button type="button" class="sm-breve" (click)="escolherProduto(produtos[1])">
-            <span class="sm-ic sm-ic--mudo"><lib-icon icon="Key" [size]="20" color="inherit"></lib-icon></span>
-            <span><b>Crédito com Garantia de Imóvel</b><small>Simulador chegando em breve</small></span>
-            <lib-tag emphasis="low" color="neutral" size="small">Em breve</lib-tag>
-          </button>
+          <lib-kpi-card label="Produtos para simular" icon="SquaresFour" [value]="produtos.length" statusLabel="PF e PJ" statusColor="positive" note="bancos parceiros"></lib-kpi-card>
         </div>
+
+        <!-- Todos os produtos -->
+        <section class="sm-sec" #todos aria-labelledby="sm-prod-t">
+          <header class="sm-head"><h2 id="sm-prod-t">Todos os produtos</h2><p>Escolha o que o cliente precisa e compare as condições dos parceiros.</p></header>
+          <div class="sm-produtos">
+            @for (p of produtos; track p.id) {
+              <button type="button" class="sm-produto" (click)="escolherProduto(p)">
+                <span class="sm-produto-ic"><lib-icon [icon]="p.icon" [size]="24" color="inherit"></lib-icon></span>
+                <span class="sm-produto-txt">
+                  <b>{{ p.label }}</b><span>{{ p.text }}</span>
+                  <span class="sm-produto-meta">
+                    @for (pf of p.perfis; track pf) { <lib-tag emphasis="low" [color]="pf === 'pf' ? 'blue' : 'purple'" size="small">{{ pf === 'pf' ? 'PF' : 'PJ' }}</lib-tag> }
+                    <span class="sm-produto-bancos">@for (b of (p.bancos ?? C().bancos).slice(0, 4); track b.nome) { <lib-partner [partner]="b.nome" partnerStyle="fill" [size]="20"></lib-partner> }
+                      @if ((p.bancos ?? C().bancos).length > 4) { <small>+{{ (p.bancos ?? C().bancos).length - 4 }}</small> }</span>
+                  </span>
+                </span>
+                <lib-icon class="sm-produto-seta" icon="CaretRight" [size]="20" color="inherit"></lib-icon>
+              </button>
+            }
+          </div>
+        </section>
 
         <!-- Recentes -->
         <section class="sm-sec" aria-labelledby="sm-rec-t">
@@ -73,7 +90,7 @@
                     @else { <b class="sm-mudo">Cliente não informado</b><span>{{ r.produto }}</span> }
                   </div>
                   <dl>
-                    <div><dt>Imóvel</dt><dd>{{ moeda(r.valor) }}</dd></div>
+                    <div><dt>{{ r.produto === 'Financiamento Imobiliário' ? 'Imóvel' : 'Valor' }}</dt><dd>{{ moeda(r.valor) }}</dd></div>
                     <div><dt>Prazo</dt><dd>{{ prazoDe(r) }} meses</dd></div>
                   </dl>
                   @if (melhorDe(r); as m) {
@@ -103,25 +120,27 @@
           <div class="sf-perguntas">
             <header class="sf-titulo">
               <p>Vamos começar a simulação</p>
-              <h2>Informe os dados do cliente e do imóvel</h2>
+              <h2>{{ prod().label }}</h2>
               <lib-button class="sf-exemplo" intent="branding" variant="bare" icon="MagicWand" label="Preencher com exemplo" (clicked)="exemplo()"></lib-button>
             </header>
 
             <section class="sf-q">
               <h3>Perfil do cliente</h3>
               <div class="sf-op" role="group" aria-label="Perfil do cliente">
-                <lib-button [intent]="f().perfil === 'pf' ? 'branding' : 'neutral'" variant="filled" [selected]="f().perfil === 'pf'" icon="User" label="Pessoa Física" (clicked)="set('perfil', 'pf')"></lib-button>
-                <lib-button [intent]="f().perfil === 'pj' ? 'branding' : 'neutral'" variant="filled" [selected]="f().perfil === 'pj'" icon="Buildings" label="Pessoa Jurídica" (clicked)="set('perfil', 'pj')"></lib-button>
+                @if (prod().perfis.includes('pf')) { <lib-button [intent]="f().perfil === 'pf' ? 'branding' : 'neutral'" variant="filled" [selected]="f().perfil === 'pf'" icon="User" label="Pessoa Física" (clicked)="set('perfil', 'pf')"></lib-button> }
+                @if (prod().perfis.includes('pj')) { <lib-button [intent]="f().perfil === 'pj' ? 'branding' : 'neutral'" variant="filled" [selected]="f().perfil === 'pj'" icon="Buildings" label="Pessoa Jurídica" (clicked)="set('perfil', 'pj')"></lib-button> }
               </div>
+              @if (prod().perfis.length === 1) { <p class="sf-dica">Produto exclusivo para {{ prod().perfis[0] === 'pj' ? 'Pessoa Jurídica' : 'Pessoa Física' }}.</p> }
               @if (enviado() && !f().perfil) { <p class="sf-erro">Escolha o perfil do cliente.</p> }
             </section>
 
+            @if (tiposProd().length) {
             <lib-divisor></lib-divisor>
 
             <section class="sf-q">
               <h3>Qual o tipo de imóvel?</h3>
               <div class="sf-tipos" role="radiogroup" aria-label="Tipo de imóvel">
-                @for (t of C().tipos; track t.value) {
+                @for (t of tiposProd(); track t.value) {
                   <button type="button" role="radio" class="sf-tipo" [class.is-on]="f().tipo === t.value" [attr.aria-checked]="f().tipo === t.value" (click)="set('tipo', t.value)">
                     <img [src]="asset + t.image" alt="" />
                     <b>{{ t.label }}</b>
@@ -131,6 +150,7 @@
               </div>
               @if (enviado() && !f().tipo) { <p class="sf-erro">Escolha o tipo de imóvel.</p> }
             </section>
+            }
 
             <lib-divisor></lib-divisor>
 
@@ -142,27 +162,33 @@
                     [error]="erroNascimento() || (enviado() && f().nascimento.replace('/', '').length < 8)" [helperText]="erroNascimento() ? 'Data incompleta.' : ''"
                     [ngModel]="f().nascimento" (ngModelChange)="set('nascimento', $event ?? '')"></lib-input-text>
                 }
-                <lib-input-text label="Valor do imóvel" variant="outlined" type="currency" prefix="R$" placeholder="0,00" [error]="enviado() && !f().valor" [ngModel]="f().valor" (ngModelChange)="set('valor', $event)"></lib-input-text>
-                <lib-input-text label="Valor de entrada" variant="outlined" type="currency" prefix="R$" placeholder="0,00"
-                  [error]="erroEntrada()" [helperColor]="entradaBaixa() ? 'warning' : 'neutral'"
-                  [helperText]="erroEntrada() ? 'A entrada precisa ser menor que o valor do imóvel.' : entradaBaixa() ? 'A maioria dos bancos pede no mínimo 20% de entrada.' : f().valor && f().entrada != null ? pctEntrada() + '% do valor do imóvel' : ''"
+                @if (temBem()) {
+                  <lib-input-text [label]="prod().rotuloValor" variant="outlined" type="currency" prefix="R$" placeholder="0,00" [error]="enviado() && !f().valor" [ngModel]="f().valor" (ngModelChange)="set('valor', $event)"></lib-input-text>
+                }
+                <lib-input-text [label]="prod().rotuloEntrada" variant="outlined" type="currency" prefix="R$" placeholder="0,00"
+                  [error]="erroEntrada() || (enviado() && credito() && !f().entrada)" [helperColor]="entradaBaixa() ? 'warning' : 'neutral'"
+                  [helperText]="credito()
+                    ? (erroEntrada() ? 'Máximo de ' + (prod().ltv! * 100) + '% do valor do ' + prod().bem + ' (' + moeda(limite()) + ').' : limite() ? 'Até ' + moeda(limite()) + ' (' + (prod().ltv! * 100) + '% do ' + prod().bem + ')' : '')
+                    : (erroEntrada() ? 'Precisa ser menor que o ' + prod().rotuloValor.toLowerCase() + '.' : entradaBaixa() ? 'A maioria dos bancos pede no mínimo 20% de entrada.' : f().valor && f().entrada != null ? pctEntrada() + '% do valor' : '')"
                   [ngModel]="f().entrada" (ngModelChange)="set('entrada', $event)"></lib-input-text>
                 <div class="sf-prazo">
-                  <lib-input-text label="Prazo de pagamento" variant="outlined" mask="000" suffix="meses" placeholder="Ex.: 360" helperColor="neutral"
-                    [error]="erroPrazo()" [helperText]="erroPrazo() ? 'Entre 12 e 420 meses (35 anos).' : f().prazo ? (f().prazo! / 12 | number: '1.0-1') + ' anos' : ''"
+                  <lib-input-text label="Prazo de pagamento" variant="outlined" mask="000" suffix="meses" [placeholder]="'Ex.: ' + prod().prazo.atalhos[2]" helperColor="neutral"
+                    [error]="erroPrazo()" [helperText]="erroPrazo() ? 'Entre ' + prod().prazo.min + ' e ' + prod().prazo.max + ' meses.' : f().prazo && f().prazo! >= 12 ? (f().prazo! / 12 | number: '1.0-1') + ' anos' : 'De ' + prod().prazo.min + ' a ' + prod().prazo.max + ' meses'"
                     [ngModel]="f().prazo" (ngModelChange)="set('prazo', $event === '' || $event == null ? null : +$event)"></lib-input-text>
                   <div class="sf-chips" aria-label="Prazos comuns">
-                    @for (m of [180, 240, 360, 420]; track m) {
-                      <button type="button" class="sf-chip" [class.is-on]="f().prazo === m" (click)="prazoRapido(m)">{{ m / 12 }} anos</button>
+                    @for (m of prod().prazo.atalhos; track m) {
+                      <button type="button" class="sf-chip" [class.is-on]="f().prazo === m" (click)="prazoRapido(m)">{{ m % 12 === 0 ? (m / 12) + (m === 12 ? ' ano' : ' anos') : m + ' meses' }}</button>
                     }
                   </div>
                 </div>
               </div>
             </section>
 
+            @if (prod().cartorio || (prod().fgts && !pj())) {
             <lib-divisor></lib-divisor>
 
             <section class="sf-q sf-q--duplo">
+              @if (prod().cartorio) {
               <div>
                 <h3>Incluir custos de cartório?</h3>
                 <p class="sf-dica">ITBI e escritura entram no valor financiado.</p>
@@ -172,7 +198,8 @@
                 </div>
                 @if (enviado() && !f().cartorio) { <p class="sf-erro">Escolha uma opção.</p> }
               </div>
-              @if (!pj()) {
+              }
+              @if (prod().fgts && !pj()) {
                 <div>
                   <h3>Vai usar FGTS?</h3>
                   <p class="sf-dica">O saldo pode entrar como parte da entrada.</p>
@@ -184,6 +211,7 @@
                 </div>
               }
             </section>
+            }
           </div>
 
           <div class="sf-rodape">
@@ -200,18 +228,18 @@
           <section class="sf-est" [class.is-on]="!!estimativa()">
             <header>
               <span class="sf-est-ic"><lib-icon icon="Calculator" [size]="20" color="inherit"></lib-icon></span>
-              <div><span>Estimativa ao vivo</span><b>1ª parcela</b></div>
+              <div><span>Estimativa ao vivo</span><b>{{ prod().sistema === 'sac' ? '1ª parcela' : 'Parcela fixa' }}</b></div>
             </header>
             @if (estimativa(); as e) {
               <p class="sf-est-valor">{{ moeda(e.min) }} <small>a {{ moeda(e.max) }}</small></p>
               <dl class="sf-est-lista">
-                <div><dt>Valor financiado</dt><dd>{{ moeda(financiado()) }}</dd></div>
-                <div><dt>Entrada</dt><dd>{{ pctEntrada() }}%</dd></div>
+                <div><dt>{{ credito() ? 'Valor do crédito' : 'Valor financiado' }}</dt><dd>{{ moeda(financiado()) }}</dd></div>
+                @if (!credito()) { <div><dt>Entrada</dt><dd>{{ pctEntrada() }}%</dd></div> }
                 <div><dt>Renda mínima sugerida</dt><dd>{{ moeda(e.renda) }}</dd></div>
               </dl>
-              <p class="sf-est-nota">Parcela pela tabela SAC, compromete até 30% da renda. Valores de referência.</p>
+              <p class="sf-est-nota">{{ prod().sistema === 'sac' ? 'Tabela SAC' : 'Tabela Price' }}, parcela comprometendo até 30% da renda. Valores de referência.</p>
             } @else {
-              <p class="sf-est-vazio">Preencha valor do imóvel, entrada e prazo para ver a faixa de parcelas.</p>
+              <p class="sf-est-vazio">Preencha {{ temBem() ? prod().rotuloValor.toLowerCase() + ', ' : '' }}{{ prod().rotuloEntrada.toLowerCase() }} e prazo para ver a faixa de parcelas.</p>
             }
           </section>
 
@@ -224,8 +252,8 @@
           <section class="sf-como">
             <h3>Como funciona</h3>
             <ol>
-              <li><span>1</span><div><b>Informe os dados</b><p>Do cliente e do imóvel.</p></div></li>
-              <li><span>2</span><div><b>Simule</b><p>Calculamos as condições de cada banco parceiro.</p></div></li>
+              <li><span>1</span><div><b>Informe os dados</b><p>Do cliente e da operação.</p></div></li>
+              <li><span>2</span><div><b>Simule</b><p>Calculamos as condições de {{ bancosProd().length > 1 ? 'cada banco parceiro' : bancosProd()[0].nome }}.</p></div></li>
               <li><span>3</span><div><b>Compare e gere a proposta</b><p>Escolha a melhor condição e siga para a proposta.</p></div></li>
             </ol>
           </section>
@@ -237,23 +265,25 @@
     @case ('resultado') {
       <div class="sr">
         <header class="sr-head">
-          <div><p><lib-icon icon="CheckCircle" [size]="16" color="inherit"></lib-icon>Simulação concluída</p><h2>Compare os bancos e transforme a melhor condição em proposta</h2></div>
+          <div><p><lib-icon icon="CheckCircle" [size]="16" color="inherit"></lib-icon>Simulação concluída</p><h2>{{ bancosProd().length > 1 ? 'Compare os bancos e transforme a melhor condição em proposta' : 'Confira a condição e transforme em proposta' }}</h2></div>
           <lib-button intent="neutral" variant="filled" icon="ShareNetwork" label="Compartilhar" (clicked)="compartilhar()"></lib-button>
         </header>
 
         <section class="sr-resumo">
-          <div class="sr-tipo"><img [src]="asset + tipoAtual().image" alt="" /><div><span>Tipo de imóvel</span><b>{{ tipoAtual().label }}</b></div></div>
+          @if (tipoAtual(); as t) { <div class="sr-tipo"><img [src]="asset + t.image" alt="" /><div><span>Tipo de imóvel</span><b>{{ t.label }}</b></div></div> }
+          @else { <div class="sr-tipo"><span class="sr-tipo-ic"><lib-icon [icon]="prod().icon" [size]="32" color="inherit"></lib-icon></span><div><span>Produto</span><b>{{ prod().curto }}</b></div></div> }
           <dl>@for (i of resumo(); track i[0]) { <div><dt>{{ i[0] }}</dt><dd>{{ i[1] }}</dd></div> }</dl>
           <lib-button class="sr-ajustar" intent="branding" variant="bare" icon="PencilSimple" label="Ajustar" (clicked)="ajustar()"></lib-button>
         </section>
 
         <section class="sr-destaques" aria-label="Destaques">
           <article class="sr-dest sr-dest--top">
-            <span class="sr-dest-tag"><lib-icon icon="Trophy" [size]="16" color="inherit"></lib-icon>Menor 1ª parcela</span>
+            <span class="sr-dest-tag"><lib-icon icon="Trophy" [size]="16" color="inherit"></lib-icon>{{ bancosProd().length > 1 ? (prod().sistema === 'sac' ? 'Menor 1ª parcela' : 'Menor parcela') : (prod().sistema === 'sac' ? '1ª parcela' : 'Parcela fixa') }}</span>
             <div class="sr-dest-banco"><lib-partner [partner]="melhor().parceiro" partnerStyle="fill" [size]="40"></lib-partner><b>{{ melhor().parceiro }}</b></div>
             <p class="sr-dest-valor">{{ moeda(melhor().primeira) }}</p>
-            <span class="sr-dest-sub">Última: {{ moeda(melhor().ultima) }} · {{ pct(melhor().taxa) }}</span>
+            <span class="sr-dest-sub">@if (prod().sistema === 'sac') { Última: {{ moeda(melhor().ultima) }} · } {{ pct(melhor().taxa) }} · {{ melhor().parcelas }} meses</span>
           </article>
+          @if (bancosProd().length > 1) {
           <article class="sr-dest">
             <span class="sr-dest-tag"><lib-icon icon="Percent" [size]="16" color="inherit"></lib-icon>Menor taxa</span>
             <div class="sr-dest-banco"><lib-partner [partner]="menorTaxa().parceiro" partnerStyle="fill" [size]="40"></lib-partner><b>{{ menorTaxa().parceiro }}</b></div>
@@ -266,26 +296,29 @@
             <p class="sr-dest-valor">{{ moeda(menorTotal().total) }}</p>
             <span class="sr-dest-sub">Em {{ menorTotal().parcelas }} parcelas</span>
           </article>
+          }
         </section>
 
         <section class="sr-tabela" aria-labelledby="sr-tab-t">
           <header class="sr-tab-head">
-            <h3 id="sr-tab-t">Todas as condições</h3>
+            <h3 id="sr-tab-t">{{ bancosProd().length > 1 ? 'Todas as condições' : 'Condição do parceiro' }}</h3>
+            @if (bancosProd().length > 1) {
             <span class="sr-ordem">Ordenar por
-              @for (o of [{ k: 'primeira', l: '1ª parcela' }, { k: 'taxa', l: 'Taxa' }, { k: 'total', l: 'Custo total' }]; track o.k) {
+              @for (o of [{ k: 'primeira', l: prod().sistema === 'sac' ? '1ª parcela' : 'Parcela' }, { k: 'taxa', l: 'Taxa' }, { k: 'total', l: 'Custo total' }]; track o.k) {
                 <button type="button" class="sf-chip" [class.is-on]="ordem() === o.k" (click)="ordem.set($any(o.k))">{{ o.l }}</button>
               }
             </span>
+            }
           </header>
           <lib-list [striped]="false" [hoverable]="true">
             <lib-list-header>
               <lib-list-header-item width="230px">Parceiro</lib-list-header-item>
-              <lib-list-header-item>Valor financiado</lib-list-header-item>
+              <lib-list-header-item>{{ credito() ? 'Valor do crédito' : 'Valor financiado' }}</lib-list-header-item>
               <lib-list-header-item width="136px">Taxa de juros</lib-list-header-item>
               <lib-list-header-item width="136px">CET</lib-list-header-item>
               <lib-list-header-item width="96px">Parcelas</lib-list-header-item>
-              <lib-list-header-item>1ª parcela</lib-list-header-item>
-              <lib-list-header-item>Última parcela</lib-list-header-item>
+              <lib-list-header-item>{{ prod().sistema === 'sac' ? '1ª parcela' : 'Parcela' }}</lib-list-header-item>
+              @if (prod().sistema === 'sac') { <lib-list-header-item>Última parcela</lib-list-header-item> }
               <lib-list-header-item width="156px">Ações</lib-list-header-item>
             </lib-list-header>
             <lib-list-body>
@@ -293,20 +326,20 @@
                 <lib-list-body-row [class.sr-melhor]="l.parceiro === melhor().parceiro">
                   <lib-list-body-cell kind="title">
                     <span class="sr-banco"><lib-partner [partner]="l.parceiro" partnerStyle="fill" [size]="32"></lib-partner>{{ l.parceiro }}
-                      @if (l.parceiro === melhor().parceiro) { <lib-tag emphasis="low" color="green" size="small">Melhor</lib-tag> }</span>
+                      @if (bancosProd().length > 1 && l.parceiro === melhor().parceiro) { <lib-tag emphasis="low" color="green" size="small">Melhor</lib-tag> }</span>
                   </lib-list-body-cell>
-                  <lib-list-body-cell label="Valor financiado">{{ moeda(l.financiado) }}</lib-list-body-cell>
+                  <lib-list-body-cell [label]="credito() ? 'Valor do crédito' : 'Valor financiado'">{{ moeda(l.financiado) }}</lib-list-body-cell>
                   <lib-list-body-cell label="Taxa de juros">{{ pct(l.taxa) }}</lib-list-body-cell>
                   <lib-list-body-cell label="CET">{{ pct(l.cet) }}</lib-list-body-cell>
                   <lib-list-body-cell label="Parcelas">{{ l.parcelas }}</lib-list-body-cell>
-                  <lib-list-body-cell label="1ª parcela"><b class="sr-forte">{{ moeda(l.primeira) }}</b></lib-list-body-cell>
-                  <lib-list-body-cell label="Última parcela">{{ moeda(l.ultima) }}</lib-list-body-cell>
+                  <lib-list-body-cell [label]="prod().sistema === 'sac' ? '1ª parcela' : 'Parcela'"><b class="sr-forte">{{ moeda(l.primeira) }}</b></lib-list-body-cell>
+                  @if (prod().sistema === 'sac') { <lib-list-body-cell label="Última parcela">{{ moeda(l.ultima) }}</lib-list-body-cell> }
                   <lib-list-body-cell kind="actions"><lib-button intent="neutral" variant="filled" label="Escolher" [showIcon]="false" (clicked)="gerarProposta(l.parceiro)"></lib-button></lib-list-body-cell>
                 </lib-list-body-row>
               }
             </lib-list-body>
           </lib-list>
-          <p class="sr-nota"><lib-icon icon="Info" [size]="16" color="inherit"></lib-icon>Valores de referência pela tabela SAC, sujeitos à análise de crédito de cada banco.</p>
+          <p class="sr-nota"><lib-icon icon="Info" [size]="16" color="inherit"></lib-icon>Valores de referência pela tabela {{ prod().sistema === 'sac' ? 'SAC' : 'Price' }}, sujeitos à análise de crédito de cada banco.</p>
         </section>
 
         <div class="sr-rodape">

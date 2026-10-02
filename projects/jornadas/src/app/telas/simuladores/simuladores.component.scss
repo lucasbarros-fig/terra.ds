@@ -46,6 +46,17 @@
   lib-tag { flex: 0 0 auto; white-space: nowrap; }
   &:focus-visible { outline: var(--size-stoke-2) solid var(--color-state-system-focus); outline-offset: 2px; } }
 
+.sm-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--size-spacing-16); }
+.sm-produto { display: flex; align-items: center; gap: var(--size-spacing-16); padding: var(--size-spacing-16) var(--size-spacing-20, 20px); text-align: left; cursor: pointer;
+  border: var(--size-stoke-1) solid var(--color-stroke-frame); border-radius: var(--size-radius-16); background: var(--color-theme-lower);
+  transition: border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+  &:hover { border-color: var(--color-branding-surface-primary-base); transform: translateY(-1px); box-shadow: 0 10px 24px -18px rgba(0, 0, 0, .4); }
+  &:focus-visible { outline: var(--size-stoke-2) solid var(--color-state-system-focus); outline-offset: 2px; } }
+.sm-produto-ic { display: inline-grid; place-items: center; flex: 0 0 auto; width: 52px; height: 52px; border-radius: var(--size-radius-12, 12px);
+  background: color-mix(in srgb, var(--color-branding-surface-primary-base) 12%, transparent); color: var(--color-branding-surface-primary-base); }
+.sm-produto-txt { display: flex; flex: 1 1 auto; flex-direction: column; gap: 2px; min-width: 0;
+  > b { font-size: var(--size-font-body-16); font-weight: 700; color: var(--color-text-essential-heading); }
+  > span:not(.sm-produto-meta) { font-size: var(--size-font-body-14); color: var(--color-text-essential-caption); } }
 .sm-sec { display: flex; flex-direction: column; gap: var(--size-spacing-16); }
 .sm-head { display: flex; flex-direction: column; gap: 4px;
   h2 { margin: 0; font-size: var(--size-font-heading-20); font-weight: 700; color: var(--color-text-essential-heading); }
