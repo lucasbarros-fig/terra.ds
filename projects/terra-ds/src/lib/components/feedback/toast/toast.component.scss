@@ -8,7 +8,8 @@ html, body, * {
   position: fixed;
   bottom: var(--size-spacing-24, 24px);
   right: var(--size-spacing-24, 24px);
-  z-index: 9999;
+  /* Acima de Drawer e Dialog (120000): o aviso nunca fica escondido. */
+  z-index: 130000;
 }
 
 .toast-container {
