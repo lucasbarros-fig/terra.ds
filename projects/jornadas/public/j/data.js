@@ -185,7 +185,7 @@ window.JORNADAS.sideNav = function (brand, journey, onNav) {
         'pj.fin': { panelTitle: 'Produtos imobiliários', options: ['aquisicao'], list: ['aquisicao'] },
         'pj.emp': { panelTitle: 'Produtos para pessoa jurídica', options: ['imovel', 'condominios', 'veiculos', 'giro'], list: ['imovel', 'condominios', 'veiculos', 'giro'] }
       },
-      emBreve: ['veiculos'],
+      emBreve: [],
       catalogo: {
         pf: {
           construcao: { label: 'Financiamento para Construção', icon: 'building-commercial--duotone',
