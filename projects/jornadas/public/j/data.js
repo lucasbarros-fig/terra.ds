@@ -91,7 +91,7 @@ window.JORNADAS.sideNav = function (brand, journey, onNav) {
         rules: ['Crédito com Garantia de Veículos aparece desabilitado, com o balão "Em breve".'],
         components: BASE_COMP.concat(['Card', 'PartnerLogo', 'Tooltip', 'Icon']) },
       { id: 'pf-garantia-imovel', group: 'pf', title: 'PF · Crédito com Garantia de Imóvel', state: { perfil: 'pf', solucao: 'emp', produto: 'imovel' }, node: '23207:1734', figmaName: 'Home Equity PF', shot: 'shots/07-pf-garantia-imovel.png',
-        about: 'Detalhe do crédito com garantia de imóvel (Home Equity) para PF e sócios PJ.',
+        about: 'Detalhe do crédito com garantia de imóvel para PF e sócios PJ.',
         rules: ['No Figma o frame se chama "Home Equity PF", mas a tela mostra Crédito com Garantia de Imóvel.'],
         components: BASE_COMP.concat(['PartnerLogo', 'Link', 'Tooltip', 'Toast']) },
       { id: 'pf-garantia-veiculos', group: 'pf', title: 'PF · Crédito com Garantia de Veículos', state: { perfil: 'pf', solucao: 'emp', produto: 'veiculos' }, node: '23420:11178', figmaName: 'Emprestimo com garantia PF', shot: 'shots/08-pf-garantia-veiculos.png',
@@ -378,7 +378,7 @@ window.JORNADAS.sideNav = function (brand, journey, onNav) {
         rules: ['"Nova proposta" abre a jornada Nova Proposta.', 'O resumo mostra as 6 etapas zeradas.'],
         components: BASE_P.concat(['Toast']) },
       { id: 'vazio-filtros', group: 'vazio', title: 'Nenhuma proposta com os filtros', state: { view: 'kanban', filtros: 'sem-resultado' }, node: '8617:10976', figmaName: 'Propostas -> Seu acompanhamento -> Empty State/Filtros', shot: 'shots/33-propostas-vazio-filtros.png',
-        about: 'Filtros sem resultado (período 1 a 15 de abril de 2026 e produto Home Equity): a lista some e aparece "Limpar filtros".',
+        about: 'Filtros sem resultado (período 1 a 15 de abril de 2026 e produto Crédito com Garantia de Imóvel): a lista some e aparece "Limpar filtros".',
         rules: ['"Limpar filtros" volta todos os filtros para "Todos" e mostra a lista de novo.'],
         components: BASE_P.concat(['Toast']) }
     ],
@@ -407,7 +407,7 @@ window.JORNADAS.sideNav = function (brand, journey, onNav) {
         { value: 'formalizacao', label: 'Formalização', icon: 'clipboard-text--duotone', color: 'teal' },
         { value: 'finalizado', label: 'Finalizado', icon: 'chart-simple--duotone', color: 'green' }
       ],
-      produtos: ['Financiamento Imobiliário', 'Crédito para construção', 'Home Equity', 'Crédito para Condomínios'],
+      produtos: ['Financiamento Imobiliário', 'Crédito para construção', 'Crédito com Garantia de Imóvel', 'Crédito para Condomínios'],
       usuarios: [
         { value: 'mariana', label: 'Mariana Silva', children: [
           { value: 'mariana/carlos', label: 'Carlos Silva' }, { value: 'mariana/gabriel', label: 'Gabriel Souza' },
@@ -416,7 +416,7 @@ window.JORNADAS.sideNav = function (brand, journey, onNav) {
         { value: 'lucas', label: 'Lucas Oliveira' }, { value: 'beatriz', label: 'Beatriz Costa' }
       ],
       statusIntent: { 'Pendência documentos de crédito': 'notice', 'Crédito negado': 'negative', 'Crédito aprovado': 'positive' },
-      filtrosSemResultado: { produto: ['Home Equity'], periodo: { start: '2026-04-01', end: '2026-04-15' } },
+      filtrosSemResultado: { produto: ['Crédito com Garantia de Imóvel'], periodo: { start: '2026-04-01', end: '2026-04-15' } },
       propostas: PROPOSTAS
     }
   });

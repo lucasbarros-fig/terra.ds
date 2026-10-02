@@ -41,7 +41,7 @@ export class LoginComponent {
   protected readonly ano = new Date().getFullYear();
 
   protected readonly beneficios = [
-    { icon: 'HouseLine', texto: 'Financiamento imobiliário, home equity e consórcio em um só lugar' },
+    { icon: 'HouseLine', texto: 'Financiamento imobiliário, crédito com garantia de imóvel e consórcio em um só lugar' },
     { icon: 'Handshake', texto: 'Compare ofertas dos principais bancos parceiros em minutos' },
     { icon: 'ChartLineUp', texto: 'Acompanhe propostas e comissões em tempo real' },
   ];
