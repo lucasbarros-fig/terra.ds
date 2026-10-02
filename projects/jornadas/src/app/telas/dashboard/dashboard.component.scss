@@ -182,3 +182,6 @@
 @media (max-width: 767px) {
   .db-destaques lib-banner ::ng-deep .banner-arrow { display: none; }
 }
+
+/* Mobile: banner um pouco mais alto para o conteúdo respirar. */
+@media (max-width: 767px) { .db-destaques lib-banner.db-banner { --banner-height: 112px !important; } }

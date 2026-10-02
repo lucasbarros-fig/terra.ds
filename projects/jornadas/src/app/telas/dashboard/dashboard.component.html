@@ -61,7 +61,7 @@
           <h2 id="db-destaques-t">{{ C.destaques.title }}</h2>
           <lib-button intent="branding" variant="bare" [showIcon]="false" [label]="C.destaques.link" (clicked)="avisar('A central de notícias ainda não tem jornada cadastrada.')"></lib-button>
         </header>
-        <lib-banner [slides]="slides()" [height]="280" [autoplay]="true" [interval]="6000" ariaLabel="Destaques da The House"></lib-banner>
+        <lib-banner class="db-banner" [slides]="slides()" [height]="280" [autoplay]="true" [interval]="6000" ariaLabel="Destaques da The House"></lib-banner>
       </section>
 
       <section class="db-panel db-funil" aria-labelledby="db-funil-t">

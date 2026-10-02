@@ -45,17 +45,20 @@
           <header class="sm-head"><h2 id="sm-prod-t">Todos os produtos</h2><p>Escolha o que o cliente precisa e compare as condições dos parceiros.</p></header>
           <div class="sm-produtos">
             @for (p of produtos; track p.id) {
-              <button type="button" class="sm-produto" (click)="escolherProduto(p)">
-                <span class="sm-produto-ic"><lib-icon [icon]="p.icon" [size]="24" color="inherit"></lib-icon></span>
-                <span class="sm-produto-txt">
-                  <b>{{ p.label }}</b><span>{{ p.text }}</span>
-                  <span class="sm-produto-meta">
-                    @for (pf of p.perfis; track pf) { <lib-tag emphasis="low" [color]="pf === 'pf' ? 'blue' : 'purple'" size="small">{{ pf === 'pf' ? 'PF' : 'PJ' }}</lib-tag> }
-                    <span class="sm-produto-bancos">@for (b of (p.bancos ?? C().bancos).slice(0, 4); track b.nome) { <lib-partner [partner]="b.nome" partnerStyle="fill" [size]="20"></lib-partner> }
-                      @if ((p.bancos ?? C().bancos).length > 4) { <small>+{{ (p.bancos ?? C().bancos).length - 4 }}</small> }</span>
-                  </span>
+              <button type="button" class="sm-produto" [style.--tema]="p.tema" (click)="escolherProduto(p)" [attr.aria-label]="'Simular ' + p.label">
+                <span class="sm-produto-topo">
+                  <span class="sm-produto-ic"><lib-icon [icon]="p.icon" [size]="24" color="inherit"></lib-icon></span>
+                  <span class="sm-produto-perfis">@for (pf of p.perfis; track pf) { <span>{{ pf === 'pf' ? 'PF' : 'PJ' }}</span> }</span>
                 </span>
-                <lib-icon class="sm-produto-seta" icon="CaretRight" [size]="20" color="inherit"></lib-icon>
+                <span class="sm-produto-txt"><b>{{ p.label }}</b><span>{{ p.text }}</span></span>
+                <span class="sm-produto-rodape">
+                  <span class="sm-produto-bancos">
+                    @for (b of (p.bancos ?? C().bancos).slice(0, 4); track b.nome) { <lib-partner [partner]="b.nome" partnerStyle="fill" [size]="24"></lib-partner> }
+                    @if ((p.bancos ?? C().bancos).length > 4) { <small>+{{ (p.bancos ?? C().bancos).length - 4 }}</small> }
+                    <em>{{ (p.bancos ?? C().bancos).length }} {{ (p.bancos ?? C().bancos).length === 1 ? 'banco' : 'bancos' }}</em>
+                  </span>
+                  <span class="sm-produto-cta">Simular <lib-icon icon="ArrowRight" [size]="16" color="inherit"></lib-icon></span>
+                </span>
               </button>
             }
           </div>

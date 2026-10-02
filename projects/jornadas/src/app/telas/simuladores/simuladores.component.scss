@@ -47,17 +47,39 @@
   lib-tag { flex: 0 0 auto; white-space: nowrap; }
   &:focus-visible { outline: var(--size-stoke-2) solid var(--color-state-system-focus); outline-offset: 2px; } }
 
-.sm-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--size-spacing-16); }
-.sm-produto { display: flex; align-items: center; gap: var(--size-spacing-16); padding: var(--size-spacing-16) var(--size-spacing-20, 20px); text-align: left; cursor: pointer;
+.sm-produtos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--size-spacing-16); }
+.sm-produto { --tema: var(--color-branding-surface-primary-base); position: relative; display: flex; flex-direction: column; gap: var(--size-spacing-16); min-width: 0;
+  padding: var(--size-spacing-20, 20px); overflow: hidden; isolation: isolate; text-align: left; cursor: pointer; font: inherit;
   border: var(--size-stoke-1) solid var(--color-stroke-frame); border-radius: var(--size-radius-16); background: var(--color-theme-lower);
-  transition: border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
-  &:hover { border-color: var(--color-branding-surface-primary-base); transform: translateY(-1px); box-shadow: 0 10px 24px -18px rgba(0, 0, 0, .4); }
+  transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+  /* Brilho na cor do produto no canto, discreto até o hover. */
+  &::before { content: ''; position: absolute; right: -60px; top: -60px; z-index: -1; width: 180px; height: 180px; border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--tema) 22%, transparent), transparent 70%); opacity: .6; transition: opacity 200ms ease, transform 300ms ease; }
+  &:hover { border-color: color-mix(in srgb, var(--tema) 55%, var(--color-stroke-frame)); transform: translateY(-2px); box-shadow: 0 18px 36px -24px color-mix(in srgb, var(--tema) 70%, #000);
+    &::before { opacity: 1; transform: scale(1.15); }
+    .sm-produto-cta { gap: 10px; background: var(--tema); color: #fff; } }
   &:focus-visible { outline: var(--size-stoke-2) solid var(--color-state-system-focus); outline-offset: 2px; } }
-.sm-produto-ic { display: inline-grid; place-items: center; flex: 0 0 auto; width: 52px; height: 52px; border-radius: var(--size-radius-12, 12px);
-  background: color-mix(in srgb, var(--color-branding-surface-primary-base) 12%, transparent); color: var(--color-branding-surface-primary-base); }
-.sm-produto-txt { display: flex; flex: 1 1 auto; flex-direction: column; gap: 2px; min-width: 0;
-  > b { font-size: var(--size-font-body-16); font-weight: 700; color: var(--color-text-essential-heading); }
-  > span:not(.sm-produto-meta) { font-size: var(--size-font-body-14); color: var(--color-text-essential-caption); } }
+.sm-produto-topo { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--size-spacing-12); }
+.sm-produto-ic { display: inline-grid; place-items: center; flex: 0 0 auto; width: 48px; height: 48px; border-radius: 14px; color: #fff;
+  background: linear-gradient(135deg, var(--tema), color-mix(in srgb, var(--tema) 70%, #0d1b2a));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2), 0 8px 18px -10px var(--tema); }
+.sm-produto-perfis { display: flex; gap: 4px;
+  span { padding: 2px 8px; border: 1px solid var(--color-stroke-frame); border-radius: 99px; background: var(--color-theme-base);
+    font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--color-text-essential-caption); } }
+.sm-produto-txt { display: flex; flex: 1 1 auto; flex-direction: column; gap: 4px; min-width: 0;
+  > b { font-size: var(--size-font-body-16); font-weight: 700; line-height: 1.3; color: var(--color-text-essential-heading); }
+  > span { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-size: var(--size-font-body-14); line-height: 1.45; color: var(--color-text-essential-caption); } }
+.sm-produto-rodape { display: flex; align-items: center; justify-content: space-between; gap: var(--size-spacing-12); padding-top: var(--size-spacing-16);
+  border-top: 1px dashed var(--color-stroke-frame); }
+.sm-produto-bancos { display: flex; align-items: center; min-width: 0;
+  lib-partner { margin-left: -6px; border-radius: 8px; box-shadow: 0 0 0 2px var(--color-theme-lower); line-height: 0; }
+  lib-partner:first-child { margin-left: 0; }
+  small { display: inline-grid; place-items: center; height: 24px; min-width: 24px; margin-left: -6px; padding: 0 6px; border-radius: 8px;
+    background: var(--color-theme-upper); box-shadow: 0 0 0 2px var(--color-theme-lower); font-size: 11px; font-weight: 700; color: var(--color-text-essential-body); }
+  em { margin-left: 10px; font-size: var(--size-font-body-12); font-style: normal; color: var(--color-text-essential-caption); white-space: nowrap; } }
+.sm-produto-cta { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 99px;
+  background: color-mix(in srgb, var(--tema) 10%, transparent); color: var(--tema); font-size: var(--size-font-body-14); font-weight: 700;
+  transition: gap 200ms ease, background 200ms ease, color 200ms ease; }
 .sm-sec { display: flex; flex-direction: column; gap: var(--size-spacing-16); }
 .sm-head { display: flex; flex-direction: column; gap: 4px;
   h2 { margin: 0; font-size: var(--size-font-heading-20); font-weight: 700; color: var(--color-text-essential-heading); }
@@ -243,12 +265,14 @@
   .sf-como { display: none; }
 }
 @media (max-width: 1023px) {
+  .sm-produtos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .sm-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .sr-resumo { grid-template-columns: minmax(0, 1fr); dl { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-right: 0; } }
   .sr-dest-valor { font-size: 22px; }
   .sf-campos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 767px) {
+  .sm-produtos { grid-template-columns: minmax(0, 1fr); }
   .sm, .sr { padding-left: var(--size-spacing-16); padding-right: var(--size-spacing-16); }
   .sm-hero { padding: var(--size-spacing-24) 48px var(--size-spacing-48, 48px); } .sm-hero-tit { font-size: 24px; } .sm-hero-glass { display: none; } .sm-hero-conteudo { max-width: 100%; } .sm-hero-txt { display: none; }
   .sf-perguntas, .sf-painel { padding: var(--size-spacing-16); }
@@ -262,3 +286,6 @@
   .sr-ajustar-bar { display: none; }
 }
 .sr-tabela ::ng-deep td { vertical-align: middle; }
+
+/* Mobile: banner um pouco mais alto para o conteúdo respirar. */
+@media (max-width: 767px) { .sm-banners { --banner-height: 400px !important; } }
