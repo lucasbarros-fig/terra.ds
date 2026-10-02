@@ -1,6 +1,12 @@
 .np { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(360px, 520px); min-height: 100%; }
 .np > .np-div--h { display: none !important; }
 
+/* Desktop: cada lado rola sozinho (perguntas à esquerda, painel do produto à direita); a página não desce inteira. */
+@media (min-width: 1201px) {
+  .np { height: 100%; min-height: 0; }
+  .np-col, .np-painel { min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+}
+
 .np-col { display: flex; flex-direction: column; min-width: 0; }
 .np-perguntas { display: flex; flex: 1 1 auto; flex-direction: column; gap: var(--size-spacing-24); padding: var(--size-spacing-32); }
 .np-q { display: flex; flex-direction: column; gap: var(--size-spacing-16); }
