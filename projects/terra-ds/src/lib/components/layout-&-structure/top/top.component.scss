@@ -145,3 +145,22 @@
   background-color: var(--color-support-colors-red);
   pointer-events: none;
 }
+
+// ---------- Responsivo ----------
+// Desktop S / tablet: some o nome e o cargo; fica só o avatar.
+@media (max-width: 1279px) {
+  :host { --top-padding-x: var(--size-spacing-24); --top-diagonal: 48px; }
+  .top-profile-text { display: none; }
+}
+
+// Mobile: barra de 64px, título menor, sem breadcrumb e sem o bloco do usuário.
+@media (max-width: 767px) {
+  :host { --top-height: 64px; --top-padding-x: var(--size-spacing-16); --top-diagonal: 32px; }
+  .top { gap: var(--size-spacing-8); }
+  .top-title-text { font-size: var(--size-font-body-16); line-height: 24px; }
+  .top-breadcrumbs,
+  .top-profile,
+  .top-aside .top-divisor { display: none; }
+  .top-aside { gap: var(--size-spacing-4); }
+  .top-actions { gap: 0; }
+}

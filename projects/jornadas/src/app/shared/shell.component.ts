@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, computed, input, output, signal } from '@angular/core';
 import {
   BreadcrumbItem, ButtonComponent, IconButtonComponent, DropdownItemComponent, DropdownGroupHeaderComponent, IconComponent,
   SidebarComponent, SidebarItem, TabsComponent, ToggleButtonComponent, TopAction, TopComponent, ToastComponent,
@@ -28,6 +28,27 @@ export class ShellComponent {
   protected readonly avisos = inject(AvisosService);
 
   protected readonly topo = J.topo;
+
+  /** Resoluções: Desktop L 1728x972, Desktop S 1366x768, Tablet 768x1024, Mobile 390x844. */
+  protected readonly bp = signal(ShellComponent.faixa(window.innerWidth));
+  /** Tablet começa com a sidebar recolhida (só ícones); desktop, aberta. */
+  protected readonly recolhida = signal(this.bp() === 'tablet');
+  /** Mobile: sidebar vira gaveta, aberta pelo botão de menu no topo. */
+  protected readonly gaveta = signal(false);
+  private static faixa(w: number): 'desktop' | 'tablet' | 'mobile' { return w < 768 ? 'mobile' : w < 1280 ? 'tablet' : 'desktop'; }
+
+  @HostListener('window:resize')
+  protected aoRedimensionar(): void {
+    const nova = ShellComponent.faixa(window.innerWidth);
+    if (nova === this.bp()) return;
+    this.bp.set(nova);
+    this.recolhida.set(nova === 'tablet');
+    this.gaveta.set(false);
+    this.painel.set(null);
+  }
+
+  @HostListener('document:keydown.escape')
+  protected aoEsc(): void { this.gaveta.set(false); }
   protected readonly painel = signal<null | 'notificacoes' | 'loja' | 'configuracoes'>(null);
   protected readonly abaNotif = signal(0);
   protected readonly lidas = signal<Record<string, boolean>>(Object.fromEntries(J.topo.notificacoes.map((n: any) => [n.id, n.lida])));
@@ -49,8 +70,10 @@ export class ShellComponent {
 
   protected readonly naoLidas = computed(() => J.topo.notificacoes.filter((n: any) => !this.lidas()[n.id]).length);
   protected readonly acoes = computed<TopAction[]>(() => [
-    { id: 'treinamentos', icon: 'Calendar', label: 'Treinamentos' },
-    { id: 'loja', icon: 'Storefront', label: 'Minha loja' },
+    ...(this.bp() === 'mobile' ? [] : [
+      { id: 'treinamentos', icon: 'Calendar', label: 'Treinamentos' },
+      { id: 'loja', icon: 'Storefront', label: 'Minha loja' },
+    ]),
     { id: 'notificacoes', icon: 'Bell', label: this.naoLidas() ? `Notificações: ${this.naoLidas()} não lidas` : 'Notificações', badge: this.naoLidas() > 0 },
     { id: 'configuracoes', icon: 'Gear', label: 'Configurações' },
   ]);
@@ -85,6 +108,7 @@ export class ShellComponent {
   protected iniciais(n: string): string { const p = n.split(' '); return (p[0][0] + (p[1]?.[0] ?? p[0][1] ?? '')).toUpperCase(); }
 
   protected selecionar(item: SidebarItem): void {
+    this.gaveta.set(false);
     const destino = item.id === 'base' ? 'base-minha' : item.id;
     if (destino !== this.menu()) this.nav.emit(destino);
   }

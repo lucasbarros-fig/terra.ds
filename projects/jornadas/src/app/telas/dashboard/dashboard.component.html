@@ -43,12 +43,14 @@
           <div class="db-gerente-txt">
             <b>{{ C.gerente.name }}</b>
             <span>{{ C.gerente.role }}</span>
+            <span class="db-gerente-tel">{{ C.gerente.phone }}</span>
           </div>
         </div>
         <div class="db-gerente-acoes">
           <lib-icon-button class="db-contorno db-contorno--azul" type="branding" variant="ghost" icon="Envelope" [ariaLabel]="'Enviar email para ' + C.gerente.name" (clicked)="avisar('Email da gerente de sucesso: ' + C.gerente.email)"></lib-icon-button>
           <lib-icon-button class="db-contorno db-contorno--verde" type="neutral" variant="ghost" icon="WhatsappLogo" [ariaLabel]="'Chamar ' + C.gerente.name + ' no WhatsApp'" (clicked)="avisar('WhatsApp da gerente de sucesso: ' + C.gerente.phone, 'success')"></lib-icon-button>
           <lib-button class="db-contorno db-contorno--cinza db-tel" intent="neutral" variant="ghost" icon="Phone" [label]="C.gerente.phone" (clicked)="avisar('Telefone da gerente de sucesso: ' + C.gerente.phone)"></lib-button>
+          <lib-icon-button class="db-contorno db-contorno--cinza db-tel-ic" type="neutral" variant="ghost" icon="Phone" [ariaLabel]="'Ligar para ' + C.gerente.name + ': ' + C.gerente.phone" (clicked)="avisar('Telefone da gerente de sucesso: ' + C.gerente.phone)"></lib-icon-button>
         </div>
       </section>
     </section>

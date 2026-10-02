@@ -129,3 +129,29 @@
   &:hover { background: var(--color-state-system-ghost-hovering); }
   &:focus-visible { outline: var(--size-stoke-2) solid var(--color-state-system-focus); } }
 .sh-config .sh-versao { border-top: 0; padding-top: var(--size-spacing-4); }
+
+/* ---------- Responsivo (Desktop L 1728, Desktop S 1366, Tablet 768, Mobile 390) ---------- */
+.sh-menu-btn { flex: 0 0 auto; margin-left: calc(-1 * var(--size-spacing-8)); }
+
+@media (max-width: 767px) {
+  .sh-side--gaveta {
+    position: absolute; top: 0; bottom: 0; left: 0; z-index: 50;
+    max-width: calc(100% - 56px);
+    transform: translateX(-100%); visibility: hidden;
+    transition: transform 220ms ease, visibility 0s linear 220ms;
+    box-shadow: 0 0 0 transparent;
+  }
+  .sh-side--gaveta.is-aberta {
+    transform: none; visibility: visible;
+    transition: transform 220ms ease;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, .24);
+  }
+  .sh-gaveta-fundo { position: absolute; inset: 0; z-index: 49; background: rgba(15, 20, 23, .48); }
+
+  .sh-panel { top: 72px; right: var(--size-spacing-16); left: var(--size-spacing-16); width: auto; max-height: calc(100% - 88px); overflow: auto; }
+  .sh-toasts { right: var(--size-spacing-16); left: var(--size-spacing-16); bottom: var(--size-spacing-16); align-items: stretch; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sh-side--gaveta, .sh-side--gaveta.is-aberta { transition: none; }
+}

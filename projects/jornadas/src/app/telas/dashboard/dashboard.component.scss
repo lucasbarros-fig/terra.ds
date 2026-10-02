@@ -59,10 +59,6 @@
 .db-item-lado { display: flex; align-items: center; gap: var(--size-spacing-16); flex-shrink: 0; }
 .db-tempo { display: inline-flex; align-items: center; gap: 6px; font-size: var(--size-font-body-12); color: var(--color-text-essential-caption); }
 
-@media (max-width: 1280px) {
-  .db-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .db-meio, .db-listas { grid-template-columns: minmax(0, 1fr); }
-}
 
 /* Métricas no mesmo desenho do Figma: ícone em círculo colorido, título na cor, valor e olho para ocultar. */
 .db-metrica { position: relative; flex-direction: row; align-items: center; gap: var(--size-spacing-16); min-height: 124px; }
@@ -122,3 +118,58 @@
   b { font-size: var(--size-font-body-16); line-height: 24px; font-weight: 700; color: var(--color-text-essential-heading); font-variant-numeric: tabular-nums; } }
 .db-num-var { display: inline-flex; align-items: center; gap: var(--size-spacing-4); padding: var(--size-spacing-4) var(--size-spacing-8); border-radius: var(--size-radius-8);
   background: var(--color-support-colors-green); color: var(--color-text-static-white); font-size: var(--size-font-body-12); line-height: 18px; font-weight: 500; }
+
+/* Gerente de sucesso: largo mostra o botão com o telefone; estreito (Desktop S, tablet) vira 3 ícones e o número vai para o texto. */
+.db-gerente { container: gerente / inline-size; min-width: 0; }
+.db-gerente-txt { min-width: 0; }
+.db-gerente-tel { display: none; font-variant-numeric: tabular-nums; }
+.db-tel-ic { display: none; }
+@container gerente (max-width: 270px) {
+  .db-gerente-tel { display: block; }
+  .db-tel { display: none; }
+  .db-tel-ic { display: inline-flex; }
+}
+
+/* ---------- Responsivo: Desktop L 1728, Desktop S 1366, Tablet 768, Mobile 390 ---------- */
+@media (max-width: 1279px) {
+  .db { padding: var(--size-spacing-24); }
+  .db-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .db-meio, .db-listas { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .db { gap: var(--size-spacing-16); padding: var(--size-spacing-16); }
+  .db-kpis { grid-template-columns: minmax(0, 1fr); gap: var(--size-spacing-12); }
+  .db-num { min-height: 0; gap: var(--size-spacing-16); padding: var(--size-spacing-20, 20px); }
+  .db-num-dados { gap: var(--size-spacing-8); }
+  .db-gerente { padding: var(--size-spacing-20, 20px); gap: var(--size-spacing-16); }
+  .db-head { flex-wrap: wrap; row-gap: var(--size-spacing-4); }
+  .db-funil-lista li { min-width: 0; width: 100% !important; }
+}
+
+/* Desktop S (1366): cards de 243px como no Figma; espaço interno menor para o título caber em uma linha. */
+@media (min-width: 1280px) and (max-width: 1535px) {
+  .db-num, .db-gerente { padding: var(--size-spacing-20, 20px) var(--size-spacing-16); }
+  .db-num-head { gap: 6px; }
+  .db-num-head h2 { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+}
+
+/* Itens das listas: quando a coluna fica estreita, a ação desce para baixo do texto. */
+.db-itens { container: itens / inline-size; }
+@container itens (max-width: 440px) {
+  .db-item { flex-direction: column; align-items: stretch; }
+  .db-item-lado { justify-content: space-between; }
+  .db-item-lado lib-button:only-child { flex: 1 1 auto; }
+  .db-item-lado lib-button:only-child ::ng-deep button { width: 100%; justify-content: center; }
+}
+
+/* Destaques: abaixo do Desktop L o banner ocupa a linha toda e mantém a proporção da arte (1660x330), sem cortar o texto. */
+.db-destaques { container-type: inline-size; }
+@media (max-width: 1535px) {
+  .db-meio { grid-template-columns: minmax(0, 1fr); }
+  .db-destaques lib-banner { --banner-height: calc(100cqw * 0.1988) !important; }
+}
+
+@media (max-width: 767px) {
+  .db-destaques lib-banner ::ng-deep .banner-arrow { display: none; }
+}

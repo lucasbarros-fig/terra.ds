@@ -1,4 +1,5 @@
 <header class="top">
+  <ng-content select="[topLeading]"></ng-content>
   <div class="top-title">
     <p class="top-title-text">{{ title() }}</p>
     @if (breadcrumbs().length) {

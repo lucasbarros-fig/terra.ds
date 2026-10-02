@@ -1,5 +1,21 @@
 <div class="sh">
-  <lib-sidebar class="sh-side" [class.sh-side--marca]="home()" [items]="itens" [activeId]="ativo()" groupLabel="" (itemSelect)="selecionar($event)"></lib-sidebar>
+  @if (bp() === 'mobile' && gaveta()) {
+    <div class="sh-gaveta-fundo" (click)="gaveta.set(false)" aria-hidden="true"></div>
+  }
+  <lib-sidebar
+    class="sh-side"
+    [class.sh-side--marca]="home()"
+    [class.sh-side--gaveta]="bp() === 'mobile'"
+    [class.is-aberta]="gaveta()"
+    [attr.inert]="bp() === 'mobile' && !gaveta() ? '' : null"
+    [items]="itens"
+    [activeId]="ativo()"
+    groupLabel=""
+    [showToggle]="bp() !== 'mobile'"
+    [collapsed]="bp() === 'mobile' ? false : recolhida()"
+    (collapsedChange)="recolhida.set($event)"
+    (itemSelect)="selecionar($event)"
+  ></lib-sidebar>
 
   <div class="sh-main">
     @if (home()) {
@@ -32,7 +48,11 @@
       [userRole]="topo.account.role"
       [actions]="acoes()"
       (actionClick)="acao($event)"
-    ></lib-top>
+    >
+      @if (bp() === 'mobile') {
+        <lib-icon-button topLeading class="sh-menu-btn" type="neutral" variant="ghost" icon="List" ariaLabel="Abrir menu" [attr.aria-expanded]="gaveta()" (clicked)="gaveta.set(true)"></lib-icon-button>
+      }
+    </lib-top>
     }
 
     <div class="sh-content">
