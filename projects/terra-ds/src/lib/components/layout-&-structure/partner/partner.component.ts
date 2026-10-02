@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, type SafeHtml } from '@angular/platform-browser';
 
-/** Parceiros disponíveis no Figma (Terra.ds | Components › Identity › Partners). */
+/** Parceiros disponíveis: Figma Terra.ds › Identity › Partners; BV, Daycoval, Omni, Safra e Direto vêm dos logos do TeddyDS. */
 export const PARTNER_NAMES = [
   'bradesco',
   'caixa',
@@ -22,6 +22,11 @@ export const PARTNER_NAMES = [
   'galleriabank',
   'creditas',
   'crediblue',
+  'bv',
+  'daycoval',
+  'omni',
+  'safra',
+  'direto',
 ] as const;
 
 export type PartnerName = (typeof PARTNER_NAMES)[number];
@@ -44,6 +49,11 @@ export const PARTNER_LABELS: Readonly<Record<PartnerName, string>> = {
   galleriabank: 'Galleria Bank',
   creditas: 'Creditas',
   crediblue: 'Crediblue',
+  bv: 'Banco BV',
+  daycoval: 'Banco Daycoval',
+  omni: 'Omni',
+  safra: 'Banco Safra',
+  direto: 'Direto',
 };
 
 /** Normaliza "Itaú", "C6 Bank", "Galleria Bank" etc. para a chave do parceiro. */
