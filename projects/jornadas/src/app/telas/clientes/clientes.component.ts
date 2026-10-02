@@ -4,7 +4,7 @@ import {
   ButtonComponent, DialogBodyComponent, DialogComponent, DialogFooterComponent, DialogHeaderComponent, DivisorComponent, DrawerComponent,
   IconButtonComponent, IconComponent, InputTextComponent, InputTextareaComponent, ListBodyCellComponent, ListBodyComponent,
   ListBodyRowComponent, ListComponent, ListHeaderComponent, ListHeaderItemComponent, ListPaginationComponent, StatusColor, StatusComponent,
-  TabsComponent, TagComponent,
+  TabsComponent, TagComponent, TooltipComponent,
 } from '../../shared/terra';
 import { ShellComponent } from '../../shared/shell.component';
 import { AvisosService } from '../../shared/avisos.service';
@@ -12,15 +12,18 @@ import { MenuFlutuanteComponent, PosicaoMenu, ancorar } from '../../shared/menu-
 import { brl, semAcento } from '../../shared/data';
 
 const COR: Record<string, StatusColor> = { notice: 'warning', negative: 'negative', positive: 'positive', informative: 'informative' };
-const POR_PAGINA = 10;
+const PRODUTOS = ['Crédito com Garantia de Imóvel', 'Financiamento / Aquisição de Imóvel', 'Crédito com Garantia de Veículos', 'Financiamento para Construção', 'Capital de giro'];
 
-/** Clientes (Base de clientes): lista PF/PJ, busca, Drawer de detalhes, edição e exclusão. */
+/**
+ * Clientes (Base de clientes · Figma Clientes 4266:20391): lista PF/PJ com ordenação, busca, Drawer de detalhes, edição e exclusão.
+ * Na The House não existe cadastro manual: o cliente nasce quando uma proposta é preenchida (por isso não há botão "+").
+ */
 @Component({
   selector: 'jv-clientes',
   standalone: true,
   imports: [
     ShellComponent, FormsModule, ButtonComponent, DialogComponent, DialogHeaderComponent, DialogBodyComponent, DialogFooterComponent, DivisorComponent,
-    DrawerComponent, IconButtonComponent, IconComponent, InputTextComponent, InputTextareaComponent, StatusComponent, TabsComponent, TagComponent,
+    DrawerComponent, IconButtonComponent, IconComponent, InputTextComponent, InputTextareaComponent, StatusComponent, TabsComponent, TagComponent, TooltipComponent,
     ListComponent, ListHeaderComponent, ListHeaderItemComponent, ListBodyComponent, ListBodyRowComponent, ListBodyCellComponent, ListPaginationComponent,
     MenuFlutuanteComponent,
   ],
@@ -43,6 +46,8 @@ export class ClientesComponent {
   protected readonly aba = signal<number>(this.s0.tab === 'pj' ? 1 : 0);
   protected readonly busca = signal<string>(this.s0.busca || '');
   protected readonly pagina = signal(1);
+  protected readonly porPagina = signal(8);
+  protected readonly ordem = signal<{ k: string; asc: boolean }>({ k: 'atualizado', asc: false });
   protected readonly removidos = signal<Record<string, boolean>>({});
   protected readonly aberto = signal<string | null>(this.s0.cliente || null);
   protected readonly excluir = signal<string | null>(this.s0.excluir || null);
@@ -56,12 +61,20 @@ export class ClientesComponent {
 
   protected readonly tipo = computed(() => (this.aba() === 1 ? 'pj' : 'pf'));
   protected readonly todos = computed<any[]>(() => this.C()[this.tipo()].filter((r: any) => !this.removidos()[r.id]));
+  protected readonly colunas = computed(() => this.tipo() === 'pf'
+    ? [{ k: 'nome', label: 'Nome', w: undefined }, { k: 'doc', label: 'CPF', w: '170px' }, { k: 'telefone', label: 'Telefone', w: '170px' }, { k: 'email', label: 'E-mail', w: undefined }, { k: 'atualizado', label: 'Atualizado', w: '150px' }]
+    : [{ k: 'nome', label: 'Razão social', w: undefined }, { k: 'doc', label: 'CNPJ', w: '200px' }, { k: 'faturamento', label: 'Faturamento', w: '190px' }, { k: 'representante', label: 'Representante legal', w: undefined }, { k: 'atualizado', label: 'Atualizado', w: '150px' }]);
   protected readonly linhas = computed(() => {
     const q = semAcento(this.busca().trim()), qd = this.busca().replace(/\D/g, '');
-    if (!q) return this.todos();
-    return this.todos().filter((r) => semAcento(r.nome).includes(q) || (qd.length >= 3 && r.doc.replace(/\D/g, '').includes(qd)));
+    const l = !q ? this.todos() : this.todos().filter((r) => semAcento(r.nome).includes(q) || (qd.length >= 3 && r.doc.replace(/\D/g, '').includes(qd)));
+    const { k, asc } = this.ordem();
+    return [...l].sort((a, b) => {
+      const va = a[k], vb = b[k];
+      const c = typeof va === 'number' ? va - vb : String(va).localeCompare(String(vb), 'pt-BR');
+      return asc ? c : -c;
+    });
   });
-  protected readonly paginaAtual = computed(() => this.linhas().slice((this.pagina() - 1) * POR_PAGINA, this.pagina() * POR_PAGINA));
+  protected readonly paginaAtual = computed(() => this.linhas().slice((this.pagina() - 1) * this.porPagina(), this.pagina() * this.porPagina()));
 
   protected readonly rowAberto = computed(() => this.acharRow(this.aberto()));
   protected readonly d = computed(() => (this.rowAberto() ? this.detalhe(this.rowAberto()) : null));
@@ -94,6 +107,19 @@ export class ClientesComponent {
   protected corAss(v: string): StatusColor { return v === 'Assinado' ? 'positive' : 'warning'; }
 
   protected trocarAba(i: number): void { this.aba.set(i); this.busca.set(''); this.pagina.set(1); }
+  protected ordenar(k: string): void {
+    this.ordem.update((o) => (o.k === k ? { k, asc: !o.asc } : { k, asc: k !== 'atualizado' }));
+    this.pagina.set(1);
+  }
+  /** Protótipo: parte dos clientes já assinou o termo LGPD (o escudo fica desabilitado). */
+  protected lgpdOk(r: any): boolean { return this.assinados()[r.id] ?? Number(r.id) % 3 !== 1; }
+  private readonly assinados = signal<Record<string, boolean>>({});
+  /** Proposta que deu origem ao cliente (no back vem do vínculo cliente › proposta). */
+  protected origem(r: any): { proposta: string; produto: string } {
+    const n = Number(r.id);
+    return { proposta: '#' + String(300000 + ((n * 37) % 99999)), produto: PRODUTOS[n % PRODUTOS.length] };
+  }
+  protected ver(ev: Event, r: any): void { ev?.stopPropagation?.(); this.abrir(r); }
   protected buscar(v: string): void { this.busca.set(v ?? ''); this.pagina.set(1); }
 
   protected abrir(r: any): void {
@@ -117,10 +143,11 @@ export class ClientesComponent {
   protected acaoMenu(v: string): void {
     const r = this.menu()!.r; this.menu.set(null);
     if (v === 'ver') this.abrir(r);
+    else if (v === 'proposta') this.nav.emit('nova');
     else if (v === 'docs') this.avisos.mostrar(`Os documentos de ${r.nome} ainda não têm tela no Figma.`);
     else this.excluir.set(r.id);
   }
-  protected lgpd(ev: Event, r: any): void { ev.stopPropagation(); this.avisos.mostrar(`Termo LGPD enviado para ${r.email}.`, 'success'); }
+  protected lgpd(ev: Event, r: any): void { ev?.stopPropagation?.(); this.avisos.mostrar(`Termo LGPD enviado para ${r.email}.`, 'success'); }
   protected proposta(ev: Event): void { ev.stopPropagation(); this.nav.emit('nova'); }
   protected confirmarExclusao(): void {
     const r = this.rowExcluir();

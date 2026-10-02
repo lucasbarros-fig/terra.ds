@@ -1,11 +1,10 @@
-<jv-shell menu="base-minha" title="Clientes" [breadcrumbs]="[{ label: 'Base de clientes' }, { label: 'Clientes' }]" (nav)="nav.emit($event)">
+<jv-shell menu="base-minha" title="Clientes" [breadcrumbs]="[{ label: 'Home' }, { label: 'Clientes' }]" (nav)="nav.emit($event)">
   <div class="cl" #area>
     <div class="cl-barra">
-      <lib-tabs [tabs]="[{ label: 'Pessoa Física', icon: 'IdentificationCard' }, { label: 'Pessoa Jurídica', icon: 'Buildings' }]" [selected]="aba()" (selectedChange)="trocarAba($event)"></lib-tabs>
+      <lib-tabs [tabs]="[{ label: 'Pessoa Física', icon: 'User' }, { label: 'Pessoa Jurídica', icon: 'BuildingApartment' }]" [selected]="aba()" (selectedChange)="trocarAba($event)"></lib-tabs>
       <span class="cl-barra-dir">
-        <lib-input-text class="cl-busca" variant="outlined" iconBefore="MagnifyingGlass" placeholder="Pesquise pelo cliente" inputAriaLabel="Pesquisar cliente pelo nome ou documento" [clearable]="true" [ngModel]="busca()" (ngModelChange)="buscar($event)"></lib-input-text>
-        <lib-divisor orientation="vertical"></lib-divisor>
-        <span class="cl-conta">{{ linhas().length }} {{ linhas().length === 1 ? 'cliente' : 'clientes' }}</span>
+        <lib-input-text class="cl-busca" variant="outlined" iconBefore="MagnifyingGlass" placeholder="Pesquise por cliente" inputAriaLabel="Pesquisar cliente pelo nome ou documento" [clearable]="true" [ngModel]="busca()" (ngModelChange)="buscar($event)"></lib-input-text>
+        <lib-tooltip class="cl-info" indicator="top" arrow="end" triggerIcon="Info" triggerIconColor="essential-medium" [triggerSize]="20" text="Na The House o cliente é criado automaticamente quando uma proposta é preenchida, por você ou pelo próprio cliente."></lib-tooltip>
       </span>
     </div>
 
@@ -13,37 +12,28 @@
       <div class="cl-lista">
         <lib-list [striped]="false" [hoverable]="true">
           <lib-list-header>
-            @if (tipo() === 'pf') {
-              <lib-list-header-item>Nome</lib-list-header-item>
-              <lib-list-header-item>CPF</lib-list-header-item>
-              <lib-list-header-item>Telefone</lib-list-header-item>
-              <lib-list-header-item>E-mail</lib-list-header-item>
-            } @else {
-              <lib-list-header-item>Razão social</lib-list-header-item>
-              <lib-list-header-item>CNPJ</lib-list-header-item>
-              <lib-list-header-item>Faturamento anual</lib-list-header-item>
-              <lib-list-header-item>Representante legal</lib-list-header-item>
+            @for (c of colunas(); track c.k) {
+              <lib-list-header-item [width]="c.w" [sortable]="true" icon="ArrowsDownUp" [iconSize]="16" iconPosition="after" [attr.aria-sort]="ordem().k === c.k ? (ordem().asc ? 'ascending' : 'descending') : null" (click)="ordenar(c.k)">{{ c.label }}</lib-list-header-item>
             }
-            <lib-list-header-item>Atualizado em</lib-list-header-item>
-            <lib-list-header-item align="right" width="152px">Ações</lib-list-header-item>
+            <lib-list-header-item width="124px">Ações</lib-list-header-item>
           </lib-list-header>
           <lib-list-body>
             @for (r of paginaAtual(); track r.id) {
               <lib-list-body-row tabindex="0" class="cl-linha" (click)="abrir(r)" (keydown.enter)="abrir(r)">
-                <lib-list-body-cell><b class="cl-nome">{{ r.nome }}</b></lib-list-body-cell>
+                <lib-list-body-cell><span class="cl-nome">{{ r.nome }}</span></lib-list-body-cell>
                 <lib-list-body-cell>{{ r.doc }}</lib-list-body-cell>
                 @if (tipo() === 'pf') {
                   <lib-list-body-cell>{{ r.telefone }}</lib-list-body-cell>
-                  <lib-list-body-cell>{{ r.email }}</lib-list-body-cell>
+                  <lib-list-body-cell><span class="cl-nome">{{ r.email }}</span></lib-list-body-cell>
                 } @else {
                   <lib-list-body-cell>R$ {{ brl(r.faturamento) }}</lib-list-body-cell>
                   <lib-list-body-cell>{{ r.representante }}</lib-list-body-cell>
                 }
                 <lib-list-body-cell>{{ data(r.atualizado) }}</lib-list-body-cell>
-                <lib-list-body-cell align="right">
+                <lib-list-body-cell>
                   <span class="cl-acoes">
-                    <lib-icon-button type="neutral" variant="ghost" size="small" icon="ShieldCheck" [ariaLabel]="'Enviar LGPD para ' + r.nome" (clicked)="lgpd($event, r)"></lib-icon-button>
-                    <lib-icon-button type="branding" variant="ghost" size="small" icon="Wallet" [ariaLabel]="'Criar proposta para ' + r.nome" (clicked)="proposta($event)"></lib-icon-button>
+                    <lib-icon-button type="neutral" variant="ghost" size="small" icon="ShieldCheck" [disabled]="lgpdOk(r)" [ariaLabel]="lgpdOk(r) ? 'LGPD já assinado por ' + r.nome : 'Enviar LGPD para ' + r.nome" (clicked)="lgpd($event, r)"></lib-icon-button>
+                    <lib-icon-button type="neutral" variant="ghost" size="small" icon="Eye" [ariaLabel]="'Ver detalhes de ' + r.nome" (clicked)="ver($event, r)"></lib-icon-button>
                     <lib-icon-button type="neutral" variant="ghost" size="small" icon="DotsThreeVertical" [ariaLabel]="'Mais ações de ' + r.nome" (clicked)="abrirMenu($event, r)"></lib-icon-button>
                   </span>
                 </lib-list-body-cell>
@@ -51,14 +41,21 @@
             }
           </lib-list-body>
         </lib-list>
-        <lib-list-pagination label="Clientes por página" [pageSize]="10" [pageSizeOptions]="[10]" [total]="linhas().length" [page]="pagina()" (pageChange)="pagina.set($event)"></lib-list-pagination>
+        <lib-list-pagination class="cl-pag" label="Visualizar por página" [pageSize]="porPagina()" [pageSizeOptions]="[8, 16, 24]" [total]="linhas().length" [page]="pagina()" (pageSizeChange)="porPagina.set($event); pagina.set(1)" (pageChange)="pagina.set($event)"></lib-list-pagination>
       </div>
+    } @else if (busca()) {
+      <div class="cl-vazio" role="status"><lib-icon icon="MagnifyingGlass" [size]="32" color="inherit"></lib-icon><b>Nenhum cliente encontrado</b><span>Confira o nome, CPF ou CNPJ digitado.</span></div>
     } @else {
-      <div class="cl-vazio" role="status"><lib-icon icon="Warning" [size]="32" color="inherit"></lib-icon><span>Nenhum cliente encontrado para essa busca.</span></div>
+      <div class="cl-vazio" role="status">
+        <lib-icon icon="UsersThree" [size]="32" color="inherit"></lib-icon>
+        <b>Sua base de clientes ainda está vazia</b>
+        <span>Os clientes aparecem aqui assim que uma proposta é preenchida.</span>
+        <lib-button intent="branding" variant="filled" icon="PlusCircle" label="Nova proposta" (clicked)="nav.emit('nova')"></lib-button>
+      </div>
     }
 
     @if (menu(); as m) {
-      <jv-menu-flutuante [itens]="[{ value: 'ver', label: 'Ver detalhes', icon: 'eye--duotone' }, { value: 'docs', label: 'Documentos', icon: 'folder-open--duotone' }, { value: 'excluir', label: 'Excluir cliente', icon: 'trash-can--duotone' }]" [pos]="m.pos" [largura]="200" rotulo="Ações do cliente" (escolher)="acaoMenu($event)" (fechar)="menu.set(null)"></jv-menu-flutuante>
+      <jv-menu-flutuante [itens]="[{ value: 'proposta', label: 'Gerar nova proposta', icon: 'wallet--duotone' }, { value: 'docs', label: 'Documentos', icon: 'folder-open--duotone' }, { value: 'excluir', label: 'Excluir cliente', icon: 'trash-can--duotone' }]" [pos]="m.pos" [largura]="200" rotulo="Ações do cliente" (escolher)="acaoMenu($event)" (fechar)="menu.set(null)"></jv-menu-flutuante>
     }
   </div>
 
@@ -123,6 +120,7 @@
                   <div><dt>Status LGPD</dt><dd><lib-status size="small" [status]="corAss(d.lgpd)" [text]="d.lgpd"></lib-status></dd></div>
                   <div><dt>Status Carta BACEN</dt><dd><lib-status size="small" [status]="corAss(d.bacen)" [text]="d.bacen"></lib-status></dd></div>
                   <div><dt>Data da criação</dt><dd>{{ d.criado }}</dd></div>
+                  <div class="cl-s3"><dt>Origem</dt><dd class="cl-origem"><lib-icon icon="FileText" [size]="16" color="inherit"></lib-icon>Criado automaticamente pela proposta {{ origem(rowAberto()).proposta }} · {{ origem(rowAberto()).produto }}</dd></div>
                   <div class="cl-s3"><dt>Observações</dt><dd>{{ d.obs || 'Sem observações' }}</dd></div>
                 </dl>
               }
@@ -136,6 +134,7 @@
                   <div><dt>Status Carta BACEN</dt><dd class="cl-bacen"><lib-status size="small" [status]="corAss(d.bacen)" [text]="d.bacen"></lib-status>
                     @if (d.bacen === 'Assinado') { <lib-icon-button type="neutral" variant="ghost" size="small" icon="FileArrowDown" ariaLabel="Baixar Carta BACEN" (clicked)="avisar('Download da Carta BACEN iniciado.', 'success')"></lib-icon-button> }</dd></div>
                   <div><dt>Data da criação</dt><dd>{{ d.criado }}</dd></div>
+                  <div class="cl-s3"><dt>Origem</dt><dd class="cl-origem"><lib-icon icon="FileText" [size]="16" color="inherit"></lib-icon>Criado automaticamente pela proposta {{ origem(rowAberto()).proposta }} · {{ origem(rowAberto()).produto }}</dd></div>
                   <div class="cl-s3"><dt>Observações</dt><dd>{{ d.obs || 'Sem observações' }}</dd></div>
                 </dl>
               }

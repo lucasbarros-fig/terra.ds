@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal } from '@angular/core';
-import { DialogBodyComponent, DialogComponent, DialogHeaderComponent, IconButtonComponent, IconComponent, PartnerComponent, TagComponent } from './terra';
+import { DialogBodyComponent, DialogComponent, DialogHeaderComponent, IconButtonComponent, IconComponent, PartnerComponent } from './terra';
 import { AvisosService } from './avisos.service';
 import { J } from './data';
 
@@ -18,7 +18,7 @@ export interface PropostaCompartilhada {
 @Component({
   selector: 'jv-compartilhar-proposta',
   standalone: true,
-  imports: [DialogComponent, DialogHeaderComponent, DialogBodyComponent, IconButtonComponent, IconComponent, PartnerComponent, TagComponent],
+  imports: [DialogComponent, DialogHeaderComponent, DialogBodyComponent, IconButtonComponent, IconComponent, PartnerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <lib-dialog [open]="aberto()" [ariaLabel]="'Enviar ' + dados().produto + ' para o cliente'" (backdropClick)="fechar.emit()">
@@ -27,12 +27,10 @@ export interface PropostaCompartilhada {
         <div class="cp">
           <p class="cp-intro">O cliente recebe este link, preenche os dados dele e a proposta volta para você acompanhar em Propostas.</p>
 
-          <div class="cp-moldura">
-            <article class="cp-card" aria-label="Prévia do convite">
+          <article class="cp-card" aria-label="Prévia do convite">
               <header class="cp-card-head">
                 <span class="cp-ic"><lib-icon [icon]="dados().icone" [size]="20" color="inherit"></lib-icon></span>
                 <h3>{{ dados().produto }}</h3>
-                <lib-tag emphasis="low" color="green" size="small">Válido até {{ validade }}</lib-tag>
               </header>
 
               <div class="cp-destaque">
@@ -53,19 +51,11 @@ export interface PropostaCompartilhada {
                 </div>
               </div>
 
-              <dl class="cp-info">
-                <div><dt>Perfil</dt><dd>{{ dados().perfil }}</dd></div>
-                <div><dt>Solução</dt><dd>{{ dados().solucao }}</dd></div>
-                <div><dt>Corretor</dt><dd>{{ corretor }}</dd></div>
-                <div><dt>Código</dt><dd>{{ codigo() }}</dd></div>
-              </dl>
-
               <footer class="cp-link">
                 <lib-icon icon="LinkSimple" [size]="16" color="inherit"></lib-icon>
                 <span>{{ linkCurto() }}</span>
               </footer>
             </article>
-          </div>
 
           <ul class="cp-acoes" aria-label="Formas de envio">
             @for (a of acoes; track a.id) {
@@ -83,15 +73,14 @@ export interface PropostaCompartilhada {
     :host { display: contents; }
     .cp { display: flex; flex-direction: column; gap: var(--size-spacing-24); width: min(560px, calc(100vw - 80px)); }
     .cp-intro { margin: 0; font-size: var(--size-font-body-14); line-height: 1.5; color: var(--color-text-essential-body); }
-    .cp-moldura { padding: var(--size-spacing-12); border-radius: var(--size-radius-16); background: var(--color-theme-lower); }
-    .cp-card { display: flex; flex-direction: column; gap: var(--size-spacing-16); padding: var(--size-spacing-20, 20px);
-      border: 1px solid var(--color-stroke-frame); border-radius: var(--size-radius-8); background: var(--color-theme-base); }
+    .cp-card { display: flex; flex-direction: column; gap: var(--size-spacing-16); padding: var(--size-spacing-16);
+      border: 1px solid color-mix(in srgb, var(--color-stroke-frame) 60%, transparent); border-radius: var(--size-radius-8); background: transparent; }
     .cp-card-head { display: flex; align-items: center; gap: var(--size-spacing-8);
       h3 { flex: 1; min-width: 0; margin: 0; font-size: var(--size-font-body-16); font-weight: 700; color: var(--color-text-essential-heading); } }
     .cp-ic { display: inline-grid; place-items: center; flex: 0 0 auto; width: 32px; height: 32px; border: 1px solid var(--color-stroke-frame);
       border-radius: var(--size-radius-8); color: var(--color-icons-essential-default, var(--color-text-essential-heading)); }
     .cp-destaque { display: grid; grid-template-columns: 1fr 1px 1fr; gap: var(--size-spacing-16); padding: var(--size-spacing-16);
-      border-radius: var(--size-radius-8); background: var(--color-theme-lower);
+      border-radius: var(--size-radius-8); background: color-mix(in srgb, var(--color-theme-lower) 70%, transparent);
       > i { background: var(--color-stroke-frame); }
       > div { display: flex; flex-direction: column; gap: var(--size-spacing-4); min-width: 0; }
       span { font-size: var(--size-font-body-12); color: var(--color-text-essential-caption); }
@@ -100,11 +89,6 @@ export interface PropostaCompartilhada {
       small { font-size: var(--size-font-body-12); font-weight: 500; color: var(--color-text-essential-caption); } }
     .cp-logos { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 2px; }
     .cp-mais { font-size: var(--size-font-body-12) !important; font-weight: 600; color: var(--color-text-essential-body) !important; }
-    .cp-info { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0;
-      > div { display: flex; flex-direction: column; gap: 2px; padding: 0 var(--size-spacing-12); min-width: 0; border-left: 1px solid var(--color-stroke-frame); }
-      > div:first-child { padding-left: 0; border-left: 0; }
-      dt { font-size: var(--size-font-body-12); color: var(--color-text-essential-caption); }
-      dd { margin: 0; font-size: var(--size-font-body-14); font-weight: 600; color: var(--color-text-essential-heading); overflow-wrap: anywhere; } }
     .cp-link { display: flex; align-items: center; gap: var(--size-spacing-8); padding-top: var(--size-spacing-12); border-top: 1px solid var(--color-stroke-frame);
       font-size: var(--size-font-body-12); color: var(--color-branding-text-primary, var(--color-branding-surface-primary-base));
       span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }
@@ -113,8 +97,6 @@ export interface PropostaCompartilhada {
       span { font-size: var(--size-font-body-14); color: var(--color-text-essential-body); } }
     @media (max-width: 600px) {
       .cp { width: calc(100vw - 64px); }
-      .cp-info { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--size-spacing-12);
-        > div:nth-child(3) { padding-left: 0; border-left: 0; } }
       .cp-destaque { grid-template-columns: 1fr; > i { height: 1px; } }
       .cp-card-head { flex-wrap: wrap; h3 { flex-basis: calc(100% - 48px); } }
       .cp-acoes { gap: var(--size-spacing-8); justify-content: space-between; li { min-width: 0; } span { font-size: var(--size-font-body-12); white-space: nowrap; } }
@@ -129,10 +111,6 @@ export class CompartilharPropostaComponent {
   private readonly avisos = inject(AvisosService);
   protected readonly corretor = J.topo.account.name;
   protected readonly copiado = signal(false);
-  protected readonly validade = (() => {
-    const d = new Date(); d.setDate(d.getDate() + 7);
-    return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
-  })();
 
   /** Código estável por produto + perfil (protótipo; no back vem da API). */
   protected readonly codigo = computed(() => {
@@ -181,13 +159,12 @@ export class CompartilharPropostaComponent {
     const css = getComputedStyle(document.documentElement);
     const cor = (v: string, f: string) => css.getPropertyValue(v).trim() || f;
     const fonte = getComputedStyle(document.body).fontFamily || 'sans-serif';
-    const W = 1080, H = 640, esc = 1;
+    const W = 1080, H = 540, esc = 1;
     const cv = document.createElement('canvas'); cv.width = W * esc; cv.height = H * esc;
     const g = cv.getContext('2d'); if (!g) return;
     const fundo = cor('--color-theme-lower', '#f4f5f7'), base = cor('--color-theme-base', '#ffffff');
     const titulo = cor('--color-text-essential-heading', '#1b1d21'), legenda = cor('--color-text-essential-caption', '#6b7280');
     const linha = cor('--color-stroke-frame', '#e5e7eb'), marca = cor('--color-branding-surface-primary-base', '#2b7de9');
-    const verde = cor('--color-support-colors-green', '#1a9a4b');
     const ret = (x: number, y: number, w: number, h: number, r: number, f: string, s?: string) => {
       g.beginPath(); g.roundRect(x, y, w, h, r); g.fillStyle = f; g.fill(); if (s) { g.strokeStyle = s; g.lineWidth = 2; g.stroke(); } };
     const txt = (t: string, x: number, y: number, tam: number, peso: number, c: string, alinhar: CanvasTextAlign = 'left') => {
@@ -196,7 +173,6 @@ export class CompartilharPropostaComponent {
     ret(0, 0, W, H, 0, fundo);
     ret(48, 48, W - 96, H - 96, 16, base, linha);
     txt('The House', 96, 116, 22, 700, marca);
-    txt('Válido até ' + this.validade, W - 96, 116, 20, 600, verde, 'right');
     txt(this.dados().produto, 96, 176, 38, 700, titulo);
     ret(96, 212, W - 192, 150, 12, fundo);
     txt('Tempo para preencher', 128, 258, 20, 400, legenda);
@@ -208,11 +184,7 @@ export class CompartilharPropostaComponent {
     while (lista.length > 1 && g.measureText(nomes).width > max) { lista.pop(); nomes = lista.join(' · ') + ` +${this.dados().parceiros.length - lista.length}`; }
     txt(nomes, W / 2 + 32, 306, 22, 600, titulo);
     g.fillStyle = linha; g.fillRect(W / 2, 236, 2, 102);
-    const cols = [['Perfil', this.dados().perfil], ['Solução', this.dados().solucao], ['Corretor', this.corretor], ['Código', this.codigo()]];
-    const cw = (W - 192) / 4;
-    cols.forEach(([k, v], i) => { const x = 96 + i * cw; txt(k, x, 414, 18, 400, legenda); txt(v, x, 446, 22, 600, titulo); });
-    g.fillStyle = linha; g.fillRect(96, 486, W - 192, 2);
-    txt(this.linkCurto(), 96, 534, 22, 600, marca);
+    txt(this.linkCurto(), 96, 430, 22, 600, marca);
 
     cv.toBlob((b) => {
       if (!b) return;

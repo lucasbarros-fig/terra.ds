@@ -63,3 +63,12 @@
     }
   }
 }
+
+/* Entrada: o fundo escurece e o painel sobe devagar de baixo. */
+.dialog-root .dialog-backdrop { animation: dialog-fundo 320ms ease-out both; }
+.dialog-root .dialog-surface-wrap .dialog-panel { animation: dialog-subir 520ms cubic-bezier(.16, 1, .3, 1) both; }
+@keyframes dialog-fundo { from { opacity: 0; } }
+@keyframes dialog-subir { from { opacity: 0; transform: translateY(48px); } }
+@media (prefers-reduced-motion: reduce) {
+  .dialog-root .dialog-backdrop, .dialog-root .dialog-surface-wrap .dialog-panel { animation-duration: 1ms; }
+}
