@@ -94,7 +94,7 @@
               </div>
               <div class="db-item-lado">
                 <span class="db-tempo"><lib-icon icon="Clock" [size]="16" color="inherit"></lib-icon>{{ it.tempo }}</span>
-                <lib-button intent="branding" variant="filled" [showIcon]="false" label="Ver proposta" (clicked)="nav.emit('propostas')"></lib-button>
+                <lib-button class="db-acao" intent="branding" variant="filled" [showIcon]="false" label="Ver proposta" (clicked)="nav.emit('propostas')"></lib-button>
               </div>
             </article>
           }
@@ -115,7 +115,7 @@
                 <p class="db-linha db-data">{{ it.data }}</p>
               </div>
               <div class="db-item-lado">
-                <lib-button class="db-contorno db-contorno--forte" intent="neutral" variant="ghost" [showIcon]="false" label="Gerar proposta" (clicked)="nav.emit('nova')"></lib-button>
+                <lib-button class="db-acao db-contorno db-contorno--forte" intent="neutral" variant="ghost" [showIcon]="false" label="Gerar proposta" (clicked)="nav.emit('nova')"></lib-button>
               </div>
             </article>
           }

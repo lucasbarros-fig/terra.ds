@@ -52,7 +52,7 @@
   border-radius: var(--size-radius-8); background: var(--color-theme-upper);
 }
 .db-item-main { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.db-linha { display: flex; align-items: center; gap: var(--size-spacing-8); margin: 0; font-size: var(--size-font-body-14); color: var(--color-text-essential-body);
+.db-linha { display: flex; align-items: center; min-width: 0; white-space: nowrap; gap: var(--size-spacing-8); margin: 0; font-size: var(--size-font-body-14); color: var(--color-text-essential-body);
   b { color: var(--color-text-essential-heading); font-weight: 500; } }
 .db-data { color: var(--color-text-essential-caption); }
 .db-sep { width: 1px; height: 12px; background: var(--color-stroke-frame); }
@@ -156,12 +156,7 @@
 
 /* Itens das listas: quando a coluna fica estreita, a ação desce para baixo do texto. */
 .db-itens { container: itens / inline-size; }
-@container itens (max-width: 440px) {
-  .db-item { flex-direction: column; align-items: stretch; }
-  .db-item-lado { justify-content: space-between; }
-  .db-item-lado lib-button:only-child { flex: 1 1 auto; }
-  .db-item-lado lib-button:only-child ::ng-deep button { width: 100%; justify-content: center; }
-}
+
 
 /* Destaques: abaixo do Desktop L o banner ocupa a linha toda e mantém a proporção da arte (1660x330), sem cortar o texto. */
 .db-destaques { container-type: inline-size; }
@@ -185,3 +180,18 @@
 
 /* Mobile: banner um pouco mais alto para o conteúdo respirar. */
 @media (max-width: 767px) { .db-destaques lib-banner.db-banner { --banner-height: 112px !important; } }
+
+/* Ações das listas: mesmo tamanho nas duas colunas e linhas na mesma altura, para os botões ficarem alinhados. */
+.db-item { min-height: 96px; box-sizing: border-box; }
+.db-acao { display: block; }
+.db-acao ::ng-deep button { width: 160px; height: 48px; min-height: 48px; box-sizing: border-box; justify-content: center; }
+/* Mobile: nas duas listas a ação desce para baixo do texto e o botão ocupa a largura toda. */
+@media (max-width: 767px) {
+  .db-item { flex-direction: column; align-items: stretch; }
+  .db-item-lado { flex-direction: column; align-items: stretch; gap: var(--size-spacing-12); }
+  .db-acao ::ng-deep button { width: 100%; }
+}
+/* Coluna estreita (desktop S): texto em uma linha com reticências, sem empurrar o botão. */
+.db-linha > b, .db-linha > span:not(.db-sep), .db-linha:not(:has(> *)) { overflow: hidden; text-overflow: ellipsis; }
+.db-linha:not(:has(> *)) { display: block; }
+.db-linha > b { min-width: 0; }
