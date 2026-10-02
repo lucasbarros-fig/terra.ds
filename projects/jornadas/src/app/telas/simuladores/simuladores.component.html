@@ -393,4 +393,7 @@
       </div>
     </lib-drawer>
   }
+  @if (compartilhando() && etapa() === 'resultado') {
+    <jv-compartilhar-simulacao [aberto]="true" [dados]="dadosCompartilhar()" (fechar)="compartilhando.set(false)"></jv-compartilhar-simulacao>
+  }
 </jv-shell>

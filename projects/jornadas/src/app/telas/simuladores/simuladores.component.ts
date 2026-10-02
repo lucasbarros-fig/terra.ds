@@ -7,6 +7,7 @@ import {
   KpiCardComponent, PartnerComponent, SkeletonComponent, TagComponent,
 } from '../../shared/terra';
 import { ShellComponent } from '../../shared/shell.component';
+import { CompartilharSimulacaoComponent, SimulacaoCompartilhada } from '../../shared/compartilhar-simulacao.component';
 import { AvisosService } from '../../shared/avisos.service';
 import { ASSET, brl } from '../../shared/data';
 
@@ -52,7 +53,7 @@ const PRODUTOS: Produto[] = [
   selector: 'jv-simuladores',
   standalone: true,
   imports: [
-    ShellComponent, FormsModule, DecimalPipe, ActionBarComponent, BannerComponent, ButtonComponent, DivisorComponent, DrawerComponent, EmptyStateComponent, IconComponent,
+    ShellComponent, CompartilharSimulacaoComponent, FormsModule, DecimalPipe, ActionBarComponent, BannerComponent, ButtonComponent, DivisorComponent, DrawerComponent, EmptyStateComponent, IconComponent,
     InputTextComponent, KpiCardComponent, PartnerComponent, SkeletonComponent, TagComponent,
     ListComponent, ListHeaderComponent, ListHeaderItemComponent, ListBodyComponent, ListBodyRowComponent, ListBodyCellComponent,
   ],
@@ -270,11 +271,21 @@ export class SimuladoresComponent implements OnInit {
     this.avisos.mostrar('Os dados da simulação já vão preenchidos na proposta.', 'success');
     this.nav.emit('nova');
   }
-  protected compartilhar(): void {
-    const texto = `Simulação The House · ${this.prod().label} · ${this.moeda(this.financiado())} em ${this.f().prazo} meses · melhor 1ª parcela: ${this.moeda(this.melhor().primeira)} (${this.melhor().parceiro})`;
-    const ok = () => this.avisos.mostrar('Resumo da simulação copiado. Cole no WhatsApp ou e-mail do cliente.', 'success');
-    navigator.clipboard?.writeText(texto).then(ok, ok);
-  }
+  /** Compartilhar no padrão do envio de proposta (Dialog com prévia, envio e download). */
+  protected readonly compartilhando = signal(false);
+  protected compartilhar(): void { this.compartilhando.set(true); }
+  protected readonly dadosCompartilhar = computed<SimulacaoCompartilhada>(() => {
+    const f = this.f(), pr = this.prod(), m = this.melhor();
+    const dados = [
+      ...(this.temBem() && f.valor ? [{ rotulo: pr.rotuloValor, valor: this.moeda(f.valor) }] : []),
+      { rotulo: pr.rotuloEntrada, valor: this.moeda(f.entrada ?? 0) },
+      { rotulo: this.credito() ? 'Valor do crédito' : 'Valor financiado', valor: this.moeda(this.financiado()) },
+      { rotulo: 'Prazo', valor: `${f.prazo} meses` },
+      { rotulo: 'Sistema', valor: pr.sistema === 'sac' ? 'SAC' : 'Price' },
+    ];
+    return { produto: pr.label, icone: pr.icon, rotuloParcela: pr.sistema === 'sac' ? '1ª parcela' : 'Parcela', parcela: m.primeira, parceiro: m.parceiro,
+      taxa: this.pct(m.taxa), dados, parceiros: this.bancosProd().map((b: { nome: string }) => b.nome) };
+  });
   /** Detalhe da simulação recente em Drawer: usa o que já está salvo, sem refazer a consulta aos bancos. */
   protected readonly vendo = signal<Recente | null>(null);
   protected readonly detalhe = computed(() => {
