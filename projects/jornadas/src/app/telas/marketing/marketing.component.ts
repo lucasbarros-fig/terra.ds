@@ -205,6 +205,8 @@ export class MarketingComponent {
   }
 
   protected criarLoja(): void { this.nav.emit('loja-minha'); }
+  /** Atalho para o fluxo de edição da loja (logo, nome e cor). Fluxo ainda não implementado. */
+  protected editarLoja(): void { this.avisos.mostrar('Em breve: aqui abre o fluxo de edição da sua loja (logo, nome e cor).'); }
 
   protected baixarCapa(c: { label: string }): void { this.avisos.mostrar(`Capa "${c.label}" baixada.`, 'success', 3000); }
   protected baixarMaterial(m: { titulo: string; formato: string }): void {

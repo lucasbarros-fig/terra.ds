@@ -34,7 +34,9 @@
         <aside class="mk-loja" aria-label="Sua marca nas artes">
           <div class="mk-loja-card">
             @if (temLoja()) {
-              <span class="mk-loja-logo" [style.background]="cor()">{{ iniciais() }}</span>
+              <span class="mk-loja-logo" [style.background]="cor()">{{ iniciais() }}
+                <lib-icon-button class="mk-loja-editar" type="neutral" variant="filled" size="small" icon="PencilSimple" ariaLabel="Editar loja" (clicked)="editarLoja()"></lib-icon-button>
+              </span>
               <h3>{{ loja() }}</h3>
               <p class="mk-loja-cor"><span>Cor primária</span><i [style.background]="cor()" aria-hidden="true"></i></p>
               <p class="mk-loja-desc">As artes saem com o logo e a cor da sua loja.</p>
