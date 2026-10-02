@@ -108,6 +108,8 @@ export class SimuladoresComponent implements OnInit {
     const f = r.form ?? { ...VAZIO, produto: 'fi', valor: r.valor, entrada: r.valor * 0.2, prazo: 360, cartorio: 'nao' as const };
     return [...this.calcular(f)].sort((a, b) => a.primeira - b.primeira)[0];
   }
+  protected iniciais(n: string): string { const p = n.trim().split(/\s+/); return ((p[0]?.[0] ?? '') + (p.length > 1 ? p[p.length - 1][0] : '')).toUpperCase(); }
+  protected prodDe(r: Recente): Produto { return PRODUTOS.find((p) => p.label === r.produto) ?? PRODUTOS[0]; }
   protected prazoDe(r: Recente): number { return r.form?.prazo ?? 360; }
 
   /* ---------- Formulário ---------- */

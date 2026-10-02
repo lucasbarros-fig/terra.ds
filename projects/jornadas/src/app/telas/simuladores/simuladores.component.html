@@ -69,33 +69,34 @@
           <header class="sm-head"><h2 id="sm-rec-t">Suas simulações recentes</h2><p>Retome uma simulação ou transforme direto em proposta.</p></header>
           @if (carregando()) {
             <div class="sm-recentes" role="status" aria-label="Carregando simulações">
-              @for (i of [1, 2, 3, 4]; track i) { <lib-skeleton height="196px" borderRadius="16px"></lib-skeleton> }
+              @for (i of [1, 2, 3, 4]; track i) { <lib-skeleton height="300px" borderRadius="16px"></lib-skeleton> }
             </div>
           } @else if (recentes().length) {
             <div class="sm-recentes">
               @for (r of recentes(); track r.id) {
-                <article class="sm-rec">
-                  <header>
-                    <lib-tag emphasis="low" [color]="r.origem === 'Simulador' ? 'blue' : 'purple'" size="small">{{ r.origem }}</lib-tag>
-                    <time>{{ r.data }}</time>
+                <article class="sm-rec" [style.--tema]="prodDe(r).tema">
+                  <header class="sm-rec-topo">
+                    <span class="sm-rec-ic"><lib-icon [icon]="prodDe(r).icon" [size]="16" color="inherit"></lib-icon></span>
+                    <span class="sm-rec-prod"><b>{{ prodDe(r).curto }}</b><time>{{ r.data }}</time></span>
+                    <span class="sm-rec-origem" [class.is-proposta]="r.origem !== 'Simulador'">{{ r.origem === 'Simulador' ? 'Simulador' : 'Proposta' }}</span>
                   </header>
                   <div class="sm-rec-cli">
-                    @if (r.cliente) { <b>{{ r.cliente.split(' | ')[0] }}</b><span>{{ r.cliente.split(' | ')[1] }}</span> }
-                    @else { <b class="sm-mudo">Cliente não informado</b><span>{{ r.produto }}</span> }
+                    @if (r.cliente) { <span class="sm-rec-av">{{ iniciais(r.cliente.split(' | ')[0]) }}</span><span><b>{{ r.cliente.split(' | ')[0] }}</b><small>{{ r.cliente.split(' | ')[1] }}</small></span> }
+                    @else { <span class="sm-rec-av is-vazio"><lib-icon icon="User" [size]="16" color="inherit"></lib-icon></span><span><b class="sm-mudo">Cliente não informado</b><small>Simulação avulsa</small></span> }
                   </div>
-                  <dl>
-                    <div><dt>{{ r.produto === 'Financiamento Imobiliário' ? 'Imóvel' : 'Valor' }}</dt><dd>{{ moeda(r.valor) }}</dd></div>
-                    <div><dt>Prazo</dt><dd>{{ prazoDe(r) }} meses</dd></div>
-                  </dl>
                   @if (melhorDe(r); as m) {
                     <div class="sm-rec-melhor">
-                      <lib-partner [partner]="m.parceiro" partnerStyle="fill" [size]="28"></lib-partner>
-                      <span><small>Melhor 1ª parcela</small><b>{{ moeda(m.primeira) }}</b></span>
+                      <span class="sm-rec-melhor-l"><small>Melhor 1ª parcela</small><b>{{ moeda(m.primeira) }}</b></span>
+                      <lib-partner [partner]="m.parceiro" partnerStyle="fill" [size]="32"></lib-partner>
                     </div>
                   }
-                  <footer>
-                    <lib-icon-button type="neutral" variant="ghost" icon="Eye" ariaLabel="Ver simulação" (clicked)="vendo.set(r)"></lib-icon-button>
-                    <lib-button intent="neutral" variant="filled" icon="FileText" label="Gerar proposta" (clicked)="gerarProposta()"></lib-button>
+                  <dl class="sm-rec-dados">
+                    <div><dt>{{ prodDe(r).modo === 'credito' ? 'Valor' : (prodDe(r).bem === 'imóvel' ? 'Imóvel' : 'Valor') }}</dt><dd>{{ curto(r.valor) }}</dd></div>
+                    <div><dt>Prazo</dt><dd>{{ prazoDe(r) }} meses</dd></div>
+                  </dl>
+                  <footer class="sm-rec-rodape">
+                    <button type="button" class="sm-rec-ver" aria-label="Ver detalhes da simulação" (click)="vendo.set(r)"><lib-icon icon="Eye" [size]="16" color="inherit"></lib-icon><span>Detalhes</span></button>
+                    <button type="button" class="sm-rec-cta" (click)="gerarProposta(melhorDe(r)?.parceiro)">Gerar proposta <lib-icon icon="ArrowRight" [size]="16" color="inherit"></lib-icon></button>
                   </footer>
                 </article>
               }
