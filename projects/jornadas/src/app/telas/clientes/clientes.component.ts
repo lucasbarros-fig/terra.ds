@@ -4,7 +4,7 @@ import {
   ButtonComponent, DialogBodyComponent, DialogComponent, DialogFooterComponent, DialogHeaderComponent, DivisorComponent, DrawerComponent,
   IconButtonComponent, IconComponent, InputTextComponent, InputTextareaComponent, ListBodyCellComponent, ListBodyComponent,
   ListBodyRowComponent, ListComponent, ListHeaderComponent, ListHeaderItemComponent, ListPaginationComponent, StatusColor, StatusComponent,
-  TabsComponent, TagComponent,
+  TabsComponent, TagComponent, SkeletonComponent, EmptyStateComponent,
 } from '../../shared/terra';
 import { ShellComponent } from '../../shared/shell.component';
 import { AvisosService } from '../../shared/avisos.service';
@@ -23,7 +23,7 @@ const PRODUTOS = ['Crédito com Garantia de Imóvel', 'Financiamento / Aquisiç�
   standalone: true,
   imports: [
     ShellComponent, FormsModule, ButtonComponent, DialogComponent, DialogHeaderComponent, DialogBodyComponent, DialogFooterComponent, DivisorComponent,
-    DrawerComponent, IconButtonComponent, IconComponent, InputTextComponent, InputTextareaComponent, StatusComponent, TabsComponent, TagComponent,
+    DrawerComponent, IconButtonComponent, IconComponent, InputTextComponent, InputTextareaComponent, StatusComponent, TabsComponent, TagComponent, SkeletonComponent, EmptyStateComponent,
     ListComponent, ListHeaderComponent, ListHeaderItemComponent, ListBodyComponent, ListBodyRowComponent, ListBodyCellComponent, ListPaginationComponent,
     MenuFlutuanteComponent,
   ],
@@ -46,6 +46,10 @@ export class ClientesComponent {
   protected readonly aba = signal<number>(this.s0.tab === 'pj' ? 1 : 0);
   protected readonly busca = signal<string>(this.s0.busca || '');
   protected readonly pagina = signal(1);
+  /** Skeleton enquanto a lista chega (protótipo simula a resposta do servidor; no back, liga ao estado da requisição). */
+  protected readonly carregando = signal(true);
+  protected readonly esqueleto = Array.from({ length: 8 }, (_, i) => i);
+  private timerCarga: ReturnType<typeof setTimeout> | null = null;
   protected readonly porPagina = signal(8);
   protected readonly ordem = signal<{ k: string; asc: boolean }>({ k: 'atualizado', asc: false });
   protected readonly removidos = signal<Record<string, boolean>>({});
@@ -86,6 +90,7 @@ export class ClientesComponent {
   protected readonly rowExcluir = computed(() => this.acharRow(this.excluir()));
 
   constructor() {
+    this.carregar(1400);
     if (this.aberto()) this.form.set({ ...this.detalhe(this.acharRow(this.aberto())) });
   }
 
@@ -107,7 +112,12 @@ export class ClientesComponent {
   protected cor(intent: string): StatusColor { return COR[intent] ?? 'informative'; }
   protected corAss(v: string): StatusColor { return v === 'Assinado' ? 'positive' : 'warning'; }
 
-  protected trocarAba(i: number): void { this.aba.set(i); this.busca.set(''); this.pagina.set(1); }
+  private carregar(ms: number): void {
+    this.carregando.set(true);
+    if (this.timerCarga) clearTimeout(this.timerCarga);
+    this.timerCarga = setTimeout(() => { this.timerCarga = null; this.carregando.set(false); }, ms);
+  }
+  protected trocarAba(i: number): void { if (i === this.aba()) return; this.aba.set(i); this.busca.set(''); this.pagina.set(1); this.carregar(700); }
   protected ordenar(k: string): void {
     this.ordem.update((o) => (o.k === k ? { k, asc: !o.asc } : { k, asc: k !== 'atualizado' }));
     this.pagina.set(1);

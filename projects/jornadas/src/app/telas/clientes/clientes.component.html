@@ -7,7 +7,21 @@
       </span>
     </div>
 
-    @if (linhas().length) {
+    @if (carregando()) {
+      <div class="cl-lista cl-sk" role="status" aria-live="polite" aria-label="Carregando clientes">
+        <div class="cl-sk-cab">
+          @for (c of colunas(); track c.k) { <lib-skeleton width="55%" height="16px"></lib-skeleton> }
+          <lib-skeleton width="72px" height="16px"></lib-skeleton>
+        </div>
+        @for (i of esqueleto; track i) {
+          <div class="cl-sk-linha">
+            @for (c of colunas(); track c.k; let j = $index) { <lib-skeleton [width]="j === 0 ? '78%' : '62%'" height="14px"></lib-skeleton> }
+            <span class="cl-sk-acoes"><lib-skeleton width="24px" height="24px" borderRadius="6px"></lib-skeleton><lib-skeleton width="24px" height="24px" borderRadius="6px"></lib-skeleton><lib-skeleton width="24px" height="24px" borderRadius="6px"></lib-skeleton></span>
+          </div>
+        }
+        <div class="cl-sk-pag"><lib-skeleton width="140px" height="16px"></lib-skeleton><lib-skeleton width="64px" height="36px" borderRadius="8px"></lib-skeleton><lib-skeleton width="140px" height="36px" borderRadius="8px"></lib-skeleton></div>
+      </div>
+    } @else if (linhas().length) {
       <div class="cl-lista">
         <lib-list [striped]="false" [hoverable]="true">
           <lib-list-header>
@@ -43,18 +57,13 @@
         <lib-list-pagination class="cl-pag" label="Visualizar por página" [pageSize]="porPagina()" [pageSizeOptions]="[8, 16, 24]" [total]="linhas().length" [page]="pagina()" (pageSizeChange)="porPagina.set($event); pagina.set(1)" (pageChange)="pagina.set($event)"></lib-list-pagination>
       </div>
     } @else if (busca()) {
-      <div class="cl-vazio" role="status"><lib-icon icon="MagnifyingGlass" [size]="32" color="inherit"></lib-icon><b>Nenhum cliente encontrado</b><span>Confira o nome, CPF ou CNPJ digitado.</span></div>
+      <lib-empty-state class="cl-vazio" role="status" icon="MagnifyingGlass" title="Nenhum cliente encontrado" description="Confira o nome, CPF ou CNPJ digitado."></lib-empty-state>
     } @else {
-      <div class="cl-vazio" role="status">
-        <lib-icon icon="UsersThree" [size]="32" color="inherit"></lib-icon>
-        <b>Sua base de clientes ainda está vazia</b>
-        <span>Os clientes aparecem aqui assim que uma proposta é preenchida.</span>
-        <lib-button intent="branding" variant="filled" icon="PlusCircle" label="Nova proposta" (clicked)="nav.emit('nova')"></lib-button>
-      </div>
+      <lib-empty-state class="cl-vazio" role="status" icon="UsersThree" title="Sua base de clientes ainda está vazia" description="Os clientes aparecem aqui assim que uma proposta é preenchida." buttonLabel="Nova proposta" buttonIcon="PlusCircle" buttonIntent="branding" (buttonClicked)="nav.emit('nova')"></lib-empty-state>
     }
 
     @if (menu(); as m) {
-      <jv-menu-flutuante [itens]="[{ value: 'proposta', label: 'Gerar nova proposta', icon: 'wallet--duotone' }, { value: 'docs', label: 'Documentos', icon: 'folder-open--duotone' }, { value: 'excluir', label: 'Excluir cliente', icon: 'trash-can--duotone' }]" [pos]="m.pos" [largura]="200" rotulo="Ações do cliente" (escolher)="acaoMenu($event)" (fechar)="menu.set(null)"></jv-menu-flutuante>
+      <jv-menu-flutuante [itens]="[{ value: 'proposta', label: 'Gerar nova proposta', icon: 'PlusCircle' }, { value: 'docs', label: 'Documentos', icon: 'folder-open--duotone' }, { value: 'excluir', label: 'Excluir cliente', icon: 'trash-can--duotone' }]" [pos]="m.pos" [largura]="200" rotulo="Ações do cliente" (escolher)="acaoMenu($event)" (fechar)="menu.set(null)"></jv-menu-flutuante>
     }
   </div>
 
@@ -159,8 +168,8 @@
                       <li><span class="cd-ic"><lib-icon icon="Phone" [size]="16" color="inherit"></lib-icon></span><div><span>{{ t.tipo }}</span><b>{{ t.numero }}</b></div>@if (t.principal) { <lib-tag emphasis="low" color="blue" size="small">Principal</lib-tag> }</li>
                     }</ul></section>
                 }
-                @case ('pf-2') { <section class="cd-card cd-vazio"><lib-icon icon="Users" [size]="24" color="inherit"></lib-icon><b>Nenhum vínculo</b><span>Cônjuge, sócios e dependentes aparecem aqui.</span></section> }
-                @case ('pf-3') { <section class="cd-card cd-vazio"><lib-icon icon="Buildings" [size]="24" color="inherit"></lib-icon><b>Nenhuma empresa vinculada</b><span>Empresas em que o cliente é sócio aparecem aqui.</span></section> }
+                @case ('pf-2') { <section class="cd-card cd-vazio"><lib-empty-state icon="Users" title="Nenhum vínculo" description="Cônjuge, sócios e dependentes aparecem aqui."></lib-empty-state></section> }
+                @case ('pf-3') { <section class="cd-card cd-vazio"><lib-empty-state icon="Buildings" title="Nenhuma empresa vinculada" description="Empresas em que o cliente é sócio aparecem aqui."></lib-empty-state></section> }
                 @case ('pj-1') {
                   <section class="cd-card"><header><h4>Representante legal</h4></header>
                     <dl class="cd-dados">
@@ -172,7 +181,7 @@
                   @if (d.atividades.length) {
                     <section class="cd-card"><header><h4>Atividades econômicas secundárias</h4></header>
                       <ul class="cd-lista">@for (a of d.atividades; track a) { <li><span class="cd-ic"><lib-icon icon="Pulse" [size]="16" color="inherit"></lib-icon></span><b>{{ a }}</b></li> }</ul></section>
-                  } @else { <section class="cd-card cd-vazio"><lib-icon icon="Pulse" [size]="24" color="inherit"></lib-icon><b>Nenhuma atividade secundária</b><span>A empresa não informou outras atividades.</span></section> }
+                  } @else { <section class="cd-card cd-vazio"><lib-empty-state icon="Pulse" title="Nenhuma atividade secundária" description="A empresa não informou outras atividades."></lib-empty-state></section> }
                 }
                 @case ('pj-0') {
                   <section class="cd-card"><header><h4>Identificação</h4></header>
