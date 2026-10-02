@@ -119,6 +119,13 @@ export class ClientesComponent {
     const n = Number(r.id);
     return { proposta: '#' + String(300000 + ((n * 37) % 99999)), produto: PRODUTOS[n % PRODUTOS.length] };
   }
+  protected iniciais(n: string): string { const p = n.trim().split(/\s+/); return (p[0][0] + (p.length > 1 ? p[p.length - 1][0] : '')).toUpperCase(); }
+  protected telefone(d: any): string { return d.tipo === 'pf' ? (d.telefones?.find((t: any) => t.principal)?.numero ?? d.telefones?.[0]?.numero ?? '') : (d.representante?.telefone !== '—' ? d.representante?.telefone : this.rowAberto()?.telefone) ?? ''; }
+  protected cidadeUf(d: any): string { const e = d.endereco?.[1] ?? ''; const m = e.match(/,\s*([^,]+?)\s*-\s*([A-Z]{2})/); return m ? `${m[1]} - ${m[2]}` : e; }
+  protected emAndamento(d: any): number { return d.historico.filter((n: any) => n.intent !== 'negative' && n.intent !== 'positive').length; }
+  protected copiar(texto: string, aviso: string): void {
+    navigator.clipboard?.writeText(texto).then(() => this.avisos.mostrar(aviso, 'success', 3000), () => this.avisos.mostrar(aviso, 'success', 3000));
+  }
   protected ver(ev: Event, r: any): void { ev?.stopPropagation?.(); this.abrir(r); }
   protected buscar(v: string): void { this.busca.set(v ?? ''); this.pagina.set(1); }
 

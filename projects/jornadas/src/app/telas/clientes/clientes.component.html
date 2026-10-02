@@ -60,99 +60,154 @@
   </div>
 
   @if (d(); as d) {
-    <lib-drawer class="cl-drawer" [open]="true" [title]="d.nome" [prefix]="d.tipo === 'pf' ? 'Pessoa Física · ID ' + rowAberto().id : 'Pessoa Jurídica · ID ' + rowAberto().id" [description]="d.doc" [showFooter]="true" [showCustomFooter]="true" [ariaLabel]="'Informações do cliente ' + d.nome" (closeClick)="fechar()" (backdropClick)="fechar()">
-      <div class="cl-dr">
-        <div class="cl-dr-main">
-          <div class="cl-dr-topo">
-            <lib-icon-button type="neutral" variant="ghost" size="small" icon="Copy" [ariaLabel]="'Copiar ' + (d.tipo === 'pf' ? 'CPF' : 'CNPJ')" (clicked)="avisar((d.tipo === 'pf' ? 'CPF' : 'CNPJ') + ' copiado.', 'success')"></lib-icon-button>
-            <span class="cl-esp"></span>
-            @if (editando()) { <lib-tag emphasis="low" color="blue" size="small">Editando...</lib-tag> }
-            @else { <lib-button intent="branding" variant="bare" icon="PencilSimple" label="Editar informações" (clicked)="editar()"></lib-button> }
-          </div>
-          <lib-tabs [tabs]="abasDet()" [selected]="abaDet()" (selectedChange)="abaDet.set($event)"></lib-tabs>
-
-          @if (editando()) {
-            <div class="cl-grid">
-              <lib-input-text label="CPF" variant="outlined" [disabled]="true" [ngModel]="form().doc"></lib-input-text>
-              <lib-input-text class="cl-s2" label="Nome completo" variant="outlined" [disabled]="true" [ngModel]="form().nome"></lib-input-text>
-              <lib-input-text label="Nascimento" variant="outlined" [disabled]="true" [ngModel]="form().nascimento"></lib-input-text>
-              <lib-input-text label="Gênero" variant="outlined" [disabled]="true" [ngModel]="form().genero"></lib-input-text>
-              <lib-input-text label="Estado civil" variant="outlined" [disabled]="true" [ngModel]="form().estadoCivil"></lib-input-text>
-              <lib-input-text label="Renda presumida (mês)" variant="outlined" [disabled]="true" [ngModel]="form().renda"></lib-input-text>
-              <lib-input-text class="cl-s2" label="Nome completo da mãe" variant="outlined" [disabled]="true" [ngModel]="form().mae"></lib-input-text>
-              <lib-input-text class="cl-s3" label="E-mail pessoal" type="email" variant="outlined" [clearable]="true" [ngModel]="form().email" (ngModelChange)="campo('email', $event)"></lib-input-text>
-              <lib-input-text label="CEP" variant="outlined" [disabled]="true" [ngModel]="form().cep"></lib-input-text>
-              <lib-input-text label="Endereço" variant="outlined" [disabled]="true" [ngModel]="form().rua"></lib-input-text>
-              <lib-input-text label="Número" variant="outlined" [disabled]="true" [ngModel]="form().numero"></lib-input-text>
-              <lib-input-text label="Complemento" variant="outlined" [disabled]="true" [ngModel]="form().complemento"></lib-input-text>
-              <lib-input-text label="UF" variant="outlined" [disabled]="true" [ngModel]="form().uf"></lib-input-text>
-              <lib-input-text label="Cidade" variant="outlined" [disabled]="true" [ngModel]="form().cidade"></lib-input-text>
-              <lib-input-textarea class="cl-s3" label="Observações" [optional]="true" variant="outlined" placeholder="Digite uma observação..." [rows]="3" [ngModel]="form().obs" (ngModelChange)="campo('obs', $event)"></lib-input-textarea>
+    <lib-drawer class="cl-drawer" [open]="true" title="Detalhes do cliente" [showFooter]="true" [showCustomFooter]="true" [ariaLabel]="'Informações do cliente ' + d.nome" (closeClick)="fechar()" (backdropClick)="fechar()">
+      <div class="cd">
+        <!-- Identificação -->
+        <section class="cd-hero">
+          <span class="cd-avatar" [class.cd-avatar--pj]="d.tipo === 'pj'" aria-hidden="true">
+            @if (d.tipo === 'pj') { <lib-icon icon="BuildingApartment" [size]="24" color="inherit"></lib-icon> } @else { {{ iniciais(d.nome) }} }
+          </span>
+          <div class="cd-id">
+            <div class="cd-nome">
+              <h3>{{ d.nome }}</h3>
+              <lib-tag emphasis="low" [color]="d.tipo === 'pj' ? 'purple' : 'blue'" size="small">{{ d.tipo === 'pj' ? 'Pessoa Jurídica' : 'Pessoa Física' }}</lib-tag>
             </div>
-          } @else {
-            @switch (d.tipo + '-' + abaDet()) {
-              @case ('pf-1') {
-                <ul class="cl-sub">@for (t of d.telefones; track t.numero) {
-                  <li><lib-icon icon="Phone" [size]="20" color="inherit"></lib-icon><div><span>{{ t.tipo }}</span><b>{{ t.numero }}</b></div>@if (t.principal) { <lib-tag emphasis="low" color="blue" size="small">Principal</lib-tag> }</li>
-                }</ul>
-              }
-              @case ('pf-2') { <div class="cl-aba-vazia"><lib-icon icon="Users" [size]="32" color="inherit"></lib-icon><span>Nenhum vínculo cadastrado para este cliente.</span></div> }
-              @case ('pf-3') { <div class="cl-aba-vazia"><lib-icon icon="Buildings" [size]="32" color="inherit"></lib-icon><span>Nenhuma empresa vinculada a este cliente.</span></div> }
-              @case ('pj-1') {
-                <dl class="cl-grid">
-                  <div class="cl-s2"><dt>Nome</dt><dd>{{ d.representante.nome }}</dd></div><div><dt>CPF</dt><dd>{{ d.representante.cpf }}</dd></div>
-                  <div><dt>Cargo</dt><dd>{{ d.representante.cargo }}</dd></div><div><dt>E-mail</dt><dd>{{ d.representante.email }}</dd></div><div><dt>Telefone</dt><dd>{{ d.representante.telefone }}</dd></div>
-                </dl>
-              }
-              @case ('pj-2') {
-                @if (d.atividades.length) { <ul class="cl-sub">@for (a of d.atividades; track a) { <li><lib-icon icon="Pulse" [size]="20" color="inherit"></lib-icon><b>{{ a }}</b></li> }</ul> }
-                @else { <div class="cl-aba-vazia"><lib-icon icon="Pulse" [size]="32" color="inherit"></lib-icon><span>Nenhuma atividade econômica secundária informada.</span></div> }
-              }
-              @case ('pj-0') {
-                <dl class="cl-grid">
-                  <div><dt>CNPJ</dt><dd>{{ d.doc }}</dd></div><div><dt>Nome da empresa</dt><dd>{{ d.nome }}</dd></div><div><dt>Nome fantasia</dt><dd>{{ d.fantasia }}</dd></div>
-                  <div><dt>Data de abertura</dt><dd>{{ d.abertura }}</dd></div><div><dt>Porte</dt><dd>{{ d.porte }}</dd></div><div><dt>Nível</dt><dd>{{ d.nivel }}</dd></div>
-                  <div><dt>Natureza jurídica</dt><dd>{{ d.natureza }}</dd></div><div><dt>Regime tributário</dt><dd>{{ d.regime }}</dd></div><div><dt>Capital social</dt><dd>{{ d.capital }}</dd></div>
-                  <div><dt>Faturamento anual</dt><dd>{{ d.faturamento }}</dd></div><div><dt>Início do Simples</dt><dd>{{ d.inicioSimples }}</dd></div><div><dt>Fim do Simples</dt><dd>{{ d.fimSimples }}</dd></div>
-                  <div><dt>Optante pelo MEI</dt><dd>{{ d.mei }}</dd></div><div><dt>Renda presumida (mês)</dt><dd>{{ d.renda }}</dd></div><div><dt>Funcionários</dt><dd>{{ d.funcionarios }}</dd></div>
-                  <div class="cl-s3"><dt>E-mail</dt><dd>{{ d.email }}</dd></div>
-                  <div class="cl-s3"><dt>Endereço</dt><dd>{{ d.endereco[0] }}<br>{{ d.endereco[1] }}</dd></div>
-                  <div><dt>Status LGPD</dt><dd><lib-status size="small" [status]="corAss(d.lgpd)" [text]="d.lgpd"></lib-status></dd></div>
-                  <div><dt>Status Carta BACEN</dt><dd><lib-status size="small" [status]="corAss(d.bacen)" [text]="d.bacen"></lib-status></dd></div>
-                  <div><dt>Data da criação</dt><dd>{{ d.criado }}</dd></div>
-                  <div class="cl-s3"><dt>Origem</dt><dd class="cl-origem"><lib-icon icon="FileText" [size]="16" color="inherit"></lib-icon>Criado automaticamente pela proposta {{ origem(rowAberto()).proposta }} · {{ origem(rowAberto()).produto }}</dd></div>
-                  <div class="cl-s3"><dt>Observações</dt><dd>{{ d.obs || 'Sem observações' }}</dd></div>
-                </dl>
-              }
-              @default {
-                <dl class="cl-grid">
-                  <div><dt>CPF</dt><dd>{{ d.doc }}</dd></div><div class="cl-s2"><dt>Nome completo</dt><dd>{{ d.nome }}</dd></div>
-                  <div><dt>Nascimento</dt><dd>{{ d.nascimento }}</dd></div><div><dt>Gênero</dt><dd>{{ d.genero }}</dd></div><div><dt>Estado civil</dt><dd>{{ d.estadoCivil }}</dd></div>
-                  <div><dt>Renda presumida (mês)</dt><dd>{{ d.renda }}</dd></div><div><dt>Nome completo da mãe</dt><dd>{{ d.mae }}</dd></div><div><dt>E-mail pessoal</dt><dd>{{ d.email }}</dd></div>
-                  <div class="cl-s3"><dt>Endereço</dt><dd>{{ d.endereco[0] }}<br>{{ d.endereco[1] }}</dd></div>
-                  <div><dt>Status LGPD</dt><dd><lib-status size="small" [status]="corAss(d.lgpd)" [text]="d.lgpd"></lib-status></dd></div>
-                  <div><dt>Status Carta BACEN</dt><dd class="cl-bacen"><lib-status size="small" [status]="corAss(d.bacen)" [text]="d.bacen"></lib-status>
-                    @if (d.bacen === 'Assinado') { <lib-icon-button type="neutral" variant="ghost" size="small" icon="FileArrowDown" ariaLabel="Baixar Carta BACEN" (clicked)="avisar('Download da Carta BACEN iniciado.', 'success')"></lib-icon-button> }</dd></div>
-                  <div><dt>Data da criação</dt><dd>{{ d.criado }}</dd></div>
-                  <div class="cl-s3"><dt>Origem</dt><dd class="cl-origem"><lib-icon icon="FileText" [size]="16" color="inherit"></lib-icon>Criado automaticamente pela proposta {{ origem(rowAberto()).proposta }} · {{ origem(rowAberto()).produto }}</dd></div>
-                  <div class="cl-s3"><dt>Observações</dt><dd>{{ d.obs || 'Sem observações' }}</dd></div>
-                </dl>
-              }
-            }
+            <p class="cd-meta">
+              <span class="cd-doc">{{ d.tipo === 'pj' ? 'CNPJ' : 'CPF' }} {{ d.doc }}
+                <lib-icon-button type="neutral" variant="bare" size="small" icon="Copy" [ariaLabel]="'Copiar ' + (d.tipo === 'pf' ? 'CPF' : 'CNPJ')" (clicked)="copiar(d.doc, (d.tipo === 'pf' ? 'CPF' : 'CNPJ') + ' copiado.')"></lib-icon-button>
+              </span>
+              <i aria-hidden="true"></i><span>ID {{ rowAberto().id }}</span>
+              <i aria-hidden="true"></i><span>Cliente desde {{ d.criado }}</span>
+            </p>
+          </div>
+          @if (editando()) { <lib-tag class="cd-editando" emphasis="low" color="blue" size="small">Editando</lib-tag> }
+          @else { <lib-button class="cd-editar" intent="neutral" variant="filled" icon="PencilSimple" label="Editar" (clicked)="editar()"></lib-button> }
+        </section>
+
+        <!-- Contato rápido -->
+        <ul class="cd-contato" aria-label="Contato">
+          <li><lib-icon icon="EnvelopeSimple" [size]="16" color="inherit"></lib-icon><span>{{ d.email }}</span>
+            <lib-icon-button type="neutral" variant="bare" size="small" icon="Copy" ariaLabel="Copiar e-mail" (clicked)="copiar(d.email, 'E-mail copiado.')"></lib-icon-button></li>
+          @if (telefone(d); as t) {
+            <li><lib-icon icon="Phone" [size]="16" color="inherit"></lib-icon><span>{{ t }}</span>
+              <lib-icon-button type="neutral" variant="bare" size="small" icon="WhatsappLogo" ariaLabel="Chamar no WhatsApp" (clicked)="avisar('Abre a conversa no WhatsApp (fora do protótipo).')"></lib-icon-button></li>
           }
+          <li><lib-icon icon="MapPin" [size]="16" color="inherit"></lib-icon><span>{{ cidadeUf(d) }}</span></li>
+        </ul>
+
+        <!-- Resumo -->
+        <div class="cd-kpis">
+          <div class="cd-kpi"><span>Propostas</span><b>{{ d.historico.length }}</b></div>
+          <div class="cd-kpi"><span>Em andamento</span><b>{{ emAndamento(d) }}</b></div>
+          <div class="cd-kpi"><span>Termo LGPD</span><lib-status size="small" [status]="corAss(d.lgpd)" [text]="d.lgpd"></lib-status></div>
+          <div class="cd-kpi"><span>Carta BACEN</span>
+            <span class="cd-kpi-linha"><lib-status size="small" [status]="corAss(d.bacen)" [text]="d.bacen"></lib-status>
+              @if (d.bacen === 'Assinado') { <lib-icon-button type="neutral" variant="bare" size="small" icon="DownloadSimple" ariaLabel="Baixar Carta BACEN" (clicked)="avisar('Download da Carta BACEN iniciado.', 'success')"></lib-icon-button> }
+              @else { <lib-button intent="branding" variant="bare" [showIcon]="false" label="Enviar" (clicked)="avisar('Carta BACEN enviada para ' + d.email + '.', 'success')"></lib-button> }
+            </span></div>
         </div>
 
-        <section class="cl-hist" aria-labelledby="cl-hist-t">
-          <h3 id="cl-hist-t">Histórico</h3>
-          <p>Aqui você encontra todos os negócios em andamento com este cliente.</p>
-          @if (d.historico.length) {
-            <ul>@for (n of d.historico; track $index) { <li><b>{{ n.produto }}</b><span>{{ n.data }}<lib-status size="small" [status]="cor(n.intent)" [text]="n.status"></lib-status></span></li> }</ul>
-          } @else {
-            <div class="cl-aba-vazia"><lib-icon icon="Briefcase" [size]="32" color="inherit"></lib-icon><span>Nenhum negócio em andamento com este cliente.</span></div>
-          }
-        </section>
-      </div>
+        <div class="cd-cols">
+          <div class="cd-main">
+            <lib-tabs [tabs]="abasDet()" [selected]="abaDet()" (selectedChange)="abaDet.set($event)"></lib-tabs>
 
+            @if (editando()) {
+              <section class="cd-card">
+                <header><h4>Dados pessoais</h4><p>Os dados que vêm do CPF ficam bloqueados.</p></header>
+                <div class="cd-form">
+                  <lib-input-text class="cd-s2" label="Nome completo" variant="outlined" [disabled]="true" [ngModel]="form().nome"></lib-input-text>
+                  <lib-input-text label="CPF" variant="outlined" [disabled]="true" [ngModel]="form().doc"></lib-input-text>
+                  <lib-input-text label="Nascimento" variant="outlined" [disabled]="true" [ngModel]="form().nascimento"></lib-input-text>
+                  <lib-input-text label="Gênero" variant="outlined" [disabled]="true" [ngModel]="form().genero"></lib-input-text>
+                  <lib-input-text label="Estado civil" variant="outlined" [disabled]="true" [ngModel]="form().estadoCivil"></lib-input-text>
+                  <lib-input-text label="Renda presumida (mês)" variant="outlined" [disabled]="true" [ngModel]="form().renda"></lib-input-text>
+                  <lib-input-text class="cd-s2" label="Nome completo da mãe" variant="outlined" [disabled]="true" [ngModel]="form().mae"></lib-input-text>
+                </div>
+              </section>
+              <section class="cd-card">
+                <header><h4>Contato e observações</h4><p>Você pode atualizar o e-mail e as observações.</p></header>
+                <div class="cd-form">
+                  <lib-input-text class="cd-s3" label="E-mail pessoal" type="email" variant="outlined" [clearable]="true" [ngModel]="form().email" (ngModelChange)="campo('email', $event)"></lib-input-text>
+                  <lib-input-textarea class="cd-s3" label="Observações" [optional]="true" variant="outlined" placeholder="Digite uma observação..." [rows]="3" [ngModel]="form().obs" (ngModelChange)="campo('obs', $event)"></lib-input-textarea>
+                </div>
+              </section>
+            } @else {
+              @switch (d.tipo + '-' + abaDet()) {
+                @case ('pf-1') {
+                  <section class="cd-card"><header><h4>Telefones</h4></header>
+                    <ul class="cd-lista">@for (t of d.telefones; track t.numero) {
+                      <li><span class="cd-ic"><lib-icon icon="Phone" [size]="16" color="inherit"></lib-icon></span><div><span>{{ t.tipo }}</span><b>{{ t.numero }}</b></div>@if (t.principal) { <lib-tag emphasis="low" color="blue" size="small">Principal</lib-tag> }</li>
+                    }</ul></section>
+                }
+                @case ('pf-2') { <section class="cd-card cd-vazio"><lib-icon icon="Users" [size]="24" color="inherit"></lib-icon><b>Nenhum vínculo</b><span>Cônjuge, sócios e dependentes aparecem aqui.</span></section> }
+                @case ('pf-3') { <section class="cd-card cd-vazio"><lib-icon icon="Buildings" [size]="24" color="inherit"></lib-icon><b>Nenhuma empresa vinculada</b><span>Empresas em que o cliente é sócio aparecem aqui.</span></section> }
+                @case ('pj-1') {
+                  <section class="cd-card"><header><h4>Representante legal</h4></header>
+                    <dl class="cd-dados">
+                      <div class="cd-s2"><dt>Nome</dt><dd>{{ d.representante.nome }}</dd></div><div><dt>CPF</dt><dd>{{ d.representante.cpf }}</dd></div>
+                      <div><dt>Cargo</dt><dd>{{ d.representante.cargo }}</dd></div><div><dt>E-mail</dt><dd>{{ d.representante.email }}</dd></div><div><dt>Telefone</dt><dd>{{ d.representante.telefone }}</dd></div>
+                    </dl></section>
+                }
+                @case ('pj-2') {
+                  @if (d.atividades.length) {
+                    <section class="cd-card"><header><h4>Atividades econômicas secundárias</h4></header>
+                      <ul class="cd-lista">@for (a of d.atividades; track a) { <li><span class="cd-ic"><lib-icon icon="Pulse" [size]="16" color="inherit"></lib-icon></span><b>{{ a }}</b></li> }</ul></section>
+                  } @else { <section class="cd-card cd-vazio"><lib-icon icon="Pulse" [size]="24" color="inherit"></lib-icon><b>Nenhuma atividade secundária</b><span>A empresa não informou outras atividades.</span></section> }
+                }
+                @case ('pj-0') {
+                  <section class="cd-card"><header><h4>Identificação</h4></header>
+                    <dl class="cd-dados">
+                      <div class="cd-s2"><dt>Razão social</dt><dd>{{ d.nome }}</dd></div><div><dt>Nome fantasia</dt><dd>{{ d.fantasia }}</dd></div>
+                      <div><dt>Data de abertura</dt><dd>{{ d.abertura }}</dd></div><div><dt>Porte</dt><dd>{{ d.porte }}</dd></div><div><dt>Natureza jurídica</dt><dd>{{ d.natureza }}</dd></div>
+                    </dl></section>
+                  <section class="cd-card"><header><h4>Financeiro e tributário</h4></header>
+                    <dl class="cd-dados">
+                      <div><dt>Faturamento anual</dt><dd>{{ d.faturamento }}</dd></div><div><dt>Capital social</dt><dd>{{ d.capital }}</dd></div><div><dt>Renda presumida (mês)</dt><dd>{{ d.renda }}</dd></div>
+                      <div><dt>Regime tributário</dt><dd>{{ d.regime }}</dd></div><div><dt>Optante pelo MEI</dt><dd>{{ d.mei }}</dd></div><div><dt>Funcionários</dt><dd>{{ d.funcionarios }}</dd></div>
+                    </dl></section>
+                  <section class="cd-card"><header><h4>Endereço</h4></header>
+                    <p class="cd-end"><lib-icon icon="MapPin" [size]="16" color="inherit"></lib-icon><span>{{ d.endereco[0] }}<br>{{ d.endereco[1] }}</span></p></section>
+                  <section class="cd-card"><header><h4>Observações</h4></header><p class="cd-obs">{{ d.obs || 'Nenhuma observação sobre este cliente.' }}</p></section>
+                }
+                @default {
+                  <section class="cd-card"><header><h4>Dados pessoais</h4></header>
+                    <dl class="cd-dados">
+                      <div><dt>Nascimento</dt><dd>{{ d.nascimento }}</dd></div><div><dt>Gênero</dt><dd>{{ d.genero }}</dd></div><div><dt>Estado civil</dt><dd>{{ d.estadoCivil }}</dd></div>
+                      <div><dt>Renda presumida (mês)</dt><dd>{{ d.renda }}</dd></div><div class="cd-s2"><dt>Nome da mãe</dt><dd>{{ d.mae }}</dd></div>
+                    </dl></section>
+                  <section class="cd-card"><header><h4>Endereço</h4></header>
+                    <p class="cd-end"><lib-icon icon="MapPin" [size]="16" color="inherit"></lib-icon><span>{{ d.endereco[0] }}<br>{{ d.endereco[1] }}</span></p></section>
+                  <section class="cd-card"><header><h4>Observações</h4></header><p class="cd-obs">{{ d.obs || 'Nenhuma observação sobre este cliente.' }}</p></section>
+                }
+              }
+            }
+          </div>
+
+          <!-- Linha do tempo -->
+          <aside class="cd-hist" aria-labelledby="cd-hist-t">
+            <header><h4 id="cd-hist-t">Histórico</h4><span>{{ d.historico.length }} {{ d.historico.length === 1 ? 'proposta' : 'propostas' }}</span></header>
+            <ol class="cd-tl">
+              @for (n of d.historico; track $index) {
+                <li [attr.data-intent]="n.intent">
+                  <span class="cd-tl-ponto" aria-hidden="true"></span>
+                  <div class="cd-tl-corpo">
+                    <b>{{ n.produto }}</b>
+                    <span class="cd-tl-linha"><time>{{ n.data }}</time><lib-status size="small" [status]="cor(n.intent)" [text]="n.status"></lib-status></span>
+                  </div>
+                </li>
+              }
+              <li class="cd-tl-origem">
+                <span class="cd-tl-ponto" aria-hidden="true"><lib-icon icon="UserPlus" [size]="12" color="inherit"></lib-icon></span>
+                <div class="cd-tl-corpo">
+                  <b>Cliente criado</b>
+                  <span class="cd-tl-txt">Automaticamente pela proposta {{ origem(rowAberto()).proposta }} · {{ origem(rowAberto()).produto }}</span>
+                  <time>{{ d.criado }}</time>
+                </div>
+              </li>
+            </ol>
+          </aside>
+        </div>
+      </div>
       <div libDrawerFooter class="cl-rodape">
         @if (editando()) {
           <span></span>
@@ -161,9 +216,9 @@
             <lib-button intent="branding" variant="filled" icon="Check" label="Salvar" [disabled]="!mudou()" (clicked)="dialogo.set('salvar')"></lib-button>
           </span>
         } @else {
-          <lib-button intent="negative" variant="bare" icon="Trash" label="Excluir cliente" (clicked)="excluir.set(rowAberto().id)"></lib-button>
+          <lib-button intent="negative" variant="ghost" icon="Trash" label="Excluir" (clicked)="excluir.set(rowAberto().id)"></lib-button>
           <span class="cl-rodape-dir">
-            <lib-button intent="neutral" variant="ghost" icon="MagnifyingGlass" label="Consulta Serasa" (clicked)="avisar('Consulta Serasa de ' + d.nome + ' solicitada. O resultado aparece no histórico do cliente.')"></lib-button>
+            <lib-button intent="neutral" variant="filled" icon="MagnifyingGlass" label="Consulta Serasa" (clicked)="avisar('Consulta Serasa de ' + d.nome + ' solicitada. O resultado aparece no histórico do cliente.')"></lib-button>
             <lib-button intent="branding" variant="filled" icon="Wallet" label="Gerar nova proposta" (clicked)="nav.emit('nova')"></lib-button>
           </span>
         }
