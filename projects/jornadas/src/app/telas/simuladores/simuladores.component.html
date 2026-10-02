@@ -3,11 +3,6 @@
     <!-- ===== Início ===== -->
     @case ('inicio') {
       <div class="sm">
-        <header class="sm-topo">
-          <div><h2>Simule e compare em segundos</h2><p>Encontre a melhor condição entre os bancos parceiros e transforme em proposta.</p></div>
-          <lib-button intent="branding" variant="filled" icon="Calculator" label="Nova simulação" (clicked)="todos.scrollIntoView({ behavior: 'smooth', block: 'start' })"></lib-button>
-        </header>
-
         <div class="sm-grade">
           <!-- Banners dos produtos -->
           <lib-banner class="sm-banners" [items]="produtos" [slideTemplate]="slideProduto" [height]="340" [autoplay]="true" [interval]="6000" ariaLabel="Produtos para simular" [(activeIndex)]="bannerAtivo"></lib-banner>

@@ -1,8 +1,5 @@
 /* ===== Início ===== */
 .sm { display: flex; flex-direction: column; gap: var(--size-spacing-24); padding: var(--size-spacing-24) var(--size-spacing-32) var(--size-spacing-48, 48px); }
-.sm-topo { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--size-spacing-16);
-  h2 { margin: 0; font-size: var(--size-font-heading-24); font-weight: 700; color: var(--color-text-essential-heading); }
-  p { margin: 4px 0 0; font-size: var(--size-font-body-14); color: var(--color-text-essential-caption); } }
 .sm-grade { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(320px, 1fr); gap: var(--size-spacing-24); }
 .sm-banners { display: block; min-width: 0; border-radius: var(--size-radius-16);
   ::ng-deep .banner-viewport { border-radius: var(--size-radius-16); } }
