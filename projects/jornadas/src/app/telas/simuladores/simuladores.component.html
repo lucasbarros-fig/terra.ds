@@ -35,7 +35,7 @@
             <lib-kpi-card label="Simulações no mês" icon="Calculator" [value]="kpis().total" statusLabel="+3" statusColor="positive" note="em todos os produtos"></lib-kpi-card>
             <lib-kpi-card label="Viraram proposta" icon="FileText" [value]="kpis().propostas" [statusLabel]="kpis().conversao + '%'" statusColor="informative" note="de conversão"></lib-kpi-card>
             <lib-kpi-card label="Volume simulado" icon="CurrencyCircleDollar" [value]="curto(kpis().volume)" [statusLabel]="curto(kpis().media)" statusColor="neutral" note="de ticket médio"></lib-kpi-card>
-            <lib-kpi-card label="Produtos para simular" icon="SquaresFour" [value]="produtos.length" [statusLabel]="kpis().bancos + ' bancos'" statusColor="positive" note="parceiros, PF e PJ"></lib-kpi-card>
+            <lib-kpi-card label="Produtos para simular" icon="SquaresFour" [value]="produtos.length" [statusLabel]="kpis().bancos + ' bancos'" statusColor="positive" note="parceiros"></lib-kpi-card>
           </div>
         </div>
 
