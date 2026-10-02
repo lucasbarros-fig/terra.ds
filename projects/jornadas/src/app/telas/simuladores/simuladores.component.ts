@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, computed, inject, input, ou
 import { DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
-  ActionBarComponent, BannerComponent, ButtonComponent, DivisorComponent, EmptyStateComponent, IconButtonComponent, IconComponent, InputTextComponent,
+  ActionBarComponent, BannerComponent, ButtonComponent, DivisorComponent, DrawerComponent, EmptyStateComponent, IconButtonComponent, IconComponent, InputTextComponent,
   ListBodyCellComponent, ListBodyComponent, ListBodyRowComponent, ListComponent, ListHeaderComponent, ListHeaderItemComponent,
   KpiCardComponent, PartnerComponent, SkeletonComponent, TagComponent,
 } from '../../shared/terra';
@@ -52,7 +52,7 @@ const PRODUTOS: Produto[] = [
   selector: 'jv-simuladores',
   standalone: true,
   imports: [
-    ShellComponent, FormsModule, DecimalPipe, ActionBarComponent, BannerComponent, ButtonComponent, DivisorComponent, EmptyStateComponent, IconButtonComponent, IconComponent,
+    ShellComponent, FormsModule, DecimalPipe, ActionBarComponent, BannerComponent, ButtonComponent, DivisorComponent, DrawerComponent, EmptyStateComponent, IconButtonComponent, IconComponent,
     InputTextComponent, KpiCardComponent, PartnerComponent, SkeletonComponent, TagComponent,
     ListComponent, ListHeaderComponent, ListHeaderItemComponent, ListBodyComponent, ListBodyRowComponent, ListBodyCellComponent,
   ],
@@ -101,20 +101,6 @@ export class SimuladoresComponent implements OnInit {
     const media = l.length ? l.reduce((t, r) => t + r.valor, 0) / l.length : 0;
     return { total: l.length, propostas, conversao: l.length ? Math.round((propostas / l.length) * 100) : 0, media };
   });
-  /** Simulação rápida: só valor, entrada e prazo; mostra a parcela estimada e leva para o formulário preenchido. */
-  protected readonly rapida = signal<{ valor: number | null; entrada: number | null; prazo: number }>({ valor: 450000, entrada: 90000, prazo: 360 });
-  protected readonly rapidaRes = computed(() => {
-    const r = this.rapida();
-    if (!r.valor || r.entrada == null || r.entrada >= r.valor) return null;
-    const l = this.calcular({ ...VAZIO, produto: 'fi', valor: r.valor, entrada: r.entrada, prazo: r.prazo, cartorio: 'nao' });
-    const melhor = [...l].sort((a, b) => a.primeira - b.primeira)[0];
-    return { melhor, pct: Math.round((r.entrada / r.valor) * 100) };
-  });
-  protected setRapida(k: 'valor' | 'entrada' | 'prazo', v: any): void { this.rapida.update((r) => ({ ...r, [k]: v })); }
-  protected continuarRapida(): void {
-    const r = this.rapida();
-    this.f.set({ ...VAZIO, produto: 'fi', valor: r.valor, entrada: r.entrada, prazo: r.prazo }); this.enviado.set(false); this.etapa.set('form');
-  }
   /** Melhor condição de uma simulação recente (entrada de 20% e 360 meses quando não há dados completos). */
   protected melhorDe(r: Recente): Linha {
     const f = r.form ?? { ...VAZIO, produto: 'fi', valor: r.valor, entrada: r.valor * 0.2, prazo: 360, cartorio: 'nao' as const };
@@ -254,7 +240,17 @@ export class SimuladoresComponent implements OnInit {
     const ok = () => this.avisos.mostrar('Resumo da simulação copiado. Cole no WhatsApp ou e-mail do cliente.', 'success');
     navigator.clipboard?.writeText(texto).then(ok, ok);
   }
+  /** Detalhe da simulação recente em Drawer: usa o que já está salvo, sem refazer a consulta aos bancos. */
+  protected readonly vendo = signal<Recente | null>(null);
+  protected readonly detalhe = computed(() => {
+    const r = this.vendo(); if (!r) return null;
+    const pr = PRODUTOS.find((p) => p.label === r.produto) ?? PRODUTOS[0];
+    const form: Form = r.form ?? { ...VAZIO, produto: pr.id, valor: r.valor, entrada: r.valor * 0.2, prazo: 360, cartorio: 'nao' };
+    const linhas = [...this.calcular(form)].sort((a, b) => a.primeira - b.primeira);
+    return { r, pr, form, linhas, melhor: linhas[0], credito: pr.modo === 'credito' };
+  });
   protected abrirRecente(r: Recente): void {
+    this.vendo.set(null);
     if (r.form) { this.f.set({ ...r.form }); this.etapa.set('resultado'); return; }
     this.f.set({ ...VAZIO, produto: 'fi' }); this.exemplo(); this.f.update((f) => ({ ...f, valor: r.valor })); this.etapa.set('resultado');
   }

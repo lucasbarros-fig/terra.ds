@@ -23,90 +23,22 @@
                   <span class="sm-hero-logos" aria-hidden="true">@for (b of (p.bancos ?? C().bancos).slice(0, 6); track b.nome) { <lib-partner [partner]="b.nome" partnerStyle="fill" [size]="28"></lib-partner> }</span>
                 </span>
               </div>
-              <span class="sm-hero-ilus" aria-hidden="true">
-                <svg viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-                  @switch (p.id) {
-                    @case ('fi') {
-                      <path d="M30 190h180" opacity=".5" />
-                      <path class="f" d="M50 190V95l70-55 70 55v95z" />
-                      <path d="M38 104l82-64 82 64" />
-                      <path class="f2" d="M102 190v-48h36v48" />
-                      <rect class="f2" x="66" y="112" width="26" height="26" rx="3" />
-                      <rect class="f2" x="148" y="112" width="26" height="26" rx="3" />
-                      <path d="M168 50v-22h16v34" />
-                    }
-                    @case ('construcao') {
-                      <path d="M20 190h200" opacity=".5" />
-                      <path d="M60 190V30M60 30h150M60 30l-30 16M60 54l26-24M84 30l-24 24M108 30l-24 24M132 30l-24 24" />
-                      <path d="M186 30v40" /><path d="M178 70h16l-8 14z" class="f2" />
-                      <rect class="f" x="120" y="110" width="80" height="80" rx="4" />
-                      <path d="M120 136h80M120 162h80M146 110v80M174 110v80" opacity=".7" />
-                    }
-                    @case ('cgi') {
-                      <path class="f" d="M30 190v-70l55-42 55 42v70z" />
-                      <path d="M20 128l65-50 65 50" />
-                      <path class="f2" d="M70 190v-36h30v36" />
-                      <circle class="f2" cx="170" cy="96" r="30" />
-                      <circle cx="170" cy="96" r="10" />
-                      <path d="M158 122l-38 58M134 160l14 9M126 172l12 8" />
-                    }
-                    @case ('veiculos') {
-                      <path d="M10 176h220" opacity=".5" />
-                      <path class="f" d="M24 150v-22l26-6 30-34h70l34 34 28 6v22z" />
-                      <path class="f2" d="M88 96h28v28H66zM126 96h20l28 28h-48z" />
-                      <circle class="f2" cx="66" cy="152" r="18" /><circle cx="66" cy="152" r="6" />
-                      <circle class="f2" cx="180" cy="152" r="18" /><circle cx="180" cy="152" r="6" />
-                    }
-                    @case ('giro') {
-                      <path d="M24 190h192" opacity=".5" />
-                      <rect class="f" x="40" y="140" width="30" height="50" rx="4" />
-                      <rect class="f" x="88" y="110" width="30" height="80" rx="4" />
-                      <rect class="f" x="136" y="80" width="30" height="110" rx="4" />
-                      <path d="M40 100l50-30 34 18 64-50" /><path d="M164 38h24v24" />
-                      <circle class="f2" cx="196" cy="140" r="20" /><path d="M196 130v20M190 136h10a4 4 0 010 8h-8" opacity=".8" />
-                    }
-                    @case ('condominios') {
-                      <path d="M14 190h212" opacity=".5" />
-                      <rect class="f" x="30" y="90" width="56" height="100" rx="4" />
-                      <rect class="f" x="96" y="40" width="64" height="150" rx="4" />
-                      <rect class="f" x="170" y="110" width="44" height="80" rx="4" />
-                      <path d="M44 110h28M44 130h28M44 150h28M110 60h36M110 80h36M110 100h36M110 120h36M110 140h36M182 128h20M182 148h20" opacity=".7" />
-                      <path class="f2" d="M118 190v-26h20v26" />
-                    }
-                  }
-                </svg>
+              <span class="sm-hero-glass" aria-hidden="true">
+                <span class="sm-hero-glass-tras"></span>
+                <span class="sm-hero-glass-frente"><lib-icon [icon]="p.icon" [size]="32" color="inherit"></lib-icon></span>
               </span>
             </div>
           </ng-template>
 
-          <!-- Simulação rápida -->
-          <section class="sm-rapida" aria-labelledby="sm-rap-t">
-            <header><span class="sm-ic"><lib-icon icon="MagicWand" [size]="20" color="inherit"></lib-icon></span><div><h3 id="sm-rap-t">Simulação rápida</h3><p>Uma prévia antes de abrir o simulador completo.</p></div></header>
-            <div class="sm-rapida-campos">
-              <lib-input-text label="Valor do imóvel" variant="outlined" type="currency" prefix="R$" [ngModel]="rapida().valor" (ngModelChange)="setRapida('valor', $event)"></lib-input-text>
-              <lib-input-text label="Entrada" variant="outlined" type="currency" prefix="R$" [error]="!!rapida().valor && rapida().entrada != null && rapida().entrada! >= rapida().valor!" [ngModel]="rapida().entrada" (ngModelChange)="setRapida('entrada', $event)"></lib-input-text>
-            </div>
-            <div class="sf-chips" aria-label="Prazo">
-              @for (m of [180, 240, 360, 420]; track m) { <button type="button" class="sf-chip" [class.is-on]="rapida().prazo === m" (click)="setRapida('prazo', m)">{{ m / 12 }} anos</button> }
-            </div>
-            <div class="sm-rapida-res">
-              @if (rapidaRes(); as r) {
-                <span>1ª parcela a partir de</span>
-                <b>{{ moeda(r.melhor.primeira) }}</b>
-                <small><lib-partner [partner]="r.melhor.parceiro" partnerStyle="fill" [size]="20"></lib-partner>{{ r.melhor.parceiro }} · {{ pct(r.melhor.taxa) }} · entrada de {{ r.pct }}%</small>
-              } @else { <span>Informe um valor de imóvel maior que a entrada.</span> }
-            </div>
-            <lib-button intent="neutral" variant="filled" icon="ArrowRight" label="Continuar no simulador" [disabled]="!rapidaRes()" (clicked)="continuarRapida()"></lib-button>
-          </section>
+          <!-- Indicadores -->
+          <div class="sm-kpis">
+            <lib-kpi-card label="Simulações no mês" icon="Calculator" [value]="kpis().total" statusLabel="+3" statusColor="positive" note="vs. mês anterior"></lib-kpi-card>
+            <lib-kpi-card label="Viraram proposta" icon="FileText" [value]="kpis().propostas" [statusLabel]="kpis().conversao + '%'" statusColor="informative" note="de conversão"></lib-kpi-card>
+            <lib-kpi-card label="Valor médio dos imóveis" icon="HouseLine" [value]="moeda(kpis().media)" statusLabel="Ticket médio" statusColor="neutral" note="das simulações"></lib-kpi-card>
+            <lib-kpi-card label="Produtos para simular" icon="SquaresFour" [value]="produtos.length" statusLabel="PF e PJ" statusColor="positive" note="bancos parceiros"></lib-kpi-card>
+          </div>
         </div>
 
-        <!-- Indicadores -->
-        <div class="sm-kpis">
-          <lib-kpi-card label="Simulações no mês" icon="Calculator" [value]="kpis().total" statusLabel="+3" statusColor="positive" note="vs. mês anterior"></lib-kpi-card>
-          <lib-kpi-card label="Viraram proposta" icon="FileText" [value]="kpis().propostas" [statusLabel]="kpis().conversao + '%'" statusColor="informative" note="de conversão"></lib-kpi-card>
-          <lib-kpi-card label="Valor médio dos imóveis" icon="HouseLine" [value]="moeda(kpis().media)" statusLabel="Ticket médio" statusColor="neutral" note="das simulações"></lib-kpi-card>
-          <lib-kpi-card label="Produtos para simular" icon="SquaresFour" [value]="produtos.length" statusLabel="PF e PJ" statusColor="positive" note="bancos parceiros"></lib-kpi-card>
-        </div>
 
         <!-- Todos os produtos -->
         <section class="sm-sec" #todos aria-labelledby="sm-prod-t">
@@ -159,7 +91,7 @@
                     </div>
                   }
                   <footer>
-                    <lib-icon-button type="neutral" variant="ghost" icon="Eye" ariaLabel="Ver resultado" (clicked)="abrirRecente(r)"></lib-icon-button>
+                    <lib-icon-button type="neutral" variant="ghost" icon="Eye" ariaLabel="Ver simulação" (clicked)="vendo.set(r)"></lib-icon-button>
                     <lib-button intent="neutral" variant="filled" icon="FileText" label="Gerar proposta" (clicked)="gerarProposta()"></lib-button>
                   </footer>
                 </article>
@@ -412,5 +344,51 @@
         </div>
       </div>
     }
+  }
+
+  @if (detalhe(); as d) {
+    <lib-drawer class="sd-drawer" [open]="true" title="Detalhes da simulação" [showFooter]="true" [showCustomFooter]="true" ariaLabel="Detalhes da simulação" (closeClick)="vendo.set(null)" (backdropClick)="vendo.set(null)">
+      <div class="sd" [style.--tema]="d.pr.tema">
+        <section class="sd-hero">
+          <span class="sd-ic"><lib-icon [icon]="d.pr.icon" [size]="24" color="inherit"></lib-icon></span>
+          <div>
+            <small>{{ d.pr.label }} · {{ d.r.data }}</small>
+            @if (d.r.cliente) { <b>{{ d.r.cliente.split(' | ')[0] }}</b><span>{{ d.r.cliente.split(' | ')[1] }}</span> }
+            @else { <b>Cliente não informado</b><span>Simulação feita {{ d.r.origem === 'Simulador' ? 'no simulador' : 'na proposta' }}</span> }
+          </div>
+        </section>
+        <dl class="sd-dados">
+          @if (d.form.valor) { <div><dt>{{ d.pr.rotuloValor || 'Valor' }}</dt><dd>{{ moeda(d.form.valor) }}</dd></div> }
+          <div><dt>{{ d.pr.rotuloEntrada }}</dt><dd>{{ moeda(d.form.entrada ?? 0) }}</dd></div>
+          <div><dt>Prazo</dt><dd>{{ d.form.prazo }} meses</dd></div>
+          <div><dt>Sistema</dt><dd>{{ d.pr.sistema === 'sac' ? 'SAC' : 'Price' }}</dd></div>
+        </dl>
+        @if (d.melhor; as m) {
+          <section class="sd-melhor">
+            <lib-partner [partner]="m.parceiro" partnerStyle="fill" [size]="40"></lib-partner>
+            <div><small>Melhor condição</small><b>{{ moeda(m.primeira) }}</b><span>{{ m.parceiro }} · {{ pct(m.taxa) }} · CET {{ pct(m.cet) }}</span></div>
+            <lib-tag emphasis="low" color="green" size="small">Menor parcela</lib-tag>
+          </section>
+        }
+        <section class="sd-bancos">
+          <h3>Bancos comparados <span>{{ d.linhas.length }}</span></h3>
+          <ul>
+            @for (l of d.linhas; track l.parceiro; let i = $index) {
+              <li>
+                <lib-partner [partner]="l.parceiro" partnerStyle="fill" [size]="28"></lib-partner>
+                <span class="sd-banco"><b>{{ l.parceiro }}</b><small>{{ pct(l.taxa) }} · {{ l.parcelas }}x</small></span>
+                <span class="sd-valor"><small>1ª parcela</small><b>{{ moeda(l.primeira) }}</b></span>
+                <lib-icon-button type="neutral" variant="ghost" icon="FileText" [ariaLabel]="'Gerar proposta com ' + l.parceiro" (clicked)="gerarProposta(l.parceiro)"></lib-icon-button>
+              </li>
+            }
+          </ul>
+          <p class="sd-nota"><lib-icon icon="Info" [size]="16" color="inherit"></lib-icon>Valores salvos no momento da simulação. Para atualizar as taxas, abra no simulador.</p>
+        </section>
+      </div>
+      <div libDrawerFooter class="sd-rodape">
+        <lib-button intent="neutral" variant="ghost" icon="ArrowsClockwise" label="Abrir no simulador" (clicked)="abrirRecente(d.r)"></lib-button>
+        <lib-button intent="branding" variant="filled" icon="FileText" label="Gerar proposta" (clicked)="gerarProposta(d.melhor?.parceiro)"></lib-button>
+      </div>
+    </lib-drawer>
   }
 </jv-shell>
