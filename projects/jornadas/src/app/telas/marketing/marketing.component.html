@@ -48,7 +48,7 @@
             }
           </div>
           <div class="mk-loja-acoes">
-            <lib-button intent="branding" variant="filled" icon="DownloadSimple" [label]="'Downloads' + (downloads().length ? ' (' + downloads().length + ')' : '')" (clicked)="vendoDownloads.set(true)"></lib-button>
+            <lib-button intent="branding" variant="filled" [label]="'Downloads' + (downloads().length ? ' (' + downloads().length + ')' : '')" (clicked)="vendoDownloads.set(true)"></lib-button>
             <lib-button intent="neutral" variant="filled" icon="Heart" [label]="'Favoritos' + (qtdFavoritos() ? ' (' + qtdFavoritos() + ')' : '')" (clicked)="vendoFavoritos.set(true)"></lib-button>
           </div>
         </aside>
@@ -97,7 +97,7 @@
                         <p>{{ a.legenda }}</p>
                       </div>
                       <div class="mk-card-acoes">
-                        <lib-button intent="branding" variant="filled" icon="Eye" label="Visualizar" (clicked)="visualizar(a)"></lib-button>
+                        <lib-button intent="branding" variant="filled" label="Visualizar" (clicked)="visualizar(a)"></lib-button>
                         <lib-icon-button type="neutral" variant="filled" icon="ShareNetwork" [ariaLabel]="'Compartilhar ' + a.destaque" (clicked)="compartilhar(a)"></lib-icon-button>
                         <lib-icon-button class="mk-fav" [class.mk-fav--on]="favoritos()[a.id]" type="neutral" variant="filled" icon="Heart" [ariaLabel]="favoritos()[a.id] ? 'Remover dos favoritos' : 'Salvar nos favoritos'" (clicked)="favoritar(a, $event)"></lib-icon-button>
                       </div>
@@ -116,7 +116,7 @@
           <section class="mk-sec" aria-labelledby="mk-capas-t">
             <header class="mk-sec-head">
               <div><h2 id="mk-capas-t">Capas para os destaques</h2><p>Deixe os destaques do Instagram organizados e com a cor da sua marca.</p></div>
-              <lib-button intent="branding" variant="filled" icon="DownloadSimple" label="Baixar todas" (clicked)="baixarCapa({ label: 'todas as capas (.zip)' })"></lib-button>
+              <lib-button intent="branding" variant="filled" label="Baixar todas" (clicked)="baixarCapa({ label: 'todas as capas (.zip)' })"></lib-button>
             </header>
             <lib-tabs class="mk-subtabs" [tabs]="abasEstiloCapa" [selected]="estiloCapa() === 'contorno' ? 1 : 0" (selectedChange)="estiloCapa.set($event === 1 ? 'contorno' : 'cheia')"></lib-tabs>
             <ul class="mk-capas">
@@ -153,7 +153,7 @@
               <span class="mk-cat-ic"><lib-icon icon="Link" [size]="16" color="inherit"></lib-icon></span>
               <div><b>Link da sua loja</b><span>Use na bio para o cliente simular e enviar a proposta direto para você.</span></div>
               <code>{{ linkLoja() }}</code>
-              <lib-button intent="branding" variant="filled" icon="Copy" label="Copiar link" (clicked)="copiar('https://' + linkLoja(), 'Link da loja copiado.')"></lib-button>
+              <lib-button intent="branding" variant="filled" label="Copiar link" (clicked)="copiar('https://' + linkLoja(), 'Link da loja copiado.')"></lib-button>
             </div>
           </section>
         }
@@ -218,7 +218,7 @@
         <lib-button intent="neutral" variant="ghost" icon="Heart" [selected]="!!favoritos()[a.id]" [label]="favoritos()[a.id] ? 'Favoritada' : 'Favoritar'" (clicked)="favoritar(a)"></lib-button>
         <span class="mk-dr-rodape-dir">
           <lib-button intent="neutral" variant="filled" icon="ShareNetwork" label="Compartilhar" (clicked)="compartilhar(a)"></lib-button>
-          <lib-button intent="branding" variant="filled" icon="DownloadSimple" label="Baixar arte" [loading]="baixando()" (clicked)="baixar(a)"></lib-button>
+          <lib-button intent="branding" variant="filled" label="Baixar arte" [loading]="baixando()" (clicked)="baixar(a)"></lib-button>
         </span>
       </div>
     </lib-drawer>

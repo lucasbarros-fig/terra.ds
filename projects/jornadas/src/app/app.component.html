@@ -28,7 +28,7 @@
     <lib-tabs class="jv-abas" [tabs]="[{ label: 'Protótipo', icon: 'Monitor' }, { label: 'Print do Figma', icon: 'Image' }]" [selected]="aba()" (selectedChange)="aba.set($event)"></lib-tabs>
 
     <lib-icon-button type="neutral" variant="ghost" [icon]="modo() === 'dark' ? 'Sun' : 'Moon'" [ariaLabel]="modo() === 'dark' ? 'Usar tema claro' : 'Usar tema escuro'" (clicked)="modo.set(modo() === 'dark' ? 'light' : 'dark')"></lib-icon-button>
-    <lib-button intent="branding" variant="filled" icon="ListBullets" label="Etapas e detalhes" (clicked)="detalhes.set(true)"></lib-button>
+    <lib-button intent="branding" variant="filled" label="Etapas e detalhes" (clicked)="detalhes.set(true)"></lib-button>
   </header>
 
   <main class="jv-palco">

@@ -14,7 +14,7 @@
                 <span class="sm-hero-txt">{{ p.text }}</span>
                 <span class="sm-hero-chips">@for (c of p.chips; track c) { <span>{{ c }}</span> }</span>
                 <span class="sm-hero-rodape">
-                  <button type="button" class="sm-hero-cta" (click)="escolherProduto(p)">Simular agora <lib-icon icon="ArrowRight" [size]="16" color="inherit"></lib-icon></button>
+                  <button type="button" class="sm-hero-cta" (click)="escolherProduto(p)">Simular agora</button>
                   <span class="sm-hero-logos" aria-hidden="true">@for (b of (p.bancos ?? C().bancos).slice(0, 6); track b.nome) { <lib-partner [partner]="b.nome" partnerStyle="fill" [size]="28"></lib-partner> }</span>
                 </span>
               </div>
@@ -52,7 +52,7 @@
                     @if ((p.bancos ?? C().bancos).length > 4) { <small>+{{ (p.bancos ?? C().bancos).length - 4 }}</small> }
                     <em>{{ (p.bancos ?? C().bancos).length }} {{ (p.bancos ?? C().bancos).length === 1 ? 'parceiro' : 'parceiros' }}</em>
                   </span>
-                  <lib-button class="sm-cta" intent="branding" variant="filled" icon="Calculator" label="Simular" [ariaLabel]="'Simular ' + p.label"></lib-button>
+                  <lib-button class="sm-cta" intent="branding" variant="filled" label="Simular" [ariaLabel]="'Simular ' + p.label"></lib-button>
                 </span>
               </div>
             }
@@ -91,7 +91,7 @@
                   </dl>
                   <footer class="sm-rec-rodape">
                     <lib-button class="sm-rec-ver" intent="neutral" variant="ghost" icon="Eye" label="Detalhes" ariaLabel="Ver detalhes da simulação" (clicked)="vendo.set(r)"></lib-button>
-                    <lib-button class="sm-cta" intent="branding" variant="filled" icon="FileText" label="Gerar proposta" (clicked)="gerarProposta()"></lib-button>
+                    <lib-button class="sm-cta" intent="branding" variant="filled" label="Gerar proposta" (clicked)="gerarProposta()"></lib-button>
                   </footer>
                 </article>
               }
@@ -213,7 +213,7 @@
           <div class="sf-rodape">
             <lib-action-bar [fixedToViewport]="false">
               <div class="left"><lib-button intent="neutral" variant="ghost" icon="ArrowLeft" label="Voltar" (clicked)="inicio()"></lib-button></div>
-              <div class="right"><lib-button intent="branding" variant="filled" icon="Calculator" label="Simular" [loading]="calculando()" (clicked)="simular()"></lib-button></div>
+              <div class="right"><lib-button intent="branding" variant="filled" label="Simular" [loading]="calculando()" (clicked)="simular()"></lib-button></div>
             </lib-action-bar>
           </div>
         </div>
@@ -341,7 +341,7 @@
             <div class="left"><lib-button intent="neutral" variant="ghost" icon="ArrowLeft" label="Voltar" (clicked)="inicio()"></lib-button></div>
             <div class="right">
               <lib-button class="sr-ajustar-bar" intent="neutral" variant="filled" icon="PencilSimple" label="Ajustar simulação" (clicked)="ajustar()"></lib-button>
-              <lib-button intent="branding" variant="filled" icon="FileText" label="Gerar proposta" (clicked)="gerarProposta()"></lib-button>
+              <lib-button intent="branding" variant="filled" label="Gerar proposta" (clicked)="gerarProposta()"></lib-button>
             </div>
           </lib-action-bar>
         </div>
@@ -389,7 +389,7 @@
       </div>
       <div libDrawerFooter class="sd-rodape">
         <lib-button intent="neutral" variant="ghost" icon="ArrowsClockwise" label="Abrir no simulador" (clicked)="abrirRecente(d.r)"></lib-button>
-        <lib-button intent="branding" variant="filled" icon="FileText" label="Gerar proposta" (clicked)="gerarProposta()"></lib-button>
+        <lib-button intent="branding" variant="filled" label="Gerar proposta" (clicked)="gerarProposta()"></lib-button>
       </div>
     </lib-drawer>
   }

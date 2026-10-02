@@ -219,13 +219,13 @@
           <span></span>
           <span class="cl-rodape-dir">
             <lib-button intent="neutral" variant="ghost" [showIcon]="false" label="Cancelar" (clicked)="cancelarEdicao()"></lib-button>
-            <lib-button intent="branding" variant="filled" icon="Check" label="Salvar" [disabled]="!mudou()" (clicked)="dialogo.set('salvar')"></lib-button>
+            <lib-button intent="branding" variant="filled" label="Salvar" [disabled]="!mudou()" (clicked)="dialogo.set('salvar')"></lib-button>
           </span>
         } @else {
           <lib-button intent="negative" variant="ghost" icon="Trash" label="Excluir" (clicked)="excluir.set(rowAberto().id)"></lib-button>
           <span class="cl-rodape-dir">
             <lib-button intent="neutral" variant="filled" icon="MagnifyingGlass" label="Consulta Serasa" (clicked)="avisar('Consulta Serasa de ' + d.nome + ' solicitada. O resultado aparece no histórico do cliente.')"></lib-button>
-            <lib-button intent="branding" variant="filled" icon="Wallet" label="Gerar nova proposta" (clicked)="nav.emit('nova')"></lib-button>
+            <lib-button intent="branding" variant="filled" label="Gerar nova proposta" (clicked)="nav.emit('nova')"></lib-button>
           </span>
         }
       </div>
