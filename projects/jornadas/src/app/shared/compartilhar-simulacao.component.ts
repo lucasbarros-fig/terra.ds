@@ -45,12 +45,13 @@ export interface SimulacaoCompartilhada {
               </div>
               <i aria-hidden="true"></i>
               <div>
-                <span>{{ dados().parceiros.length === 1 ? 'Parceiro' : 'Parceiros comparados' }}</span>
+                <span>{{ dados().parceiros.length === 1 ? 'Parceiro' : 'Parceiros' }}<span class="cp-desk"> comparados</span></span>
                 <div class="cp-logos">
                   @for (n of dados().parceiros.slice(0, 5); track n) {
                     <lib-partner [partner]="n" partnerStyle="fill" type="default" [size]="32"></lib-partner>
                   }
-                  @if (dados().parceiros.length > 5) { <span class="cp-mais">+{{ dados().parceiros.length - 5 }}</span> }
+                  @if (dados().parceiros.length > 5) { <span class="cp-mais cp-mais--desk">+{{ dados().parceiros.length - 5 }}</span> }
+                  @if (dados().parceiros.length > 3) { <span class="cp-mais cp-mais--mob">+{{ dados().parceiros.length - 3 }}</span> }
                 </div>
               </div>
             </div>
@@ -95,6 +96,8 @@ export interface SimulacaoCompartilhada {
       em { font-style: normal; font-size: var(--size-font-body-12); color: var(--color-text-essential-caption); } }
     .cp-grande { font-size: var(--size-font-heading-24); font-weight: 700; line-height: 1.2; color: var(--color-text-essential-heading); }
     .cp-logos { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 2px; }
+    .cp-mais--mob { display: none; }
+    @media (max-width: 600px) { .cp-mais--desk { display: none; } .cp-mais--mob { display: inline; } }
     .cp-mais { font-size: var(--size-font-body-12) !important; font-weight: 600; color: var(--color-text-essential-body) !important; }
     .cp-dados { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--size-spacing-12); margin: 0;
       dt { font-size: var(--size-font-body-12); color: var(--color-text-essential-caption); }
@@ -105,10 +108,22 @@ export interface SimulacaoCompartilhada {
       li { display: flex; flex-direction: column; align-items: center; gap: var(--size-spacing-8); min-width: 64px; }
       span { font-size: var(--size-font-body-14); color: var(--color-text-essential-body); } }
     @media (max-width: 600px) {
-      .cp { width: calc(100vw - 64px); }
-      .cp-destaque { grid-template-columns: 1fr; > i { height: 1px; } }
-      .cp-dados { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .cp-acoes { gap: var(--size-spacing-8); justify-content: space-between; li { min-width: 0; } span { font-size: var(--size-font-body-12); white-space: nowrap; } }
+      .cp { width: calc(100vw - 64px); gap: var(--size-spacing-16); }
+      .cp-intro { display: none; }
+      .cp-card { gap: var(--size-spacing-12); padding: var(--size-spacing-12); }
+      .cp-destaque { grid-template-columns: minmax(0, 1fr) auto; gap: var(--size-spacing-12); padding: var(--size-spacing-12); > i { display: none; } }
+      .cp-destaque > div:last-child { align-items: flex-end; text-align: right; }
+      .cp-grande { font-size: var(--size-font-heading-20, 20px); white-space: nowrap; }
+      .cp-desk { display: none; }
+      .cp-logos { flex-wrap: nowrap; gap: 0;
+        lib-partner { margin-left: -8px; border-radius: 8px; box-shadow: 0 0 0 2px var(--color-theme-base); line-height: 0; }
+        lib-partner:first-child { margin-left: 0; }
+        lib-partner:nth-child(n+4) { display: none; } }
+      .cp-mais { margin-left: 6px; }
+      .cp-dados { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--size-spacing-8) var(--size-spacing-12);
+        dd { font-size: var(--size-font-body-12); } }
+      .cp-link { padding-top: var(--size-spacing-8); }
+      .cp-acoes { gap: 0; justify-content: space-between; li { min-width: 0; flex: 1 1 0; gap: 6px; } span { font-size: 11px; white-space: nowrap; } }
     }
   `],
 })
