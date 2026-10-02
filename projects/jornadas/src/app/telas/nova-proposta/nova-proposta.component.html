@@ -65,22 +65,19 @@
     <lib-divisor class="np-div np-div--h" orientation="horizontal"></lib-divisor>
     <aside class="np-painel" aria-label="Painel de produtos">
       @if (produto(); as p) {
-        <div class="np-p-head"><h2>{{ p.label }}</h2>@if (p.detail.subtitle) { <p>{{ p.detail.subtitle }}</p> }</div>
-        <ul class="np-bullets">
-          @for (b of p.detail.bullets; track $index) {
-            <li><lib-icon icon="Check" [size]="16" color="inherit"></lib-icon><span>{{ bullet(b).text }}
-              @if (bullet(b).sub.length) { <ul>@for (x of bullet(b).sub; track x) { <li>{{ x }}</li> }</ul> }
-            </span></li>
-          }
-        </ul>
-        <div class="np-bloco">
-          <b>{{ p.detail.partnersTitle }}</b>
-          <div class="np-parceiros">@for (n of p.detail.partners; track n) { <jv-parceiro [nome]="n" [tamanho]="56"></jv-parceiro> }</div>
-          <lib-button class="np-doc" intent="neutral" variant="bare" icon="ArrowSquareOut" label="Documentações e informações necessárias" (clicked)="documentacao()"></lib-button>
+        <header class="np-det-head">
+          <span class="np-det-ic"><lib-icon [icon]="ic(p.icon)" [size]="20" color="inherit"></lib-icon></span>
+          <div class="np-det-tt"><span>Detalhes</span><h2>{{ p.label }}</h2></div>
+        </header>
+        @if (p.detail.about) { <p class="np-det-txt">{{ p.detail.about }}</p> }
+        <div class="np-det-parceiros">
+          <b>Nossos parceiros</b>
+          <div class="np-parceiros">
+            @for (n of p.detail.partners; track n) {
+              <lib-partner [partner]="n" partnerStyle="solid" type="default" [size]="64"></lib-partner>
+            }
+          </div>
         </div>
-        @if (p.detail.about) {
-          <div class="np-bloco"><b>Conheça o produto:</b><p>{{ p.detail.about }}</p></div>
-        }
         <jv-video-produto class="np-video" [titulo]="p.label + ': conheça em vídeo'"></jv-video-produto>
       } @else if (listaPainel(); as lp) {
         <div class="np-p-head"><h2>{{ lp.title }}</h2></div>

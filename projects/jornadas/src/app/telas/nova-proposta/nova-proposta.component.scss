@@ -19,7 +19,7 @@
 .np-rodape { position: sticky; bottom: 0; z-index: 2; padding: 0 var(--size-spacing-32) var(--size-spacing-24); }
 
 .np-painel {
-  display: flex; flex-direction: column; gap: var(--size-spacing-24);
+  display: flex; flex-direction: column; gap: var(--size-spacing-16);
   padding: var(--size-spacing-32);
 }
 .np-p-head { display: flex; flex-direction: column; gap: var(--size-spacing-4);
@@ -65,3 +65,14 @@
 }
 
 .np-video { width: 100%; }
+
+/* Detalhes do produto (Figma 2 - Nova proposta › Details Text): ícone, "Detalhes", nome, texto, parceiros e vídeo. */
+.np-det-head { display: flex; align-items: center; gap: var(--size-spacing-12); }
+.np-det-ic { display: inline-grid; flex: 0 0 44px; height: 45px; place-items: center;
+  border: var(--size-stoke-1) solid var(--color-stroke-frame); border-radius: var(--size-radius-8); color: var(--color-icons-essential-high); }
+.np-det-tt { display: flex; flex-direction: column; min-width: 0;
+  span { font-size: var(--size-font-body-12); line-height: 18px; font-weight: 500; color: var(--color-text-essential-caption); }
+  h2 { margin: 0; font-size: var(--size-font-body-16); line-height: 24px; font-weight: 700; color: var(--color-text-essential-heading); } }
+.np-det-txt { margin: 0; font-size: var(--size-font-body-14); line-height: 21px; color: var(--color-text-essential-body); white-space: pre-line; }
+.np-det-parceiros { display: flex; flex-direction: column; gap: var(--size-spacing-12);
+  b { font-size: var(--size-font-body-14); line-height: 21px; font-weight: 700; color: var(--color-text-essential-heading); } }
