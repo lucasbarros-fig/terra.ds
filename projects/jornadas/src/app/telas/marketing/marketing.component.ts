@@ -64,16 +64,16 @@ export class MarketingComponent {
   protected readonly abasTipo = [{ label: 'Posts e Stories', icon: 'Images' }, { label: 'Reels', icon: 'FilmStrip' }];
   protected readonly filtro = signal<string[]>([]);
   protected readonly opCategorias = SECOES.map((s) => ({ value: s.id, label: s.label }));
-  protected readonly soFavoritos = signal(false);
+  protected readonly vendoFavoritos = signal(false);
   protected readonly favoritos = signal<Record<string, boolean>>({ 'financiamento-0': true, 'cgi-1': true });
   protected readonly qtdFavoritos = computed(() => Object.values(this.favoritos()).filter(Boolean).length);
 
   protected readonly secoes = computed<Secao[]>(() => {
     const q = semAcento(this.busca().trim());
-    const f = this.filtro(), fav = this.favoritos(), so = this.soFavoritos();
+    const f = this.filtro();
     return SECOES
       .filter((s) => !f.length || f.includes(s.id))
-      .map((s) => ({ ...s, artes: s.artes.filter((a) => (!so || fav[a.id]) && (!q || semAcento(`${a.categoria} ${a.chamada} ${a.destaque} ${a.texto}`).includes(q))) }))
+      .map((s) => ({ ...s, artes: s.artes.filter((a) => (!q || semAcento(`${a.categoria} ${a.chamada} ${a.destaque} ${a.texto}`).includes(q))) }))
       .filter((s) => s.artes.length);
   });
 
@@ -107,7 +107,8 @@ export class MarketingComponent {
     this.favoritos.update((f) => ({ ...f, [a.id]: novo }));
     this.avisos.mostrar(novo ? 'Arte salva nos favoritos.' : 'Arte removida dos favoritos.', novo ? 'success' : 'informative', 3000);
   }
-  protected alternarFavoritos(): void { this.soFavoritos.update((v) => !v); this.aba.set(0); }
+  /** Artes favoritadas, na ordem das categorias. */
+  protected readonly listaFavoritos = computed(() => { const f = this.favoritos(); return SECOES.flatMap((s) => s.artes).filter((a) => f[a.id]); });
 
   protected visualizar(a: Arte): void { this.formato.set(this.tipo() === 'reels' ? 'story' : 'post'); this.aberta.set(a); }
   protected fechar(): void { this.aberta.set(null); }

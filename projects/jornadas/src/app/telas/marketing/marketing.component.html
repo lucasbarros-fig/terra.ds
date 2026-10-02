@@ -47,7 +47,7 @@
           </div>
           <div class="mk-loja-acoes">
             <lib-button intent="branding" variant="filled" icon="DownloadSimple" [label]="'Downloads' + (downloads().length ? ' (' + downloads().length + ')' : '')" (clicked)="vendoDownloads.set(true)"></lib-button>
-            <lib-button intent="neutral" variant="filled" icon="Heart" [selected]="soFavoritos()" [label]="'Favoritos' + (qtdFavoritos() ? ' (' + qtdFavoritos() + ')' : '')" (clicked)="alternarFavoritos()"></lib-button>
+            <lib-button intent="neutral" variant="filled" icon="Heart" [label]="'Favoritos' + (qtdFavoritos() ? ' (' + qtdFavoritos() + ')' : '')" (clicked)="vendoFavoritos.set(true)"></lib-button>
           </div>
         </aside>
       </section>
@@ -59,14 +59,13 @@
           <section class="mk-sec" aria-labelledby="mk-midia-t">
             <header class="mk-sec-head">
               <div>
-                <h2 id="mk-midia-t">{{ soFavoritos() ? 'Seus favoritos' : 'Artes para as redes sociais' }}</h2>
-                <p>{{ soFavoritos() ? 'As artes que você salvou para usar depois.' : 'Posts, stories e reels prontos para deixar seu perfil completo e profissional.' }}</p>
+                <h2 id="mk-midia-t">Artes para as redes sociais</h2>
+                <p>Posts, stories e reels prontos para deixar seu perfil completo e profissional.</p>
               </div>
             </header>
             <div class="mk-filtros">
               <lib-tabs class="mk-subtabs" [tabs]="abasTipo" [selected]="tipo() === 'reels' ? 1 : 0" (selectedChange)="tipo.set($event === 1 ? 'reels' : 'posts')"></lib-tabs>
               <span class="mk-filtros-dir">
-                @if (soFavoritos()) { <lib-tag emphasis="low" color="blue" size="small" [showCloseButton]="true" (closed)="soFavoritos.set(false)">Só favoritos</lib-tag> }
                 <lib-select class="mk-filtro" variant="outlined" iconBefore="FunnelSimple" placeholder="Filtrar por produto" selectAriaLabel="Filtrar por produto" [multiple]="true" [options]="opCategorias" [ngModel]="filtro()" (selectionChange)="filtro.set($any($event) ?? [])"></lib-select>
               </span>
             </div>
@@ -105,11 +104,7 @@
                 </div>
               </div>
             } @empty {
-              @if (soFavoritos() && !busca()) {
-                <lib-empty-state class="mk-vazio" icon="Heart" title="Nenhum favorito ainda" description="Toque no coração das artes para salvar aqui e encontrar rápido depois." buttonLabel="Ver todas as artes" buttonIntent="neutral" (buttonClicked)="soFavoritos.set(false)"></lib-empty-state>
-              } @else {
                 <lib-empty-state class="mk-vazio" icon="MagnifyingGlass" title="Nenhuma arte encontrada" description="Tente outra palavra ou limpe os filtros."></lib-empty-state>
-              }
             }
           </section>
         }
@@ -235,13 +230,33 @@
           @for (d of downloads(); track d.arte.id + d.formato) {
             <li>
               <span class="mk-dl-mini"><jv-arte [arte]="d.arte" formato="post" [cor]="corArte()" [loja]="nomeArte()" [identidade]="identidade()"></jv-arte></span>
-              <div><b>{{ d.arte.destaque }}</b><span>{{ d.arte.categoria }} · {{ d.formato === 'story' ? 'Story' : 'Post' }} · hoje às {{ d.quando }}</span></div>
+              <div><b>{{ d.arte.chamada }} {{ d.arte.destaque }}</b><span>{{ d.arte.categoria }} · {{ d.formato === 'story' ? 'Story' : 'Post' }} · hoje às {{ d.quando }}</span></div>
               <lib-icon-button type="neutral" variant="ghost" size="small" icon="Eye" [ariaLabel]="'Abrir ' + d.arte.destaque" (clicked)="vendoDownloads.set(false); visualizar(d.arte)"></lib-icon-button>
             </li>
           }
         </ul>
       } @else {
         <lib-empty-state class="mk-vazio" icon="DownloadSimple" title="Nenhum download ainda" description="As artes que você baixar ficam aqui para baixar de novo quando quiser."></lib-empty-state>
+      }
+    </lib-drawer>
+  }
+
+  <!-- Favoritos -->
+  @if (vendoFavoritos()) {
+    <lib-drawer class="mk-drawer-dl" [open]="true" title="Seus favoritos" [showFooter]="false" ariaLabel="Seus favoritos" (closeClick)="vendoFavoritos.set(false)" (backdropClick)="vendoFavoritos.set(false)">
+      @if (listaFavoritos().length) {
+        <ul class="mk-dl">
+          @for (a of listaFavoritos(); track a.id) {
+            <li>
+              <span class="mk-dl-mini"><jv-arte [arte]="a" formato="post" [cor]="corArte()" [loja]="nomeArte()" [identidade]="identidade()"></jv-arte></span>
+              <div><b>{{ a.chamada }} {{ a.destaque }}</b><span>{{ a.categoria }}</span></div>
+              <lib-icon-button type="neutral" variant="ghost" size="small" icon="Eye" [ariaLabel]="'Abrir ' + a.destaque" (clicked)="vendoFavoritos.set(false); visualizar(a)"></lib-icon-button>
+              <lib-icon-button class="mk-fav mk-fav--on" type="neutral" variant="ghost" size="small" icon="Heart" [ariaLabel]="'Remover ' + a.destaque + ' dos favoritos'" (clicked)="favoritar(a)"></lib-icon-button>
+            </li>
+          }
+        </ul>
+      } @else {
+        <lib-empty-state class="mk-vazio" icon="Heart" title="Nenhum favorito ainda" description="Toque no coração das artes para salvar aqui e encontrar rápido depois."></lib-empty-state>
       }
     </lib-drawer>
   }
