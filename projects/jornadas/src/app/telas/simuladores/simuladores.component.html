@@ -40,10 +40,10 @@
           <header class="sm-head"><h2 id="sm-prod-t">Todos os produtos</h2><p>Escolha o que o cliente precisa e compare as condições dos parceiros.</p></header>
           <div class="sm-produtos">
             @for (p of produtos; track p.id) {
-              <button type="button" class="sm-produto" [style.--tema]="p.tema" (click)="escolherProduto(p)" [attr.aria-label]="'Simular ' + p.label">
+              <div class="sm-produto" [style.--tema]="p.tema" (click)="escolherProduto(p)">
                 <span class="sm-produto-topo">
                   <span class="sm-produto-ic"><lib-icon [icon]="p.icon" [size]="24" color="inherit"></lib-icon></span>
-                  <span class="sm-produto-perfis">@for (pf of p.perfis; track pf) { <span>{{ pf === 'pf' ? 'PF' : 'PJ' }}</span> }</span>
+                  <span class="sm-produto-perfis">@for (pf of p.perfis; track pf) { <lib-tag emphasis="low" [color]="pf === 'pf' ? 'blue' : 'purple'" size="small">{{ pf === 'pf' ? 'PF' : 'PJ' }}</lib-tag> }</span>
                 </span>
                 <span class="sm-produto-txt"><b>{{ p.label }}</b><span>{{ p.text }}</span></span>
                 <span class="sm-produto-rodape">
@@ -52,9 +52,9 @@
                     @if ((p.bancos ?? C().bancos).length > 4) { <small>+{{ (p.bancos ?? C().bancos).length - 4 }}</small> }
                     <em>{{ (p.bancos ?? C().bancos).length }} {{ (p.bancos ?? C().bancos).length === 1 ? 'banco' : 'bancos' }}</em>
                   </span>
-                  <span class="sm-produto-cta">Simular <lib-icon icon="ArrowRight" [size]="16" color="inherit"></lib-icon></span>
+                  <lib-button class="sm-cta" intent="branding" variant="filled" icon="Calculator" label="Simular" [ariaLabel]="'Simular ' + p.label"></lib-button>
                 </span>
-              </button>
+              </div>
             }
           </div>
         </section>
@@ -73,7 +73,7 @@
                   <header class="sm-rec-topo">
                     <span class="sm-rec-ic"><lib-icon [icon]="prodDe(r).icon" [size]="16" color="inherit"></lib-icon></span>
                     <span class="sm-rec-prod"><b>{{ prodDe(r).curto }}</b><time>{{ r.data }}</time></span>
-                    <span class="sm-rec-origem" [class.is-proposta]="r.origem !== 'Simulador'">{{ r.origem === 'Simulador' ? 'Simulador' : 'Proposta' }}</span>
+                    <lib-tag emphasis="low" [color]="r.origem === 'Simulador' ? 'blue' : 'purple'" size="small">{{ r.origem === 'Simulador' ? 'Simulador' : 'Proposta' }}</lib-tag>
                   </header>
                   <div class="sm-rec-cli">
                     @if (r.cliente) { <span class="sm-rec-av">{{ iniciais(r.cliente.split(' | ')[0]) }}</span><span><b>{{ r.cliente.split(' | ')[0] }}</b><small>{{ r.cliente.split(' | ')[1] }}</small></span> }
@@ -90,8 +90,8 @@
                     <div><dt>Prazo</dt><dd>{{ prazoDe(r) }} meses</dd></div>
                   </dl>
                   <footer class="sm-rec-rodape">
-                    <button type="button" class="sm-rec-ver" aria-label="Ver detalhes da simulação" (click)="vendo.set(r)"><lib-icon icon="Eye" [size]="16" color="inherit"></lib-icon><span>Detalhes</span></button>
-                    <button type="button" class="sm-rec-cta" (click)="gerarProposta(melhorDe(r)?.parceiro)">Gerar proposta <lib-icon icon="ArrowRight" [size]="16" color="inherit"></lib-icon></button>
+                    <lib-button class="sm-rec-ver" intent="neutral" variant="ghost" icon="Eye" label="Detalhes" ariaLabel="Ver detalhes da simulação" (clicked)="vendo.set(r)"></lib-button>
+                    <lib-button class="sm-cta" intent="branding" variant="filled" icon="FileText" label="Gerar proposta" (clicked)="gerarProposta(melhorDe(r)?.parceiro)"></lib-button>
                   </footer>
                 </article>
               }
