@@ -4,7 +4,7 @@
     [style.transform]="trackTransform()"
     [attr.aria-live]="isRotating() ? 'off' : 'polite'"
   >
-    @for (slide of slides(); track $index; let i = $index) {
+    @for (item of lista(); track $index; let i = $index) {
       <div
         class="banner-slide"
         role="group"
@@ -13,12 +13,14 @@
         [attr.aria-hidden]="i === current() ? null : 'true'"
         [attr.inert]="i === current() ? null : ''"
       >
-        @if (slide.href) {
-          <a class="banner-link" [href]="slide.href">
-            <img class="banner-img" [src]="slide.src" [alt]="slide.alt" decoding="async" [attr.loading]="i === 0 ? null : 'lazy'" />
+        @if (slideTemplate(); as tpl) {
+          <ng-container *ngTemplateOutlet="tpl; context: { $implicit: item, index: i }"></ng-container>
+        } @else if (asSlide(item).href) {
+          <a class="banner-link" [href]="asSlide(item).href">
+            <img class="banner-img" [src]="asSlide(item).src" [alt]="asSlide(item).alt" decoding="async" [attr.loading]="i === 0 ? null : 'lazy'" />
           </a>
         } @else {
-          <img class="banner-img" [src]="slide.src" [alt]="slide.alt" decoding="async" [attr.loading]="i === 0 ? null : 'lazy'" />
+          <img class="banner-img" [src]="asSlide(item).src" [alt]="asSlide(item).alt" decoding="async" [attr.loading]="i === 0 ? null : 'lazy'" />
         }
       </div>
     }
@@ -46,7 +48,7 @@
 
 @if (hasPagination()) {
   <div class="banner-pagination">
-    @for (slide of slides(); track $index; let i = $index) {
+    @for (item of lista(); track $index; let i = $index) {
       <button
         type="button"
         class="banner-dot"

@@ -9,16 +9,28 @@
         </header>
 
         <div class="sm-grade">
-          <!-- Produto principal -->
-          <button type="button" class="sm-hero" (click)="escolherProduto(produtos[0])">
-            <svg class="sm-hero-casa" viewBox="0 0 200 160" aria-hidden="true"><path d="M14 78 100 12l86 66M34 63v85h132V63M84 148v-46h32v46" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" /></svg>
-            <span class="sm-hero-tag"><lib-icon icon="HouseLine" [size]="16" color="inherit"></lib-icon>Financiamento Imobiliário</span>
-            <b class="sm-hero-tit">Compare {{ C().bancos.length }} bancos de uma vez</b>
-            <span class="sm-hero-txt">Residencial, comercial ou terreno. Informe os dados do cliente e veja parcela, taxa e custo total de cada parceiro.</span>
-            <span class="sm-hero-tipos" aria-hidden="true">@for (t of C().tipos; track t.value) { <img [src]="asset + t.image" alt="" /> }</span>
-            <span class="sm-hero-logos" aria-hidden="true">@for (b of C().bancos; track b.nome) { <lib-partner [partner]="b.nome" partnerStyle="fill" [size]="32"></lib-partner> }</span>
-            <span class="sm-hero-cta">Simular agora <lib-icon icon="ArrowRight" [size]="16" color="inherit"></lib-icon></span>
-          </button>
+          <!-- Banners dos produtos -->
+          <lib-banner class="sm-banners" [items]="produtos" [slideTemplate]="slideProduto" [height]="340" [autoplay]="true" [interval]="6000" ariaLabel="Produtos para simular" [(activeIndex)]="bannerAtivo"></lib-banner>
+          <ng-template #slideProduto let-p>
+            <div class="sm-hero" [style.--tema]="p.tema">
+              <svg class="sm-hero-casa" viewBox="0 0 200 160" aria-hidden="true"><path d="M14 78 100 12l86 66M34 63v85h132V63M84 148v-46h32v46" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" /></svg>
+              <div class="sm-hero-conteudo">
+                <span class="sm-hero-tag"><lib-icon [icon]="p.icon" [size]="16" color="inherit"></lib-icon>{{ p.label }}</span>
+                <b class="sm-hero-tit">{{ p.chamada }}</b>
+                <span class="sm-hero-txt">{{ p.text }}</span>
+                <span class="sm-hero-chips">@for (c of p.chips; track c) { <span>{{ c }}</span> }</span>
+                <span class="sm-hero-rodape">
+                  <button type="button" class="sm-hero-cta" (click)="escolherProduto(p)">Simular agora <lib-icon icon="ArrowRight" [size]="16" color="inherit"></lib-icon></button>
+                  <span class="sm-hero-logos" aria-hidden="true">@for (b of (p.bancos ?? C().bancos).slice(0, 6); track b.nome) { <lib-partner [partner]="b.nome" partnerStyle="fill" [size]="28"></lib-partner> }</span>
+                </span>
+              </div>
+              @if (p.tipos.length && p.id === 'fi') {
+                <span class="sm-hero-tipos" aria-hidden="true">@for (t of C().tipos; track t.value) { <img [src]="asset + t.image" alt="" /> }</span>
+              } @else {
+                <span class="sm-hero-icone" aria-hidden="true"><lib-icon [icon]="p.icon" [size]="32" color="inherit"></lib-icon></span>
+              }
+            </div>
+          </ng-template>
 
           <!-- Simulação rápida -->
           <section class="sm-rapida" aria-labelledby="sm-rap-t">
