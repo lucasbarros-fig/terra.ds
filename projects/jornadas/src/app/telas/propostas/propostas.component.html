@@ -1,52 +1,63 @@
-<jv-shell menu="propostas" title="Seu acompanhamento" [breadcrumbs]="[{ label: 'Acompanhamento de proposta' }]" (nav)="nav.emit($event)">
+<jv-shell menu="propostas" title="Propostas" [breadcrumbs]="[{ label: 'Home' }, { label: 'Propostas' }]" (nav)="nav.emit($event)">
   <div class="pp" #area>
-    <div class="pp-filtros" role="search">
-      <lib-input-text class="pp-busca" variant="outlined" iconBefore="MagnifyingGlass" placeholder="Pesquise por cliente" inputAriaLabel="Pesquisar proposta por cliente" [clearable]="true" [ngModel]="busca()" (ngModelChange)="busca.set($event ?? '')"></lib-input-text>
-      <lib-select class="pp-sel" variant="outlined" selectAriaLabel="Período" iconBefore="Calendar" [options]="opPeriodos" [ngModel]="periodo()" (selectionChange)="periodo.set($any($event) || 'todos')"></lib-select>
-      <lib-select class="pp-sel" variant="outlined" selectAriaLabel="Produto" placeholder="Produto: todos" [multiple]="true" [searchable]="true" [options]="opProdutos()" [ngModel]="produto()" (selectionChange)="produto.set(lista($event))"></lib-select>
-      <lib-select class="pp-sel" variant="outlined" selectAriaLabel="Status" placeholder="Status: todos" [multiple]="true" [options]="opEtapas()" [ngModel]="status()" (selectionChange)="status.set(lista($event))"></lib-select>
-      <lib-select class="pp-sel" variant="outlined" selectAriaLabel="Usuários" placeholder="Usuários: todos" [multiple]="true" [searchable]="true" [options]="opUsuarios()" [ngModel]="usuarios()" (selectionChange)="usuarios.set(lista($event))"></lib-select>
-      <lib-button intent="branding" variant="filled" icon="FileArrowDown" label="Exportar relatório" (clicked)="exportar()"></lib-button>
+    <div class="pp-barra" role="search">
+      <div class="pp-campos">
+        <lib-input-text class="pp-campo" variant="outlined" iconBefore="MagnifyingGlass" placeholder="Pesquise por clientes" inputAriaLabel="Pesquisar propostas por cliente" [clearable]="true" [ngModel]="busca()" (ngModelChange)="busca.set($event ?? '')"></lib-input-text>
+        <lib-select class="pp-campo" variant="outlined" iconBefore="CalendarDots" placeholder="Período" selectAriaLabel="Período" [options]="opPeriodos" [ngModel]="periodo() === 'todos' ? null : periodo()" (selectionChange)="periodo.set($any($event) || 'todos')"></lib-select>
+        <lib-select class="pp-campo" variant="outlined" iconBefore="Briefcase" placeholder="Produto" selectAriaLabel="Produto" [multiple]="true" [options]="opProdutos()" [ngModel]="produto()" (selectionChange)="produto.set(lista($event))"></lib-select>
+      </div>
+      <div class="pp-acoes">
+        <lib-button intent="neutral" variant="filled" icon="DownloadSimple" label="Exportar relatório" (clicked)="exportar()"></lib-button>
+        <lib-icon-button type="branding" variant="filled" icon="Plus" ariaLabel="Nova proposta" (clicked)="nav.emit('nova')"></lib-icon-button>
+      </div>
     </div>
 
-    <section class="pp-resumo" aria-label="Resumo por etapa">
-      @for (r of resumo(); track r.e.value) {
-        <lib-kpi-card [label]="r.e.label" [value]="'R$ ' + inteiro(r.total)" [icon]="ic(r.e.icon)" [statusLabel]="r.n + (r.n === 1 ? ' proposta' : ' propostas')" [statusColor]="corEtapa(r.e.color)" note=""></lib-kpi-card>
+    <div class="pp-quadro" #quadro tabindex="0" aria-label="Quadro de propostas por etapa">
+      @for (c of colunas(); track c.id) {
+        <section class="pp-col" [style.--cor]="c.cor" [attr.aria-label]="c.label + ', ' + c.cards.length + (c.cards.length === 1 ? ' proposta' : ' propostas')">
+          <header class="pp-col-titulo">
+            <span class="pp-col-icone"><lib-icon [icon]="c.icon" [size]="24" color="inherit"></lib-icon></span>
+            <div class="pp-col-txt"><h2>{{ c.label }}</h2><p>{{ brl(c.total) }}</p></div>
+          </header>
+          <div class="pp-col-div" aria-hidden="true"><span></span></div>
+          <p class="pp-col-qtd"><span>Propostas</span><span>{{ c.cards.length }}</span></p>
+          <div class="pp-col-lista">
+            @for (p of c.cards; track p.id) {
+              <lib-card-kanban
+                [type]="p.tipo"
+                [proposalId]="'#' + p.id"
+                [clientName]="p.cliente"
+                [product]="p.produto"
+                [amount]="brl(p.valor)"
+                [statusLabel]="p.status"
+                [statusColor]="corStatus(p.status)"
+                statusIcon="CircleNotch"
+                [comments]="p.comentarios ?? 0"
+                [hideZeroComments]="false"
+                [time]="tempo(p)"
+                [timeLabel]="'há ' + tempo(p) + ' na etapa'"
+                (cardClick)="ver(p)"
+                (menuClick)="abrirMenu($event, p)"
+              ></lib-card-kanban>
+            } @empty {
+              <div class="pp-col-vazia">
+                <lib-icon icon="Folder" [size]="20" color="inherit"></lib-icon>
+                <p>As propostas aparecerão aqui quando chegarem nesta etapa.</p>
+              </div>
+            }
+          </div>
+        </section>
       }
-    </section>
+    </div>
 
-    @if (!base().length) {
-      <lib-empty-state class="pp-vazio" icon="FolderOpen" title="Você ainda não possui propostas cadastradas..." description="Quando novas propostas forem criadas, elas aparecerão aqui." buttonLabel="Nova proposta" buttonIcon="NotePencil" (buttonClicked)="nav.emit('nova')"></lib-empty-state>
-    } @else if (!linhas().length) {
-      <lib-empty-state class="pp-vazio" icon="Funnel" title="Nenhuma proposta encontrada..." description="Tente ajustar ou limpar os filtros aplicados." buttonLabel="Limpar filtros" buttonIcon="FunnelX" (buttonClicked)="limpar()"></lib-empty-state>
-    } @else {
-      <div class="pp-quadro" tabindex="0" aria-label="Quadro de propostas por etapa">
-        @for (c of colunas(); track c.e.value) {
-          <section class="pp-col" [attr.aria-label]="c.e.label + ', ' + c.cards.length + ' propostas'">
-            <header class="pp-col-head"><b>{{ c.e.label }}</b><lib-tag emphasis="low" color="neutral" size="small">{{ c.cards.length }}</lib-tag></header>
-            <div class="pp-col-lista">
-              @for (p of c.cards; track p.id) {
-                <lib-card-kanban
-                  [type]="p.tipo"
-                  [proposalId]="'#' + p.id"
-                  [clientName]="p.cliente"
-                  [product]="p.produto"
-                  [amount]="'R$ ' + brl(p.valor)"
-                  [statusLabel]="p.status"
-                  [statusColor]="corStatus(p.status)"
-                  [time]="curto(p.criado)"
-                  timeLabel="Criado em"
-                  (cardClick)="ver(p)"
-                  (menuClick)="abrirMenu($event, p)"
-                ></lib-card-kanban>
-              } @empty {
-                <p class="pp-col-vazia">As propostas aparecerão aqui quando chegarem nesta etapa.</p>
-              }
-            </div>
-          </section>
-        }
+    <nav class="pp-mapa" aria-label="Ir para a etapa">
+      <div class="pp-mapa-trilho">
+      @for (c of colunas(); track c.id; let i = $index) {
+        <button type="button" class="pp-mapa-col" [attr.aria-label]="'Ir para ' + c.label" (click)="irPara(i)"></button>
+      }
+      <span class="pp-mapa-janela" aria-hidden="true" [style.left.%]="janela().ini" [style.width.%]="janela().larg"></span>
       </div>
-    }
+    </nav>
 
     @if (menu(); as m) {
       <jv-menu-flutuante
