@@ -19,12 +19,12 @@ const meta: Meta<PartnerComponent> = {
     props: args,
     template: `<lib-partner [partner]="partner" [partnerStyle]="partnerStyle" [type]="type" [shape]="shape" [size]="size"></lib-partner>`,
   }),
-  args: { partner: 'itau', partnerStyle: 'fill', type: 'minimal', shape: 'circle', size: 64 },
+  args: { partner: 'itau', partnerStyle: 'fill', type: 'minimal', shape: 'rounded', size: 64 },
   argTypes: {
     partner: { control: 'select', options: [...PARTNER_NAMES, 'Banco Exemplo'], description: 'Chave ou nome do parceiro.' },
     partnerStyle: { control: 'inline-radio', options: ['fill', 'solid', 'contrast'], table: { defaultValue: { summary: "'fill'" } } },
     type: { control: 'inline-radio', options: ['default', 'minimal'], table: { defaultValue: { summary: "'minimal'" } } },
-    shape: { control: 'inline-radio', options: ['circle', 'rounded', 'square'], table: { defaultValue: { summary: "'circle'" } } },
+    shape: { control: 'inline-radio', options: ['circle', 'rounded', 'square'], table: { defaultValue: { summary: "'rounded'" } } },
     size: { control: { type: 'range', min: 16, max: 128, step: 4 }, description: 'Lado em px.', table: { defaultValue: { summary: '40' } } },
   },
 };

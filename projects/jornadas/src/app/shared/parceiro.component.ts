@@ -24,8 +24,8 @@ const LOGOS: Record<string, string> = {
   `,
   styles: [`
     :host { display: inline-flex; }
-    img { display: block; border-radius: var(--size-radius-999); object-fit: cover; background: var(--color-theme-base); }
-    .ini { display: inline-grid; place-items: center; border: var(--size-stoke-1) solid var(--color-stroke-frame); border-radius: var(--size-radius-999);
+    img { display: block; border-radius: var(--size-radius-8); object-fit: cover; background: var(--color-theme-base); }
+    .ini { display: inline-grid; place-items: center; border: var(--size-stoke-1) solid var(--color-stroke-frame); border-radius: var(--size-radius-8);
       background: var(--color-theme-base); color: var(--color-text-essential-heading); font-size: 12px; font-weight: 700; letter-spacing: .02em; }
   `],
 })

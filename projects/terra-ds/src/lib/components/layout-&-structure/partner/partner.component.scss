@@ -14,7 +14,7 @@
   line-height: 0;
 }
 
-:host(.lib-partner--rounded) { border-radius: calc(var(--partner-size) * 0.2); }
+:host(.lib-partner--rounded) { border-radius: clamp(4px, calc(var(--partner-size) * 0.2), 12px); }
 :host(.lib-partner--square) { border-radius: 0; }
 
 :host(.lib-partner--solid) { box-shadow: inset 0 0 0 var(--size-stoke-1, 1px) var(--color-stroke-frame); }

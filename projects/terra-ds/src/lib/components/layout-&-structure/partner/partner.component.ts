@@ -93,7 +93,7 @@ export class PartnerComponent {
   readonly partner = input.required<string>();
   readonly partnerStyle = input<PartnerStyle>('fill');
   readonly type = input<PartnerType>('minimal');
-  readonly shape = input<PartnerShape>('circle');
+  readonly shape = input<PartnerShape>('rounded');
   /** Lado em px. */
   readonly size = input(40);
   /** Texto alternativo; por padrão, o nome do parceiro. */

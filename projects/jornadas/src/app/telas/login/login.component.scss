@@ -140,7 +140,7 @@ h1 {
   display: flex; align-items: center; gap: 0;
   padding: 8px 16px 8px 8px; border-radius: var(--size-radius-999);
   background: var(--lg-vidro); border: 1px solid var(--lg-vidro-borda); backdrop-filter: blur(8px); color: var(--lg-fg);
-  jv-parceiro { margin-right: -8px; border-radius: 50%; box-shadow: 0 0 0 2px var(--color-theme-lower); }
+  jv-parceiro { margin-right: -6px; border-radius: 9px; box-shadow: 0 0 0 2px var(--color-theme-lower); }
   span { margin-left: 18px; font-size: var(--size-font-body-12); font-weight: 500; white-space: nowrap; }
 }
 
