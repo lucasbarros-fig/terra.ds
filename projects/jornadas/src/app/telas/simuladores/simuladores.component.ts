@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, computed, inject, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, computed, effect, inject, input, output, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -67,6 +67,20 @@ export class SimuladoresComponent implements OnInit {
   readonly nav = output<string>();
 
   private readonly avisos = inject(AvisosService);
+  private readonly host = inject(ElementRef<HTMLElement>);
+  private passosVistos = 0;
+  /** Quando a cascata libera uma pergunta nova, rola até ela para o Banker não precisar procurar. */
+  private readonly rolarCascata = effect(() => {
+    if (this.etapa() !== 'form') { this.passosVistos = 0; return; }
+    const n = Object.values(this.cascata()).filter(Boolean).length;
+    const subiu = n > this.passosVistos && this.passosVistos > 0;
+    this.passosVistos = n;
+    if (!subiu) return;
+    setTimeout(() => {
+      const novos = (this.host.nativeElement as HTMLElement).querySelectorAll('.sf-perguntas .sf-surge');
+      (novos[novos.length - 1] as HTMLElement | undefined)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 60);
+  });
   protected readonly brl = brl;
   protected readonly asset = ASSET;
   protected readonly C = computed(() => this.journey().content);
@@ -138,6 +152,18 @@ export class SimuladoresComponent implements OnInit {
     if (pr.cartorio && !f.cartorio) l.push('custos de cartório');
     if (pr.fgts && !this.pj() && !f.fgts) l.push('uso do FGTS');
     return l;
+  });
+  /** Formulário em cascata: cada resposta libera a próxima pergunta. */
+  protected readonly cascata = computed(() => {
+    const f = this.f(), pr = this.prod();
+    const perfil = !!f.perfil;
+    const tipo = perfil && (!this.tiposProd().length || !!f.tipo);
+    const nasc = tipo && (this.pj() || f.nascimento.replace(/\D/g, '').length === 8);
+    const valor = nasc && (!this.temBem() || !!f.valor);
+    const entrada = valor && f.entrada != null && !this.erroEntrada();
+    const prazo = entrada && !!f.prazo && !this.erroPrazo();
+    const cartorio = prazo && (!pr.cartorio || !!f.cartorio);
+    return { tipo: perfil, valores: tipo, valor: nasc, entrada: valor, prazo: entrada, extras: prazo, fgts: cartorio };
   });
   protected readonly completo = computed(() => !this.faltando().length && !this.erroEntrada() && !this.erroPrazo() && !this.erroNascimento());
   protected readonly progresso = computed(() => {

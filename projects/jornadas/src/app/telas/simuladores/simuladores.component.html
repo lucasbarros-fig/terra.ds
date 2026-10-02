@@ -124,10 +124,10 @@
               @if (enviado() && !f().perfil) { <p class="sf-erro">Escolha o perfil do cliente.</p> }
             </section>
 
-            @if (tiposProd().length) {
-            <lib-divisor></lib-divisor>
+            @if (tiposProd().length && cascata().tipo) {
+            <lib-divisor class="sf-surge"></lib-divisor>
 
-            <section class="sf-q">
+            <section class="sf-q sf-surge">
               <h3>Qual o tipo de {{ prod().bem }}?</h3>
               <div class="sf-tipos" role="radiogroup" [attr.aria-label]="'Tipo de ' + prod().bem">
                 @for (t of tiposProd(); track t.value) {
@@ -142,9 +142,10 @@
             </section>
             }
 
-            <lib-divisor></lib-divisor>
+            @if (cascata().valores) {
+            <lib-divisor class="sf-surge"></lib-divisor>
 
-            <section class="sf-q">
+            <section class="sf-q sf-surge">
               <h3>Valores</h3>
               <div class="sf-campos">
                 @if (!pj()) {
@@ -152,16 +153,19 @@
                     [error]="erroNascimento() || (enviado() && f().nascimento.replace('/', '').length < 8)" [helperText]="erroNascimento() ? 'Data incompleta.' : ''"
                     [ngModel]="f().nascimento" (ngModelChange)="set('nascimento', $event ?? '')"></lib-input-text>
                 }
-                @if (temBem()) {
-                  <lib-input-text [label]="prod().rotuloValor" variant="outlined" type="currency" prefix="R$" placeholder="0,00" [error]="enviado() && !f().valor" [ngModel]="f().valor" (ngModelChange)="set('valor', $event)"></lib-input-text>
+                @if (temBem() && cascata().valor) {
+                  <lib-input-text class="sf-surge" [label]="prod().rotuloValor" variant="outlined" type="currency" prefix="R$" placeholder="0,00" [error]="enviado() && !f().valor" [ngModel]="f().valor" (ngModelChange)="set('valor', $event)"></lib-input-text>
                 }
-                <lib-input-text [label]="prod().rotuloEntrada" variant="outlined" type="currency" prefix="R$" placeholder="0,00"
+                @if (cascata().entrada) {
+                <lib-input-text class="sf-surge" [label]="prod().rotuloEntrada" variant="outlined" type="currency" prefix="R$" placeholder="0,00"
                   [error]="erroEntrada() || (enviado() && credito() && !f().entrada)" [helperColor]="entradaBaixa() ? 'warning' : 'neutral'"
                   [helperText]="credito()
                     ? (erroEntrada() ? 'Máximo de ' + (prod().ltv! * 100) + '% do valor do ' + prod().bem + ' (' + moeda(limite()) + ').' : limite() ? 'Até ' + moeda(limite()) + ' (' + (prod().ltv! * 100) + '% do ' + prod().bem + ')' : '')
                     : (erroEntrada() ? 'Precisa ser menor que o ' + prod().rotuloValor.toLowerCase() + '.' : entradaBaixa() ? 'A maioria dos parceiros pede no mínimo 20% de entrada.' : f().valor && f().entrada != null ? pctEntrada() + '% do valor' : '')"
                   [ngModel]="f().entrada" (ngModelChange)="set('entrada', $event)"></lib-input-text>
-                <div class="sf-prazo">
+                }
+                @if (cascata().prazo) {
+                <div class="sf-prazo sf-surge">
                   <lib-input-text label="Prazo de pagamento" variant="outlined" mask="000" suffix="meses" [placeholder]="'Ex.: ' + prod().prazo.atalhos[2]" helperColor="neutral"
                     [error]="erroPrazo()" [helperText]="erroPrazo() ? 'Entre ' + prod().prazo.min + ' e ' + prod().prazo.max + ' meses.' : f().prazo && f().prazo! >= 12 ? (f().prazo! / 12 | number: '1.0-1') + ' anos' : 'De ' + prod().prazo.min + ' a ' + prod().prazo.max + ' meses'"
                     [ngModel]="f().prazo" (ngModelChange)="set('prazo', $event === '' || $event == null ? null : +$event)"></lib-input-text>
@@ -171,13 +175,15 @@
                     }
                   </div>
                 </div>
+                }
               </div>
             </section>
+            }
 
-            @if (prod().cartorio || (prod().fgts && !pj())) {
-            <lib-divisor></lib-divisor>
+            @if ((prod().cartorio || (prod().fgts && !pj())) && cascata().extras) {
+            <lib-divisor class="sf-surge"></lib-divisor>
 
-            <section class="sf-q sf-q--duplo">
+            <section class="sf-q sf-q--duplo sf-surge">
               @if (prod().cartorio) {
               <div>
                 <h3>Incluir custos de cartório?</h3>
@@ -189,8 +195,8 @@
                 @if (enviado() && !f().cartorio) { <p class="sf-erro">Escolha uma opção.</p> }
               </div>
               }
-              @if (prod().fgts && !pj()) {
-                <div>
+              @if (prod().fgts && !pj() && cascata().fgts) {
+                <div class="sf-surge">
                   <h3>Vai usar FGTS?</h3>
                   <p class="sf-dica">O saldo pode entrar como parte da entrada.</p>
                   <div class="sf-op" role="group" aria-label="Vai usar FGTS">

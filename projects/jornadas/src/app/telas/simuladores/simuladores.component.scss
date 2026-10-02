@@ -318,3 +318,8 @@
     border-top: 1px solid var(--color-stroke-frame); background: var(--color-theme-lower); box-shadow: 0 -8px 24px -16px rgba(0, 0, 0, .25); }
   .sf-rodape ::ng-deep .action-bar, .sr-rodape ::ng-deep .action-bar { min-height: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; }
 }
+
+/* Cascata: cada pergunta nova surge suave de baixo. */
+.sf-surge { animation: sf-surgir 420ms cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes sf-surgir { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .sf-surge { animation: none; } }
